@@ -1,0 +1,78 @@
+{
+  "sitesList": [
+    {
+      "id": "site-1",
+      "title": "Main Site",
+      "url": "https://contoso.sharepoint.com/sites/testsite",
+      "description": "Main collaboration site for the team",
+      "createdAt": "2025-02-15T14:30:00Z",
+      "lastModified": "2025-03-28T09:45:22Z"
+    },
+    {
+      "id": "site-2",
+      "title": "Project Alpha",
+      "url": "https://contoso.sharepoint.com/sites/projectalpha",
+      "description": "Project documentation and resources",
+      "createdAt": "2025-01-10T08:15:00Z",
+      "lastModified": "2025-03-25T16:12:33Z"
+    },
+    {
+      "id": "site-3",
+      "title": "HR Portal",
+      "url": "https://contoso.sharepoint.com/sites/hrportal",
+      "description": "Human resources documentation and forms",
+      "createdAt": "2024-11-05T11:22:00Z",
+      "lastModified": "2025-03-20T14:35:10Z"
+    },
+    {
+      "id": "site-4",
+      "title": "Marketing",
+      "url": "https://contoso.sharepoint.com/sites/marketing",
+      "description": "Marketing assets and campaign materials",
+      "createdAt": "2024-12-18T09:30:00Z",
+      "lastModified": "2025-03-18T10:23:45Z"
+    }
+  ],
+  "librariesList": [
+    {
+      "id": "lib-1",
+      "name": "Documents",
+      "itemCount": 145,
+      "folderCount": 12,
+      "fileCount": 133,
+      "createdAt": "2025-01-16T09:30:00Z",
+      "lastModified": "2025-03-28T15:42:18Z",
+      "defaultFolder": "Shared Documents"
+    },
+    {
+      "id": "lib-2",
+      "name": "Form Templates",
+      "itemCount": 34,
+      "folderCount": 5,
+      "fileCount": 29,
+      "createdAt": "2025-01-18T10:15:00Z",
+      "lastModified": "2025-03-22T11:30:42Z",
+      "defaultFolder": "Form Templates"
+    },
+    {
+      "id": "lib-3",
+      "name": "Site Assets",
+      "itemCount": 78,
+      "folderCount": 8,
+      "fileCount": 70,
+      "createdAt": "2025-01-16T09:30:00Z",
+      "lastModified": "2025-03-15T16:20:10Z",
+      "defaultFolder": "Site Assets"
+    },
+    {
+      "id": "lib-4",
+      "name": "Style Library",
+      "itemCount": 22,
+      "folderCount": 3,
+      "fileCount": 19,
+      "createdAt": "2025-01-16T09:30:00Z",
+      "lastModified": "2025-02-28T13:45:30Z",
+      "defaultFolder": "Style Library"
+    }
+  ]
+}

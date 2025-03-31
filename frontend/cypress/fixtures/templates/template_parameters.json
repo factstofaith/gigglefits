@@ -1,0 +1,223 @@
+{
+  "template-001": [
+    {
+      "id": "param-001",
+      "name": "sourceFilePattern",
+      "displayName": "Source File Pattern",
+      "description": "Pattern to match source files",
+      "type": "string",
+      "required": true,
+      "defaultValue": "*.csv"
+    },
+    {
+      "id": "param-002",
+      "name": "targetTable",
+      "displayName": "Target Table",
+      "description": "Database table to load data into",
+      "type": "string",
+      "required": true,
+      "defaultValue": "data_imports"
+    },
+    {
+      "id": "param-011",
+      "name": "truncateTable",
+      "displayName": "Truncate Table Before Load",
+      "description": "Whether to truncate the target table before loading",
+      "type": "boolean",
+      "required": false,
+      "defaultValue": false
+    },
+    {
+      "id": "param-012",
+      "name": "batchSize",
+      "displayName": "Batch Size",
+      "description": "Number of records to process in each batch",
+      "type": "number",
+      "required": false,
+      "defaultValue": 1000
+    }
+  ],
+  "template-002": [
+    {
+      "id": "param-003",
+      "name": "folderPath",
+      "displayName": "Email Folder Path",
+      "description": "Path to the email folder to sync",
+      "type": "string",
+      "required": true,
+      "defaultValue": "Inbox"
+    },
+    {
+      "id": "param-004",
+      "name": "syncSchedule",
+      "displayName": "Sync Schedule",
+      "description": "Cron expression for sync schedule",
+      "type": "string",
+      "required": true,
+      "defaultValue": "0 0 * * *"
+    },
+    {
+      "id": "param-013",
+      "name": "emailFilter",
+      "displayName": "Email Filter",
+      "description": "Filter expression for emails to sync",
+      "type": "string",
+      "required": false,
+      "defaultValue": ""
+    },
+    {
+      "id": "param-014",
+      "name": "includeAttachments",
+      "displayName": "Include Attachments",
+      "description": "Whether to include email attachments",
+      "type": "boolean",
+      "required": false,
+      "defaultValue": true
+    },
+    {
+      "id": "param-015",
+      "name": "maxEmailAge",
+      "displayName": "Max Email Age (Days)",
+      "description": "Maximum age of emails to sync in days",
+      "type": "number",
+      "required": false,
+      "defaultValue": 30
+    }
+  ],
+  "template-003": [
+    {
+      "id": "param-005",
+      "name": "sfObjects",
+      "displayName": "Salesforce Objects",
+      "description": "Comma-separated list of Salesforce objects to backup",
+      "type": "string",
+      "required": true,
+      "defaultValue": "Account,Contact,Opportunity"
+    },
+    {
+      "id": "param-006",
+      "name": "backupContainer",
+      "displayName": "Backup Container",
+      "description": "Azure blob container for backups",
+      "type": "string",
+      "required": true,
+      "defaultValue": "sf-backups"
+    },
+    {
+      "id": "param-016",
+      "name": "backupSchedule",
+      "displayName": "Backup Schedule",
+      "description": "Cron expression for backup schedule",
+      "type": "string",
+      "required": false,
+      "defaultValue": "0 0 * * 0"
+    },
+    {
+      "id": "param-017",
+      "name": "backupFormat",
+      "displayName": "Backup Format",
+      "description": "Format for backup files",
+      "type": "string",
+      "required": false,
+      "defaultValue": "JSON",
+      "allowedValues": ["JSON", "CSV", "XML"]
+    },
+    {
+      "id": "param-018",
+      "name": "compress",
+      "displayName": "Compress Backups",
+      "description": "Whether to compress backup files",
+      "type": "boolean",
+      "required": false,
+      "defaultValue": true
+    }
+  ],
+  "template-004": [
+    {
+      "id": "param-007",
+      "name": "dataRetentionDays",
+      "displayName": "Data Retention (Days)",
+      "description": "Number of days to retain processed data",
+      "type": "number",
+      "required": true,
+      "defaultValue": "90"
+    },
+    {
+      "id": "param-008",
+      "name": "anonymizationLevel",
+      "displayName": "Anonymization Level",
+      "description": "Level of data anonymization",
+      "type": "string",
+      "required": true,
+      "defaultValue": "High",
+      "allowedValues": ["Low", "Medium", "High"]
+    },
+    {
+      "id": "param-019",
+      "name": "patientFields",
+      "displayName": "Patient Fields",
+      "description": "Comma-separated list of patient fields to process",
+      "type": "string",
+      "required": false,
+      "defaultValue": "name,dob,address,diagnosis"
+    },
+    {
+      "id": "param-020",
+      "name": "encryptData",
+      "displayName": "Encrypt Data",
+      "description": "Whether to encrypt sensitive data",
+      "type": "boolean",
+      "required": false,
+      "defaultValue": true
+    }
+  ],
+  "template-005": [
+    {
+      "id": "param-009",
+      "name": "syncInterval",
+      "displayName": "Sync Interval (Minutes)",
+      "description": "Interval between syncs in minutes",
+      "type": "number",
+      "required": true,
+      "defaultValue": "15"
+    },
+    {
+      "id": "param-010",
+      "name": "conflictResolution",
+      "displayName": "Conflict Resolution",
+      "description": "How to resolve data conflicts",
+      "type": "string",
+      "required": true,
+      "defaultValue": "SourceWins",
+      "allowedValues": ["SourceWins", "TargetWins", "NewestWins", "Manual"]
+    },
+    {
+      "id": "param-021",
+      "name": "productCategories",
+      "displayName": "Product Categories",
+      "description": "Comma-separated list of product categories to sync",
+      "type": "string",
+      "required": false,
+      "defaultValue": ""
+    },
+    {
+      "id": "param-022",
+      "name": "locationIds",
+      "displayName": "Location IDs",
+      "description": "Comma-separated list of location IDs to sync",
+      "type": "string",
+      "required": false,
+      "defaultValue": ""
+    },
+    {
+      "id": "param-023",
+      "name": "logLevel",
+      "displayName": "Log Level",
+      "description": "Level of logging detail",
+      "type": "string",
+      "required": false,
+      "defaultValue": "Info",
+      "allowedValues": ["Error", "Warning", "Info", "Debug", "Trace"]
+    }
+  ]
+}

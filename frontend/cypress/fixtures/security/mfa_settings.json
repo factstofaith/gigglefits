@@ -1,0 +1,22 @@
+{
+  "mfa": {
+    "enabled": true,
+    "enrolledAt": "2025-02-15T10:45:00Z",
+    "lastVerified": "2025-03-25T09:15:22Z",
+    "recoveryCodesCount": 10,
+    "recoveryCodesRemaining": 10
+  },
+  "securitySettings": {
+    "passwordLastChanged": "2025-01-10T14:30:00Z",
+    "passwordExpiresAt": "2025-04-10T14:30:00Z",
+    "loginAttempts": {
+      "total": 25,
+      "failed": 2,
+      "lastFailed": "2025-03-10T08:22:15Z"
+    },
+    "securityQuestions": {
+      "configured": true,
+      "lastUpdated": "2025-01-10T14:35:00Z"
+    }
+  }
+}

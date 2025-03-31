@@ -1,0 +1,52 @@
+[
+  {
+    "id": "msg-001",
+    "text": "Hello, I need help with setting up an integration",
+    "from": "You"
+  },
+  {
+    "id": "msg-002",
+    "text": "Hello! How can we help you today?",
+    "from": "Support"
+  },
+  {
+    "id": "msg-003",
+    "text": "I'm trying to connect to Azure Blob Storage",
+    "from": "You"
+  },
+  {
+    "id": "msg-004",
+    "text": "Thanks for your message. Our team will get back to you soon.",
+    "from": "Support"
+  },
+  {
+    "id": "msg-005",
+    "text": "How do I create a new integration?",
+    "from": "You"
+  },
+  {
+    "id": "msg-006",
+    "text": "You can create a new integration by going to the Integrations page and clicking the 'New Integration' button. Would you like me to walk you through the steps?",
+    "from": "Support"
+  },
+  {
+    "id": "msg-007",
+    "text": "Where can I find documentation about templates?",
+    "from": "You"
+  },
+  {
+    "id": "msg-008",
+    "text": "Our documentation on templates can be found in the Documentation Portal under 'Integration Guides > Templates'. You can also access it directly at /documentation/integration/templates.",
+    "from": "Support"
+  },
+  {
+    "id": "msg-009",
+    "text": "I'm getting an error when trying to save my integration",
+    "from": "You"
+  },
+  {
+    "id": "msg-010",
+    "text": "I'll help you troubleshoot that error. Could you please provide more details about the error message you're seeing?",
+    "from": "Support"
+  }
+]

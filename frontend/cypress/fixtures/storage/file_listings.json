@@ -1,0 +1,299 @@
+{
+  "rootListing": {
+    "folderPath": "/",
+    "folders": [
+      {
+        "name": "documents",
+        "path": "/documents",
+        "lastModified": "2025-04-01T10:30:00Z"
+      },
+      {
+        "name": "images",
+        "path": "/images",
+        "lastModified": "2025-04-01T10:35:00Z"
+      },
+      {
+        "name": "data",
+        "path": "/data",
+        "lastModified": "2025-04-01T10:40:00Z"
+      }
+    ],
+    "files": [
+      {
+        "name": "readme.txt",
+        "path": "/readme.txt",
+        "size": 1024,
+        "lastModified": "2025-04-01T10:45:00Z",
+        "contentType": "text/plain"
+      },
+      {
+        "name": "config.json",
+        "path": "/config.json",
+        "size": 2048,
+        "lastModified": "2025-04-01T10:50:00Z",
+        "contentType": "application/json"
+      }
+    ]
+  },
+  "sharePointRootListing": {
+    "folderPath": "/",
+    "folders": [
+      {
+        "name": "documents",
+        "path": "/documents",
+        "lastModified": "2025-03-28T14:20:00Z"
+      },
+      {
+        "name": "presentations",
+        "path": "/presentations",
+        "lastModified": "2025-03-28T14:25:00Z"
+      },
+      {
+        "name": "spreadsheets",
+        "path": "/spreadsheets",
+        "lastModified": "2025-03-28T14:30:00Z"
+      }
+    ],
+    "files": [
+      {
+        "name": "introduction.docx",
+        "path": "/introduction.docx",
+        "size": 25600,
+        "lastModified": "2025-03-28T14:35:00Z",
+        "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "name": "readme.txt",
+        "path": "/readme.txt",
+        "size": 1024,
+        "lastModified": "2025-03-28T14:40:00Z",
+        "contentType": "text/plain"
+      }
+    ]
+  },
+  "sharePointDocumentsListing": {
+    "folderPath": "/documents",
+    "folders": [
+      {
+        "name": "project-plans",
+        "path": "/documents/project-plans",
+        "lastModified": "2025-03-28T15:00:00Z"
+      },
+      {
+        "name": "reports",
+        "path": "/documents/reports",
+        "lastModified": "2025-03-28T15:05:00Z"
+      }
+    ],
+    "files": [
+      {
+        "name": "project-scope.docx",
+        "path": "/documents/project-scope.docx",
+        "size": 35840,
+        "lastModified": "2025-03-28T15:10:00Z",
+        "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "name": "meeting-notes.docx",
+        "path": "/documents/meeting-notes.docx",
+        "size": 18432,
+        "lastModified": "2025-03-28T15:15:00Z",
+        "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "name": "requirements.docx",
+        "path": "/documents/requirements.docx",
+        "size": 42000,
+        "lastModified": "2025-03-28T15:20:00Z",
+        "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      }
+    ]
+  },
+  "sharePointPresentationsListing": {
+    "folderPath": "/presentations",
+    "folders": [
+      {
+        "name": "client-meetings",
+        "path": "/presentations/client-meetings",
+        "lastModified": "2025-03-28T16:00:00Z"
+      }
+    ],
+    "files": [
+      {
+        "name": "company-overview.pptx",
+        "path": "/presentations/company-overview.pptx",
+        "size": 65536,
+        "lastModified": "2025-03-28T16:05:00Z",
+        "contentType": "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+      },
+      {
+        "name": "project-kickoff.pptx",
+        "path": "/presentations/project-kickoff.pptx",
+        "size": 51200,
+        "lastModified": "2025-03-28T16:10:00Z",
+        "contentType": "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+      },
+      {
+        "name": "quarterly-results.pptx",
+        "path": "/presentations/quarterly-results.pptx",
+        "size": 76800,
+        "lastModified": "2025-03-28T16:15:00Z",
+        "contentType": "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+      }
+    ]
+  },
+  "documentsListing": {
+    "folderPath": "/documents",
+    "folders": [
+      {
+        "name": "reports",
+        "path": "/documents/reports",
+        "lastModified": "2025-04-01T11:00:00Z"
+      },
+      {
+        "name": "contracts",
+        "path": "/documents/contracts",
+        "lastModified": "2025-04-01T11:05:00Z"
+      }
+    ],
+    "files": [
+      {
+        "name": "sample.docx",
+        "path": "/documents/sample.docx",
+        "size": 15360,
+        "lastModified": "2025-04-01T11:10:00Z",
+        "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "name": "report.pdf",
+        "path": "/documents/report.pdf",
+        "size": 51200,
+        "lastModified": "2025-04-01T11:15:00Z",
+        "contentType": "application/pdf"
+      },
+      {
+        "name": "notes.txt",
+        "path": "/documents/notes.txt",
+        "size": 512,
+        "lastModified": "2025-04-01T11:20:00Z",
+        "contentType": "text/plain"
+      }
+    ]
+  },
+  "imagesListing": {
+    "folderPath": "/images",
+    "folders": [
+      {
+        "name": "products",
+        "path": "/images/products",
+        "lastModified": "2025-04-01T11:30:00Z"
+      },
+      {
+        "name": "banners",
+        "path": "/images/banners",
+        "lastModified": "2025-04-01T11:35:00Z"
+      }
+    ],
+    "files": [
+      {
+        "name": "logo.png",
+        "path": "/images/logo.png",
+        "size": 5120,
+        "lastModified": "2025-04-01T11:40:00Z",
+        "contentType": "image/png"
+      },
+      {
+        "name": "header.jpg",
+        "path": "/images/header.jpg",
+        "size": 102400,
+        "lastModified": "2025-04-01T11:45:00Z",
+        "contentType": "image/jpeg"
+      },
+      {
+        "name": "icon.svg",
+        "path": "/images/icon.svg",
+        "size": 2560,
+        "lastModified": "2025-04-01T11:50:00Z",
+        "contentType": "image/svg+xml"
+      }
+    ]
+  },
+  "dataListing": {
+    "folderPath": "/data",
+    "folders": [
+      {
+        "name": "exports",
+        "path": "/data/exports",
+        "lastModified": "2025-04-01T12:00:00Z"
+      },
+      {
+        "name": "imports",
+        "path": "/data/imports",
+        "lastModified": "2025-04-01T12:05:00Z"
+      }
+    ],
+    "files": [
+      {
+        "name": "customers.csv",
+        "path": "/data/customers.csv",
+        "size": 10240,
+        "lastModified": "2025-04-01T12:10:00Z",
+        "contentType": "text/csv"
+      },
+      {
+        "name": "products.json",
+        "path": "/data/products.json",
+        "size": 20480,
+        "lastModified": "2025-04-01T12:15:00Z",
+        "contentType": "application/json"
+      },
+      {
+        "name": "sales.xlsx",
+        "path": "/data/sales.xlsx",
+        "size": 30720,
+        "lastModified": "2025-04-01T12:20:00Z",
+        "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      {
+        "name": "inventory.xml",
+        "path": "/data/inventory.xml",
+        "size": 15360,
+        "lastModified": "2025-04-01T12:25:00Z",
+        "contentType": "application/xml"
+      }
+    ]
+  },
+  "searchResults": {
+    "query": "report",
+    "results": [
+      {
+        "name": "report.pdf",
+        "path": "/documents/report.pdf",
+        "size": 51200,
+        "lastModified": "2025-04-01T11:15:00Z",
+        "contentType": "application/pdf"
+      },
+      {
+        "name": "monthly_report.xlsx",
+        "path": "/documents/reports/monthly_report.xlsx",
+        "size": 25600,
+        "lastModified": "2025-04-01T13:00:00Z",
+        "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      {
+        "name": "annual_report_2024.pdf",
+        "path": "/documents/reports/annual_report_2024.pdf",
+        "size": 102400,
+        "lastModified": "2025-04-01T13:05:00Z",
+        "contentType": "application/pdf"
+      }
+    ]
+  },
+  "filePreview": {
+    "content": "This is a sample text file content for preview.\nIt contains multiple lines of text.\nThe content is used for testing the file preview functionality.\n\nLine 1: Sample data\nLine 2: More sample data\nLine 3: Even more sample data",
+    "contentType": "text/plain",
+    "fileName": "sample.txt",
+    "size": 1024,
+    "lastModified": "2025-04-01T14:00:00Z"
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "invalidConnections": {
+    "api": {
+      "name": "Invalid API Connection",
+      "description": "API connection with invalid credentials for testing",
+      "type": "API",
+      "config": {
+        "url": "https://invalid-api.example.com",
+        "apiKey": "invalid_api_key_12345",
+        "timeout": 5000
+      },
+      "expectedError": {
+        "code": "CONNECTION_ERROR",
+        "message": "Failed to connect to API endpoint",
+        "details": "Authentication failed: Invalid API key"
+      }
+    },
+    "database": {
+      "name": "Invalid Database Connection",
+      "description": "Database connection with invalid credentials for testing",
+      "type": "DATABASE",
+      "config": {
+        "host": "invalid-db.example.com",
+        "database": "test_db",
+        "username": "invalid_user",
+        "password": "invalid_password"
+      },
+      "expectedError": {
+        "code": "CONNECTION_ERROR",
+        "message": "Failed to connect to database",
+        "details": "Authentication failed: Invalid username or password"
+      }
+    },
+    "oauth": {
+      "name": "Invalid OAuth Connection",
+      "description": "OAuth connection with invalid credentials for testing",
+      "type": "OAUTH",
+      "config": {
+        "provider": "CUSTOM",
+        "clientId": "invalid_client_id",
+        "clientSecret": "invalid_client_secret",
+        "tokenUrl": "https://invalid-oauth.example.com/token",
+        "authUrl": "https://invalid-oauth.example.com/authorize"
+      },
+      "expectedError": {
+        "code": "CONNECTION_ERROR",
+        "message": "Failed to connect to OAuth provider",
+        "details": "Authentication failed: Invalid client credentials"
+      }
+    }
+  },
+  "validConnections": {
+    "api": {
+      "name": "Valid API Connection",
+      "description": "API connection with valid credentials for testing",
+      "type": "API",
+      "config": {
+        "url": "https://valid-api.example.com",
+        "apiKey": "valid_api_key_12345",
+        "timeout": 5000
+      }
+    },
+    "database": {
+      "name": "Valid Database Connection",
+      "description": "Database connection with valid credentials for testing",
+      "type": "DATABASE",
+      "config": {
+        "host": "valid-db.example.com",
+        "database": "test_db",
+        "username": "valid_user",
+        "password": "valid_password"
+      }
+    },
+    "oauth": {
+      "name": "Valid OAuth Connection",
+      "description": "OAuth connection with valid credentials for testing",
+      "type": "OAUTH",
+      "config": {
+        "provider": "CUSTOM",
+        "clientId": "valid_client_id",
+        "clientSecret": "valid_client_secret",
+        "tokenUrl": "https://valid-oauth.example.com/token",
+        "authUrl": "https://valid-oauth.example.com/authorize"
+      }
+    }
+  }
+}

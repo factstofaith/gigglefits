@@ -1,0 +1,156 @@
+Creating an optimized production build...
+Failed to compile.
+
+[eslint] 
+src/components/admin/AzureConfigurationPanel.jsx
+  Line 354:26:  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  Line 354:33:  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+
+src/components/admin/ReleasesManager.jsx
+  Line 314:15:  'sampleTenants' is not defined  no-undef
+
+src/components/admin/ResourceHealthCards.jsx
+  Line 131:64:  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  Line 131:83:  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+
+src/components/auth/RequireAdmin.jsx
+  Line 18:10:  'LinearProgress' is not defined  react/jsx-no-undef
+
+src/components/auth/RequireAuth.jsx
+  Line 19:10:  'LinearProgress' is not defined  react/jsx-no-undef
+
+src/components/common/ErrorBoundary.jsx
+  Line 226:13:  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+src/components/common/ResourceLoader.jsx
+  Line 16:24:   Component definition is missing display name  react/display-name
+  Line 41:22:   Component definition is missing display name  react/display-name
+  Line 100:20:  Component definition is missing display name  react/display-name
+
+src/components/earnings/EarningsCodeManager.jsx
+  Line 540:63:  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  Line 541:33:  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+
+src/components/earnings/EarningsMapEditor.jsx
+  Line 1092:62:  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  Line 1092:89:  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  Line 1092:94:  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  Line 1093:65:  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+
+src/components/earnings/EmployeeManager.jsx
+  Line 946:58:  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  Line 947:42:  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+
+src/components/earnings/EmployeeRosterManager.jsx
+  Line 471:56:  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  Line 471:79:  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+
+src/components/integration/AzureBlobConfiguration.jsx
+  Line 403:64:  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  Line 403:81:  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+src/components/integration/EarningsMappingDetail.jsx
+  Line 96:15:   'discoverFields' is not defined                                  no-undef
+  Line 97:15:   'discoverFields' is not defined                                  no-undef
+  Line 326:51:  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  Line 326:63:  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  Line 637:59:  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  Line 637:68:  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+src/components/integration/FieldMappingEditor.jsx
+  Line 642:54:  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  Line 642:66:  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+
+src/components/integration/IntegrationCreationDialog.jsx
+  Line 376:5:  'setSelectedTemplate' is not defined  no-undef
+
+src/components/integration/IntegrationFlowCanvas.jsx
+Syntax error: Identifier 'useMediaQuery' has already been declared. (84:2) (84:2)
+
+src/components/integration/RunLogViewer.jsx
+  Line 306:63:  'muiTheme' is not defined  no-undef
+  Line 421:65:  'muiTheme' is not defined  no-undef
+  Line 500:67:  'muiTheme' is not defined  no-undef
+  Line 516:67:  'muiTheme' is not defined  no-undef
+  Line 529:67:  'muiTheme' is not defined  no-undef
+  Line 540:67:  'muiTheme' is not defined  no-undef
+  Line 553:67:  'muiTheme' is not defined  no-undef
+  Line 569:75:  'muiTheme' is not defined  no-undef
+  Line 578:89:  'muiTheme' is not defined  no-undef
+  Line 579:90:  'muiTheme' is not defined  no-undef
+  Line 599:73:  'muiTheme' is not defined  no-undef
+  Line 608:87:  'muiTheme' is not defined  no-undef
+  Line 609:88:  'muiTheme' is not defined  no-undef
+
+src/components/integration/ScheduleConfiguration.jsx
+Syntax error: Expected corresponding JSX closing tag for <Grid>. (286:10) (286:10)
+
+src/components/integration/nodes/BaseNode.jsx
+  Line 48:24:   Component definition is missing display name  react/display-name
+  Line 177:27:  Component definition is missing display name  react/display-name
+  Line 195:28:  Component definition is missing display name  react/display-name
+  Line 214:21:  Component definition is missing display name  react/display-name
+  Line 314:18:  Component definition is missing display name  react/display-name
+  Line 333:20:  Component definition is missing display name  react/display-name
+
+src/components/security/MFAEnrollment.jsx
+  Line 162:55:  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+src/components/security/RecoveryCodes.jsx
+  Line 243:17:  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+src/contexts/NotificationContext.jsx
+  Line 70:7:   Unexpected lexical declaration in case block  no-case-declarations
+  Line 92:7:   Unexpected lexical declaration in case block  no-case-declarations
+  Line 104:7:  Unexpected lexical declaration in case block  no-case-declarations
+  Line 105:7:  Unexpected lexical declaration in case block  no-case-declarations
+  Line 107:7:  Unexpected lexical declaration in case block  no-case-declarations
+  Line 134:7:  Unexpected lexical declaration in case block  no-case-declarations
+  Line 135:7:  Unexpected lexical declaration in case block  no-case-declarations
+
+src/design-system/components/form/DatePicker.jsx
+  Line 783:16:  Unknown property 'jsx' found  react/no-unknown-property
+
+src/design-system/components/form/Switch.jsx
+  Line 285:16:  Unknown property 'jsx' found  react/no-unknown-property
+
+src/design-system/legacy/LinearProgressLegacy.jsx
+  Line 56:14:  Unknown property 'jsx' found  react/no-unknown-property
+
+src/pages/EarningsPage.jsx
+  Line 188:8:  'Tab' is not defined  react/jsx-no-undef
+  Line 189:8:  'Tab' is not defined  react/jsx-no-undef
+
+src/pages/IntegrationDetailPage.jsx
+  Line 529:61:  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  Line 529:87:  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+
+src/pages/IntegrationsPage.jsx
+  Line 853:29:  'setAnchorEl' is not defined                                     no-undef
+  Line 968:61:  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  Line 968:89:  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+
+src/pages/LoginPage.jsx
+  Line 155:20:  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+src/pages/invitation/OAuthCallbackPage.jsx
+  Line 15:6:  'Box' is not defined  react/jsx-no-undef
+
+src/utils/apiServiceFactory.js
+  Line 295:7:  Unnecessary try/catch wrapper  no-useless-catch
+  Line 323:7:  Unnecessary try/catch wrapper  no-useless-catch
+  Line 363:7:  Unnecessary try/catch wrapper  no-useless-catch
+  Line 402:7:  Unnecessary try/catch wrapper  no-useless-catch
+
+src/utils/bidirectionalSync.js
+  Line 131:37:  React Hook "useState" cannot be called inside a callback. React Hooks must be called in a React function component or a custom React Hook function       react-hooks/rules-of-hooks
+  Line 132:25:  React Hook "useRef" cannot be called inside a callback. React Hooks must be called in a React function component or a custom React Hook function         react-hooks/rules-of-hooks
+  Line 135:24:  React Hook "useCallback" cannot be called inside a callback. React Hooks must be called in a React function component or a custom React Hook function    react-hooks/rules-of-hooks
+  Line 149:5:   React Hook "useEffect" cannot be called inside a callback. React Hooks must be called in a React function component or a custom React Hook function      react-hooks/rules-of-hooks
+  Line 155:27:  React Hook "useCallback" cannot be called inside a callback. React Hooks must be called in a React function component or a custom React Hook function    react-hooks/rules-of-hooks
+  Line 161:28:  React Hook "useCallback" cannot be called inside a callback. React Hooks must be called in a React function component or a custom React Hook function    react-hooks/rules-of-hooks
+  Line 336:41:  React Hook "useSyncManager" cannot be called at the top level. React Hooks must be called in a React function component or a custom React Hook function  react-hooks/rules-of-hooks
+
+Search for the keywords to learn more about each error.
+
+

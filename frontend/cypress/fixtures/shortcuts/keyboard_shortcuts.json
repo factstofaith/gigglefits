@@ -1,0 +1,116 @@
+[
+  {
+    "combo": "Ctrl + Z",
+    "description": "Undo last action",
+    "category": "General",
+    "icon": "UndoIcon"
+  },
+  {
+    "combo": "Ctrl + Y",
+    "description": "Redo undone action",
+    "category": "General",
+    "icon": "RedoIcon"
+  },
+  {
+    "combo": "Ctrl + S",
+    "description": "Save flow",
+    "category": "General",
+    "icon": "SaveIcon"
+  },
+  {
+    "combo": "Ctrl + R",
+    "description": "Run/test flow",
+    "category": "General",
+    "icon": "PlayArrowIcon"
+  },
+  {
+    "combo": "Delete",
+    "description": "Delete selected node/edge",
+    "category": "General",
+    "icon": "DeleteIcon"
+  },
+  {
+    "combo": "Ctrl + C",
+    "description": "Copy selected node",
+    "category": "General",
+    "icon": "ContentCopyIcon"
+  },
+  {
+    "combo": "Ctrl + V",
+    "description": "Paste copied node",
+    "category": "General",
+    "icon": "ContentPasteIcon"
+  },
+  {
+    "combo": "Ctrl + A",
+    "description": "Select all nodes",
+    "category": "General",
+    "icon": "SelectAllIcon"
+  },
+  {
+    "combo": "Ctrl + +",
+    "description": "Zoom in",
+    "category": "Navigation",
+    "icon": "ZoomInIcon"
+  },
+  {
+    "combo": "Ctrl + -",
+    "description": "Zoom out",
+    "category": "Navigation",
+    "icon": "ZoomOutIcon"
+  },
+  {
+    "combo": "Ctrl + 0",
+    "description": "Fit view to screen",
+    "category": "Navigation",
+    "icon": "FitScreenIcon"
+  },
+  {
+    "combo": "Ctrl + F",
+    "description": "Search",
+    "category": "Navigation",
+    "icon": "SearchIcon"
+  },
+  {
+    "combo": "Ctrl + P",
+    "description": "Toggle node palette",
+    "category": "Panels",
+    "icon": "TuneIcon"
+  },
+  {
+    "combo": "Ctrl + E",
+    "description": "Toggle properties panel",
+    "category": "Panels",
+    "icon": "SettingsIcon"
+  },
+  {
+    "combo": "Ctrl + D",
+    "description": "Toggle debug mode",
+    "category": "Panels",
+    "icon": "BugReportIcon"
+  },
+  {
+    "combo": "?",
+    "description": "Show keyboard shortcuts",
+    "category": "Help",
+    "icon": "HelpOutlineIcon"
+  },
+  {
+    "combo": "Ctrl + H",
+    "description": "Open help documentation",
+    "category": "Help",
+    "icon": "MenuBookIcon"
+  },
+  {
+    "combo": "Ctrl + /",
+    "description": "Open chat support",
+    "category": "Help",
+    "icon": "ChatIcon"
+  },
+  {
+    "combo": "Esc",
+    "description": "Close current dialog",
+    "category": "General",
+    "icon": "CloseIcon"
+  }
+]

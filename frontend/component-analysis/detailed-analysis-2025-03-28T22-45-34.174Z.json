@@ -1,0 +1,6443 @@
+{
+  "meta": {
+    "timestamp": "2025-03-28T22:45:34.936Z",
+    "componentCount": 96
+  },
+  "components": [
+    {
+      "path": "src/components/admin/ApplicationsManager.jsx",
+      "name": "ApplicationsManager",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Unexpected token (3:23)"
+        }
+      ]
+    },
+    {
+      "path": "src/components/admin/AzureConfigurationPanel.jsx",
+      "name": "AzureConfigurationPanel",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/admin/DatasetsManager.jsx",
+      "name": "DatasetsManager",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Unterminated string constant. (308:17)"
+        }
+      ]
+    },
+    {
+      "path": "src/components/admin/documentation/DocumentationDashboard.jsx",
+      "name": "DocumentationDashboard",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": false,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/admin/documentation/DocumentationLibrary.jsx",
+      "name": "DocumentationLibrary",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": false,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": true,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/admin/documentation/DocumentViewer.jsx",
+      "name": "DocumentViewer",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": false,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/admin/DocumentationAnalytics.jsx",
+      "name": "DocumentationAnalytics",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/admin/EmailConfiguration.jsx",
+      "name": "EmailConfiguration",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/admin/ErrorLogViewer.jsx",
+      "name": "ErrorLogViewer",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Unexpected keyword 'import'. (38:0)"
+        }
+      ]
+    },
+    {
+      "path": "src/components/admin/InvitationForm.jsx",
+      "name": "InvitationForm",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/admin/InvitationList.jsx",
+      "name": "InvitationList",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/admin/MetricsCharts/AppServiceMetrics.jsx",
+      "name": "AppServiceMetrics",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": false,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/admin/MetricsCharts/DatabaseMetrics.jsx",
+      "name": "DatabaseMetrics",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": false,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/admin/MetricsCharts/DocumentationMetrics.jsx",
+      "name": "DocumentationMetrics",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": false,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Unexpected keyword 'import'. (10:0)"
+        }
+      ]
+    },
+    {
+      "path": "src/components/admin/MetricsCharts/KeyVaultMetrics.jsx",
+      "name": "KeyVaultMetrics",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": false,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/admin/MetricsCharts/NetworkMetrics.jsx",
+      "name": "NetworkMetrics",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": false,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/admin/MetricsCharts/StorageMetrics.jsx",
+      "name": "StorageMetrics",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": false,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/admin/MFASettings.jsx",
+      "name": "MFASettings",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/admin/MonitoringDashboard.jsx",
+      "name": "MonitoringDashboard",
+      "hooks": [
+        "useState",
+        "useNotification",
+        "useAzureConfig"
+      ],
+      "imports": [
+        {
+          "path": "react",
+          "specifiers": [
+            "React",
+            "useState",
+            "useEffect"
+          ]
+        },
+        {
+          "path": "../../design-system",
+          "specifiers": [
+            "Box",
+            "Typography",
+            "Tabs",
+            "CircularProgress",
+            "Alert",
+            "Button"
+          ]
+        },
+        {
+          "path": "@mui/icons-material",
+          "specifiers": [
+            "RefreshIcon",
+            "MonitoringIcon",
+            "SettingsIcon",
+            "AssessmentIcon",
+            "StorageIcon",
+            "ErrorIcon"
+          ]
+        },
+        {
+          "path": "@components/admin/AzureConfigurationPanel",
+          "specifiers": [
+            "AzureConfigurationPanel"
+          ]
+        },
+        {
+          "path": "@components/admin/ResourceHealthCards",
+          "specifiers": [
+            "ResourceHealthCards"
+          ]
+        },
+        {
+          "path": "@components/admin/ErrorLogViewer",
+          "specifiers": [
+            "ErrorLogViewer"
+          ]
+        },
+        {
+          "path": "@hooks/useNotification",
+          "specifiers": [
+            "useNotification"
+          ]
+        },
+        {
+          "path": "@contexts/AzureConfigContext",
+          "specifiers": [
+            "useAzureConfig"
+          ]
+        },
+        {
+          "path": "@components/admin/DocumentationAnalytics",
+          "specifiers": [
+            "DocumentationAnalytics"
+          ]
+        }
+      ],
+      "designSystem": {
+        "directMuiImports": false,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": []
+    },
+    {
+      "path": "src/components/admin/ReleasesManager.jsx",
+      "name": "ReleasesManager",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Unexpected keyword 'import'. (46:0)"
+        }
+      ]
+    },
+    {
+      "path": "src/components/admin/ResourceHealthCards.jsx",
+      "name": "ResourceHealthCards",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/admin/TenantsManager.jsx",
+      "name": "TenantsManager",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/admin/UserDetail.jsx",
+      "name": "UserDetail",
+      "hooks": [
+        "useParams",
+        "useNavigate",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useEffect"
+      ],
+      "imports": [
+        {
+          "path": "react",
+          "specifiers": [
+            "React",
+            "useState",
+            "useEffect"
+          ]
+        },
+        {
+          "path": "@design-system",
+          "specifiers": [
+            "Box",
+            "Typography",
+            "Button",
+            "Paper",
+            "TextField",
+            "Grid",
+            "Chip",
+            "Divider",
+            "LinearProgress",
+            "Alert",
+            "Avatar",
+            "Stack",
+            "FormControl",
+            "InputLabel",
+            "Select",
+            "MenuItem",
+            "Tabs",
+            "Tab",
+            "List",
+            "ListItem",
+            "ListItemText",
+            "ListItemSecondaryAction",
+            "Dialog",
+            "DialogTitle",
+            "DialogContent",
+            "DialogContentText",
+            "DialogActions"
+          ]
+        },
+        {
+          "path": "@mui/material/IconButton",
+          "specifiers": [
+            "IconButton"
+          ]
+        },
+        {
+          "path": "@mui/icons-material",
+          "specifiers": [
+            "EditIcon",
+            "SaveIcon",
+            "CancelIcon",
+            "DeleteIcon",
+            "SecurityIcon",
+            "LockResetIcon",
+            "EmailIcon",
+            "BlockIcon",
+            "CheckCircleIcon"
+          ]
+        },
+        {
+          "path": "react-router-dom",
+          "specifiers": [
+            "useParams",
+            "useNavigate"
+          ]
+        },
+        {
+          "path": "@services/userManagementService",
+          "specifiers": [
+            "userService",
+            "mfaService"
+          ]
+        }
+      ],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": false,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        }
+      ]
+    },
+    {
+      "path": "src/components/admin/UserManagement.jsx",
+      "name": "UserManagement",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/auth/RequireAdmin.jsx",
+      "name": "RequireAdmin",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/auth/RequireAuth.jsx",
+      "name": "RequireAuth",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/common/Button.jsx",
+      "name": "Button",
+      "hooks": [],
+      "imports": [
+        {
+          "path": "react",
+          "specifiers": [
+            "React"
+          ]
+        },
+        {
+          "path": "prop-types",
+          "specifiers": [
+            "PropTypes"
+          ]
+        },
+        {
+          "path": "../../design-system",
+          "specifiers": [
+            "DesignSystemButton"
+          ]
+        }
+      ],
+      "designSystem": {
+        "directMuiImports": false,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": []
+    },
+    {
+      "path": "src/components/common/DataTable.jsx",
+      "name": "DataTable",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Unexpected token, expected \"from\" (59:13)"
+        }
+      ]
+    },
+    {
+      "path": "src/components/common/ErrorBoundary.jsx",
+      "name": "ErrorBoundary",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "high"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "performance",
+          "subtype": "complex-render",
+          "severity": "medium",
+          "message": "Complex render function detected (over 500 characters)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/common/InputField.jsx",
+      "name": "InputField",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/common/IntegrationHealthBar.jsx",
+      "name": "IntegrationHealthBar",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Unexpected keyword 'import'. (10:0)"
+        }
+      ]
+    },
+    {
+      "path": "src/components/common/IntegrationStatsBar.jsx",
+      "name": "IntegrationStatsBar",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/common/KeyboardShortcutsHelp.jsx",
+      "name": "KeyboardShortcutsHelp",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": true,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/common/Navigation.jsx",
+      "name": "Navigation",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": true,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/common/NotificationCenter.jsx",
+      "name": "NotificationCenter",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/common/PageLayout.jsx",
+      "name": "PageLayout",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/common/ResourceLoader.jsx",
+      "name": "ResourceLoader",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": true,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/common/StatusDisplay.jsx",
+      "name": "StatusDisplay",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Unexpected keyword 'import'. (14:0)"
+        }
+      ]
+    },
+    {
+      "path": "src/components/common/Timeline.jsx",
+      "name": "Timeline",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/common/Toast.jsx",
+      "name": "Toast",
+      "hooks": [],
+      "imports": [
+        {
+          "path": "react",
+          "specifiers": [
+            "React",
+            "forwardRef"
+          ]
+        },
+        {
+          "path": "prop-types",
+          "specifiers": [
+            "PropTypes"
+          ]
+        },
+        {
+          "path": "../../design-system",
+          "specifiers": [
+            "DesignSystemToast"
+          ]
+        }
+      ],
+      "designSystem": {
+        "directMuiImports": false,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": []
+    },
+    {
+      "path": "src/components/common/ToastContainer.jsx",
+      "name": "ToastContainer",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/common/UserProfile.jsx",
+      "name": "UserProfile",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Unexpected token, expected \"}\" (154:8)"
+        }
+      ]
+    },
+    {
+      "path": "src/components/common/VirtualizedDataTable.jsx",
+      "name": "VirtualizedDataTable",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": true,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Unexpected keyword 'import'. (72:9)"
+        }
+      ]
+    },
+    {
+      "path": "src/components/documentation/DocumentRedirect.jsx",
+      "name": "DocumentRedirect",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/integration/ApplicationNodePropertiesPanel.jsx",
+      "name": "ApplicationNodePropertiesPanel",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": true,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/integration/AzureBlobConfiguration.jsx",
+      "name": "AzureBlobConfiguration",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/integration/ConnectionPropertiesPanel.jsx",
+      "name": "ConnectionPropertiesPanel",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": true,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/integration/ContextualPropertiesPanel.jsx",
+      "name": "ContextualPropertiesPanel",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": true,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Unexpected token, expected \"from\" (48:13)"
+        }
+      ]
+    },
+    {
+      "path": "src/components/integration/DataPreviewPanel.jsx",
+      "name": "DataPreviewPanel",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": true,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/integration/DatasetNodePropertiesPanel.jsx",
+      "name": "DatasetNodePropertiesPanel",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": true,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/integration/DebugModePanel.jsx",
+      "name": "DebugModePanel",
+      "hooks": [
+        "useTheme",
+        "useRef",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useEffect",
+        "useCallback",
+        "useCallback",
+        "useCallback",
+        "useCallback",
+        "useCallback",
+        "useCallback",
+        "useCallback",
+        "useCallback",
+        "useCallback",
+        "useState"
+      ],
+      "imports": [
+        {
+          "path": "react",
+          "specifiers": [
+            "React",
+            "useState",
+            "useEffect",
+            "useCallback",
+            "useRef"
+          ]
+        },
+        {
+          "path": "prop-types",
+          "specifiers": [
+            "PropTypes"
+          ]
+        },
+        {
+          "path": "@mui/material/Box",
+          "specifiers": [
+            "Box"
+          ]
+        },
+        {
+          "path": "@mui/material/Paper",
+          "specifiers": [
+            "Paper"
+          ]
+        },
+        {
+          "path": "@mui/material/Typography",
+          "specifiers": [
+            "Typography"
+          ]
+        },
+        {
+          "path": "@mui/material/Button",
+          "specifiers": [
+            "Button"
+          ]
+        },
+        {
+          "path": "@mui/material/IconButton",
+          "specifiers": [
+            "IconButton"
+          ]
+        },
+        {
+          "path": "@mui/material/Tooltip",
+          "specifiers": [
+            "Tooltip"
+          ]
+        },
+        {
+          "path": "@mui/material/Divider",
+          "specifiers": [
+            "Divider"
+          ]
+        },
+        {
+          "path": "@mui/material/List",
+          "specifiers": [
+            "List"
+          ]
+        },
+        {
+          "path": "@mui/material/ListItem",
+          "specifiers": [
+            "ListItem"
+          ]
+        },
+        {
+          "path": "@mui/material/ListItemText",
+          "specifiers": [
+            "ListItemText"
+          ]
+        },
+        {
+          "path": "@mui/material/ListItemIcon",
+          "specifiers": [
+            "ListItemIcon"
+          ]
+        },
+        {
+          "path": "@mui/material/ListItemSecondaryAction",
+          "specifiers": [
+            "ListItemSecondaryAction"
+          ]
+        },
+        {
+          "path": "@mui/material/Chip",
+          "specifiers": [
+            "Chip"
+          ]
+        },
+        {
+          "path": "@mui/material/Badge",
+          "specifiers": [
+            "Badge"
+          ]
+        },
+        {
+          "path": "@mui/material/LinearProgress",
+          "specifiers": [
+            "LinearProgress"
+          ]
+        },
+        {
+          "path": "@mui/material/CircularProgress",
+          "specifiers": [
+            "CircularProgress"
+          ]
+        },
+        {
+          "path": "@mui/material/Stack",
+          "specifiers": [
+            "Stack"
+          ]
+        },
+        {
+          "path": "@mui/material/Stepper",
+          "specifiers": [
+            "Stepper"
+          ]
+        },
+        {
+          "path": "@mui/material/Step",
+          "specifiers": [
+            "Step"
+          ]
+        },
+        {
+          "path": "@mui/material/StepLabel",
+          "specifiers": [
+            "StepLabel"
+          ]
+        },
+        {
+          "path": "@mui/material/StepContent",
+          "specifiers": [
+            "StepContent"
+          ]
+        },
+        {
+          "path": "@mui/material/Switch",
+          "specifiers": [
+            "Switch"
+          ]
+        },
+        {
+          "path": "@mui/material/FormControlLabel",
+          "specifiers": [
+            "FormControlLabel"
+          ]
+        },
+        {
+          "path": "@mui/material/TextField",
+          "specifiers": [
+            "TextField"
+          ]
+        },
+        {
+          "path": "@mui/material/Select",
+          "specifiers": [
+            "Select"
+          ]
+        },
+        {
+          "path": "@mui/material/MenuItem",
+          "specifiers": [
+            "MenuItem"
+          ]
+        },
+        {
+          "path": "@mui/material/Card",
+          "specifiers": [
+            "Card"
+          ]
+        },
+        {
+          "path": "@mui/material/CardContent",
+          "specifiers": [
+            "CardContent"
+          ]
+        },
+        {
+          "path": "@mui/material/CardHeader",
+          "specifiers": [
+            "CardHeader"
+          ]
+        },
+        {
+          "path": "@mui/material/Grid",
+          "specifiers": [
+            "Grid"
+          ]
+        },
+        {
+          "path": "@mui/material/Dialog",
+          "specifiers": [
+            "Dialog"
+          ]
+        },
+        {
+          "path": "@mui/material/DialogTitle",
+          "specifiers": [
+            "DialogTitle"
+          ]
+        },
+        {
+          "path": "@mui/material/DialogContent",
+          "specifiers": [
+            "DialogContent"
+          ]
+        },
+        {
+          "path": "@mui/material/DialogActions",
+          "specifiers": [
+            "DialogActions"
+          ]
+        },
+        {
+          "path": "@mui/material/Alert",
+          "specifiers": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "@mui/material/Collapse",
+          "specifiers": [
+            "Collapse"
+          ]
+        },
+        {
+          "path": "@mui/material/Tab",
+          "specifiers": [
+            "Tab"
+          ]
+        },
+        {
+          "path": "@mui/material/Tabs",
+          "specifiers": [
+            "Tabs"
+          ]
+        },
+        {
+          "path": "@mui/material/Drawer",
+          "specifiers": [
+            "Drawer"
+          ]
+        },
+        {
+          "path": "@mui/material/Backdrop",
+          "specifiers": [
+            "Backdrop"
+          ]
+        },
+        {
+          "path": "@mui/icons-material",
+          "specifiers": [
+            "PlayIcon",
+            "StopIcon",
+            "PauseIcon",
+            "StepIcon",
+            "DebugIcon",
+            "CodeIcon",
+            "DataIcon",
+            "MemoryIcon",
+            "WarningIcon",
+            "ErrorIcon",
+            "SuccessIcon",
+            "InfoIcon",
+            "TimelineIcon",
+            "SettingsIcon",
+            "EditIcon",
+            "SaveIcon",
+            "CancelIcon",
+            "RefreshIcon",
+            "DownloadIcon",
+            "ViewIcon",
+            "HideIcon",
+            "ZoomInIcon",
+            "ZoomOutIcon",
+            "FilterIcon",
+            "BreakpointIcon"
+          ]
+        },
+        {
+          "path": "@mui/material/styles",
+          "specifiers": [
+            "styled",
+            "alpha",
+            "useTheme"
+          ]
+        },
+        {
+          "path": "@utils/reactJsonAdapter",
+          "specifiers": [
+            "ReactJson"
+          ]
+        }
+      ],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": false,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": true,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        }
+      ]
+    },
+    {
+      "path": "src/components/integration/EarningsMappingDetail.jsx",
+      "name": "EarningsMappingDetail",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": false,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Unexpected token, expected \"from\" (31:13)"
+        }
+      ]
+    },
+    {
+      "path": "src/components/integration/EnhancedNodePalette.jsx",
+      "name": "EnhancedNodePalette",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": true,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/integration/ErrorVisualization.jsx",
+      "name": "ErrorVisualization",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": true,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Unexpected keyword 'import'. (17:0)"
+        }
+      ]
+    },
+    {
+      "path": "src/components/integration/FieldMappingEditor.jsx",
+      "name": "FieldMappingEditor",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Unexpected keyword 'import'. (27:0)"
+        }
+      ]
+    },
+    {
+      "path": "src/components/integration/FileBrowserComponent.jsx",
+      "name": "FileBrowserComponent",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": true,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Unterminated string constant. (54:12)"
+        }
+      ]
+    },
+    {
+      "path": "src/components/integration/FileMonitoringSystem.jsx",
+      "name": "FileMonitoringSystem",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": true,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/integration/FileNotificationSystem.jsx",
+      "name": "FileNotificationSystem",
+      "hooks": [
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useEffect"
+      ],
+      "imports": [
+        {
+          "path": "react",
+          "specifiers": [
+            "React",
+            "useState",
+            "useEffect",
+            "useCallback",
+            "useRef"
+          ]
+        },
+        {
+          "path": "prop-types",
+          "specifiers": [
+            "PropTypes"
+          ]
+        },
+        {
+          "path": "@mui/material/Box",
+          "specifiers": [
+            "Box"
+          ]
+        },
+        {
+          "path": "@mui/material/Paper",
+          "specifiers": [
+            "Paper"
+          ]
+        },
+        {
+          "path": "@mui/material/Typography",
+          "specifiers": [
+            "Typography"
+          ]
+        },
+        {
+          "path": "@mui/material/Switch",
+          "specifiers": [
+            "Switch"
+          ]
+        },
+        {
+          "path": "@mui/material/FormControlLabel",
+          "specifiers": [
+            "FormControlLabel"
+          ]
+        },
+        {
+          "path": "@mui/material/TextField",
+          "specifiers": [
+            "TextField"
+          ]
+        },
+        {
+          "path": "@mui/material/Button",
+          "specifiers": [
+            "Button"
+          ]
+        },
+        {
+          "path": "@mui/material/IconButton",
+          "specifiers": [
+            "IconButton"
+          ]
+        },
+        {
+          "path": "@mui/material/Divider",
+          "specifiers": [
+            "Divider"
+          ]
+        },
+        {
+          "path": "@mui/material/Grid",
+          "specifiers": [
+            "Grid"
+          ]
+        },
+        {
+          "path": "@mui/material/Chip",
+          "specifiers": [
+            "Chip"
+          ]
+        },
+        {
+          "path": "@mui/material/Alert",
+          "specifiers": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "@mui/material/CircularProgress",
+          "specifiers": [
+            "CircularProgress"
+          ]
+        },
+        {
+          "path": "@mui/material/Select",
+          "specifiers": [
+            "Select"
+          ]
+        },
+        {
+          "path": "@mui/material/MenuItem",
+          "specifiers": [
+            "MenuItem"
+          ]
+        },
+        {
+          "path": "@mui/material/FormControl",
+          "specifiers": [
+            "FormControl"
+          ]
+        },
+        {
+          "path": "@mui/material/InputLabel",
+          "specifiers": [
+            "InputLabel"
+          ]
+        },
+        {
+          "path": "@mui/material/List",
+          "specifiers": [
+            "List"
+          ]
+        },
+        {
+          "path": "@mui/material/ListItem",
+          "specifiers": [
+            "ListItem"
+          ]
+        },
+        {
+          "path": "@mui/material/ListItemText",
+          "specifiers": [
+            "ListItemText"
+          ]
+        },
+        {
+          "path": "@mui/material/ListItemIcon",
+          "specifiers": [
+            "ListItemIcon"
+          ]
+        },
+        {
+          "path": "@mui/material/ListItemSecondaryAction",
+          "specifiers": [
+            "ListItemSecondaryAction"
+          ]
+        },
+        {
+          "path": "@mui/material/Tooltip",
+          "specifiers": [
+            "Tooltip"
+          ]
+        },
+        {
+          "path": "@mui/material/Dialog",
+          "specifiers": [
+            "Dialog"
+          ]
+        },
+        {
+          "path": "@mui/material/DialogTitle",
+          "specifiers": [
+            "DialogTitle"
+          ]
+        },
+        {
+          "path": "@mui/material/DialogContent",
+          "specifiers": [
+            "DialogContent"
+          ]
+        },
+        {
+          "path": "@mui/material/DialogActions",
+          "specifiers": [
+            "DialogActions"
+          ]
+        },
+        {
+          "path": "@mui/material/Badge",
+          "specifiers": [
+            "Badge"
+          ]
+        },
+        {
+          "path": "@mui/material/Snackbar",
+          "specifiers": [
+            "Snackbar"
+          ]
+        },
+        {
+          "path": "@mui/material/FormHelperText",
+          "specifiers": [
+            "FormHelperText"
+          ]
+        },
+        {
+          "path": "@mui/material/Stack",
+          "specifiers": [
+            "Stack"
+          ]
+        },
+        {
+          "path": "@mui/material/Collapse",
+          "specifiers": [
+            "Collapse"
+          ]
+        },
+        {
+          "path": "@mui/material/RadioGroup",
+          "specifiers": [
+            "RadioGroup"
+          ]
+        },
+        {
+          "path": "@mui/material/Radio",
+          "specifiers": [
+            "Radio"
+          ]
+        },
+        {
+          "path": "@mui/material/Drawer",
+          "specifiers": [
+            "Drawer"
+          ]
+        },
+        {
+          "path": "@mui/material/Tabs",
+          "specifiers": [
+            "Tabs"
+          ]
+        },
+        {
+          "path": "@mui/material/Tab",
+          "specifiers": [
+            "Tab"
+          ]
+        },
+        {
+          "path": "@mui/material/Card",
+          "specifiers": [
+            "Card"
+          ]
+        },
+        {
+          "path": "@mui/material/CardHeader",
+          "specifiers": [
+            "CardHeader"
+          ]
+        },
+        {
+          "path": "@mui/material/CardContent",
+          "specifiers": [
+            "CardContent"
+          ]
+        },
+        {
+          "path": "@mui/material/CardActions",
+          "specifiers": [
+            "CardActions"
+          ]
+        },
+        {
+          "path": "@mui/material/Checkbox",
+          "specifiers": [
+            "Checkbox"
+          ]
+        },
+        {
+          "path": "@mui/icons-material",
+          "specifiers": [
+            "NotificationsIcon",
+            "NotificationsActiveIcon",
+            "NotificationsOffIcon",
+            "DeleteIcon",
+            "EmailIcon",
+            "ChatIcon",
+            "SettingsIcon",
+            "AddIcon",
+            "SaveIcon",
+            "EditIcon",
+            "CloseIcon",
+            "RefreshIcon",
+            "InfoIcon",
+            "ErrorIcon",
+            "SuccessIcon",
+            "WarningIcon",
+            "TimeIcon",
+            "CalendarIcon",
+            "ImportantIcon",
+            "MuteIcon",
+            "HistoryIcon",
+            "PersonIcon",
+            "GroupIcon",
+            "SendIcon",
+            "StorageIcon",
+            "FilterIcon",
+            "ViewIcon",
+            "HideIcon",
+            "DashboardIcon",
+            "AppsIcon",
+            "CategoryIcon",
+            "MoreIcon"
+          ]
+        },
+        {
+          "path": "@mui/material/styles",
+          "specifiers": [
+            "styled",
+            "alpha"
+          ]
+        }
+      ],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": false,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": true,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        }
+      ]
+    },
+    {
+      "path": "src/components/integration/FilePreviewComponent.jsx",
+      "name": "FilePreviewComponent",
+      "hooks": [
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useCallback",
+        "useEffect",
+        "useEffect",
+        "useMemo",
+        "useMemo",
+        "useMemo"
+      ],
+      "imports": [
+        {
+          "path": "react",
+          "specifiers": [
+            "React",
+            "useState",
+            "useEffect",
+            "useCallback",
+            "useMemo"
+          ]
+        },
+        {
+          "path": "prop-types",
+          "specifiers": [
+            "PropTypes"
+          ]
+        },
+        {
+          "path": "@mui/material/Box",
+          "specifiers": [
+            "Box"
+          ]
+        },
+        {
+          "path": "@mui/material/Paper",
+          "specifiers": [
+            "Paper"
+          ]
+        },
+        {
+          "path": "@mui/material/Typography",
+          "specifiers": [
+            "Typography"
+          ]
+        },
+        {
+          "path": "@mui/material/CircularProgress",
+          "specifiers": [
+            "CircularProgress"
+          ]
+        },
+        {
+          "path": "@mui/material/Tabs",
+          "specifiers": [
+            "Tabs"
+          ]
+        },
+        {
+          "path": "@mui/material/Tab",
+          "specifiers": [
+            "Tab"
+          ]
+        },
+        {
+          "path": "@mui/material/Table",
+          "specifiers": [
+            "Table"
+          ]
+        },
+        {
+          "path": "@mui/material/TableContainer",
+          "specifiers": [
+            "TableContainer"
+          ]
+        },
+        {
+          "path": "@mui/material/TableHead",
+          "specifiers": [
+            "TableHead"
+          ]
+        },
+        {
+          "path": "@mui/material/TableBody",
+          "specifiers": [
+            "TableBody"
+          ]
+        },
+        {
+          "path": "@mui/material/TableRow",
+          "specifiers": [
+            "TableRow"
+          ]
+        },
+        {
+          "path": "@mui/material/TableCell",
+          "specifiers": [
+            "TableCell"
+          ]
+        },
+        {
+          "path": "@mui/material/TextField",
+          "specifiers": [
+            "TextField"
+          ]
+        },
+        {
+          "path": "@mui/material/IconButton",
+          "specifiers": [
+            "IconButton"
+          ]
+        },
+        {
+          "path": "@mui/material/Tooltip",
+          "specifiers": [
+            "Tooltip"
+          ]
+        },
+        {
+          "path": "@mui/material/Chip",
+          "specifiers": [
+            "Chip"
+          ]
+        },
+        {
+          "path": "@mui/material/Button",
+          "specifiers": [
+            "Button"
+          ]
+        },
+        {
+          "path": "@mui/material/Select",
+          "specifiers": [
+            "Select"
+          ]
+        },
+        {
+          "path": "@mui/material/MenuItem",
+          "specifiers": [
+            "MenuItem"
+          ]
+        },
+        {
+          "path": "@mui/material/FormControl",
+          "specifiers": [
+            "FormControl"
+          ]
+        },
+        {
+          "path": "@mui/material/InputLabel",
+          "specifiers": [
+            "InputLabel"
+          ]
+        },
+        {
+          "path": "@mui/material/Divider",
+          "specifiers": [
+            "Divider"
+          ]
+        },
+        {
+          "path": "@mui/material/Alert",
+          "specifiers": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "@mui/material/TablePagination",
+          "specifiers": [
+            "TablePagination"
+          ]
+        },
+        {
+          "path": "@mui/icons-material",
+          "specifiers": [
+            "CodeIcon",
+            "TableIcon",
+            "ChartIcon",
+            "FileIcon",
+            "RefreshIcon",
+            "FilterIcon",
+            "SearchIcon",
+            "DownloadIcon",
+            "PrevIcon",
+            "NextIcon",
+            "SchemaIcon",
+            "StatsIcon",
+            "SettingsIcon"
+          ]
+        },
+        {
+          "path": "@mui/material/styles",
+          "specifiers": [
+            "styled",
+            "alpha"
+          ]
+        }
+      ],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": false,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": true,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        }
+      ]
+    },
+    {
+      "path": "src/components/integration/FileTriggerMechanism.jsx",
+      "name": "FileTriggerMechanism",
+      "hooks": [
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useCallback",
+        "useCallback",
+        "useCallback",
+        "useCallback",
+        "useCallback",
+        "useCallback",
+        "useCallback",
+        "useCallback",
+        "useCallback",
+        "useCallback",
+        "useCallback",
+        "useCallback",
+        "useCallback",
+        "useEffect"
+      ],
+      "imports": [
+        {
+          "path": "react",
+          "specifiers": [
+            "React",
+            "useState",
+            "useEffect",
+            "useCallback"
+          ]
+        },
+        {
+          "path": "prop-types",
+          "specifiers": [
+            "PropTypes"
+          ]
+        },
+        {
+          "path": "@mui/material/Box",
+          "specifiers": [
+            "Box"
+          ]
+        },
+        {
+          "path": "@mui/material/Paper",
+          "specifiers": [
+            "Paper"
+          ]
+        },
+        {
+          "path": "@mui/material/Typography",
+          "specifiers": [
+            "Typography"
+          ]
+        },
+        {
+          "path": "@mui/material/FormControl",
+          "specifiers": [
+            "FormControl"
+          ]
+        },
+        {
+          "path": "@mui/material/InputLabel",
+          "specifiers": [
+            "InputLabel"
+          ]
+        },
+        {
+          "path": "@mui/material/Select",
+          "specifiers": [
+            "Select"
+          ]
+        },
+        {
+          "path": "@mui/material/MenuItem",
+          "specifiers": [
+            "MenuItem"
+          ]
+        },
+        {
+          "path": "@mui/material/TextField",
+          "specifiers": [
+            "TextField"
+          ]
+        },
+        {
+          "path": "@mui/material/Switch",
+          "specifiers": [
+            "Switch"
+          ]
+        },
+        {
+          "path": "@mui/material/FormControlLabel",
+          "specifiers": [
+            "FormControlLabel"
+          ]
+        },
+        {
+          "path": "@mui/material/Button",
+          "specifiers": [
+            "Button"
+          ]
+        },
+        {
+          "path": "@mui/material/Divider",
+          "specifiers": [
+            "Divider"
+          ]
+        },
+        {
+          "path": "@mui/material/Grid",
+          "specifiers": [
+            "Grid"
+          ]
+        },
+        {
+          "path": "@mui/material/Chip",
+          "specifiers": [
+            "Chip"
+          ]
+        },
+        {
+          "path": "@mui/material/List",
+          "specifiers": [
+            "List"
+          ]
+        },
+        {
+          "path": "@mui/material/ListItem",
+          "specifiers": [
+            "ListItem"
+          ]
+        },
+        {
+          "path": "@mui/material/ListItemText",
+          "specifiers": [
+            "ListItemText"
+          ]
+        },
+        {
+          "path": "@mui/material/ListItemIcon",
+          "specifiers": [
+            "ListItemIcon"
+          ]
+        },
+        {
+          "path": "@mui/material/IconButton",
+          "specifiers": [
+            "IconButton"
+          ]
+        },
+        {
+          "path": "@mui/material/Tooltip",
+          "specifiers": [
+            "Tooltip"
+          ]
+        },
+        {
+          "path": "@mui/material/Alert",
+          "specifiers": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "@mui/material/CircularProgress",
+          "specifiers": [
+            "CircularProgress"
+          ]
+        },
+        {
+          "path": "@mui/material/Dialog",
+          "specifiers": [
+            "Dialog"
+          ]
+        },
+        {
+          "path": "@mui/material/DialogTitle",
+          "specifiers": [
+            "DialogTitle"
+          ]
+        },
+        {
+          "path": "@mui/material/DialogContent",
+          "specifiers": [
+            "DialogContent"
+          ]
+        },
+        {
+          "path": "@mui/material/DialogActions",
+          "specifiers": [
+            "DialogActions"
+          ]
+        },
+        {
+          "path": "@mui/icons-material",
+          "specifiers": [
+            "NotificationsActiveIcon",
+            "PlayIcon",
+            "TriggerIcon",
+            "ScheduleIcon",
+            "DelayIcon",
+            "FilterIcon",
+            "AddTriggerIcon",
+            "DeleteIcon",
+            "EditIcon",
+            "DoneIcon",
+            "ErrorIcon",
+            "StorageIcon",
+            "FolderIcon",
+            "FileIcon",
+            "SyncIcon",
+            "ClipboardIcon",
+            "SaveIcon",
+            "InfoIcon",
+            "MoreIcon"
+          ]
+        },
+        {
+          "path": "@mui/material/styles",
+          "specifiers": [
+            "styled",
+            "alpha"
+          ]
+        },
+        {
+          "path": "./FileMonitoringSystem",
+          "specifiers": [
+            "FileMonitoringSystem"
+          ]
+        }
+      ],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": false,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": true,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        }
+      ]
+    },
+    {
+      "path": "src/components/integration/FlowPerformanceMonitor.jsx",
+      "name": "FlowPerformanceMonitor",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/integration/HistoryPanel.jsx",
+      "name": "HistoryPanel",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": true,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/integration/IntegrationCreationDialog.jsx",
+      "name": "IntegrationCreationDialog",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/integration/IntegrationDetailView.jsx",
+      "name": "IntegrationDetailView",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": true,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/integration/IntegrationFlowCanvas.jsx",
+      "name": "IntegrationFlowCanvas",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": true,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/integration/IntegrationTable.jsx",
+      "name": "IntegrationTable",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": true,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/integration/IntegrationTableRow.jsx",
+      "name": "IntegrationTableRow",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Identifier 'TableRow' has already been declared. (1:29)"
+        }
+      ]
+    },
+    {
+      "path": "src/components/integration/MiniMapNode.jsx",
+      "name": "MiniMapNode",
+      "hooks": [],
+      "imports": [
+        {
+          "path": "react",
+          "specifiers": [
+            "React",
+            "memo"
+          ]
+        }
+      ],
+      "designSystem": {
+        "directMuiImports": false,
+        "designSystemImports": false,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 0,
+        "renderComplexity": "low"
+      },
+      "issues": []
+    },
+    {
+      "path": "src/components/integration/nodes/OptimizedBaseNode.jsx",
+      "name": "OptimizedBaseNode",
+      "hooks": [],
+      "imports": [
+        {
+          "path": "react",
+          "specifiers": [
+            "React",
+            "memo"
+          ]
+        },
+        {
+          "path": "prop-types",
+          "specifiers": [
+            "PropTypes"
+          ]
+        },
+        {
+          "path": "@utils/reactFlowAdapter",
+          "specifiers": [
+            "Handle"
+          ]
+        }
+      ],
+      "designSystem": {
+        "directMuiImports": false,
+        "designSystemImports": false,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": true,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": []
+    },
+    {
+      "path": "src/components/integration/nodes/TransformNode.jsx",
+      "name": "TransformNode",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": false,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": true,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/integration/NotificationSettings.jsx",
+      "name": "NotificationSettings",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/integration/OptimizedEdge.jsx",
+      "name": "OptimizedEdge",
+      "hooks": [
+        "useTheme"
+      ],
+      "imports": [
+        {
+          "path": "react",
+          "specifiers": [
+            "React",
+            "memo"
+          ]
+        },
+        {
+          "path": "@utils/reactFlowAdapter",
+          "specifiers": [
+            "getSmoothStepPath",
+            "EdgeText"
+          ]
+        },
+        {
+          "path": "prop-types",
+          "specifiers": [
+            "PropTypes"
+          ]
+        },
+        {
+          "path": "../../design-system",
+          "specifiers": [
+            "useTheme"
+          ]
+        }
+      ],
+      "designSystem": {
+        "directMuiImports": false,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": true,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": []
+    },
+    {
+      "path": "src/components/integration/RunLogViewer.jsx",
+      "name": "RunLogViewer",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Missing semicolon. (651:40)"
+        }
+      ]
+    },
+    {
+      "path": "src/components/integration/ScheduleConfiguration.jsx",
+      "name": "ScheduleConfiguration",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/integration/StorageFileBrowserPanel.jsx",
+      "name": "StorageFileBrowserPanel",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": true,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/integration/TemplateBrowser.jsx",
+      "name": "TemplateBrowser",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": true,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Unexpected token, expected \"from\" (36:13)"
+        }
+      ]
+    },
+    {
+      "path": "src/components/integration/TemplateForm.jsx",
+      "name": "TemplateForm",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": true,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/integration/UserRoleSwitcher.jsx",
+      "name": "UserRoleSwitcher",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Identifier 'Box' has already been declared. (1:23)"
+        }
+      ]
+    },
+    {
+      "path": "src/components/integration/ValidationPanel.jsx",
+      "name": "ValidationPanel",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": true,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/integration/VisualFieldMapper.jsx",
+      "name": "VisualFieldMapper",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": true,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/integration/WebhookSettings.jsx",
+      "name": "WebhookSettings",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/invitation/AcceptInvitation.jsx",
+      "name": "AcceptInvitation",
+      "hooks": [
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useParams",
+        "useNavigate",
+        "useEffect"
+      ],
+      "imports": [
+        {
+          "path": "react",
+          "specifiers": [
+            "React",
+            "useState",
+            "useEffect"
+          ]
+        },
+        {
+          "path": "@mui/material/Box",
+          "specifiers": [
+            "Box"
+          ]
+        },
+        {
+          "path": "@mui/material/Typography",
+          "specifiers": [
+            "Typography"
+          ]
+        },
+        {
+          "path": "@mui/material/Button",
+          "specifiers": [
+            "Button"
+          ]
+        },
+        {
+          "path": "@mui/material/Paper",
+          "specifiers": [
+            "Paper"
+          ]
+        },
+        {
+          "path": "@mui/material/Container",
+          "specifiers": [
+            "Container"
+          ]
+        },
+        {
+          "path": "@mui/material/LinearProgress",
+          "specifiers": [
+            "LinearProgress"
+          ]
+        },
+        {
+          "path": "@mui/material/Alert",
+          "specifiers": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "@mui/material/Stack",
+          "specifiers": [
+            "Stack"
+          ]
+        },
+        {
+          "path": "@mui/material/Card",
+          "specifiers": [
+            "Card"
+          ]
+        },
+        {
+          "path": "@mui/material/CardContent",
+          "specifiers": [
+            "CardContent"
+          ]
+        },
+        {
+          "path": "@mui/material/CardActions",
+          "specifiers": [
+            "CardActions"
+          ]
+        },
+        {
+          "path": "@mui/material/Divider",
+          "specifiers": [
+            "Divider"
+          ]
+        },
+        {
+          "path": "@mui/material/Grid",
+          "specifiers": [
+            "Grid"
+          ]
+        },
+        {
+          "path": "@mui/icons-material",
+          "specifiers": [
+            "EmailIcon",
+            "MicrosoftIcon",
+            "GoogleIcon"
+          ]
+        },
+        {
+          "path": "react-router-dom",
+          "specifiers": [
+            "useParams",
+            "useNavigate"
+          ]
+        },
+        {
+          "path": "@services/userManagementService",
+          "specifiers": [
+            "invitationService"
+          ]
+        }
+      ],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": false,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        }
+      ]
+    },
+    {
+      "path": "src/components/invitation/CompleteRegistration.jsx",
+      "name": "CompleteRegistration",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/invitation/OAuthCallback.jsx",
+      "name": "OAuthCallback",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/profile/LoginHistory.jsx",
+      "name": "LoginHistory",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/profile/SecuritySettings.jsx",
+      "name": "SecuritySettings",
+      "hooks": [
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useNavigate",
+        "useUser",
+        "useEffect"
+      ],
+      "imports": [
+        {
+          "path": "react",
+          "specifiers": [
+            "React",
+            "useState",
+            "useEffect"
+          ]
+        },
+        {
+          "path": "@mui/material/Box",
+          "specifiers": [
+            "Box"
+          ]
+        },
+        {
+          "path": "@mui/material/Typography",
+          "specifiers": [
+            "Typography"
+          ]
+        },
+        {
+          "path": "@mui/material/Button",
+          "specifiers": [
+            "Button"
+          ]
+        },
+        {
+          "path": "@mui/material/Paper",
+          "specifiers": [
+            "Paper"
+          ]
+        },
+        {
+          "path": "@mui/material/Grid",
+          "specifiers": [
+            "Grid"
+          ]
+        },
+        {
+          "path": "@mui/material/Divider",
+          "specifiers": [
+            "Divider"
+          ]
+        },
+        {
+          "path": "@mui/material/Card",
+          "specifiers": [
+            "Card"
+          ]
+        },
+        {
+          "path": "@mui/material/CardContent",
+          "specifiers": [
+            "CardContent"
+          ]
+        },
+        {
+          "path": "@mui/material/CardActions",
+          "specifiers": [
+            "CardActions"
+          ]
+        },
+        {
+          "path": "@mui/material/Alert",
+          "specifiers": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "@mui/material/Dialog",
+          "specifiers": [
+            "Dialog"
+          ]
+        },
+        {
+          "path": "@mui/material/DialogTitle",
+          "specifiers": [
+            "DialogTitle"
+          ]
+        },
+        {
+          "path": "@mui/material/DialogContent",
+          "specifiers": [
+            "DialogContent"
+          ]
+        },
+        {
+          "path": "@mui/material/DialogContentText",
+          "specifiers": [
+            "DialogContentText"
+          ]
+        },
+        {
+          "path": "@mui/material/DialogActions",
+          "specifiers": [
+            "DialogActions"
+          ]
+        },
+        {
+          "path": "@mui/material/List",
+          "specifiers": [
+            "List"
+          ]
+        },
+        {
+          "path": "@mui/material/ListItem",
+          "specifiers": [
+            "ListItem"
+          ]
+        },
+        {
+          "path": "@mui/material/ListItemText",
+          "specifiers": [
+            "ListItemText"
+          ]
+        },
+        {
+          "path": "@mui/material/ListItemSecondaryAction",
+          "specifiers": [
+            "ListItemSecondaryAction"
+          ]
+        },
+        {
+          "path": "@mui/material/Chip",
+          "specifiers": [
+            "Chip"
+          ]
+        },
+        {
+          "path": "@mui/material/Snackbar",
+          "specifiers": [
+            "Snackbar"
+          ]
+        },
+        {
+          "path": "@mui/material/LinearProgress",
+          "specifiers": [
+            "LinearProgress"
+          ]
+        },
+        {
+          "path": "@mui/material/IconButton",
+          "specifiers": [
+            "IconButton"
+          ]
+        },
+        {
+          "path": "@mui/icons-material",
+          "specifiers": [
+            "SecurityIcon",
+            "CheckCircleIcon",
+            "CancelIcon",
+            "ContentCopyIcon",
+            "DownloadIcon",
+            "RefreshIcon",
+            "VerifiedUserIcon",
+            "HistoryIcon"
+          ]
+        },
+        {
+          "path": "react-router-dom",
+          "specifiers": [
+            "useNavigate"
+          ]
+        },
+        {
+          "path": "@contexts/UserContext",
+          "specifiers": [
+            "useUser"
+          ]
+        },
+        {
+          "path": "@services/userManagementService",
+          "specifiers": [
+            "userService"
+          ]
+        }
+      ],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": false,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        }
+      ]
+    },
+    {
+      "path": "src/components/profile/UserProfile.jsx",
+      "name": "UserProfile",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/security/MFAEnrollment.jsx",
+      "name": "MFAEnrollment",
+      "hooks": [
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useNavigate",
+        "useUser",
+        "useEffect"
+      ],
+      "imports": [
+        {
+          "path": "react",
+          "specifiers": [
+            "React",
+            "useState",
+            "useEffect"
+          ]
+        },
+        {
+          "path": "@mui/material/Box",
+          "specifiers": [
+            "Box"
+          ]
+        },
+        {
+          "path": "@mui/material/Typography",
+          "specifiers": [
+            "Typography"
+          ]
+        },
+        {
+          "path": "@mui/material/Button",
+          "specifiers": [
+            "Button"
+          ]
+        },
+        {
+          "path": "@mui/material/Paper",
+          "specifiers": [
+            "Paper"
+          ]
+        },
+        {
+          "path": "@mui/material/Stepper",
+          "specifiers": [
+            "Stepper"
+          ]
+        },
+        {
+          "path": "@mui/material/Step",
+          "specifiers": [
+            "Step"
+          ]
+        },
+        {
+          "path": "@mui/material/StepLabel",
+          "specifiers": [
+            "StepLabel"
+          ]
+        },
+        {
+          "path": "@mui/material/TextField",
+          "specifiers": [
+            "TextField"
+          ]
+        },
+        {
+          "path": "@mui/material/Grid",
+          "specifiers": [
+            "Grid"
+          ]
+        },
+        {
+          "path": "@mui/material/LinearProgress",
+          "specifiers": [
+            "LinearProgress"
+          ]
+        },
+        {
+          "path": "@mui/material/Alert",
+          "specifiers": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "@mui/material/Stack",
+          "specifiers": [
+            "Stack"
+          ]
+        },
+        {
+          "path": "@mui/material/Card",
+          "specifiers": [
+            "Card"
+          ]
+        },
+        {
+          "path": "@mui/material/CardContent",
+          "specifiers": [
+            "CardContent"
+          ]
+        },
+        {
+          "path": "@mui/material/Checkbox",
+          "specifiers": [
+            "Checkbox"
+          ]
+        },
+        {
+          "path": "@mui/material/FormControlLabel",
+          "specifiers": [
+            "FormControlLabel"
+          ]
+        },
+        {
+          "path": "@mui/material/InputAdornment",
+          "specifiers": [
+            "InputAdornment"
+          ]
+        },
+        {
+          "path": "@mui/material/Link",
+          "specifiers": [
+            "Link"
+          ]
+        },
+        {
+          "path": "@mui/icons-material",
+          "specifiers": [
+            "ContentCopyIcon",
+            "DownloadIcon"
+          ]
+        },
+        {
+          "path": "react-router-dom",
+          "specifiers": [
+            "useNavigate"
+          ]
+        },
+        {
+          "path": "@contexts/UserContext",
+          "specifiers": [
+            "useUser"
+          ]
+        }
+      ],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": false,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        }
+      ]
+    },
+    {
+      "path": "src/components/security/MFAVerification.jsx",
+      "name": "MFAVerification",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/security/RecoveryCodes.jsx",
+      "name": "RecoveryCodes",
+      "hooks": [
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useState",
+        "useNavigate",
+        "useUser",
+        "useEffect"
+      ],
+      "imports": [
+        {
+          "path": "react",
+          "specifiers": [
+            "React",
+            "useState",
+            "useEffect"
+          ]
+        },
+        {
+          "path": "@mui/material/Box",
+          "specifiers": [
+            "Box"
+          ]
+        },
+        {
+          "path": "@mui/material/Typography",
+          "specifiers": [
+            "Typography"
+          ]
+        },
+        {
+          "path": "@mui/material/Button",
+          "specifiers": [
+            "Button"
+          ]
+        },
+        {
+          "path": "@mui/material/Paper",
+          "specifiers": [
+            "Paper"
+          ]
+        },
+        {
+          "path": "@mui/material/Grid",
+          "specifiers": [
+            "Grid"
+          ]
+        },
+        {
+          "path": "@mui/material/Alert",
+          "specifiers": [
+            "Alert"
+          ]
+        },
+        {
+          "path": "@mui/material/LinearProgress",
+          "specifiers": [
+            "LinearProgress"
+          ]
+        },
+        {
+          "path": "@mui/material/Stack",
+          "specifiers": [
+            "Stack"
+          ]
+        },
+        {
+          "path": "@mui/material/Card",
+          "specifiers": [
+            "Card"
+          ]
+        },
+        {
+          "path": "@mui/material/CardContent",
+          "specifiers": [
+            "CardContent"
+          ]
+        },
+        {
+          "path": "@mui/material/Divider",
+          "specifiers": [
+            "Divider"
+          ]
+        },
+        {
+          "path": "@mui/material/Dialog",
+          "specifiers": [
+            "Dialog"
+          ]
+        },
+        {
+          "path": "@mui/material/DialogTitle",
+          "specifiers": [
+            "DialogTitle"
+          ]
+        },
+        {
+          "path": "@mui/material/DialogContent",
+          "specifiers": [
+            "DialogContent"
+          ]
+        },
+        {
+          "path": "@mui/material/DialogContentText",
+          "specifiers": [
+            "DialogContentText"
+          ]
+        },
+        {
+          "path": "@mui/material/DialogActions",
+          "specifiers": [
+            "DialogActions"
+          ]
+        },
+        {
+          "path": "@mui/material/Snackbar",
+          "specifiers": [
+            "Snackbar"
+          ]
+        },
+        {
+          "path": "@mui/material/IconButton",
+          "specifiers": [
+            "IconButton"
+          ]
+        },
+        {
+          "path": "@mui/icons-material",
+          "specifiers": [
+            "ContentCopyIcon",
+            "DownloadIcon",
+            "RefreshIcon",
+            "WarningIcon",
+            "CloseIcon",
+            "ArrowBackIcon"
+          ]
+        },
+        {
+          "path": "react-router-dom",
+          "specifiers": [
+            "useNavigate"
+          ]
+        },
+        {
+          "path": "@contexts/UserContext",
+          "specifiers": [
+            "useUser"
+          ]
+        }
+      ],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": false,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        }
+      ]
+    },
+    {
+      "path": "src/components/testing/ThemeTestComponent.jsx",
+      "name": "ThemeTestComponent",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Unexpected keyword 'import'. (3:0)"
+        }
+      ]
+    },
+    {
+      "path": "src/components/users/invitation/AcceptInvitation.jsx",
+      "name": "AcceptInvitation",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": false,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Unexpected keyword 'import'. (4:9)"
+        }
+      ]
+    },
+    {
+      "path": "src/components/users/invitation/InvitationForm.jsx",
+      "name": "InvitationForm",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": false,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/users/invitation/InvitationList.jsx",
+      "name": "InvitationList",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": false,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    },
+    {
+      "path": "src/components/users/mfa/MFAEnrollment.jsx",
+      "name": "MFAEnrollment",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": false,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Unexpected keyword 'import'. (3:9)"
+        }
+      ]
+    },
+    {
+      "path": "src/components/users/UserManagement.jsx",
+      "name": "UserManagement",
+      "hooks": [],
+      "imports": [],
+      "designSystem": {
+        "directMuiImports": true,
+        "designSystemImports": true,
+        "adaptedComponents": false
+      },
+      "performance": {
+        "usesMemo": false,
+        "usesCallback": false,
+        "inlineObjectsCount": 1,
+        "renderComplexity": "low"
+      },
+      "issues": [
+        {
+          "type": "design-system",
+          "subtype": "direct-mui-import",
+          "severity": "medium",
+          "message": "Direct MUI import detected (should use design system)"
+        },
+        {
+          "type": "parse-error",
+          "severity": "high",
+          "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+        }
+      ]
+    }
+  ],
+  "statistics": {
+    "hookStats": [
+      {
+        "hook": "useState",
+        "count": 85
+      },
+      {
+        "hook": "useCallback",
+        "count": 23
+      },
+      {
+        "hook": "useEffect",
+        "count": 10
+      },
+      {
+        "hook": "useNavigate",
+        "count": 5
+      },
+      {
+        "hook": "useMemo",
+        "count": 3
+      },
+      {
+        "hook": "useUser",
+        "count": 3
+      },
+      {
+        "hook": "useParams",
+        "count": 2
+      },
+      {
+        "hook": "useTheme",
+        "count": 2
+      },
+      {
+        "hook": "useNotification",
+        "count": 1
+      },
+      {
+        "hook": "useAzureConfig",
+        "count": 1
+      },
+      {
+        "hook": "useRef",
+        "count": 1
+      }
+    ],
+    "designSystemStats": {
+      "directMuiImports": 90,
+      "designSystemImports": 70,
+      "adaptedComponents": 0,
+      "compliance": 0.041666666666666664
+    },
+    "performanceStats": {
+      "memoizedComponents": 30,
+      "highComplexityComponents": 1,
+      "averageInlineObjects": 0.9895833333333334
+    },
+    "dependencyStats": {
+      "mostDependedOn": []
+    }
+  },
+  "issues": {
+    "issuesByType": {
+      "design-system": [
+        {
+          "component": "ApplicationsManager",
+          "path": "src/components/admin/ApplicationsManager.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "AzureConfigurationPanel",
+          "path": "src/components/admin/AzureConfigurationPanel.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "DatasetsManager",
+          "path": "src/components/admin/DatasetsManager.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "DocumentationDashboard",
+          "path": "src/components/admin/documentation/DocumentationDashboard.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "DocumentationLibrary",
+          "path": "src/components/admin/documentation/DocumentationLibrary.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "DocumentViewer",
+          "path": "src/components/admin/documentation/DocumentViewer.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "DocumentationAnalytics",
+          "path": "src/components/admin/DocumentationAnalytics.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "EmailConfiguration",
+          "path": "src/components/admin/EmailConfiguration.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "ErrorLogViewer",
+          "path": "src/components/admin/ErrorLogViewer.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "InvitationForm",
+          "path": "src/components/admin/InvitationForm.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "InvitationList",
+          "path": "src/components/admin/InvitationList.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "AppServiceMetrics",
+          "path": "src/components/admin/MetricsCharts/AppServiceMetrics.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "DatabaseMetrics",
+          "path": "src/components/admin/MetricsCharts/DatabaseMetrics.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "DocumentationMetrics",
+          "path": "src/components/admin/MetricsCharts/DocumentationMetrics.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "KeyVaultMetrics",
+          "path": "src/components/admin/MetricsCharts/KeyVaultMetrics.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "NetworkMetrics",
+          "path": "src/components/admin/MetricsCharts/NetworkMetrics.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "StorageMetrics",
+          "path": "src/components/admin/MetricsCharts/StorageMetrics.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "MFASettings",
+          "path": "src/components/admin/MFASettings.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "ReleasesManager",
+          "path": "src/components/admin/ReleasesManager.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "ResourceHealthCards",
+          "path": "src/components/admin/ResourceHealthCards.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "TenantsManager",
+          "path": "src/components/admin/TenantsManager.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "UserDetail",
+          "path": "src/components/admin/UserDetail.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "UserManagement",
+          "path": "src/components/admin/UserManagement.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "RequireAdmin",
+          "path": "src/components/auth/RequireAdmin.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "RequireAuth",
+          "path": "src/components/auth/RequireAuth.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "DataTable",
+          "path": "src/components/common/DataTable.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "ErrorBoundary",
+          "path": "src/components/common/ErrorBoundary.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "InputField",
+          "path": "src/components/common/InputField.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "IntegrationHealthBar",
+          "path": "src/components/common/IntegrationHealthBar.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "IntegrationStatsBar",
+          "path": "src/components/common/IntegrationStatsBar.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "KeyboardShortcutsHelp",
+          "path": "src/components/common/KeyboardShortcutsHelp.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "Navigation",
+          "path": "src/components/common/Navigation.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "NotificationCenter",
+          "path": "src/components/common/NotificationCenter.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "PageLayout",
+          "path": "src/components/common/PageLayout.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "ResourceLoader",
+          "path": "src/components/common/ResourceLoader.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "StatusDisplay",
+          "path": "src/components/common/StatusDisplay.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "Timeline",
+          "path": "src/components/common/Timeline.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "ToastContainer",
+          "path": "src/components/common/ToastContainer.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "UserProfile",
+          "path": "src/components/common/UserProfile.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "VirtualizedDataTable",
+          "path": "src/components/common/VirtualizedDataTable.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "DocumentRedirect",
+          "path": "src/components/documentation/DocumentRedirect.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "ApplicationNodePropertiesPanel",
+          "path": "src/components/integration/ApplicationNodePropertiesPanel.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "AzureBlobConfiguration",
+          "path": "src/components/integration/AzureBlobConfiguration.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "ConnectionPropertiesPanel",
+          "path": "src/components/integration/ConnectionPropertiesPanel.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "ContextualPropertiesPanel",
+          "path": "src/components/integration/ContextualPropertiesPanel.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "DataPreviewPanel",
+          "path": "src/components/integration/DataPreviewPanel.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "DatasetNodePropertiesPanel",
+          "path": "src/components/integration/DatasetNodePropertiesPanel.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "DebugModePanel",
+          "path": "src/components/integration/DebugModePanel.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "EarningsMappingDetail",
+          "path": "src/components/integration/EarningsMappingDetail.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "EnhancedNodePalette",
+          "path": "src/components/integration/EnhancedNodePalette.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "ErrorVisualization",
+          "path": "src/components/integration/ErrorVisualization.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "FieldMappingEditor",
+          "path": "src/components/integration/FieldMappingEditor.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "FileBrowserComponent",
+          "path": "src/components/integration/FileBrowserComponent.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "FileMonitoringSystem",
+          "path": "src/components/integration/FileMonitoringSystem.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "FileNotificationSystem",
+          "path": "src/components/integration/FileNotificationSystem.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "FilePreviewComponent",
+          "path": "src/components/integration/FilePreviewComponent.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "FileTriggerMechanism",
+          "path": "src/components/integration/FileTriggerMechanism.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "FlowPerformanceMonitor",
+          "path": "src/components/integration/FlowPerformanceMonitor.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "HistoryPanel",
+          "path": "src/components/integration/HistoryPanel.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "IntegrationCreationDialog",
+          "path": "src/components/integration/IntegrationCreationDialog.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "IntegrationDetailView",
+          "path": "src/components/integration/IntegrationDetailView.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "IntegrationFlowCanvas",
+          "path": "src/components/integration/IntegrationFlowCanvas.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "IntegrationTable",
+          "path": "src/components/integration/IntegrationTable.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "IntegrationTableRow",
+          "path": "src/components/integration/IntegrationTableRow.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "TransformNode",
+          "path": "src/components/integration/nodes/TransformNode.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "NotificationSettings",
+          "path": "src/components/integration/NotificationSettings.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "RunLogViewer",
+          "path": "src/components/integration/RunLogViewer.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "ScheduleConfiguration",
+          "path": "src/components/integration/ScheduleConfiguration.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "StorageFileBrowserPanel",
+          "path": "src/components/integration/StorageFileBrowserPanel.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "TemplateBrowser",
+          "path": "src/components/integration/TemplateBrowser.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "TemplateForm",
+          "path": "src/components/integration/TemplateForm.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "UserRoleSwitcher",
+          "path": "src/components/integration/UserRoleSwitcher.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "ValidationPanel",
+          "path": "src/components/integration/ValidationPanel.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "VisualFieldMapper",
+          "path": "src/components/integration/VisualFieldMapper.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "WebhookSettings",
+          "path": "src/components/integration/WebhookSettings.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "AcceptInvitation",
+          "path": "src/components/invitation/AcceptInvitation.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "CompleteRegistration",
+          "path": "src/components/invitation/CompleteRegistration.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "OAuthCallback",
+          "path": "src/components/invitation/OAuthCallback.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "LoginHistory",
+          "path": "src/components/profile/LoginHistory.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "SecuritySettings",
+          "path": "src/components/profile/SecuritySettings.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "UserProfile",
+          "path": "src/components/profile/UserProfile.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "MFAEnrollment",
+          "path": "src/components/security/MFAEnrollment.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "MFAVerification",
+          "path": "src/components/security/MFAVerification.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "RecoveryCodes",
+          "path": "src/components/security/RecoveryCodes.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "ThemeTestComponent",
+          "path": "src/components/testing/ThemeTestComponent.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "AcceptInvitation",
+          "path": "src/components/users/invitation/AcceptInvitation.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "InvitationForm",
+          "path": "src/components/users/invitation/InvitationForm.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "InvitationList",
+          "path": "src/components/users/invitation/InvitationList.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "MFAEnrollment",
+          "path": "src/components/users/mfa/MFAEnrollment.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        },
+        {
+          "component": "UserManagement",
+          "path": "src/components/users/UserManagement.jsx",
+          "issue": {
+            "type": "design-system",
+            "subtype": "direct-mui-import",
+            "severity": "medium",
+            "message": "Direct MUI import detected (should use design system)"
+          }
+        }
+      ],
+      "parse-error": [
+        {
+          "component": "ApplicationsManager",
+          "path": "src/components/admin/ApplicationsManager.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Unexpected token (3:23)"
+          }
+        },
+        {
+          "component": "AzureConfigurationPanel",
+          "path": "src/components/admin/AzureConfigurationPanel.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "DatasetsManager",
+          "path": "src/components/admin/DatasetsManager.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Unterminated string constant. (308:17)"
+          }
+        },
+        {
+          "component": "DocumentationDashboard",
+          "path": "src/components/admin/documentation/DocumentationDashboard.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "DocumentationLibrary",
+          "path": "src/components/admin/documentation/DocumentationLibrary.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "DocumentViewer",
+          "path": "src/components/admin/documentation/DocumentViewer.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "DocumentationAnalytics",
+          "path": "src/components/admin/DocumentationAnalytics.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "EmailConfiguration",
+          "path": "src/components/admin/EmailConfiguration.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "ErrorLogViewer",
+          "path": "src/components/admin/ErrorLogViewer.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Unexpected keyword 'import'. (38:0)"
+          }
+        },
+        {
+          "component": "InvitationForm",
+          "path": "src/components/admin/InvitationForm.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "InvitationList",
+          "path": "src/components/admin/InvitationList.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "AppServiceMetrics",
+          "path": "src/components/admin/MetricsCharts/AppServiceMetrics.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "DatabaseMetrics",
+          "path": "src/components/admin/MetricsCharts/DatabaseMetrics.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "DocumentationMetrics",
+          "path": "src/components/admin/MetricsCharts/DocumentationMetrics.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Unexpected keyword 'import'. (10:0)"
+          }
+        },
+        {
+          "component": "KeyVaultMetrics",
+          "path": "src/components/admin/MetricsCharts/KeyVaultMetrics.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "NetworkMetrics",
+          "path": "src/components/admin/MetricsCharts/NetworkMetrics.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "StorageMetrics",
+          "path": "src/components/admin/MetricsCharts/StorageMetrics.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "MFASettings",
+          "path": "src/components/admin/MFASettings.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "ReleasesManager",
+          "path": "src/components/admin/ReleasesManager.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Unexpected keyword 'import'. (46:0)"
+          }
+        },
+        {
+          "component": "ResourceHealthCards",
+          "path": "src/components/admin/ResourceHealthCards.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "TenantsManager",
+          "path": "src/components/admin/TenantsManager.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "UserManagement",
+          "path": "src/components/admin/UserManagement.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "RequireAdmin",
+          "path": "src/components/auth/RequireAdmin.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "RequireAuth",
+          "path": "src/components/auth/RequireAuth.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "DataTable",
+          "path": "src/components/common/DataTable.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Unexpected token, expected \"from\" (59:13)"
+          }
+        },
+        {
+          "component": "ErrorBoundary",
+          "path": "src/components/common/ErrorBoundary.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "InputField",
+          "path": "src/components/common/InputField.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "IntegrationHealthBar",
+          "path": "src/components/common/IntegrationHealthBar.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Unexpected keyword 'import'. (10:0)"
+          }
+        },
+        {
+          "component": "IntegrationStatsBar",
+          "path": "src/components/common/IntegrationStatsBar.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "KeyboardShortcutsHelp",
+          "path": "src/components/common/KeyboardShortcutsHelp.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "Navigation",
+          "path": "src/components/common/Navigation.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "NotificationCenter",
+          "path": "src/components/common/NotificationCenter.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "PageLayout",
+          "path": "src/components/common/PageLayout.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "ResourceLoader",
+          "path": "src/components/common/ResourceLoader.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "StatusDisplay",
+          "path": "src/components/common/StatusDisplay.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Unexpected keyword 'import'. (14:0)"
+          }
+        },
+        {
+          "component": "Timeline",
+          "path": "src/components/common/Timeline.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "ToastContainer",
+          "path": "src/components/common/ToastContainer.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "UserProfile",
+          "path": "src/components/common/UserProfile.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Unexpected token, expected \"}\" (154:8)"
+          }
+        },
+        {
+          "component": "VirtualizedDataTable",
+          "path": "src/components/common/VirtualizedDataTable.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Unexpected keyword 'import'. (72:9)"
+          }
+        },
+        {
+          "component": "DocumentRedirect",
+          "path": "src/components/documentation/DocumentRedirect.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "ApplicationNodePropertiesPanel",
+          "path": "src/components/integration/ApplicationNodePropertiesPanel.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "AzureBlobConfiguration",
+          "path": "src/components/integration/AzureBlobConfiguration.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "ConnectionPropertiesPanel",
+          "path": "src/components/integration/ConnectionPropertiesPanel.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "ContextualPropertiesPanel",
+          "path": "src/components/integration/ContextualPropertiesPanel.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Unexpected token, expected \"from\" (48:13)"
+          }
+        },
+        {
+          "component": "DataPreviewPanel",
+          "path": "src/components/integration/DataPreviewPanel.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "DatasetNodePropertiesPanel",
+          "path": "src/components/integration/DatasetNodePropertiesPanel.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "EarningsMappingDetail",
+          "path": "src/components/integration/EarningsMappingDetail.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Unexpected token, expected \"from\" (31:13)"
+          }
+        },
+        {
+          "component": "EnhancedNodePalette",
+          "path": "src/components/integration/EnhancedNodePalette.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "ErrorVisualization",
+          "path": "src/components/integration/ErrorVisualization.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Unexpected keyword 'import'. (17:0)"
+          }
+        },
+        {
+          "component": "FieldMappingEditor",
+          "path": "src/components/integration/FieldMappingEditor.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Unexpected keyword 'import'. (27:0)"
+          }
+        },
+        {
+          "component": "FileBrowserComponent",
+          "path": "src/components/integration/FileBrowserComponent.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Unterminated string constant. (54:12)"
+          }
+        },
+        {
+          "component": "FileMonitoringSystem",
+          "path": "src/components/integration/FileMonitoringSystem.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "FlowPerformanceMonitor",
+          "path": "src/components/integration/FlowPerformanceMonitor.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "HistoryPanel",
+          "path": "src/components/integration/HistoryPanel.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "IntegrationCreationDialog",
+          "path": "src/components/integration/IntegrationCreationDialog.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "IntegrationDetailView",
+          "path": "src/components/integration/IntegrationDetailView.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "IntegrationFlowCanvas",
+          "path": "src/components/integration/IntegrationFlowCanvas.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "IntegrationTable",
+          "path": "src/components/integration/IntegrationTable.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "IntegrationTableRow",
+          "path": "src/components/integration/IntegrationTableRow.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Identifier 'TableRow' has already been declared. (1:29)"
+          }
+        },
+        {
+          "component": "TransformNode",
+          "path": "src/components/integration/nodes/TransformNode.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "NotificationSettings",
+          "path": "src/components/integration/NotificationSettings.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "RunLogViewer",
+          "path": "src/components/integration/RunLogViewer.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Missing semicolon. (651:40)"
+          }
+        },
+        {
+          "component": "ScheduleConfiguration",
+          "path": "src/components/integration/ScheduleConfiguration.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "StorageFileBrowserPanel",
+          "path": "src/components/integration/StorageFileBrowserPanel.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "TemplateBrowser",
+          "path": "src/components/integration/TemplateBrowser.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Unexpected token, expected \"from\" (36:13)"
+          }
+        },
+        {
+          "component": "TemplateForm",
+          "path": "src/components/integration/TemplateForm.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "UserRoleSwitcher",
+          "path": "src/components/integration/UserRoleSwitcher.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Identifier 'Box' has already been declared. (1:23)"
+          }
+        },
+        {
+          "component": "ValidationPanel",
+          "path": "src/components/integration/ValidationPanel.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "VisualFieldMapper",
+          "path": "src/components/integration/VisualFieldMapper.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "WebhookSettings",
+          "path": "src/components/integration/WebhookSettings.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "CompleteRegistration",
+          "path": "src/components/invitation/CompleteRegistration.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "OAuthCallback",
+          "path": "src/components/invitation/OAuthCallback.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "LoginHistory",
+          "path": "src/components/profile/LoginHistory.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "UserProfile",
+          "path": "src/components/profile/UserProfile.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "MFAVerification",
+          "path": "src/components/security/MFAVerification.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "ThemeTestComponent",
+          "path": "src/components/testing/ThemeTestComponent.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Unexpected keyword 'import'. (3:0)"
+          }
+        },
+        {
+          "component": "AcceptInvitation",
+          "path": "src/components/users/invitation/AcceptInvitation.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Unexpected keyword 'import'. (4:9)"
+          }
+        },
+        {
+          "component": "InvitationForm",
+          "path": "src/components/users/invitation/InvitationForm.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "InvitationList",
+          "path": "src/components/users/invitation/InvitationList.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        },
+        {
+          "component": "MFAEnrollment",
+          "path": "src/components/users/mfa/MFAEnrollment.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Unexpected keyword 'import'. (3:9)"
+          }
+        },
+        {
+          "component": "UserManagement",
+          "path": "src/components/users/UserManagement.jsx",
+          "issue": {
+            "type": "parse-error",
+            "severity": "high",
+            "message": "Parser error: Cannot read properties of undefined (reading 'buildError')"
+          }
+        }
+      ],
+      "performance": [
+        {
+          "component": "ErrorBoundary",
+          "path": "src/components/common/ErrorBoundary.jsx",
+          "issue": {
+            "type": "performance",
+            "subtype": "complex-render",
+            "severity": "medium",
+            "message": "Complex render function detected (over 500 characters)"
+          }
+        }
+      ]
+    },
+    "dependencyIssues": []
+  }
+}

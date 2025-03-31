@@ -1,0 +1,306 @@
+{
+  "errors": [],
+  "warnings": [],
+  "dependencies": [
+    {
+      "name": "@babel/runtime",
+      "severity": "moderate",
+      "isDirect": true,
+      "path": [],
+      "overview": "",
+      "recommendation": ""
+    },
+    {
+      "name": "@jest/fake-timers",
+      "severity": "moderate",
+      "isDirect": false,
+      "path": [
+        "jest-util"
+      ],
+      "overview": "",
+      "recommendation": ""
+    },
+    {
+      "name": "@react-native-community/cli",
+      "severity": "critical",
+      "isDirect": false,
+      "path": [
+        "react-native"
+      ],
+      "overview": "",
+      "recommendation": ""
+    },
+    {
+      "name": "@react-native-community/cli-hermes",
+      "severity": "critical",
+      "isDirect": false,
+      "path": [
+        "@react-native-community/cli"
+      ],
+      "overview": "",
+      "recommendation": ""
+    },
+    {
+      "name": "@react-native-community/cli-platform-android",
+      "severity": "critical",
+      "isDirect": false,
+      "path": [],
+      "overview": "",
+      "recommendation": ""
+    },
+    {
+      "name": "@react-native-community/cli-platform-ios",
+      "severity": "critical",
+      "isDirect": false,
+      "path": [],
+      "overview": "",
+      "recommendation": ""
+    },
+    {
+      "name": "@react-native-community/cli-server-api",
+      "severity": "critical",
+      "isDirect": false,
+      "path": [
+        "@react-native-community/cli"
+      ],
+      "overview": "",
+      "recommendation": ""
+    },
+    {
+      "name": "@react-native-community/cli-tools",
+      "severity": "critical",
+      "isDirect": false,
+      "path": [
+        "@react-native-community/cli",
+        "@react-native-community/cli-hermes",
+        "@react-native-community/cli-platform-android",
+        "@react-native-community/cli-platform-ios",
+        "@react-native-community/cli-server-api"
+      ],
+      "overview": "",
+      "recommendation": ""
+    },
+    {
+      "name": "anymatch",
+      "severity": "moderate",
+      "isDirect": false,
+      "path": [
+        "jest-haste-map",
+        "sane"
+      ],
+      "overview": "",
+      "recommendation": ""
+    },
+    {
+      "name": "axios",
+      "severity": "high",
+      "isDirect": true,
+      "path": [],
+      "overview": "",
+      "recommendation": ""
+    },
+    {
+      "name": "braces",
+      "severity": "high",
+      "isDirect": false,
+      "path": [
+        "micromatch"
+      ],
+      "overview": "",
+      "recommendation": ""
+    },
+    {
+      "name": "cross-spawn",
+      "severity": "high",
+      "isDirect": false,
+      "path": [
+        "fbjs-scripts"
+      ],
+      "overview": "",
+      "recommendation": ""
+    },
+    {
+      "name": "fbjs",
+      "severity": "high",
+      "isDirect": false,
+      "path": [
+        "metro",
+        "react-native"
+      ],
+      "overview": "",
+      "recommendation": ""
+    },
+    {
+      "name": "fbjs-scripts",
+      "severity": "high",
+      "isDirect": false,
+      "path": [
+        "react-native"
+      ],
+      "overview": "",
+      "recommendation": ""
+    },
+    {
+      "name": "hermes-engine",
+      "severity": "critical",
+      "isDirect": false,
+      "path": [
+        "react-native"
+      ],
+      "overview": "",
+      "recommendation": ""
+    },
+    {
+      "name": "ip",
+      "severity": "high",
+      "isDirect": false,
+      "path": [
+        "@react-native-community/cli-hermes"
+      ],
+      "overview": "",
+      "recommendation": ""
+    },
+    {
+      "name": "isomorphic-fetch",
+      "severity": "high",
+      "isDirect": false,
+      "path": [
+        "fbjs"
+      ],
+      "overview": "",
+      "recommendation": ""
+    },
+    {
+      "name": "jest-haste-map",
+      "severity": "moderate",
+      "isDirect": false,
+      "path": [
+        "metro",
+        "metro-core"
+      ],
+      "overview": "",
+      "recommendation": ""
+    },
+    {
+      "name": "jest-message-util",
+      "severity": "moderate",
+      "isDirect": false,
+      "path": [
+        "@jest/fake-timers"
+      ],
+      "overview": "",
+      "recommendation": ""
+    },
+    {
+      "name": "jest-util",
+      "severity": "moderate",
+      "isDirect": false,
+      "path": [
+        "jest-haste-map"
+      ],
+      "overview": "",
+      "recommendation": ""
+    },
+    {
+      "name": "metro",
+      "severity": "high",
+      "isDirect": false,
+      "path": [],
+      "overview": "",
+      "recommendation": ""
+    },
+    {
+      "name": "metro-cache",
+      "severity": "moderate",
+      "isDirect": false,
+      "path": [],
+      "overview": "",
+      "recommendation": ""
+    },
+    {
+      "name": "metro-config",
+      "severity": "moderate",
+      "isDirect": false,
+      "path": [
+        "metro"
+      ],
+      "overview": "",
+      "recommendation": ""
+    },
+    {
+      "name": "metro-core",
+      "severity": "moderate",
+      "isDirect": false,
+      "path": [
+        "@react-native-community/cli",
+        "metro",
+        "metro-cache",
+        "metro-config"
+      ],
+      "overview": "",
+      "recommendation": ""
+    },
+    {
+      "name": "micromatch",
+      "severity": "high",
+      "isDirect": false,
+      "path": [
+        "anymatch",
+        "jest-haste-map",
+        "jest-message-util",
+        "sane"
+      ],
+      "overview": "",
+      "recommendation": ""
+    },
+    {
+      "name": "node-fetch",
+      "severity": "high",
+      "isDirect": false,
+      "path": [
+        "isomorphic-fetch"
+      ],
+      "overview": "",
+      "recommendation": ""
+    },
+    {
+      "name": "react-native",
+      "severity": "critical",
+      "isDirect": false,
+      "path": [
+        "react-performance-testing"
+      ],
+      "overview": "",
+      "recommendation": ""
+    },
+    {
+      "name": "react-performance-testing",
+      "severity": "high",
+      "isDirect": true,
+      "path": [],
+      "overview": "",
+      "recommendation": ""
+    },
+    {
+      "name": "sane",
+      "severity": "moderate",
+      "isDirect": false,
+      "path": [
+        "jest-haste-map"
+      ],
+      "overview": "",
+      "recommendation": ""
+    },
+    {
+      "name": "shell-quote",
+      "severity": "critical",
+      "isDirect": false,
+      "path": [
+        "@react-native-community/cli-tools"
+      ],
+      "overview": "",
+      "recommendation": ""
+    }
+  ],
+  "metrics": {}
+}

@@ -2,7 +2,7 @@
 // -----------------------------------------------------------------------------
 // Component for configuring integration execution schedules
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   Box,
   Button,
@@ -72,7 +72,8 @@ const ScheduleConfiguration = ({
     }
   }, [currentSchedule.cronExpression]);
   
-  const handleChange = (e) => {
+  // Memoize handleChange to prevent unnecessary recreations
+  const handleChange = useCallback((e) => {
     const { name, value } = e.target;
     
     // If schedule type changes, update cron expression
@@ -98,11 +99,12 @@ const ScheduleConfiguration = ({
         [name]: value
       });
     }
-  };
+  }, [currentSchedule, onChange, scheduleOptions]);
   
-  const handleCronBlur = () => {
+  // Memoize handleCronBlur to prevent unnecessary recreations
+  const handleCronBlur = useCallback(() => {
     setIsEditingCron(false);
-  };
+  }, []);
   
   const timezones = [
     'UTC',

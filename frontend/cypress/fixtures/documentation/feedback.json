@@ -1,0 +1,58 @@
+{
+  "feedbackSubmission": {
+    "success": true,
+    "message": "Thank you for your feedback!"
+  },
+  "feedbackItems": [
+    {
+      "id": "fb-12345",
+      "documentId": "getting-started-guide",
+      "documentTitle": "Getting Started Guide",
+      "rating": "positive",
+      "comment": "Very helpful for beginners, thanks!",
+      "timestamp": "2025-03-26T09:15:32Z",
+      "userId": "user-789",
+      "userEmail": "user@example.com"
+    },
+    {
+      "id": "fb-12346",
+      "documentId": "rest-api-reference",
+      "documentTitle": "REST API Reference",
+      "rating": "negative",
+      "comment": "Missing examples for pagination parameters",
+      "timestamp": "2025-03-25T14:42:18Z",
+      "userId": "user-456",
+      "userEmail": "developer@example.com"
+    },
+    {
+      "id": "fb-12347",
+      "documentId": "azure-blob-integration",
+      "documentTitle": "Azure Blob Storage Integration",
+      "rating": "positive",
+      "comment": "The diagrams were very clear, made it easy to understand",
+      "timestamp": "2025-03-24T11:08:45Z",
+      "userId": "user-123",
+      "userEmail": "admin@example.com"
+    },
+    {
+      "id": "fb-12348",
+      "documentId": "webhook-api",
+      "documentTitle": "Webhook API Reference",
+      "rating": "positive",
+      "comment": "",
+      "timestamp": "2025-03-23T16:37:22Z",
+      "userId": "user-789",
+      "userEmail": "user@example.com"
+    },
+    {
+      "id": "fb-12349",
+      "documentId": "sdk-documentation",
+      "documentTitle": "SDK Documentation",
+      "rating": "negative",
+      "comment": "The Python examples are outdated, they don't work with the latest SDK version",
+      "timestamp": "2025-03-22T10:15:07Z",
+      "userId": "user-456",
+      "userEmail": "developer@example.com"
+    }
+  ]
+}

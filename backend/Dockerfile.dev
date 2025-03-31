@@ -1,0 +1,31 @@
+FROM python:3.10-slim
+
+WORKDIR /app
+
+# Install curl for healthcheck and system dependencies
+RUN apt-get update && apt-get install -y \
+    curl \
+    build-essential \
+    libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Python dependencies first to leverage Docker cache
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Install development tools
+RUN pip install --no-cache-dir pytest pytest-cov black isort flake8
+
+# The application code will be mounted as a volume
+
+# Create directory for init scripts
+RUN mkdir -p /app/db/init
+
+# Expose API port
+EXPOSE 8000
+
+# Create a health check endpoint script to be copied to the container
+COPY ./scripts/healthcheck.py /app/scripts/healthcheck.py
+
+# Start development server with hot reloading
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]

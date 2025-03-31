@@ -1,0 +1,30 @@
+Command: npm run build:quick
+Started: 2025-03-28T22:46:36.109Z
+
+[ERROR] npm[ERROR]  WARN [ERROR] config optional Use `--omit=optional` to exclude optional dependencies, or
+npm WARN config `--include=optional` to include them.
+npm [ERROR] WARN config[ERROR]  
+npm WARN config     Default value does install optional deps unless otherwise omitted.
+
+> tap-integration-platform-frontend@1.0.0 build:quick
+> cross-env NODE_ENV=production BUILD_TYPE=quick DISABLE_ESLINT_PLUGIN=true react-app-rewired build
+
+Creating an optimized production build...
+Failed to compile.
+
+SyntaxError: /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/admin/UserManagement.jsx: Identifier 'Box' has already been declared. (19:7)
+  17 | import { userService, mfaService } from '@services/userManagementService';
+  18 | import Tab from '@mui/material/Tab';
+> 19 | import Box from '@mui/material/Box';
+     |        ^
+  20 | /**
+  21 |  * Component for displaying and managing users
+  22 |  * Includes filtering, sorting, and bulk operations
+    at parser.next (<anonymous>)
+    at normalizeFile.next (<anonymous>)
+    at run.next (<anonymous>)
+    at transform.next (<anonymous>)
+
+
+
+Exited with code: 1

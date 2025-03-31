@@ -1,0 +1,108 @@
+{
+  "errorLogs": [
+    {
+      "id": "error_1",
+      "timestamp": "2025-04-05T10:00:00Z",
+      "type": "API_ERROR",
+      "message": "Failed to connect to API endpoint",
+      "source": "IntegrationService",
+      "severity": "ERROR",
+      "details": {
+        "endpoint": "https://api.example.com/data",
+        "error": "Connection refused",
+        "statusCode": 0,
+        "userId": "user_123",
+        "integrationId": "integration_456"
+      },
+      "stackTrace": "Error: Failed to connect to API endpoint\n  at IntegrationService.executeApiRequest (/app/services/integrationService.js:123)\n  at async IntegrationService.runIntegration (/app/services/integrationService.js:45)"
+    },
+    {
+      "id": "error_2",
+      "timestamp": "2025-04-05T11:15:00Z",
+      "type": "VALIDATION_ERROR",
+      "message": "Invalid data format in transformation",
+      "source": "TransformationService",
+      "severity": "WARNING",
+      "details": {
+        "expected": "number",
+        "received": "string",
+        "field": "amount",
+        "userId": "user_456",
+        "integrationId": "integration_789"
+      },
+      "stackTrace": "Error: Invalid data format in transformation\n  at TransformationService.validateField (/app/services/transformationService.js:78)\n  at TransformationService.applyTransformation (/app/services/transformationService.js:42)"
+    },
+    {
+      "id": "error_3",
+      "timestamp": "2025-04-05T12:30:00Z",
+      "type": "AUTHENTICATION_ERROR",
+      "message": "Token expired during operation",
+      "source": "AuthService",
+      "severity": "ERROR",
+      "details": {
+        "tokenExpiry": "2025-04-05T12:15:00Z",
+        "userId": "user_789",
+        "clientIp": "192.168.1.100"
+      },
+      "stackTrace": "Error: Token expired during operation\n  at AuthService.validateToken (/app/services/authService.js:56)\n  at AuthService.authorizeRequest (/app/services/authService.js:23)"
+    },
+    {
+      "id": "error_4",
+      "timestamp": "2025-04-05T13:45:00Z",
+      "type": "DATABASE_ERROR",
+      "message": "Query execution failed",
+      "source": "DatabaseService",
+      "severity": "ERROR",
+      "details": {
+        "query": "SELECT * FROM integrations WHERE user_id = ?",
+        "params": ["user_123"],
+        "error": "Connection lost during query execution",
+        "retryCount": 3
+      },
+      "stackTrace": "Error: Query execution failed\n  at DatabaseService.executeQuery (/app/services/databaseService.js:92)\n  at DatabaseService.findUserIntegrations (/app/services/databaseService.js:37)"
+    },
+    {
+      "id": "error_5",
+      "timestamp": "2025-04-05T14:00:00Z",
+      "type": "TIMEOUT_ERROR",
+      "message": "Operation timed out",
+      "source": "StorageService",
+      "severity": "WARNING",
+      "details": {
+        "operation": "uploadFile",
+        "fileSize": "25MB",
+        "timeout": "30s",
+        "userId": "user_456",
+        "storageProvider": "azureBlob"
+      },
+      "stackTrace": "Error: Operation timed out\n  at StorageService.uploadWithRetry (/app/services/storageService.js:104)\n  at async StorageService.uploadFile (/app/services/storageService.js:68)"
+    }
+  ],
+  "errorCounts": {
+    "API_ERROR": 12,
+    "VALIDATION_ERROR": 24,
+    "AUTHENTICATION_ERROR": 8,
+    "DATABASE_ERROR": 5,
+    "TIMEOUT_ERROR": 15,
+    "SYSTEM_ERROR": 3
+  },
+  "severityCounts": {
+    "ERROR": 28,
+    "WARNING": 39,
+    "INFO": 0
+  },
+  "sourceDistribution": {
+    "IntegrationService": 18,
+    "TransformationService": 14,
+    "AuthService": 10,
+    "DatabaseService": 6,
+    "StorageService": 12,
+    "ApiService": 7
+  },
+  "timeDistribution": {
+    "00:00-06:00": 5,
+    "06:00-12:00": 21,
+    "12:00-18:00": 32,
+    "18:00-00:00": 9
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "azureBlobStorageConfig": {
+    "name": "Test Azure Blob Storage",
+    "description": "Azure Blob Storage configuration for testing",
+    "accountName": "teststorageaccount",
+    "connectionString": "DefaultEndpointsProtocol=https;AccountName=teststorageaccount;AccountKey=abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJK==;EndpointSuffix=core.windows.net",
+    "container": "testcontainer",
+    "folderPath": "/test-folder"
+  },
+  "awsS3Config": {
+    "name": "Test AWS S3",
+    "description": "AWS S3 configuration for testing",
+    "region": "us-west-2",
+    "bucket": "test-bucket",
+    "accessKey": "AKIAIOSFODNN7EXAMPLE",
+    "secretKey": "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY",
+    "folderPath": "/test-folder"
+  },
+  "sharePointConfig": {
+    "name": "Test SharePoint",
+    "description": "SharePoint configuration for testing",
+    "siteUrl": "https://contoso.sharepoint.com/sites/testsite",
+    "library": "Documents",
+    "folderPath": "/test-folder",
+    "authMethod": "CREDENTIALS",
+    "username": "test@contoso.com",
+    "password": "testPassword123"
+  },
+  "sharePointOAuthConfig": {
+    "name": "Test SharePoint OAuth",
+    "description": "SharePoint configuration with OAuth for testing",
+    "siteUrl": "https://contoso.sharepoint.com/sites/oauthsite",
+    "library": "Documents",
+    "folderPath": "/test-folder",
+    "authMethod": "OAUTH"
+  },
+  "updatedAzureBlobStorageConfig": {
+    "name": "Updated Azure Blob Storage",
+    "description": "Updated Azure Blob Storage configuration for testing",
+    "accountName": "updatedstorageaccount",
+    "connectionString": "DefaultEndpointsProtocol=https;AccountName=updatedstorageaccount;AccountKey=abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJK==;EndpointSuffix=core.windows.net",
+    "container": "updatedcontainer",
+    "folderPath": "/updated-folder",
+    "providerType": "AZURE_BLOB"
+  },
+  "updatedAwsS3Config": {
+    "name": "Updated AWS S3",
+    "description": "Updated AWS S3 configuration for testing",
+    "region": "us-east-1",
+    "bucket": "updated-bucket",
+    "accessKey": "AKIAIOSFODNN7EXAMPLE",
+    "secretKey": "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY",
+    "folderPath": "/updated-folder",
+    "providerType": "AWS_S3"
+  },
+  "invalidAzureBlobStorageConfig": {
+    "name": "Invalid Azure Blob Storage",
+    "description": "Invalid Azure Blob Storage configuration for testing",
+    "accountName": "invalidaccount",
+    "connectionString": "DefaultEndpointsProtocol=https;AccountName=invalidaccount;AccountKey=invalidkey==;EndpointSuffix=core.windows.net",
+    "container": "nonexistentcontainer"
+  },
+  "invalidS3Config": {
+    "name": "Invalid AWS S3",
+    "description": "Invalid AWS S3 configuration for testing",
+    "region": "us-west-2",
+    "bucket": "nonexistent-bucket",
+    "accessKey": "AKIAINVALID7EXAMPLE",
+    "secretKey": "wJalrINVALIDI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+  },
+  "fileOperationsConfig": {
+    "name": "File Operations Test Storage",
+    "description": "Storage configuration for file operations testing",
+    "accountName": "fileopsaccount",
+    "connectionString": "DefaultEndpointsProtocol=https;AccountName=fileopsaccount;AccountKey=abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJK==;EndpointSuffix=core.windows.net",
+    "container": "fileops",
+    "folderPath": "/"
+  }
+}

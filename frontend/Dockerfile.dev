@@ -1,0 +1,18 @@
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Install dependencies for better development experience
+RUN apk add --no-cache wget curl bash
+
+# Install dependencies (leveraging Docker cache)
+COPY package.json package-lock.json* ./
+RUN npm ci
+
+# The application code will be mounted as a volume
+
+# Expose the React development server port
+EXPOSE 3000
+
+# Start the React development server with hot reloading
+CMD ["npm", "start"]

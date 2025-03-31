@@ -1,0 +1,52 @@
+{
+  "errors": {
+    "invalidCode": {
+      "success": false,
+      "message": "Invalid verification code",
+      "code": "INVALID_CODE",
+      "remainingAttempts": 2
+    },
+    "expiredCode": {
+      "success": false,
+      "message": "Verification code has expired",
+      "code": "EXPIRED_CODE",
+      "remainingAttempts": 3
+    },
+    "tooManyAttempts": {
+      "success": false,
+      "message": "Too many failed verification attempts. Please try again later.",
+      "code": "TOO_MANY_ATTEMPTS",
+      "lockoutTime": 300
+    },
+    "invalidRecoveryCode": {
+      "success": false,
+      "message": "Invalid recovery code",
+      "code": "INVALID_RECOVERY_CODE"
+    },
+    "usedRecoveryCode": {
+      "success": false,
+      "message": "This recovery code has already been used",
+      "code": "USED_RECOVERY_CODE"
+    },
+    "networkError": {
+      "success": false,
+      "message": "Network error occurred during verification. Please try again.",
+      "code": "NETWORK_ERROR"
+    },
+    "sessionExpired": {
+      "success": false,
+      "message": "Your session has expired. Please log in again to continue.",
+      "code": "SESSION_EXPIRED"
+    },
+    "incorrectPassword": {
+      "success": false,
+      "message": "Incorrect password",
+      "code": "INCORRECT_PASSWORD"
+    },
+    "accessDenied": {
+      "success": false,
+      "message": "You do not have permission to perform this action",
+      "code": "ACCESS_DENIED"
+    }
+  }
+}

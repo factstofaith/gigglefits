@@ -1,21 +1,27 @@
-<!-- index.html (novice guidance)
-
-Main HTML entry for the React SPA.
-React will mount on a root element here.
-
--->
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8"/>
-    <title>React App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="TAP Integration Platform - Streamlined integration workflows" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <title>TAP Integration Platform</title>
+    <!-- Environment Variables - Injected at build time -->
+    <script>
+      window.env = {
+        REACT_APP_VERSION: "%REACT_APP_VERSION%",
+        REACT_APP_API_URL: "%REACT_APP_API_URL%",
+        REACT_APP_ENVIRONMENT: "%NODE_ENV%",
+        REACT_APP_MOCK_API: "%REACT_APP_MOCK_API%",
+        REACT_APP_AUTH_ENABLED: "%REACT_APP_AUTH_ENABLED%"
+      };
+    </script>
   </head>
   <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <div id="modal-root"></div>
   </body>
 </html>
-  
-
-
 

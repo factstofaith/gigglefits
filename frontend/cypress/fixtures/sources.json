@@ -1,0 +1,95 @@
+[
+  {
+    "id": "sample-api",
+    "name": "Sample API Source",
+    "type": "api",
+    "description": "Sample REST API source for testing",
+    "configSchema": {
+      "required": ["apiUrl"],
+      "properties": {
+        "apiUrl": {
+          "type": "string",
+          "format": "uri",
+          "description": "API endpoint URL"
+        },
+        "authType": {
+          "type": "string",
+          "enum": ["none", "basic", "apiKey", "oauth2"],
+          "default": "none",
+          "description": "Authentication type"
+        },
+        "username": {
+          "type": "string",
+          "description": "Username for basic auth"
+        },
+        "password": {
+          "type": "string",
+          "format": "password",
+          "description": "Password for basic auth"
+        },
+        "apiKey": {
+          "type": "string",
+          "description": "API key for apiKey auth"
+        },
+        "headers": {
+          "type": "object",
+          "description": "Custom request headers"
+        }
+      }
+    }
+  },
+  {
+    "id": "csv-file",
+    "name": "CSV File",
+    "type": "file",
+    "description": "CSV file source",
+    "configSchema": {
+      "required": ["filePath"],
+      "properties": {
+        "filePath": {
+          "type": "string",
+          "description": "Path to CSV file"
+        },
+        "delimiter": {
+          "type": "string",
+          "default": ",",
+          "description": "CSV delimiter character"
+        },
+        "hasHeader": {
+          "type": "boolean",
+          "default": true,
+          "description": "Whether the CSV has a header row"
+        },
+        "encoding": {
+          "type": "string",
+          "default": "utf-8",
+          "description": "File encoding"
+        }
+      }
+    }
+  },
+  {
+    "id": "sharepoint",
+    "name": "SharePoint Folder",
+    "type": "document",
+    "description": "SharePoint document source",
+    "configSchema": {
+      "required": ["siteUrl", "folderPath"],
+      "properties": {
+        "siteUrl": {
+          "type": "string",
+          "format": "uri",
+          "description": "SharePoint site URL"
+        },
+        "folderPath": {
+          "type": "string",
+          "description": "Folder path within SharePoint"
+        },
+        "filePattern": {
+          "type": "string",
+          "description": "File pattern to match (e.g., *.xlsx)"
+        }
+      }
+    }
+  }
+]

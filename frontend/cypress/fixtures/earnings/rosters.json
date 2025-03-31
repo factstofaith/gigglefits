@@ -1,0 +1,26 @@
+[
+  {
+    "id": "1",
+    "name": "Finance Department",
+    "source_id": "HR-SYS-001",
+    "destination_id": "PAY-SYS-001",
+    "description": "Finance department employee roster for payroll mapping",
+    "last_sync_at": "2025-03-15T14:30:45Z"
+  },
+  {
+    "id": "2",
+    "name": "Engineering Team",
+    "source_id": "HR-SYS-002",
+    "destination_id": "PAY-SYS-001",
+    "description": "Engineering team employee roster with specialized pay codes",
+    "last_sync_at": null
+  },
+  {
+    "id": "3",
+    "name": "Sales Department",
+    "source_id": "HR-SYS-003",
+    "destination_id": "PAY-SYS-002",
+    "description": "Sales department with commission-based pay structure",
+    "last_sync_at": "2025-02-28T09:15:22Z"
+  }
+]

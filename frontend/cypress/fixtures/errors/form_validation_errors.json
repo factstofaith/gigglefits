@@ -1,0 +1,61 @@
+{
+  "forms": {
+    "user": {
+      "invalid": {
+        "email": "",
+        "firstName": "",
+        "lastName": "",
+        "role": ""
+      },
+      "valid": {
+        "email": "test@example.com",
+        "firstName": "Test",
+        "lastName": "User",
+        "role": "USER"
+      },
+      "expectedErrors": {
+        "email": "Email is required",
+        "firstName": "First name is required",
+        "lastName": "Last name is required",
+        "role": "Role is required"
+      }
+    },
+    "integration": {
+      "invalid": {
+        "name": "",
+        "description": "Test description",
+        "type": "",
+        "schedule": ""
+      },
+      "valid": {
+        "name": "Test Integration",
+        "description": "Test description",
+        "type": "DATA_SYNC",
+        "schedule": "MANUAL"
+      },
+      "expectedErrors": {
+        "name": "Name is required",
+        "type": "Type is required"
+      }
+    },
+    "connection": {
+      "invalid": {
+        "name": "",
+        "description": "Test description",
+        "type": ""
+      },
+      "valid": {
+        "name": "Test Connection",
+        "description": "Test description",
+        "type": "API",
+        "config": {
+          "url": "https://api.example.com"
+        }
+      },
+      "expectedErrors": {
+        "name": "Name is required",
+        "type": "Type is required"
+      }
+    }
+  }
+}

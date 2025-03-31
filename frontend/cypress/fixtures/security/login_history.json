@@ -1,0 +1,63 @@
+{
+  "history": [
+    {
+      "id": "login-001",
+      "timestamp": "2025-03-25T09:15:22Z",
+      "ipAddress": "192.168.1.100",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
+      "browser": "Chrome",
+      "os": "Windows",
+      "status": "SUCCESS",
+      "location": "New York, United States",
+      "mfaUsed": true
+    },
+    {
+      "id": "login-002",
+      "timestamp": "2025-03-24T14:30:45Z",
+      "ipAddress": "192.168.1.100",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
+      "browser": "Chrome",
+      "os": "Windows",
+      "status": "SUCCESS",
+      "location": "New York, United States",
+      "mfaUsed": true
+    },
+    {
+      "id": "login-003",
+      "timestamp": "2025-03-23T11:20:15Z",
+      "ipAddress": "192.168.1.100",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
+      "browser": "Chrome",
+      "os": "Windows",
+      "status": "SUCCESS",
+      "location": "New York, United States",
+      "mfaUsed": true
+    },
+    {
+      "id": "login-004",
+      "timestamp": "2025-03-22T08:45:30Z",
+      "ipAddress": "192.168.1.100",
+      "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Mobile/15E148 Safari/604.1",
+      "browser": "Safari",
+      "os": "iOS",
+      "status": "SUCCESS",
+      "location": "New York, United States",
+      "mfaUsed": true
+    },
+    {
+      "id": "login-005",
+      "timestamp": "2025-03-10T08:22:15Z",
+      "ipAddress": "203.0.113.42",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
+      "browser": "Chrome",
+      "os": "Windows",
+      "status": "FAILED",
+      "reason": "Invalid password",
+      "location": "Chicago, United States",
+      "mfaUsed": false
+    }
+  ],
+  "totalEntries": 5,
+  "lastSuccessfulLogin": "2025-03-25T09:15:22Z",
+  "lastFailedLogin": "2025-03-10T08:22:15Z"
+}

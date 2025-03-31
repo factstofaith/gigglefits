@@ -1,0 +1,35 @@
+{
+  "name": "tap-integration-platform",
+  "version": "1.0.0",
+  "description": "A comprehensive middleware UI that enables users to build integrations between various applications, connecting APIs and file storage locations through an intuitive interface.",
+  "main": "test-router-validation.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/factstofaith/tap-integration-platform.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/factstofaith/tap-integration-platform/issues"
+  },
+  "homepage": "https://github.com/factstofaith/tap-integration-platform#readme",
+  "devDependencies": {
+    "axios-mock-adapter": "^2.1.0",
+    "cheerio": "^1.0.0",
+    "glob": "^11.0.1",
+    "marked": "^15.0.7",
+    "mkdirp": "^3.0.1"
+  },
+  "resolutions": {
+    "cheerio": "1.0.0-rc.12",
+    "glob": "^11.0.1",
+    "marked": "^15.0.7"
+  }
+}

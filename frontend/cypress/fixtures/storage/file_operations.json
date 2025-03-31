@@ -1,0 +1,153 @@
+{
+  "uploadResult": {
+    "success": true,
+    "fileName": "uploaded_file.txt",
+    "path": "/test-folder/uploaded_file.txt",
+    "size": 1024,
+    "contentType": "text/plain",
+    "lastModified": "2025-04-05T10:00:00Z"
+  },
+  "sharePointUploadResult": {
+    "success": true,
+    "fileName": "test_upload.docx",
+    "path": "/test_upload.docx",
+    "size": 15360,
+    "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    "lastModified": "2025-03-29T09:30:00Z"
+  },
+  "downloadResult": {
+    "success": true,
+    "fileName": "downloaded_file.txt"
+  },
+  "createFolderResult": {
+    "success": true,
+    "folderName": "new_folder",
+    "path": "/test-folder/new_folder",
+    "lastModified": "2025-04-05T10:05:00Z"
+  },
+  "deleteFileResult": {
+    "success": true,
+    "path": "/test-folder/file_to_delete.txt"
+  },
+  "deleteFolderResult": {
+    "success": true,
+    "path": "/test-folder/folder_to_delete"
+  },
+  "testConnectionResult": {
+    "success": true,
+    "message": "Connection successful",
+    "details": {
+      "provider": "AZURE_BLOB",
+      "accountName": "teststorageaccount",
+      "container": "testcontainer",
+      "connectionTime": "2025-04-05T10:10:00Z"
+    }
+  },
+  "failedConnectionResult": {
+    "success": false,
+    "message": "Connection failed",
+    "error": "Invalid credentials or connection parameters",
+    "details": {
+      "provider": "AZURE_BLOB",
+      "accountName": "invalidaccount",
+      "container": "nonexistentcontainer",
+      "connectionTime": "2025-04-05T10:15:00Z"
+    }
+  },
+  "contentSamples": {
+    "textFile": "This is a sample text file content.\nIt contains multiple lines of text.\nUsed for testing file operations.",
+    "jsonFile": {
+      "name": "Sample JSON",
+      "type": "test",
+      "properties": {
+        "version": "1.0",
+        "enabled": true,
+        "count": 42
+      },
+      "items": [
+        {"id": 1, "value": "first"},
+        {"id": 2, "value": "second"},
+        {"id": 3, "value": "third"}
+      ]
+    },
+    "csvFile": "id,name,category,price\n1,Product A,Electronics,99.99\n2,Product B,Clothing,49.99\n3,Product C,Home,149.99\n4,Product D,Office,29.99"
+  },
+  "sharePointCreateFolderResult": {
+    "success": true,
+    "folderName": "new-sharepoint-folder",
+    "path": "/new-sharepoint-folder",
+    "lastModified": "2025-03-29T09:35:00Z"
+  },
+  "sharePointDownloadResult": {
+    "success": true,
+    "fileName": "readme.txt",
+    "contentType": "text/plain",
+    "size": 1024
+  },
+  "sharePointDeleteFileResult": {
+    "success": true,
+    "path": "/introduction.docx"
+  },
+  "sharePointBatchCopyResult": {
+    "success": true,
+    "totalItems": 2,
+    "copiedItems": 2,
+    "failedItems": 0,
+    "sourceFolder": "/documents",
+    "destinationFolder": "/presentations",
+    "details": [
+      {
+        "fileName": "project-scope.docx",
+        "sourcePath": "/documents/project-scope.docx",
+        "destinationPath": "/presentations/project-scope.docx",
+        "success": true
+      },
+      {
+        "fileName": "meeting-notes.docx",
+        "sourcePath": "/documents/meeting-notes.docx",
+        "destinationPath": "/presentations/meeting-notes.docx",
+        "success": true
+      }
+    ]
+  },
+  "sharePointBatchMoveResult": {
+    "success": true,
+    "totalItems": 2,
+    "movedItems": 2,
+    "failedItems": 0,
+    "sourceFolder": "/documents",
+    "destinationFolder": "/new-sharepoint-folder",
+    "details": [
+      {
+        "fileName": "project-scope.docx",
+        "sourcePath": "/documents/project-scope.docx",
+        "destinationPath": "/new-sharepoint-folder/project-scope.docx",
+        "success": true
+      },
+      {
+        "fileName": "meeting-notes.docx",
+        "sourcePath": "/documents/meeting-notes.docx",
+        "destinationPath": "/new-sharepoint-folder/meeting-notes.docx",
+        "success": true
+      }
+    ]
+  },
+  "sharePointBatchDeleteResult": {
+    "success": true,
+    "totalItems": 2,
+    "deletedItems": 2,
+    "failedItems": 0,
+    "details": [
+      {
+        "fileName": "project-scope.docx",
+        "path": "/documents/project-scope.docx",
+        "success": true
+      },
+      {
+        "fileName": "meeting-notes.docx",
+        "path": "/documents/meeting-notes.docx",
+        "success": true
+      }
+    ]
+  }
+}

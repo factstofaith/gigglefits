@@ -1,481 +1,226 @@
-// IntegrationDetailPage.jsx
-// -----------------------------------------------------------------------------
-// Page to display details of a specific integration and manage field mappings
+import React, { useState, useCallback, useEffect } from 'react';
+import { Container, Typography, Box, Paper, Button, Tabs, Tab } from '../design-system/optimized';
+import { useParams } from 'react-router-dom';
 
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import {
-  Box,
-  Container,
-  Typography,
-  Card,
-  CardContent,
-  Grid,
-  Button,
-  Chip,
-  IconButton,
-  Tabs,
-  Tab,
-  CircularProgress,
-  Breadcrumbs,
-  Link,
-  Divider
-} from '@mui/material';
-import {
-  ArrowBack as ArrowBackIcon,
-  PlayArrow as RunIcon,
-  Edit as EditIcon,
-  Delete as DeleteIcon,
-  Refresh as RefreshIcon
-} from '@mui/icons-material';
+// Import components
+import IntegrationFlowCanvas from '../components/integration/flow/IntegrationFlowCanvas';
+import AzureBlobConfiguration from '../components/integration/AzureBlobConfiguration';
 
-import FieldMappingEditor from '../components/integration/FieldMappingEditor';
-import IntegrationHealthBar from '../components/common/IntegrationHealthBar';
-import IntegrationStatsBar from '../components/common/IntegrationStatsBar';
-import StatusDisplay from '../components/common/StatusDisplay';
-import IntegrationDetailView from '../components/integration/IntegrationDetailView';
-import UserRoleSwitcher from '../components/integration/UserRoleSwitcher';
-
-import {
-  getIntegrationById,
-  getIntegrationHistory,
-  runIntegration,
-  deleteIntegration
-} from '../services/integrationService';
-
-// TabPanel component for tab content
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`integration-tabpanel-${index}`}
-      aria-labelledby={`integration-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ py: 3 }}>
-          {children}
-        </Box>
-      )}
-    </div>
-  );
-}
-
-// Convert status to chip color
-const getStatusColor = (status) => {
-  switch(status) {
-    case 'success': return 'success';
-    case 'warning': return 'warning';
-    case 'error': return 'error';
-    case 'running': return 'info';
-    default: return 'default';
-  }
-};
-
-export default function IntegrationDetailPage() {
+/**
+ * Integration Detail Page - Shows details for a specific integration
+ */
+const IntegrationDetailPage = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
-  const location = useLocation();
+  const [activeTab, setActiveTab] = useState(0);
+  const [configTab, setConfigTab] = useState(0);
+  const [readOnly, setReadOnly] = useState(true);
+  const [flowElements, setFlowElements] = useState([]);
   
-  const [integration, setIntegration] = useState(null);
-  const [history, setHistory] = useState([]);
-  const [loading, setLoading] = useState({
-    integration: true,
-    history: true,
-    running: false
+  // Configuration state
+  const [sourceConfig, setSourceConfig] = useState({
+    authMethod: 'connectionString',
+    connectionString: 'DefaultEndpointsProtocol=https;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;EndpointSuffix=core.windows.net',
+    containerName: 'datasets',
+    filePattern: '*.csv',
+    path: 'daily/',
+    createContainerIfNotExists: true
   });
-  // Set the initial tab value based on URL state, default to 0 (field mappings)
-  const initialTab = location.state?.tab === 'history' ? 1 : 0;
-  const [tabValue, setTabValue] = useState(initialTab);
-  const [error, setError] = useState(null);
+  const [configErrors, setConfigErrors] = useState({
+    source: {},
+    destination: {}
+  });
+  
+  // Mock user permissions for demonstration
+  const userPermissions = ['database.read', 'database.write', 'script.execute', 'ai.access', 'admin.access'];
 
-  // Fetch integration details
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(prev => ({ ...prev, integration: true }));
-        const data = await getIntegrationById(id);
-        setIntegration(data);
-      } catch (error) {
-        console.error('Error fetching integration:', error);
-        setError('Failed to load integration details. Please try again.');
-      } finally {
-        setLoading(prev => ({ ...prev, integration: false }));
-      }
-    };
-
-    fetchData();
-  }, [id]);
-
-  // Fetch integration history
-  useEffect(() => {
-    const fetchHistory = async () => {
-      try {
-        setLoading(prev => ({ ...prev, history: true }));
-        const data = await getIntegrationHistory(id);
-        setHistory(data);
-      } catch (error) {
-        console.error('Error fetching integration history:', error);
-        // Don't set error state here to avoid blocking the whole page
-      } finally {
-        setLoading(prev => ({ ...prev, history: false }));
-      }
-    };
-
-    fetchHistory();
-  }, [id]);
-
-  // Handle tab change
   const handleTabChange = (event, newValue) => {
-    setTabValue(newValue);
+    setActiveTab(newValue);
   };
-
-  // Run the integration
-  const handleRunIntegration = async () => {
-    try {
-      setLoading(prev => ({ ...prev, running: true }));
-      await runIntegration(id);
-      
-      // Refresh history after running
-      const data = await getIntegrationHistory(id);
-      setHistory(data);
-      
-      // Show success message (in a real app, you'd use a notification system)
-      alert('Integration run started successfully');
-    } catch (error) {
-      console.error('Error running integration:', error);
-      alert('Failed to run integration. Please try again.');
-    } finally {
-      setLoading(prev => ({ ...prev, running: false }));
-    }
+  
+  const handleConfigTabChange = (event, newValue) => {
+    setConfigTab(newValue);
   };
-
-  // Delete the integration
-  const handleDeleteIntegration = async () => {
-    if (!window.confirm('Are you sure you want to delete this integration? This action cannot be undone.')) {
-      return;
+  
+  const handleSourceConfigChange = (newConfig) => {
+    setSourceConfig(newConfig);
+    
+    // Simple validation
+    const errors = {};
+    if (newConfig.authMethod === 'connectionString' && !newConfig.connectionString) {
+      errors.connectionString = 'Connection string is required';
+    } else if (newConfig.authMethod === 'accountKey') {
+      if (!newConfig.accountName) errors.accountName = 'Account name is required';
+      if (!newConfig.accountKey) errors.accountKey = 'Account key is required';
+    } else if (newConfig.authMethod === 'sasToken') {
+      if (!newConfig.accountName) errors.accountName = 'Account name is required';
+      if (!newConfig.sasToken) errors.sasToken = 'SAS token is required';
+    } else if (newConfig.authMethod === 'managedIdentity' && !newConfig.accountName) {
+      errors.accountName = 'Account name is required for managed identity';
     }
     
-    try {
-      await deleteIntegration(id);
-      navigate('/integrations');
-    } catch (error) {
-      console.error('Error deleting integration:', error);
-      alert('Failed to delete integration. Please try again.');
+    if (!newConfig.containerName) {
+      errors.containerName = 'Container name is required';
     }
+    
+    setConfigErrors({
+      ...configErrors,
+      source: errors
+    });
   };
+  
+  const handleEditToggle = useCallback(() => {
+    setReadOnly(!readOnly);
+  }, [readOnly]);
+  
+  const handleFlowSave = useCallback((elements) => {
+    console.log('Saving flow:', elements);
+    // Here you would save the flow to your backend
+    setFlowElements(elements);
+  }, []);
+  
+  const handleFlowRun = useCallback((elements) => {
+    console.log('Running flow:', elements);
+    // Here you would trigger the flow execution
+  }, []);
+  
+  const handleFlowChange = useCallback((elements) => {
+    // Handle flow changes without saving
+    setFlowElements(elements);
+  }, []);
 
-  // Format date for display
-  const formatDate = (dateString) => {
-    const options = { 
-      year: 'numeric', 
-      month: 'short', 
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    };
-    return new Date(dateString).toLocaleDateString(undefined, options);
-  };
-
-  // Handle user role changes for testing
-  const handleRoleChange = (role) => {
-    console.log(`User role changed to: ${role}`);
-    // Refresh the page to update permissions
-    window.location.reload();
-  };
-
-  // If using the new IntegrationDetailView component
-  if (id && integration) {
-    return (
-      <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-        {/* Development helper to switch between roles */}
-        <UserRoleSwitcher onRoleChange={handleRoleChange} />
-        
-        <IntegrationDetailView integrationId={id} />
-      </Container>
-    );
-  }
-
-  // Fallback to original implementation
   return (
-    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-      <StatusDisplay
-        loading={loading.integration}
-        error={error}
-        isEmpty={!integration}
-        emptyMessage="Integration not found"
-        onRetry={() => window.location.reload()}
-      >
-        {integration && (
-          <>
-            {/* Breadcrumb navigation */}
-            <Breadcrumbs aria-label="breadcrumb" sx={{ mb: 2 }}>
-        <Link underline="hover" color="inherit" href="/">
-          Home
-        </Link>
-        <Link underline="hover" color="inherit" href="/integrations">
-          Integrations
-        </Link>
-        <Typography color="text.primary">{integration.name}</Typography>
-      </Breadcrumbs>
-      
-      {/* Header with actions */}
-      <Box display="flex" alignItems="center" justifyContent="space-between" mb={3}>
-        <Box display="flex" alignItems="center">
-          <IconButton 
-            onClick={() => navigate('/integrations')}
-            aria-label="Back to integrations"
+    <Container maxWidth="lg">
+      <Box my={4}>
+        <Typography variant="h4" component="h1" gutterBottom>
+          Integration Details
+        </Typography>
+        
+        <Typography variant="subtitle1" color="textSecondary" gutterBottom>
+          ID: {id}
+        </Typography>
+        
+        <Box display="flex" justifyContent="flex-end" mb={2}>
+          <Button 
+            variant="outlined" 
+            color={readOnly ? "primary" : "success"}
             sx={{ mr: 1 }}
+            onClick={handleEditToggle}
           >
-            <ArrowBackIcon />
-          </IconButton>
-          <Typography variant="h4" component="h1">
-            {integration.name}
-          </Typography>
-          <Chip 
-            label={integration.type} 
-            color="primary" 
-            size="small" 
-            variant="outlined"
-            sx={{ ml: 2 }}
-          />
-          <Chip 
-            label={integration.health || 'unknown'} 
-            color={getStatusColor(integration.health)}
-            size="small"
-            sx={{ ml: 1 }}
-          />
-        </Box>
-        <Box>
-          <Button
-            variant="contained"
+            {readOnly ? "Edit" : "Editing..."}
+          </Button>
+          <Button 
+            variant="contained" 
             color="primary"
-            startIcon={<RunIcon />}
-            onClick={handleRunIntegration}
-            disabled={loading.running}
-            sx={{ mr: 1 }}
+            onClick={() => handleFlowRun(flowElements)}
           >
-            {loading.running ? 'Running...' : 'Run Now'}
-          </Button>
-          <Button
-            variant="outlined"
-            startIcon={<EditIcon />}
-            sx={{ mr: 1 }}
-          >
-            Edit
-          </Button>
-          <Button
-            variant="outlined"
-            color="error"
-            startIcon={<DeleteIcon />}
-            onClick={handleDeleteIntegration}
-          >
-            Delete
+            Run Now
           </Button>
         </Box>
-      </Box>
-      
-      {/* Integration summary */}
-      <Card sx={{ mb: 3 }}>
-        <CardContent>
-          <Grid container spacing={2}>
-            <Grid item xs={12} md={6}>
-              <Typography variant="subtitle2" color="text.secondary">
-                Source
-              </Typography>
-              <Typography variant="body1" gutterBottom>
-                {integration.source}
-              </Typography>
-              
-              <Typography variant="subtitle2" color="text.secondary">
-                Destination
-              </Typography>
-              <Typography variant="body1" gutterBottom>
-                {integration.destination}
-              </Typography>
-              
-              <Typography variant="subtitle2" color="text.secondary">
-                Schedule
-              </Typography>
-              <Typography variant="body1" gutterBottom>
-                {integration.schedule}
-              </Typography>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <Typography variant="subtitle2" color="text.secondary">
-                Last Run
-              </Typography>
-              <Typography variant="body1" gutterBottom>
-                {history[0] ? formatDate(history[0].start_time) : 'Never'}
-              </Typography>
-              
-              <Typography variant="subtitle2" color="text.secondary">
-                Created
-              </Typography>
-              <Typography variant="body1" gutterBottom>
-                {integration.created_at ? formatDate(integration.created_at) : 'Unknown'}
-              </Typography>
-              
-              <Typography variant="subtitle2" color="text.secondary">
-                Last Updated
-              </Typography>
-              <Typography variant="body1" gutterBottom>
-                {integration.updated_at ? formatDate(integration.updated_at) : 'Unknown'}
-              </Typography>
-            </Grid>
-          </Grid>
-          
-          {/* Stats visualization */}
-          <Divider sx={{ my: 2 }} />
-          <Box sx={{ mb: 2 }}>
-            <IntegrationHealthBar health={integration.health} />
-          </Box>
-          
-          <IntegrationStatsBar 
-            stats={[
-              { label: 'Success Rate', value: '92%' },
-              { label: 'Avg. Duration', value: '3.5m' },
-              { label: 'Records Processed', value: history[0]?.records_processed || 0 }
-            ]}
-          />
-        </CardContent>
-      </Card>
-      
-      {/* Tabs for different sections */}
-      <Box sx={{ width: '100%' }}>
-        <Tabs 
-          value={tabValue} 
-          onChange={handleTabChange}
-          variant="scrollable"
-          scrollButtons="auto"
-        >
-          <Tab label="Field Mappings" />
-          <Tab label="Run History" />
-          <Tab label="Settings" />
-        </Tabs>
         
-        {/* Field Mappings Tab */}
-        <TabPanel value={tabValue} index={0}>
-          <FieldMappingEditor 
-            integrationId={id} 
-            onUpdate={() => {/* Refresh integration details if needed */}}
-          />
-        </TabPanel>
-        
-        {/* Run History Tab */}
-        <TabPanel value={tabValue} index={1}>
-          <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
-            <Typography variant="h6">Run History</Typography>
-            <Button 
-              startIcon={<RefreshIcon />}
-              size="small"
-              onClick={async () => {
-                setLoading(prev => ({ ...prev, history: true }));
-                try {
-                  const data = await getIntegrationHistory(id);
-                  setHistory(data);
-                } finally {
-                  setLoading(prev => ({ ...prev, history: false }));
-                }
-              }}
-              disabled={loading.history}
-            >
-              Refresh
-            </Button>
-          </Box>
+        <Paper sx={{ mb: 4 }}>
+          <Tabs value={activeTab} onChange={handleTabChange} aria-label="integration tabs">
+            <Tab label="Overview" />
+            <Tab label="Flow Designer" />
+            <Tab label="Configuration" />
+            <Tab label="History" />
+            <Tab label="Monitoring" />
+          </Tabs>
           
-          <StatusDisplay
-            loading={loading.history}
-            isEmpty={history.length === 0}
-            emptyMessage="No run history available"
-          >
-            {history.length > 0 && (
-            <Box>
-              {history.map((run, index) => (
-                <Card key={run.id} sx={{ mb: 2 }}>
-                  <CardContent>
-                    <Grid container spacing={2}>
-                      <Grid item xs={12} sm={3}>
-                        <Typography variant="subtitle2" color="text.secondary">
-                          Status
-                        </Typography>
-                        <Chip 
-                          label={run.status} 
-                          color={getStatusColor(run.status)}
-                          size="small"
-                        />
-                      </Grid>
-                      <Grid item xs={12} sm={3}>
-                        <Typography variant="subtitle2" color="text.secondary">
-                          Start Time
-                        </Typography>
-                        <Typography variant="body2">
-                          {formatDate(run.start_time)}
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={12} sm={3}>
-                        <Typography variant="subtitle2" color="text.secondary">
-                          End Time
-                        </Typography>
-                        <Typography variant="body2">
-                          {run.end_time ? formatDate(run.end_time) : 'Running...'}
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={12} sm={3}>
-                        <Typography variant="subtitle2" color="text.secondary">
-                          Records Processed
-                        </Typography>
-                        <Typography variant="body2">
-                          {run.records_processed || '-'}
-                        </Typography>
-                      </Grid>
-                      
-                      {run.warnings && run.warnings.length > 0 && (
-                        <Grid item xs={12}>
-                          <Typography variant="subtitle2" color="warning.main">
-                            Warnings:
-                          </Typography>
-                          <ul>
-                            {run.warnings.map((warning, i) => (
-                              <li key={i}><Typography variant="body2">{warning}</Typography></li>
-                            ))}
-                          </ul>
-                        </Grid>
-                      )}
-                      
-                      {run.error && (
-                        <Grid item xs={12}>
-                          <Typography variant="subtitle2" color="error">
-                            Error:
-                          </Typography>
-                          <Typography variant="body2">{run.error}</Typography>
-                        </Grid>
-                      )}
-                    </Grid>
-                  </CardContent>
-                </Card>
-              ))}
-            </Box>
+          <Box>
+            {activeTab === 0 && (
+              <Box sx={{ p: 3 }}>
+                <Typography variant="h6" gutterBottom>
+                  Integration Overview
+                </Typography>
+                <Typography paragraph>
+                  This integration is configured to sync data between systems.
+                </Typography>
+              </Box>
             )}
-          </StatusDisplay>
-        </TabPanel>
-        
-        {/* Settings Tab */}
-        <TabPanel value={tabValue} index={2}>
-          <Typography variant="h6" gutterBottom>
-            Integration Settings
-          </Typography>
-          <Typography color="text.secondary">
-            Settings management will be implemented in a future update.
-          </Typography>
-        </TabPanel>
+            
+            {activeTab === 1 && (
+              <Box sx={{ height: '70vh' }}>
+                <IntegrationFlowCanvas
+                  initialElements={flowElements}
+                  readOnly={readOnly}
+                  userPermissions={userPermissions}
+                  onSave={handleFlowSave}
+                  onRun={handleFlowRun}
+                  onChange={handleFlowChange}
+                />
+              </Box>
+            )}
+            
+            {activeTab === 2 && (
+              <Box sx={{ p: 3 }}>
+                <Typography variant="h6" gutterBottom>
+                  Configuration Details
+                </Typography>
+                
+                <Box mt={3}>
+                  <Tabs value={configTab} onChange={handleConfigTabChange} aria-label="configuration tabs">
+                    <Tab label="Source" />
+                    <Tab label="Destination" />
+                    <Tab label="Advanced" />
+                  </Tabs>
+                  
+                  {configTab === 0 && (
+                    <Box mt={2}>
+                      <AzureBlobConfiguration 
+                        config={sourceConfig}
+                        onChange={handleSourceConfigChange}
+                        errors={configErrors.source || {}}
+                        readOnly={readOnly}
+                        isSuperUser={userPermissions.includes('admin.access')}
+                      />
+                    </Box>
+                  )}
+                  
+                  {configTab === 1 && (
+                    <Box mt={2}>
+                      <Typography variant="body1">
+                        Configure destination settings here. This will be replaced with actual destination configuration components.
+                      </Typography>
+                    </Box>
+                  )}
+                  
+                  {configTab === 2 && (
+                    <Box mt={2}>
+                      <Typography variant="body1">
+                        Advanced configuration options such as error handling, validation, and notification settings.
+                      </Typography>
+                    </Box>
+                  )}
+                </Box>
+              </Box>
+            )}
+            
+            {activeTab === 3 && (
+              <Box sx={{ p: 3 }}>
+                <Typography variant="h6" gutterBottom>
+                  Execution History
+                </Typography>
+                <Typography paragraph>
+                  View past runs and their outcomes.
+                </Typography>
+              </Box>
+            )}
+            
+            {activeTab === 4 && (
+              <Box sx={{ p: 3 }}>
+                <Typography variant="h6" gutterBottom>
+                  Monitoring & Alerts
+                </Typography>
+                <Typography paragraph>
+                  Configure monitoring settings and alerts.
+                </Typography>
+              </Box>
+            )}
+          </Box>
+        </Paper>
       </Box>
-          </>
-        )}
-      </StatusDisplay>
     </Container>
   );
-}
+};
+
+export default IntegrationDetailPage;

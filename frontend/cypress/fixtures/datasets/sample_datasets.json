@@ -1,0 +1,434 @@
+{
+  "basicDataset": {
+    "name": "Employee Data",
+    "description": "Basic employee record structure for testing",
+    "type": "JSON",
+    "tags": ["employee", "test", "e2e"],
+    "schema": {
+      "type": "object",
+      "properties": {
+        "employee_id": {
+          "type": "string",
+          "description": "Unique identifier for the employee"
+        },
+        "first_name": {
+          "type": "string",
+          "description": "Employee's first name"
+        },
+        "last_name": {
+          "type": "string",
+          "description": "Employee's last name"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Employee's email address"
+        },
+        "hire_date": {
+          "type": "string",
+          "format": "date",
+          "description": "Date the employee was hired"
+        },
+        "department": {
+          "type": "string",
+          "description": "Department the employee belongs to"
+        },
+        "salary": {
+          "type": "number",
+          "description": "Employee's annual salary"
+        }
+      },
+      "required": ["employee_id", "first_name", "last_name", "email", "hire_date", "department"]
+    }
+  },
+  "complexDataset": {
+    "name": "Sales Transactions",
+    "description": "Complex sales transaction data with nested structures",
+    "type": "JSON",
+    "tags": ["sales", "transactions", "complex"],
+    "schema": {
+      "type": "object",
+      "properties": {
+        "transaction_id": {
+          "type": "string",
+          "description": "Unique transaction identifier"
+        },
+        "customer": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Customer identifier"
+            },
+            "name": {
+              "type": "string",
+              "description": "Customer name"
+            },
+            "contact": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "format": "email",
+                  "description": "Customer email"
+                },
+                "phone": {
+                  "type": "string",
+                  "description": "Customer phone number"
+                },
+                "address": {
+                  "type": "object",
+                  "properties": {
+                    "street": {
+                      "type": "string"
+                    },
+                    "city": {
+                      "type": "string"
+                    },
+                    "state": {
+                      "type": "string"
+                    },
+                    "zip": {
+                      "type": "string"
+                    },
+                    "country": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": ["id", "name"]
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "product_id": {
+                "type": "string",
+                "description": "Product identifier"
+              },
+              "product_name": {
+                "type": "string",
+                "description": "Product name"
+              },
+              "quantity": {
+                "type": "integer",
+                "description": "Quantity purchased"
+              },
+              "unit_price": {
+                "type": "number",
+                "description": "Price per unit"
+              },
+              "discount": {
+                "type": "number",
+                "description": "Discount amount"
+              },
+              "tax": {
+                "type": "number",
+                "description": "Tax amount"
+              }
+            },
+            "required": ["product_id", "product_name", "quantity", "unit_price"]
+          }
+        },
+        "payment": {
+          "type": "object",
+          "properties": {
+            "method": {
+              "type": "string",
+              "enum": ["credit_card", "debit_card", "cash", "wire_transfer", "check"],
+              "description": "Payment method"
+            },
+            "amount": {
+              "type": "number",
+              "description": "Total payment amount"
+            },
+            "currency": {
+              "type": "string",
+              "description": "Payment currency"
+            },
+            "status": {
+              "type": "string",
+              "enum": ["pending", "completed", "failed", "refunded"],
+              "description": "Payment status"
+            },
+            "timestamp": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Payment timestamp"
+            }
+          },
+          "required": ["method", "amount", "currency", "status"]
+        },
+        "metadata": {
+          "type": "object",
+          "properties": {
+            "store_id": {
+              "type": "string",
+              "description": "Store identifier"
+            },
+            "employee_id": {
+              "type": "string",
+              "description": "Employee who processed the transaction"
+            },
+            "device_id": {
+              "type": "string",
+              "description": "Device used for the transaction"
+            },
+            "location": {
+              "type": "object",
+              "properties": {
+                "latitude": {
+                  "type": "number"
+                },
+                "longitude": {
+                  "type": "number"
+                }
+              }
+            },
+            "tags": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Transaction creation timestamp"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Transaction last update timestamp"
+        }
+      },
+      "required": ["transaction_id", "customer", "items", "payment", "created_at"]
+    }
+  },
+  "csvDataset": {
+    "name": "Monthly Sales Report",
+    "description": "CSV-formatted monthly sales data",
+    "type": "CSV",
+    "tags": ["sales", "monthly", "report"],
+    "schema": {
+      "type": "object",
+      "properties": {
+        "date": {
+          "type": "string",
+          "format": "date",
+          "description": "Sales date"
+        },
+        "region": {
+          "type": "string",
+          "description": "Sales region"
+        },
+        "product_category": {
+          "type": "string",
+          "description": "Product category"
+        },
+        "product_subcategory": {
+          "type": "string",
+          "description": "Product subcategory"
+        },
+        "units_sold": {
+          "type": "integer",
+          "description": "Number of units sold"
+        },
+        "revenue": {
+          "type": "number",
+          "description": "Total revenue"
+        },
+        "cost": {
+          "type": "number",
+          "description": "Total cost"
+        },
+        "profit": {
+          "type": "number",
+          "description": "Total profit"
+        }
+      },
+      "required": ["date", "region", "product_category", "units_sold", "revenue", "cost", "profit"]
+    }
+  },
+  "xmlDataset": {
+    "name": "Inventory Data",
+    "description": "XML-formatted inventory data",
+    "type": "XML",
+    "tags": ["inventory", "products", "stock"],
+    "schema": {
+      "type": "object",
+      "properties": {
+        "inventory": {
+          "type": "object",
+          "properties": {
+            "product": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "sku": {
+                    "type": "string",
+                    "description": "Stock keeping unit"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Product name"
+                  },
+                  "category": {
+                    "type": "string",
+                    "description": "Product category"
+                  },
+                  "price": {
+                    "type": "number",
+                    "description": "Product price"
+                  },
+                  "quantity": {
+                    "type": "integer",
+                    "description": "Quantity in stock"
+                  },
+                  "reorder_level": {
+                    "type": "integer",
+                    "description": "Level at which to reorder"
+                  },
+                  "supplier": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "contact": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "last_updated": {
+                    "type": "string",
+                    "format": "date-time"
+                  }
+                },
+                "required": ["sku", "name", "quantity"]
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "sampleData": {
+    "employeeData": [
+      {
+        "employee_id": "EMP001",
+        "first_name": "John",
+        "last_name": "Doe",
+        "email": "john.doe@example.com",
+        "hire_date": "2022-01-15",
+        "department": "Engineering",
+        "salary": 75000
+      },
+      {
+        "employee_id": "EMP002",
+        "first_name": "Jane",
+        "last_name": "Smith",
+        "email": "jane.smith@example.com",
+        "hire_date": "2021-06-20",
+        "department": "Marketing",
+        "salary": 85000
+      },
+      {
+        "employee_id": "EMP003",
+        "first_name": "Michael",
+        "last_name": "Johnson",
+        "email": "michael.johnson@example.com",
+        "hire_date": "2022-03-10",
+        "department": "Sales",
+        "salary": 80000
+      }
+    ],
+    "salesTransaction": {
+      "transaction_id": "TX12345",
+      "customer": {
+        "id": "CUST789",
+        "name": "Acme Corporation",
+        "contact": {
+          "email": "contact@acme.com",
+          "phone": "555-123-4567",
+          "address": {
+            "street": "123 Main St",
+            "city": "Springfield",
+            "state": "IL",
+            "zip": "62701",
+            "country": "USA"
+          }
+        }
+      },
+      "items": [
+        {
+          "product_id": "PROD001",
+          "product_name": "Widget A",
+          "quantity": 5,
+          "unit_price": 19.99,
+          "discount": 5.00,
+          "tax": 7.50
+        },
+        {
+          "product_id": "PROD002",
+          "product_name": "Widget B",
+          "quantity": 2,
+          "unit_price": 29.99,
+          "discount": 0,
+          "tax": 4.50
+        }
+      ],
+      "payment": {
+        "method": "credit_card",
+        "amount": 153.93,
+        "currency": "USD",
+        "status": "completed",
+        "timestamp": "2023-05-15T14:30:45Z"
+      },
+      "metadata": {
+        "store_id": "STORE005",
+        "employee_id": "EMP042",
+        "device_id": "POS-TERM-22",
+        "location": {
+          "latitude": 39.78373,
+          "longitude": -89.65038
+        },
+        "tags": ["vip-customer", "promotion"]
+      },
+      "created_at": "2023-05-15T14:30:45Z",
+      "updated_at": "2023-05-15T14:30:45Z"
+    },
+    "monthlySalesCsv": "date,region,product_category,product_subcategory,units_sold,revenue,cost,profit\n2023-01-01,North,Electronics,Smartphones,120,60000,45000,15000\n2023-01-01,North,Electronics,Tablets,45,22500,16875,5625\n2023-01-01,South,Electronics,Smartphones,85,42500,31875,10625\n2023-01-01,South,Electronics,Tablets,35,17500,13125,4375\n2023-01-01,East,Electronics,Smartphones,95,47500,35625,11875\n2023-01-01,East,Electronics,Tablets,55,27500,20625,6875\n2023-01-01,West,Electronics,Smartphones,145,72500,54375,18125\n2023-01-01,West,Electronics,Tablets,65,32500,24375,8125",
+    "inventoryXml": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<inventory>\n  <product>\n    <sku>PROD001</sku>\n    <name>Widget A</name>\n    <category>Widgets</category>\n    <price>19.99</price>\n    <quantity>234</quantity>\n    <reorder_level>50</reorder_level>\n    <supplier>\n      <id>SUP123</id>\n      <name>Widget Supplier Inc.</name>\n      <contact>sales@widgetsupplier.com</contact>\n    </supplier>\n    <last_updated>2023-05-10T09:30:45Z</last_updated>\n  </product>\n  <product>\n    <sku>PROD002</sku>\n    <name>Widget B</name>\n    <category>Widgets</category>\n    <price>29.99</price>\n    <quantity>156</quantity>\n    <reorder_level>40</reorder_level>\n    <supplier>\n      <id>SUP123</id>\n      <name>Widget Supplier Inc.</name>\n      <contact>sales@widgetsupplier.com</contact>\n    </supplier>\n    <last_updated>2023-05-11T10:15:22Z</last_updated>\n  </product>\n  <product>\n    <sku>PROD003</sku>\n    <name>Gadget C</name>\n    <category>Gadgets</category>\n    <price>49.99</price>\n    <quantity>78</quantity>\n    <reorder_level>25</reorder_level>\n    <supplier>\n      <id>SUP456</id>\n      <name>Gadget Makers LLC</name>\n      <contact>info@gadgetmakers.com</contact>\n    </supplier>\n    <last_updated>2023-05-12T14:45:36Z</last_updated>\n  </product>\n</inventory>"
+  },
+  "validationExamples": {
+    "validEmployeeData": {
+      "employee_id": "EMP004",
+      "first_name": "Sarah",
+      "last_name": "Williams",
+      "email": "sarah.williams@example.com",
+      "hire_date": "2022-09-15",
+      "department": "Finance",
+      "salary": 90000
+    },
+    "invalidEmployeeData": {
+      "employee_id": "EMP005",
+      "first_name": "Robert",
+      "last_name": "",
+      "email": "not-an-email",
+      "hire_date": "invalid-date",
+      "department": "IT",
+      "salary": "invalid-salary"
+    }
+  }
+}

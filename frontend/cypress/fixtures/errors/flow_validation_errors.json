@@ -1,0 +1,53 @@
+{
+  "testIntegration": {
+    "name": "Error Recovery Test Integration",
+    "description": "Integration for testing error recovery functionality",
+    "type": "DATA_TRANSFORMATION",
+    "schedule": "MANUAL",
+    "tags": ["test", "error", "recovery", "e2e"]
+  },
+  "expectedErrors": {
+    "missingConnection": {
+      "code": "MISSING_CONNECTION",
+      "message": "Node is not connected to a destination",
+      "severity": "ERROR",
+      "nodeType": "TRANSFORM"
+    },
+    "missingConfiguration": {
+      "code": "MISSING_CONFIGURATION",
+      "message": "Node is missing required configuration",
+      "severity": "ERROR",
+      "nodeType": "JSON_SOURCE"
+    },
+    "invalidMapping": {
+      "code": "INVALID_MAPPING",
+      "message": "Field mapping is invalid or incomplete",
+      "severity": "ERROR",
+      "nodeType": "TRANSFORM"
+    }
+  },
+  "validatedFlow": {
+    "sourceNodeConfig": {
+      "source_type": "INLINE",
+      "data": "{\"test\": \"data\", \"number\": 42, \"boolean\": true}"
+    },
+    "transformNodeConfig": {
+      "mappings": [
+        {
+          "sourceField": "test",
+          "targetField": "result",
+          "transformationType": "PASSTHROUGH"
+        },
+        {
+          "sourceField": "number",
+          "targetField": "value",
+          "transformationType": "TO_STRING"
+        }
+      ]
+    },
+    "destinationNodeConfig": {
+      "destination_type": "MEMORY",
+      "format": "JSON"
+    }
+  }
+}

@@ -1,0 +1,90 @@
+[
+  {
+    "id": "user-001",
+    "tenantId": "tenant-001",
+    "email": "john.smith@acme.example.com",
+    "firstName": "John",
+    "lastName": "Smith",
+    "role": "TenantAdmin",
+    "status": "Active",
+    "lastLogin": "2025-03-15T09:30:00Z",
+    "createdAt": "2024-09-16T10:15:00Z"
+  },
+  {
+    "id": "user-002",
+    "tenantId": "tenant-001",
+    "email": "sarah.jones@acme.example.com",
+    "firstName": "Sarah",
+    "lastName": "Jones",
+    "role": "User",
+    "status": "Active",
+    "lastLogin": "2025-03-14T14:45:00Z",
+    "createdAt": "2024-10-05T11:30:00Z"
+  },
+  {
+    "id": "user-003",
+    "tenantId": "tenant-001",
+    "email": "michael.brown@acme.example.com",
+    "firstName": "Michael",
+    "lastName": "Brown",
+    "role": "IntegrationDeveloper",
+    "status": "Active",
+    "lastLogin": "2025-03-10T16:20:00Z",
+    "createdAt": "2024-11-12T09:45:00Z"
+  },
+  {
+    "id": "user-004",
+    "tenantId": "tenant-002",
+    "email": "emily.wilson@techsolutions.example.com",
+    "firstName": "Emily",
+    "lastName": "Wilson",
+    "role": "TenantAdmin",
+    "status": "Active",
+    "lastLogin": "2025-03-15T08:15:00Z",
+    "createdAt": "2024-11-06T13:00:00Z"
+  },
+  {
+    "id": "user-005",
+    "tenantId": "tenant-002",
+    "email": "robert.johnson@techsolutions.example.com",
+    "firstName": "Robert",
+    "lastName": "Johnson",
+    "role": "User",
+    "status": "Inactive",
+    "lastLogin": "2025-02-28T11:20:00Z",
+    "createdAt": "2024-12-15T10:30:00Z"
+  },
+  {
+    "id": "user-006",
+    "tenantId": "tenant-003",
+    "email": "jennifer.davis@globalfinancial.example.com",
+    "firstName": "Jennifer",
+    "lastName": "Davis",
+    "role": "TenantAdmin",
+    "status": "Active",
+    "lastLogin": "2025-03-16T09:10:00Z",
+    "createdAt": "2024-08-23T14:15:00Z"
+  },
+  {
+    "id": "user-007",
+    "tenantId": "tenant-003",
+    "email": "david.martinez@globalfinancial.example.com",
+    "firstName": "David",
+    "lastName": "Martinez",
+    "role": "IntegrationDeveloper",
+    "status": "Active",
+    "lastLogin": "2025-03-15T15:45:00Z",
+    "createdAt": "2024-09-10T11:30:00Z"
+  },
+  {
+    "id": "user-008",
+    "tenantId": "tenant-004",
+    "email": "lisa.taylor@healthcaresolutions.example.com",
+    "firstName": "Lisa",
+    "lastName": "Taylor",
+    "role": "TenantAdmin",
+    "status": "Active",
+    "lastLogin": "2025-02-20T10:15:00Z",
+    "createdAt": "2024-10-11T09:00:00Z"
+  }
+]

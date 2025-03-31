@@ -1,0 +1,30 @@
+[
+  {
+    "id": "sub-001",
+    "subscriptionId": "00000000-0000-0000-0000-000000000001",
+    "displayName": "TAP Development Subscription",
+    "state": "Enabled",
+    "tenantId": "11111111-1111-1111-1111-111111111111"
+  },
+  {
+    "id": "sub-002",
+    "subscriptionId": "00000000-0000-0000-0000-000000000002",
+    "displayName": "TAP Testing Subscription",
+    "state": "Enabled",
+    "tenantId": "11111111-1111-1111-1111-111111111111"
+  },
+  {
+    "id": "sub-003",
+    "subscriptionId": "00000000-0000-0000-0000-000000000003",
+    "displayName": "TAP Production Subscription",
+    "state": "Enabled",
+    "tenantId": "11111111-1111-1111-1111-111111111111"
+  },
+  {
+    "id": "sub-004",
+    "subscriptionId": "00000000-0000-0000-0000-000000000004",
+    "displayName": "TAP Disabled Subscription",
+    "state": "Disabled",
+    "tenantId": "11111111-1111-1111-1111-111111111111"
+  }
+]

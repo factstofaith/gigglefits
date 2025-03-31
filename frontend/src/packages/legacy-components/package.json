@@ -1,0 +1,7 @@
+{
+  "name": "legacy-components",
+  "version": "1.0.0",
+  "description": "Legacy components extracted from TAP Integration Platform",
+  "main": "index.js",
+  "private": true
+}

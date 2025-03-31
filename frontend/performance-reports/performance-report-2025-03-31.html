@@ -1,0 +1,5410 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Component Performance Analysis Report</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1, h2, h3 {
+      color: #0066cc;
+    }
+    .summary {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    .summary-card {
+      background-color: #f5f5f5;
+      border-radius: 5px;
+      padding: 15px;
+      flex: 1;
+    }
+    .severity-error {
+      color: #d32f2f;
+    }
+    .severity-warning {
+      color: #f57c00;
+    }
+    .severity-info {
+      color: #0288d1;
+    }
+    .component-card {
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    .component-header {
+      background-color: #f5f5f5;
+      padding: 10px 15px;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .component-body {
+      padding: 15px;
+    }
+    .issues-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .issues-table th, .issues-table td {
+      text-align: left;
+      padding: 8px;
+      border-bottom: 1px solid #ddd;
+    }
+    .issues-table th {
+      background-color: #f5f5f5;
+    }
+    .optimization-section {
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid #ddd;
+    }
+    .badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 3px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    .badge-error {
+      background-color: #ffebee;
+      color: #d32f2f;
+    }
+    .badge-warning {
+      background-color: #fff3e0;
+      color: #f57c00;
+    }
+    .badge-info {
+      background-color: #e1f5fe;
+      color: #0288d1;
+    }
+    .badge-success {
+      background-color: #e8f5e9;
+      color: #388e3c;
+    }
+  </style>
+</head>
+<body>
+  <h1>Component Performance Analysis Report</h1>
+  <p>Generated on 3/30/2025, 9:41:04 PM</p>
+  
+  <div class="summary">
+    <div class="summary-card">
+      <h3>Components Analyzed</h3>
+      <p><strong>72</strong> components</p>
+    </div>
+    <div class="summary-card">
+      <h3>Issues Found</h3>
+      <p>
+        <span class="severity-error">0 errors</span><br>
+        <span class="severity-warning">116 warnings</span><br>
+        <span class="severity-info">89 infos</span>
+      </p>
+    </div>
+    <div class="summary-card">
+      <h3>Top Optimizations</h3>
+      <p>
+        51 components need memoization<br>
+        29 callback optimizations<br>
+        125 render optimizations
+      </p>
+    </div>
+  </div>
+  
+  <h2>Component Analysis</h2>
+  
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>A11yIntegrationCreationDialog</h3>
+        <div>
+          <span class="badge badge-warning">5 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/A11yIntegrationCreationDialog.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> open, onClose, onSubmit</p>
+            <p><strong>State Variables:</strong> activeStep</p>
+            <p><strong>Hooks:</strong> useState, useContextualHelp, useRef, useRef, useA11yAnnouncement, useA11yKeyboard, useFormik, useEffect, useEffect</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 6 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>inline-function</td>
+                  <td>Found 3 inline function creation(s) in render. Consider using useCallback.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-callback-handler</td>
+                  <td>Found 1 event handler(s) not using useCallback.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>missing-perf-hooks</td>
+                  <td>Component with multiple props is not using performance hooks (useMemo, useCallback).</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+            <p><strong>Callback Optimizations:</strong></p>
+            <ul>
+              
+                <li>Wrap event handlers with useCallback</li>
+              
+            </ul>
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+                <li>Extract inline functions using useCallback</li>
+              
+                <li>Add useMemo and useCallback for expensive calculations and handlers</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>A11yIntegrationDetailView</h3>
+        <div>
+          <span class="badge badge-warning">5 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/A11yIntegrationDetailView.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> children, value, index, id, integrationId</p>
+            <p><strong>State Variables:</strong> integration, loading, error, activeTab, isEditing, isSuperUser, saving, runningIntegration</p>
+            <p><strong>Hooks:</strong> useState, useState, useState, useState, useState, useState, useState, useState, useRef, useRef, useA11yAnnouncement, useA11yKeyboard, useA11yFocus, useEffect, useEffect, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 56 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>inline-function</td>
+                  <td>Found 18 inline function creation(s) in render. Consider using useCallback.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-callback-handler</td>
+                  <td>Found 1 event handler(s) not using useCallback.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>excessive-state</td>
+                  <td>Component has 8 state variables. Consider consolidating state or using useReducer.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+            <p><strong>Callback Optimizations:</strong></p>
+            <ul>
+              
+                <li>Wrap event handlers with useCallback</li>
+              
+            </ul>
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+                <li>Extract inline functions using useCallback</li>
+              
+                <li>Consolidate related state variables or use useReducer</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>A11yScheduleConfiguration</h3>
+        <div>
+          <span class="badge badge-warning">3 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/A11yScheduleConfiguration.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> schedule, onChange, errors, readOnly</p>
+            <p><strong>State Variables:</strong> isEditingCron, cronValid, cronHumanReadable</p>
+            <p><strong>Hooks:</strong> useState, useState, useState, useRef, useA11yAnnouncement, useA11yKeyboard, useEffect, useEffect, useCallback, useCallback, useCallback</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 7 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-callback-handler</td>
+                  <td>Found 1 event handler(s) not using useCallback.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+            <p><strong>Callback Optimizations:</strong></p>
+            <ul>
+              
+                <li>Wrap event handlers with useCallback</li>
+              
+            </ul>
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>APISourceConfiguration</h3>
+        <div>
+          <span class="badge badge-warning">3 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/APISourceConfiguration.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> value, onChange, onTest, disabled</p>
+            <p><strong>State Variables:</strong> config, activeTab, testResults, testingInProgress, error, showPasswordFields, advancedSettingsOpen, showJsonEditor, rawJson, jsonError, headerToAdd, paramToAdd</p>
+            <p><strong>Hooks:</strong> useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useEffect, useEffect, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 46 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>excessive-state</td>
+                  <td>Component has 12 state variables. Consider consolidating state or using useReducer.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+                <li>Consolidate related state variables or use useReducer</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>AzureBlobConfiguration</h3>
+        <div>
+          <span class="badge badge-warning">5 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/AzureBlobConfiguration.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> config, onChange, errors, readOnly, isSuperUser</p>
+            <p><strong>State Variables:</strong> showSecrets, browserOpen, activeTab, testing, testResult, testSnackbarOpen, showPatternPreview, previewLoading, patternMatches, hasCredentials, showCredentialManager</p>
+            <p><strong>Hooks:</strong> useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useCallback, useCallback, useCallback, useCallback, useCallback</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 39 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>inline-function</td>
+                  <td>Found 4 inline function creation(s) in render. Consider using useCallback.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-callback-handler</td>
+                  <td>Found 1 event handler(s) not using useCallback.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>excessive-state</td>
+                  <td>Component has 11 state variables. Consider consolidating state or using useReducer.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+            <p><strong>Callback Optimizations:</strong></p>
+            <ul>
+              
+                <li>Wrap event handlers with useCallback</li>
+              
+            </ul>
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+                <li>Extract inline functions using useCallback</li>
+              
+                <li>Consolidate related state variables or use useReducer</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>DataPreview</h3>
+        <div>
+          <span class="badge badge-warning">5 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/DataPreview.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> data, maxHeight, data, columns, sortConfig, onSort, virtualized, page, rowsPerPage, onPageChange, onRowsPerPageChange, maxHeight, expandedRows, onRowExpand, loading, index, style, data, schema, isLoading, error, onRefresh, dataSource, maxHeight, showDownload, showFilters, showValidation, showSchemaInference, showQualityIndicators, showFileTypeDetection, initialViewMode, ariaLabel, emptyMessage, onDataUpdate, onSchemaInferred, onQualityAnalyzed, onFileTypeDetected</p>
+            <p><strong>State Variables:</strong> viewMode, page, rowsPerPage, expandedRows, sortConfig, searchTerm, filterColumn, activeFilters, filterAnchorEl, showStats, showValidationDetails, inferredSchema, showSchemaViewer, qualityResults, isAnalyzingQuality, fileTypeResult, selectedFile</p>
+            <p><strong>Hooks:</strong> useMemo, useCallback, useCallback, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useRef, useState, useState, useState, useState, useState, useState, useMemo, useMemo, useMemo, useEffect, useEffect, useEffect, useRef, useEffect, useCallback</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 46 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>inline-function</td>
+                  <td>Found 41 inline function creation(s) in render. Consider using useCallback.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-callback-handler</td>
+                  <td>Found 1 event handler(s) not using useCallback.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>excessive-state</td>
+                  <td>Component has 17 state variables. Consider consolidating state or using useReducer.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+            <p><strong>Callback Optimizations:</strong></p>
+            <ul>
+              
+                <li>Wrap event handlers with useCallback</li>
+              
+            </ul>
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+                <li>Extract inline functions using useCallback</li>
+              
+                <li>Consolidate related state variables or use useReducer</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>DataPreviewDemo</h3>
+        <div>
+          <span class="badge badge-warning">4 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/DataPreviewDemo.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> None</p>
+            <p><strong>State Variables:</strong> selectedDataset, data, inferredSchema, qualityResults, isLoading</p>
+            <p><strong>Hooks:</strong> useState, useState, useState, useState, useState, useEffect</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 6 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-callback-handler</td>
+                  <td>Found 1 event handler(s) not using useCallback.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>excessive-state</td>
+                  <td>Component has 5 state variables. Consider consolidating state or using useReducer.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+            <p><strong>Callback Optimizations:</strong></p>
+            <ul>
+              
+                <li>Wrap event handlers with useCallback</li>
+              
+            </ul>
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+                <li>Consolidate related state variables or use useReducer</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>DataQualityIndicator</h3>
+        <div>
+          <span class="badge badge-warning">4 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/DataQualityIndicator.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> score, title, dimension, score, fieldMetrics, issues, isExpanded, toggleExpanded, qualityResults, isLoading, onRefresh, showFieldMetrics, showDimensionScores, showIssues, compact, maxHeight</p>
+            <p><strong>State Variables:</strong> expandedSections</p>
+            <p><strong>Hooks:</strong> useState</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 46 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>inline-function</td>
+                  <td>Found 8 inline function creation(s) in render. Consider using useCallback.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>missing-perf-hooks</td>
+                  <td>Component with multiple props is not using performance hooks (useMemo, useCallback).</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+                <li>Extract inline functions using useCallback</li>
+              
+                <li>Add useMemo and useCallback for expensive calculations and handlers</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>DatasetCreationWizard</h3>
+        <div>
+          <span class="badge badge-warning">3 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/DatasetCreationWizard.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> open, onClose, onComplete, initialValues</p>
+            <p><strong>State Variables:</strong> activeStep, isSubmitting</p>
+            <p><strong>Hooks:</strong> useState, useState, useDatasetManagement, useFormik, useCallback, useMemo, useMemo, useMemo</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 8 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-callback-handler</td>
+                  <td>Found 1 event handler(s) not using useCallback.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+            <p><strong>Callback Optimizations:</strong></p>
+            <ul>
+              
+                <li>Wrap event handlers with useCallback</li>
+              
+            </ul>
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>FieldMappingEditor</h3>
+        <div>
+          <span class="badge badge-warning">4 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/FieldMappingEditor.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> integrationId, onUpdate</p>
+            <p><strong>State Variables:</strong> mappings, sourceFields, destinationFields, dialogOpen, editMode, currentMapping, currentMappingId, loading, errors</p>
+            <p><strong>Hooks:</strong> useState, useState, useState, useState, useState, useState, useState, useState, useState, useEffect</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 7 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-callback-handler</td>
+                  <td>Found 1 event handler(s) not using useCallback.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>excessive-state</td>
+                  <td>Component has 9 state variables. Consider consolidating state or using useReducer.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+            <p><strong>Callback Optimizations:</strong></p>
+            <ul>
+              
+                <li>Wrap event handlers with useCallback</li>
+              
+            </ul>
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+                <li>Consolidate related state variables or use useReducer</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>FileTypeDetector</h3>
+        <div>
+          <span class="badge badge-warning">4 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/FileTypeDetector.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> result, compact, file, content, onDetectionComplete, allowFileDrop, showDetailedResults, performDeepInspection, compact</p>
+            <p><strong>State Variables:</strong> selectedFile, fileContent, detectionResult, isAnalyzing, error, isDragging</p>
+            <p><strong>Hooks:</strong> useState, useState, useState, useState, useState, useState, useEffect, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 38 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>inline-function</td>
+                  <td>Found 9 inline function creation(s) in render. Consider using useCallback.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>excessive-state</td>
+                  <td>Component has 6 state variables. Consider consolidating state or using useReducer.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+                <li>Extract inline functions using useCallback</li>
+              
+                <li>Consolidate related state variables or use useReducer</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>FileTypeDetectorDemo</h3>
+        <div>
+          <span class="badge badge-warning">3 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/FileTypeDetectorDemo.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> None</p>
+            <p><strong>State Variables:</strong> detectionResult</p>
+            <p><strong>Hooks:</strong> useState</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 12 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-callback-handler</td>
+                  <td>Found 1 event handler(s) not using useCallback.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+            <p><strong>Callback Optimizations:</strong></p>
+            <ul>
+              
+                <li>Wrap event handlers with useCallback</li>
+              
+            </ul>
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>IntegrationCreationDialog</h3>
+        <div>
+          <span class="badge badge-warning">4 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/IntegrationCreationDialog.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> open, onClose, onSubmit</p>
+            <p><strong>State Variables:</strong> activeStep</p>
+            <p><strong>Hooks:</strong> useState, useContextualHelp, useFormik</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 6 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-callback-handler</td>
+                  <td>Found 1 event handler(s) not using useCallback.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>missing-perf-hooks</td>
+                  <td>Component with multiple props is not using performance hooks (useMemo, useCallback).</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+            <p><strong>Callback Optimizations:</strong></p>
+            <ul>
+              
+                <li>Wrap event handlers with useCallback</li>
+              
+            </ul>
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+                <li>Add useMemo and useCallback for expensive calculations and handlers</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>IntegrationDetailView</h3>
+        <div>
+          <span class="badge badge-warning">4 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/IntegrationDetailView.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> integrationId</p>
+            <p><strong>State Variables:</strong> integration, loading, error, activeTab, isEditing, isSuperUser, saving, runningIntegration</p>
+            <p><strong>Hooks:</strong> useState, useState, useState, useState, useState, useState, useState, useState, useEffect, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 55 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>inline-function</td>
+                  <td>Found 13 inline function creation(s) in render. Consider using useCallback.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>excessive-state</td>
+                  <td>Component has 8 state variables. Consider consolidating state or using useReducer.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+                <li>Extract inline functions using useCallback</li>
+              
+                <li>Consolidate related state variables or use useReducer</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>IntegrationTable</h3>
+        <div>
+          <span class="badge badge-info">1 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/IntegrationTable.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> integrations, onFieldMapping, onModify, onViewRunLog</p>
+            <p><strong>State Variables:</strong> None</p>
+            <p><strong>Hooks:</strong> None</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>missing-perf-hooks</td>
+                  <td>Component with multiple props is not using performance hooks (useMemo, useCallback).</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          
+          
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Add useMemo and useCallback for expensive calculations and handlers</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>IntegrationTableRow</h3>
+        <div>
+          <span class="badge badge-warning">3 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/IntegrationTableRow.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> integration, onFieldMapping, onModify, onViewRunLog</p>
+            <p><strong>State Variables:</strong> None</p>
+            <p><strong>Hooks:</strong> useNavigate</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 4 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-callback-handler</td>
+                  <td>Found 1 event handler(s) not using useCallback.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>missing-perf-hooks</td>
+                  <td>Component with multiple props is not using performance hooks (useMemo, useCallback).</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          
+          
+          
+            <p><strong>Callback Optimizations:</strong></p>
+            <ul>
+              
+                <li>Wrap event handlers with useCallback</li>
+              
+            </ul>
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+                <li>Add useMemo and useCallback for expensive calculations and handlers</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>S3Configuration</h3>
+        <div>
+          <span class="badge badge-warning">4 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/S3Configuration.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> onChange, value, readOnly</p>
+            <p><strong>State Variables:</strong> config, showBrowser, loading, connectionStatus, error</p>
+            <p><strong>Hooks:</strong> useState, useState, useState, useState, useState, useEffect, useCallback, useCallback, useCallback, useCallback</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 15 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>inline-function</td>
+                  <td>Found 2 inline function creation(s) in render. Consider using useCallback.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>excessive-state</td>
+                  <td>Component has 5 state variables. Consider consolidating state or using useReducer.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+                <li>Extract inline functions using useCallback</li>
+              
+                <li>Consolidate related state variables or use useReducer</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>ScheduleConfiguration</h3>
+        <div>
+          <span class="badge badge-warning">2 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/ScheduleConfiguration.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> schedule, onChange, errors, readOnly</p>
+            <p><strong>State Variables:</strong> isEditingCron, cronValid, cronHumanReadable</p>
+            <p><strong>Hooks:</strong> useState, useState, useState, useEffect, useCallback, useCallback</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 6 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>SchemaInferenceViewer</h3>
+        <div>
+          <span class="badge badge-warning">5 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/SchemaInferenceViewer.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> field, onFieldUpdate, onFieldRemove, showConfidence, showStats, allTypes, data, inferredSchema, onSchemaChange, maxHeight, showConfidence, showStatistics, allowEditing, sampleSize, confidenceThreshold</p>
+            <p><strong>State Variables:</strong> isEditing, editedField, schema, isInferring, settings, showSettings</p>
+            <p><strong>Hooks:</strong> useState, useState, useState, useState, useState, useState, useEffect, useMemo</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 21 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>inline-function</td>
+                  <td>Found 10 inline function creation(s) in render. Consider using useCallback.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-callback-handler</td>
+                  <td>Found 1 event handler(s) not using useCallback.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>excessive-state</td>
+                  <td>Component has 6 state variables. Consider consolidating state or using useReducer.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+            <p><strong>Callback Optimizations:</strong></p>
+            <ul>
+              
+                <li>Wrap event handlers with useCallback</li>
+              
+            </ul>
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+                <li>Extract inline functions using useCallback</li>
+              
+                <li>Consolidate related state variables or use useReducer</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>SharePointConfiguration</h3>
+        <div>
+          <span class="badge badge-warning">4 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/SharePointConfiguration.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> value, onChange, readOnly</p>
+            <p><strong>State Variables:</strong> credentials, selectedSite, selectedLibrary, selectedFolder, selectedFile, activeTab, testResults, testing, error, showAdvanced</p>
+            <p><strong>Hooks:</strong> useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 33 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>inline-function</td>
+                  <td>Found 3 inline function creation(s) in render. Consider using useCallback.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>excessive-state</td>
+                  <td>Component has 10 state variables. Consider consolidating state or using useReducer.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+                <li>Extract inline functions using useCallback</li>
+              
+                <li>Consolidate related state variables or use useReducer</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>SpecializedFileViewer</h3>
+        <div>
+          <span class="badge badge-warning">4 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/SpecializedFileViewer.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> content, fileName, content, content, file, url, file, url, content, file, url, content, fileType, showDetector, detailLevel</p>
+            <p><strong>State Variables:</strong> loading, data, headers, page, rowsPerPage, filterText, filteredData, delimiter, loading, parsedData, error, expandedPaths, loading, parsedContent, error, expandedElements, zoom, rotation, fullscreen, detectedType, fileContent, loading, error, viewMode</p>
+            <p><strong>Hooks:</strong> useState, useState, useState, useState, useState, useState, useState, useState, useEffect, useEffect, useCallback, useCallback, useCallback, useState, useState, useState, useState, useEffect, useCallback, useCallback, useCallback, useState, useState, useState, useState, useEffect, useCallback, useCallback, useState, useState, useState, useCallback, useCallback, useCallback, useCallback, useCallback, useState, useState, useState, useState, useState, useEffect, useCallback, useCallback, useCallback</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 53 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>inline-function</td>
+                  <td>Found 39 inline function creation(s) in render. Consider using useCallback.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>excessive-state</td>
+                  <td>Component has 24 state variables. Consider consolidating state or using useReducer.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+                <li>Extract inline functions using useCallback</li>
+              
+                <li>Consolidate related state variables or use useReducer</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>SpecializedFileViewerDemo</h3>
+        <div>
+          <span class="badge badge-warning">4 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/SpecializedFileViewerDemo.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> None</p>
+            <p><strong>State Variables:</strong> selectedFile, fileContent, sampleType, sampleUrl, customUrl, showDetector, detailLevel</p>
+            <p><strong>Hooks:</strong> useState, useState, useState, useState, useState, useState, useState</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 20 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-callback-handler</td>
+                  <td>Found 1 event handler(s) not using useCallback.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>excessive-state</td>
+                  <td>Component has 7 state variables. Consider consolidating state or using useReducer.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+            <p><strong>Callback Optimizations:</strong></p>
+            <ul>
+              
+                <li>Wrap event handlers with useCallback</li>
+              
+            </ul>
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+                <li>Consolidate related state variables or use useReducer</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>UserRoleSwitcher</h3>
+        <div>
+          <span class="badge badge-warning">2 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/UserRoleSwitcher.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> onRoleChange</p>
+            <p><strong>State Variables:</strong> None</p>
+            <p><strong>Hooks:</strong> None</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 2 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>WebhookConfiguration</h3>
+        <div>
+          <span class="badge badge-warning">4 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/WebhookConfiguration.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> value, onChange, onTest, disabled</p>
+            <p><strong>State Variables:</strong> config, activeTab, testResults, testingInProgress, error, showSecrets, advancedSettingsOpen, showJsonEditor, rawJson, jsonError, requiredFieldToAdd, testRequestDrawerOpen, testRequest, simulatorOpen, simulatedPayload, simulationOptions, requestHistory, historyMenuAnchor, templates, templatesMenuAnchor, testResultsTabIndex</p>
+            <p><strong>Hooks:</strong> useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useEffect, useEffect, useEffect, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 108 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>inline-function</td>
+                  <td>Found 13 inline function creation(s) in render. Consider using useCallback.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>excessive-state</td>
+                  <td>Component has 21 state variables. Consider consolidating state or using useReducer.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+                <li>Extract inline functions using useCallback</li>
+              
+                <li>Consolidate related state variables or use useReducer</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>AzureBlobContainerBrowser</h3>
+        <div>
+          <span class="badge badge-warning">4 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/azure/AzureBlobContainerBrowser.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> config, onSelectContainer, onSelectBlob, readOnly, selectedContainer, selectedPath</p>
+            <p><strong>State Variables:</strong> containers, blobs, currentPath, pathHistory, loading, containerLoading, searchTerm, searchResults, isSearching, newContainerDialogOpen, newContainerName, newFolderDialogOpen, newFolderName, confirmDeleteDialogOpen, itemToDelete, fileUploadDialogOpen, selectedFile, filesToUpload, currentUploadIndex, uploadProgress, uploadOptions, contextMenuPos, selectedItem, fileViewerOpen, fileViewUrl, fileViewType, error</p>
+            <p><strong>Hooks:</strong> useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useEffect</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 64 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>inline-function</td>
+                  <td>Found 33 inline function creation(s) in render. Consider using useCallback.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>excessive-state</td>
+                  <td>Component has 27 state variables. Consider consolidating state or using useReducer.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+                <li>Extract inline functions using useCallback</li>
+              
+                <li>Consolidate related state variables or use useReducer</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>AzureCredentialManager</h3>
+        <div>
+          <span class="badge badge-warning">5 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/azure/AzureCredentialManager.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> onCredentialsSaved, onCredentialsLoaded, readOnly, showSaveControls, initialVisible</p>
+            <p><strong>State Variables:</strong> credentials, showSecrets, loading, saving, expanded, showDeleteConfirm, hasStoredCredentials, lastUpdated, status, error, testResult</p>
+            <p><strong>Hooks:</strong> useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useEffect, useCallback, useCallback</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 22 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>inline-function</td>
+                  <td>Found 1 inline function creation(s) in render. Consider using useCallback.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-callback-handler</td>
+                  <td>Found 1 event handler(s) not using useCallback.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>excessive-state</td>
+                  <td>Component has 11 state variables. Consider consolidating state or using useReducer.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+            <p><strong>Callback Optimizations:</strong></p>
+            <ul>
+              
+                <li>Wrap event handlers with useCallback</li>
+              
+            </ul>
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+                <li>Extract inline functions using useCallback</li>
+              
+                <li>Consolidate related state variables or use useReducer</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>dataset_model</h3>
+        <div>
+          <span class="badge badge-warning">1 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/dataset_model.js</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> None</p>
+            <p><strong>State Variables:</strong> None</p>
+            <p><strong>Hooks:</strong> None</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-function</td>
+                  <td>Found 7 inline function creation(s) in render. Consider using useCallback.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          
+          
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline functions using useCallback</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>dataset_wizard_utils</h3>
+        <div>
+          <span class="badge badge-success">No Issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/dataset_wizard_utils.js</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> None</p>
+            <p><strong>State Variables:</strong> None</p>
+            <p><strong>Hooks:</strong> None</p>
+          </div>
+        
+        
+        <p>No issues found.</p>
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          
+          
+          
+          
+          
+          
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>FlowCanvas</h3>
+        <div>
+          <span class="badge badge-warning">4 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/flow/FlowCanvas.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> initialElements, readOnly, onChange, onSave, onNodeSelect, onEdgeSelect, onValidate, validationErrors</p>
+            <p><strong>State Variables:</strong> nodes, edges, selectedElements, historyIndex, history, nodeMenuAnchorEl, nodeMenuPosition, notification</p>
+            <p><strong>Hooks:</strong> useState, useState, useState, useState, useState, useState, useState, useState, useRef, useReactFlow, useEffect, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 7 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>inline-function</td>
+                  <td>Found 5 inline function creation(s) in render. Consider using useCallback.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>excessive-state</td>
+                  <td>Component has 8 state variables. Consider consolidating state or using useReducer.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+                <li>Extract inline functions using useCallback</li>
+              
+                <li>Consolidate related state variables or use useReducer</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>IntegrationFlowCanvas</h3>
+        <div>
+          <span class="badge badge-warning">4 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/flow/IntegrationFlowCanvas.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> initialElements, readOnly, userPermissions, onSave, onRun, onChange</p>
+            <p><strong>State Variables:</strong> elements, selectedElement, validationErrors, sidebarTab</p>
+            <p><strong>Hooks:</strong> useState, useState, useState, useState, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 16 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>inline-function</td>
+                  <td>Found 1 inline function creation(s) in render. Consider using useCallback.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>excessive-state</td>
+                  <td>Component has 4 state variables. Consider consolidating state or using useReducer.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+                <li>Extract inline functions using useCallback</li>
+              
+                <li>Consolidate related state variables or use useReducer</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>NodePanel</h3>
+        <div>
+          <span class="badge badge-warning">2 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/flow/NodePanel.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> userPermissions, onRefresh</p>
+            <p><strong>State Variables:</strong> None</p>
+            <p><strong>Hooks:</strong> useCallback, useCallback</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 11 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>inline-function</td>
+                  <td>Found 2 inline function creation(s) in render. Consider using useCallback.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          
+          
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+                <li>Extract inline functions using useCallback</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>FlowEdge</h3>
+        <div>
+          <span class="badge badge-warning">3 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/flow/edges/FlowEdge.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> anchorEl, open, onClose, onDelete, onLabelEdit, onPriorityChange, onConnectionTypeChange, onTest, onAddBreakpoint, connectionType, priority, id, sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, style, data, arrowHeadType, markerEndId, selected, source, target, sourceHandleId, targetHandleId, onClick, edgeUpdaterRadius</p>
+            <p><strong>State Variables:</strong> anchorEl, isHovered, showControls, edgeValidation</p>
+            <p><strong>Hooks:</strong> useState, useState, useState, useState, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useEffect</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 17 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>inline-function</td>
+                  <td>Found 14 inline function creation(s) in render. Consider using useCallback.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>excessive-state</td>
+                  <td>Component has 4 state variables. Consider consolidating state or using useReducer.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          
+          
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+                <li>Extract inline functions using useCallback</li>
+              
+                <li>Consolidate related state variables or use useReducer</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>DestinationNode</h3>
+        <div>
+          <span class="badge badge-warning">2 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/flow/nodes/DestinationNode.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> id, data, isConnectable, selected</p>
+            <p><strong>State Variables:</strong> None</p>
+            <p><strong>Hooks:</strong> None</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 8 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>missing-perf-hooks</td>
+                  <td>Component with multiple props is not using performance hooks (useMemo, useCallback).</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          
+          
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+                <li>Add useMemo and useCallback for expensive calculations and handlers</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>FilterNode</h3>
+        <div>
+          <span class="badge badge-warning">2 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/flow/nodes/FilterNode.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> id, data, isConnectable, selected</p>
+            <p><strong>State Variables:</strong> None</p>
+            <p><strong>Hooks:</strong> None</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 9 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>missing-perf-hooks</td>
+                  <td>Component with multiple props is not using performance hooks (useMemo, useCallback).</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          
+          
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+                <li>Add useMemo and useCallback for expensive calculations and handlers</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>SourceNode</h3>
+        <div>
+          <span class="badge badge-warning">2 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/flow/nodes/SourceNode.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> id, data, isConnectable, selected</p>
+            <p><strong>State Variables:</strong> None</p>
+            <p><strong>Hooks:</strong> None</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 8 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>missing-perf-hooks</td>
+                  <td>Component with multiple props is not using performance hooks (useMemo, useCallback).</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          
+          
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+                <li>Add useMemo and useCallback for expensive calculations and handlers</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>TransformationNode</h3>
+        <div>
+          <span class="badge badge-warning">2 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/flow/nodes/TransformationNode.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> id, data, isConnectable, selected</p>
+            <p><strong>State Variables:</strong> None</p>
+            <p><strong>Hooks:</strong> None</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 9 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>missing-perf-hooks</td>
+                  <td>Component with multiple props is not using performance hooks (useMemo, useCallback).</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          
+          
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+                <li>Add useMemo and useCallback for expensive calculations and handlers</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>connection-validation</h3>
+        <div>
+          <span class="badge badge-info">1 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/flow/validation/connection-validation.js</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> None</p>
+            <p><strong>State Variables:</strong> None</p>
+            <p><strong>Hooks:</strong> None</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+          
+          
+          
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>index</h3>
+        <div>
+          <span class="badge badge-success">No Issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/nodes/index.js</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> None</p>
+            <p><strong>State Variables:</strong> None</p>
+            <p><strong>Hooks:</strong> None</p>
+          </div>
+        
+        
+        <p>No issues found.</p>
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          
+          
+          
+          
+          
+          
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>S3BucketBrowser</h3>
+        <div>
+          <span class="badge badge-warning">4 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/s3/S3BucketBrowser.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> config, onSelectBucket, onSelectObject, readOnly, selectedBucket, selectedPrefix</p>
+            <p><strong>State Variables:</strong> buckets, objects, currentPrefix, prefixHistory, loading, bucketLoading, searchTerm, searchResults, isSearching, filterDialogOpen, filterTabValue, activeFilters, activeFilterCount, filterSummary, selectedItems, selectionMode, batchActionDialogOpen, batchAction, batchActionTarget, batchOperationStatus, newBucketDialogOpen, newBucketName, newFolderDialogOpen, newFolderName, confirmDeleteDialogOpen, itemToDelete, fileUploadDialogOpen, selectedFile, filesToUpload, currentUploadIndex, uploadProgress, uploadOptions, contextMenuPos, selectedItem, fileViewerOpen, fileViewUrl, fileViewType, error</p>
+            <p><strong>Hooks:</strong> useRef, useEffect, useRef, useRef, useCallback, useCallback, useEffect, useEffect, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useEffect</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 138 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>inline-function</td>
+                  <td>Found 101 inline function creation(s) in render. Consider using useCallback.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>excessive-state</td>
+                  <td>Component has 38 state variables. Consider consolidating state or using useReducer.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+                <li>Extract inline functions using useCallback</li>
+              
+                <li>Consolidate related state variables or use useReducer</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>S3CredentialManager</h3>
+        <div>
+          <span class="badge badge-warning">4 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/s3/S3CredentialManager.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> onCredentialsSaved, onCredentialsLoaded, readOnly, showSaveControls, initialVisible</p>
+            <p><strong>State Variables:</strong> credentials, showSecrets, loading, saving, expanded, showDeleteConfirm, hasStoredCredentials, lastUpdated, status, error, testResult</p>
+            <p><strong>Hooks:</strong> useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useEffect, useCallback, useCallback</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 19 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-callback-handler</td>
+                  <td>Found 1 event handler(s) not using useCallback.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>excessive-state</td>
+                  <td>Component has 11 state variables. Consider consolidating state or using useReducer.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+            <p><strong>Callback Optimizations:</strong></p>
+            <ul>
+              
+                <li>Wrap event handlers with useCallback</li>
+              
+            </ul>
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+                <li>Consolidate related state variables or use useReducer</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>SharePointBrowser</h3>
+        <div>
+          <span class="badge badge-warning">4 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/sharepoint/SharePointBrowser.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> credentials, onSelectSite, onSelectLibrary, onSelectFolder, onSelectFile, readOnly, selectedSite, selectedLibrary, selectedFolder</p>
+            <p><strong>State Variables:</strong> sites, libraries, items, breadcrumbs, loading, error, currentView, viewMode, sortField, sortDirection, anchorEl, contextMenuAnchorEl, contextMenuPosition, contextMenuSelectedItem, showSearchDialog, searchTerm, searchFilters, isSearching, searchResults, recentSearches, searchCache, lastSearchTimestamp, selectedItems, isMultiSelectMode, showFilterDialog, showBatchOperationsDialog, selectedBatchItems, batchOperation, batchProgress, isBatchProcessing, showBatchProgressDialog, batchResults, batchDestinationFolder, availableDestinations, showConfirmDialog, confirmDialogProps, documentFilters, filteredItems, hasActiveFilters, page, rowsPerPage, showSortMenu, sortMenuAnchorEl, notification, dragOver, uploading, uploadProgress, infoDialogOpen, infoDialogItem</p>
+            <p><strong>Hooks:</strong> useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useCallback, useState, useState, useState, useState, useState, useState, useState, useState, useRef, useRef, useRef, useEffect, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 88 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>inline-function</td>
+                  <td>Found 49 inline function creation(s) in render. Consider using useCallback.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>excessive-state</td>
+                  <td>Component has 49 state variables. Consider consolidating state or using useReducer.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+                <li>Extract inline functions using useCallback</li>
+              
+                <li>Consolidate related state variables or use useReducer</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>SharePointCredentialManager</h3>
+        <div>
+          <span class="badge badge-warning">5 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/sharepoint/SharePointCredentialManager.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> credentials, onChange, onTest, testResults, loading, disabled</p>
+            <p><strong>State Variables:</strong> authMethod, tenantId, clientId, clientSecret, showClientSecret, appId, appSecret, showAppSecret, certificateThumbprint, certificatePrivateKey, showPrivateKey, resourceUrl, advancedOpen, error</p>
+            <p><strong>Hooks:</strong> useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useState, useEffect, useCallback, useCallback</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 19 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>inline-function</td>
+                  <td>Found 1 inline function creation(s) in render. Consider using useCallback.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-callback-handler</td>
+                  <td>Found 1 event handler(s) not using useCallback.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>excessive-state</td>
+                  <td>Component has 14 state variables. Consider consolidating state or using useReducer.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+            <p><strong>Callback Optimizations:</strong></p>
+            <ul>
+              
+                <li>Wrap event handlers with useCallback</li>
+              
+            </ul>
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+                <li>Extract inline functions using useCallback</li>
+              
+                <li>Consolidate related state variables or use useReducer</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>AzureBlobConfigurationForm</h3>
+        <div>
+          <span class="badge badge-warning">3 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/source-config/AzureBlobConfigurationForm.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> formik</p>
+            <p><strong>State Variables:</strong> None</p>
+            <p><strong>Hooks:</strong> None</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 3 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-callback-handler</td>
+                  <td>Found 1 event handler(s) not using useCallback.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+            <p><strong>Callback Optimizations:</strong></p>
+            <ul>
+              
+                <li>Wrap event handlers with useCallback</li>
+              
+            </ul>
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>GenericConfigurationForm</h3>
+        <div>
+          <span class="badge badge-warning">3 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/source-config/GenericConfigurationForm.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> formik</p>
+            <p><strong>State Variables:</strong> None</p>
+            <p><strong>Hooks:</strong> None</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 3 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>inline-function</td>
+                  <td>Found 1 inline function creation(s) in render. Consider using useCallback.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+                <li>Extract inline functions using useCallback</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>LocalFileConfigurationForm</h3>
+        <div>
+          <span class="badge badge-warning">3 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/source-config/LocalFileConfigurationForm.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> formik</p>
+            <p><strong>State Variables:</strong> uploadProgress, isUploading, uploadedFile</p>
+            <p><strong>Hooks:</strong> useState, useState, useState</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 9 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-callback-handler</td>
+                  <td>Found 1 event handler(s) not using useCallback.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+            <p><strong>Callback Optimizations:</strong></p>
+            <ul>
+              
+                <li>Wrap event handlers with useCallback</li>
+              
+            </ul>
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>S3ConfigurationForm</h3>
+        <div>
+          <span class="badge badge-warning">3 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/source-config/S3ConfigurationForm.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> formik</p>
+            <p><strong>State Variables:</strong> None</p>
+            <p><strong>Hooks:</strong> None</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 3 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-callback-handler</td>
+                  <td>Found 1 event handler(s) not using useCallback.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+            <p><strong>Callback Optimizations:</strong></p>
+            <ul>
+              
+                <li>Wrap event handlers with useCallback</li>
+              
+            </ul>
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>TestAPIWebhookConfiguration</h3>
+        <div>
+          <span class="badge badge-warning">4 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/test/TestAPIWebhookConfiguration.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> None</p>
+            <p><strong>State Variables:</strong> apiConfig, webhookConfig, readOnly, activeTab</p>
+            <p><strong>Hooks:</strong> useState, useState, useState, useState</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 15 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>inline-function</td>
+                  <td>Found 2 inline function creation(s) in render. Consider using useCallback.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>excessive-state</td>
+                  <td>Component has 4 state variables. Consider consolidating state or using useReducer.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+                <li>Extract inline functions using useCallback</li>
+              
+                <li>Consolidate related state variables or use useReducer</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>TestS3Configuration</h3>
+        <div>
+          <span class="badge badge-warning">3 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/test/TestS3Configuration.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> None</p>
+            <p><strong>State Variables:</strong> config, readOnly</p>
+            <p><strong>Hooks:</strong> useState, useState</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 7 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-callback-handler</td>
+                  <td>Found 1 event handler(s) not using useCallback.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+            <p><strong>Callback Optimizations:</strong></p>
+            <ul>
+              
+                <li>Wrap event handlers with useCallback</li>
+              
+            </ul>
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>TestSharePointConfiguration</h3>
+        <div>
+          <span class="badge badge-warning">3 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/test/TestSharePointConfiguration.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> None</p>
+            <p><strong>State Variables:</strong> config, readOnly</p>
+            <p><strong>Hooks:</strong> useState, useState</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 7 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>inline-function</td>
+                  <td>Found 2 inline function creation(s) in render. Consider using useCallback.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+                <li>Extract inline functions using useCallback</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>DataCleansingDemo</h3>
+        <div>
+          <span class="badge badge-warning">3 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/transformation/DataCleansingDemo.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> None</p>
+            <p><strong>State Variables:</strong> config</p>
+            <p><strong>Hooks:</strong> useState</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 5 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-callback-handler</td>
+                  <td>Found 1 event handler(s) not using useCallback.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+            <p><strong>Callback Optimizations:</strong></p>
+            <ul>
+              
+                <li>Wrap event handlers with useCallback</li>
+              
+            </ul>
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>DataTypeConversionDemo</h3>
+        <div>
+          <span class="badge badge-warning">3 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/transformation/DataTypeConversionDemo.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> None</p>
+            <p><strong>State Variables:</strong> config</p>
+            <p><strong>Hooks:</strong> useState</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 7 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-callback-handler</td>
+                  <td>Found 1 event handler(s) not using useCallback.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+            <p><strong>Callback Optimizations:</strong></p>
+            <ul>
+              
+                <li>Wrap event handlers with useCallback</li>
+              
+            </ul>
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>NumericOperationDemo</h3>
+        <div>
+          <span class="badge badge-warning">3 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/transformation/NumericOperationDemo.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> None</p>
+            <p><strong>State Variables:</strong> config</p>
+            <p><strong>Hooks:</strong> useState</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 7 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-callback-handler</td>
+                  <td>Found 1 event handler(s) not using useCallback.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+            <p><strong>Callback Optimizations:</strong></p>
+            <ul>
+              
+                <li>Wrap event handlers with useCallback</li>
+              
+            </ul>
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>TextFormattingDemo</h3>
+        <div>
+          <span class="badge badge-warning">3 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/transformation/TextFormattingDemo.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> None</p>
+            <p><strong>State Variables:</strong> config</p>
+            <p><strong>Hooks:</strong> useState</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 7 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-callback-handler</td>
+                  <td>Found 1 event handler(s) not using useCallback.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+            <p><strong>Callback Optimizations:</strong></p>
+            <ul>
+              
+                <li>Wrap event handlers with useCallback</li>
+              
+            </ul>
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>index</h3>
+        <div>
+          <span class="badge badge-success">No Issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/transformation/index.js</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> None</p>
+            <p><strong>State Variables:</strong> None</p>
+            <p><strong>Hooks:</strong> None</p>
+          </div>
+        
+        
+        <p>No issues found.</p>
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          
+          
+          
+          
+          
+          
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>DataCleansing</h3>
+        <div>
+          <span class="badge badge-warning">2 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/transformation/nodes/DataCleansing.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> operation, onUpdateOperation, onRemoveOperation, validationState, disabled, readOnly, config, onChange, validationState, disabled, readOnly</p>
+            <p><strong>State Variables:</strong> sampleInput</p>
+            <p><strong>Hooks:</strong> useCallback, useCallback, useMemo, useState, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useDataTransformation, useMemo</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 14 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>inline-function</td>
+                  <td>Found 8 inline function creation(s) in render. Consider using useCallback.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          
+          
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+                <li>Extract inline functions using useCallback</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>DataTypeConversion</h3>
+        <div>
+          <span class="badge badge-warning">2 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/transformation/nodes/DataTypeConversion.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> config, onChange, validationState, disabled, readOnly</p>
+            <p><strong>State Variables:</strong> None</p>
+            <p><strong>Hooks:</strong> useCallback, useCallback, useMemo, useMemo, useCallback, useDataTransformation, useCallback, useMemo</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 4 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>inline-function</td>
+                  <td>Found 1 inline function creation(s) in render. Consider using useCallback.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          
+          
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+                <li>Extract inline functions using useCallback</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>NumericOperation</h3>
+        <div>
+          <span class="badge badge-warning">2 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/transformation/nodes/NumericOperation.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> config, onChange, validationState, disabled, readOnly</p>
+            <p><strong>State Variables:</strong> None</p>
+            <p><strong>Hooks:</strong> useCallback, useCallback, useMemo, useDataTransformation, useCallback, useMemo</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 6 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>inline-function</td>
+                  <td>Found 2 inline function creation(s) in render. Consider using useCallback.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          
+          
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+                <li>Extract inline functions using useCallback</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>TextFormatting</h3>
+        <div>
+          <span class="badge badge-warning">2 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/transformation/nodes/TextFormatting.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> config, onChange, validationState, disabled, readOnly</p>
+            <p><strong>State Variables:</strong> None</p>
+            <p><strong>Hooks:</strong> useCallback, useCallback, useCallback, useMemo, useDataTransformation, useCallback, useMemo</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 9 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>inline-function</td>
+                  <td>Found 2 inline function creation(s) in render. Consider using useCallback.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          
+          
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+                <li>Extract inline functions using useCallback</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>CustomFormulaNode</h3>
+        <div>
+          <span class="badge badge-warning">3 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/transformation/nodes/custom-formula/CustomFormulaNode.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> nodeData, onChange, isReadOnly, sampleData</p>
+            <p><strong>State Variables:</strong> formulaText, validationResult, selectedCategory, searchTerm, functionSuggestions</p>
+            <p><strong>Hooks:</strong> useState, useState, useState, useState, useState, useCallback, useCallback, useMemo, useEffect, useCallback, useCallback, useCallback, useMemo, useMemo</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 4 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>excessive-state</td>
+                  <td>Component has 5 state variables. Consider consolidating state or using useReducer.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+                <li>Consolidate related state variables or use useReducer</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>FormulaEditor</h3>
+        <div>
+          <span class="badge badge-warning">5 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/transformation/nodes/custom-formula/FormulaEditor.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> value, onChange, readOnly, validation, suggestions</p>
+            <p><strong>State Variables:</strong> cursorPosition, showSuggestions, activeSuggestion, filteredSuggestions, selectedSuggestion, currentWord</p>
+            <p><strong>Hooks:</strong> useState, useState, useState, useState, useState, useState, useRef, useRef, useRef, useCallback, useMemo, useEffect, useCallback, useEffect, useCallback, useCallback, useCallback, useCallback, useCallback, useEffect</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 2 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>inline-function</td>
+                  <td>Found 1 inline function creation(s) in render. Consider using useCallback.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-callback-handler</td>
+                  <td>Found 1 event handler(s) not using useCallback.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>excessive-state</td>
+                  <td>Component has 6 state variables. Consider consolidating state or using useReducer.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+            <p><strong>Callback Optimizations:</strong></p>
+            <ul>
+              
+                <li>Wrap event handlers with useCallback</li>
+              
+            </ul>
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+                <li>Extract inline functions using useCallback</li>
+              
+                <li>Consolidate related state variables or use useReducer</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>FunctionCatalog</h3>
+        <div>
+          <span class="badge badge-warning">2 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/transformation/nodes/custom-formula/FunctionCatalog.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> functions, onSelectFunction, searchTerm, onSearch, selectedCategory, onSelectCategory</p>
+            <p><strong>State Variables:</strong> None</p>
+            <p><strong>Hooks:</strong> useCallback, useCallback, useCallback, useMemo, useMemo</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 2 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>formula-parser</h3>
+        <div>
+          <span class="badge badge-success">No Issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/transformation/nodes/custom-formula/formula-parser.js</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> None</p>
+            <p><strong>State Variables:</strong> None</p>
+            <p><strong>Hooks:</strong> None</p>
+          </div>
+        
+        
+        <p>No issues found.</p>
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          
+          
+          
+          
+          
+          
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>function-registry</h3>
+        <div>
+          <span class="badge badge-success">No Issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/transformation/nodes/custom-formula/function-registry.js</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> None</p>
+            <p><strong>State Variables:</strong> None</p>
+            <p><strong>Hooks:</strong> None</p>
+          </div>
+        
+        
+        <p>No issues found.</p>
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          
+          
+          
+          
+          
+          
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>index</h3>
+        <div>
+          <span class="badge badge-success">No Issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/transformation/nodes/custom-formula/index.js</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> None</p>
+            <p><strong>State Variables:</strong> None</p>
+            <p><strong>Hooks:</strong> None</p>
+          </div>
+        
+        
+        <p>No issues found.</p>
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          
+          
+          
+          
+          
+          
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>index</h3>
+        <div>
+          <span class="badge badge-success">No Issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/transformation/nodes/index.js</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> None</p>
+            <p><strong>State Variables:</strong> None</p>
+            <p><strong>Hooks:</strong> None</p>
+          </div>
+        
+        
+        <p>No issues found.</p>
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          
+          
+          
+          
+          
+          
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>use_dataset_management</h3>
+        <div>
+          <span class="badge badge-warning">1 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/use_dataset_management.js</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> None</p>
+            <p><strong>State Variables:</strong> datasets, loading, error, selectedDataset, filters, sortField, sortDirection</p>
+            <p><strong>Hooks:</strong> useState, useState, useState, useState, useState, useState, useState, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useCallback, useEffect</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>excessive-state</td>
+                  <td>Component has 7 state variables. Consider consolidating state or using useReducer.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          
+          
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Consolidate related state variables or use useReducer</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>BasicInfoStep</h3>
+        <div>
+          <span class="badge badge-info">2 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/wizard-steps/BasicInfoStep.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> formik</p>
+            <p><strong>State Variables:</strong> None</p>
+            <p><strong>Hooks:</strong> None</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-callback-handler</td>
+                  <td>Found 1 event handler(s) not using useCallback.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+            <p><strong>Callback Optimizations:</strong></p>
+            <ul>
+              
+                <li>Wrap event handlers with useCallback</li>
+              
+            </ul>
+          
+          
+          
+          
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>PermissionsStep</h3>
+        <div>
+          <span class="badge badge-warning">3 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/wizard-steps/PermissionsStep.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> formik</p>
+            <p><strong>State Variables:</strong> selectedUser, selectedPermission</p>
+            <p><strong>Hooks:</strong> useState, useState</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 19 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-callback-handler</td>
+                  <td>Found 1 event handler(s) not using useCallback.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+            <p><strong>Callback Optimizations:</strong></p>
+            <ul>
+              
+                <li>Wrap event handlers with useCallback</li>
+              
+            </ul>
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>ReviewStep</h3>
+        <div>
+          <span class="badge badge-warning">2 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/wizard-steps/ReviewStep.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> formik</p>
+            <p><strong>State Variables:</strong> None</p>
+            <p><strong>Hooks:</strong> None</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 15 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>SchemaConfigStep</h3>
+        <div>
+          <span class="badge badge-warning">3 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/wizard-steps/SchemaConfigStep.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> formik</p>
+            <p><strong>State Variables:</strong> schemaDefinitionMethod, expandedField</p>
+            <p><strong>Hooks:</strong> useState, useState</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 13 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-callback-handler</td>
+                  <td>Found 1 event handler(s) not using useCallback.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+            <p><strong>Callback Optimizations:</strong></p>
+            <ul>
+              
+                <li>Wrap event handlers with useCallback</li>
+              
+            </ul>
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>SourceConfigStep</h3>
+        <div>
+          <span class="badge badge-info">1 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/wizard-steps/SourceConfigStep.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> formik</p>
+            <p><strong>State Variables:</strong> None</p>
+            <p><strong>Hooks:</strong> useMemo</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+          
+          
+          
+          
+        </div>
+      </div>
+    </div>
+  
+    <div class="component-card">
+      <div class="component-header">
+        <h3>SourceSelectionStep</h3>
+        <div>
+          <span class="badge badge-warning">3 issues</span>
+        </div>
+      </div>
+      <div class="component-body">
+        <p><strong>File:</strong> /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/wizard-steps/SourceSelectionStep.jsx</p>
+        
+        
+          <div>
+            <p><strong>Props:</strong> formik</p>
+            <p><strong>State Variables:</strong> None</p>
+            <p><strong>Hooks:</strong> None</p>
+          </div>
+        
+        
+        
+          <h4>Issues</h4>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>inline-object</td>
+                  <td>Found 7 inline object creation(s) in render. Consider using useMemo or moving to component scope.</td>
+                  <td><span class="badge badge-warning">warning</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-memoized</td>
+                  <td>Component is not memoized. Consider using React.memo for better performance.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+                <tr>
+                  <td>non-callback-handler</td>
+                  <td>Found 1 event handler(s) not using useCallback.</td>
+                  <td><span class="badge badge-info">info</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+        
+        <div class="optimization-section">
+          <h4>Recommended Optimizations</h4>
+          <p>✓ Memoize component using React.memo</p>
+          
+          
+            <p><strong>Callback Optimizations:</strong></p>
+            <ul>
+              
+                <li>Wrap event handlers with useCallback</li>
+              
+            </ul>
+          
+          
+          
+          
+          
+            <p><strong>Render Optimizations:</strong></p>
+            <ul>
+              
+                <li>Extract inline objects to component scope or use useMemo</li>
+              
+            </ul>
+          
+        </div>
+      </div>
+    </div>
+  
+</body>
+</html>
+  

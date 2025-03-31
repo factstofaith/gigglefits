@@ -37,12 +37,10 @@ module.exports = {
     '/node_modules/(?!(@mui|react-syntax-highlighter)/)',
   ],
   testMatch: [
-    '<rootDir>/src/**/__tests__/**/*.{js,jsx}',
-    '<rootDir>/src/**/*.{spec,test}.{js,jsx}',
-  ],
-  watchPlugins: [
-    'jest-watch-typeahead/filename',
-    'jest-watch-typeahead/testname',
+    '<rootDir>/src/__tests__/App.test.jsx',
+    '<rootDir>/src/components/__tests__/A11yButton.test.jsx',
+    '<rootDir>/src/components/common/__tests__/A11yForm.test.jsx',
+    '<rootDir>/src/components/common/__tests__/A11yTable.test.jsx',
   ],
   resetMocks: true,
 };

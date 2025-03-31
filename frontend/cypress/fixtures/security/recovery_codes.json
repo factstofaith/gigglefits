@@ -1,0 +1,57 @@
+{
+  "recoveryCodes": [
+    {
+      "code": "ABCD-1234-EFGH-5678",
+      "used": false,
+      "createdAt": "2025-02-15T10:45:30Z"
+    },
+    {
+      "code": "IJKL-9012-MNOP-3456",
+      "used": false,
+      "createdAt": "2025-02-15T10:45:30Z"
+    },
+    {
+      "code": "QRST-7890-UVWX-1234",
+      "used": false,
+      "createdAt": "2025-02-15T10:45:30Z"
+    },
+    {
+      "code": "YZAB-5678-CDEF-9012",
+      "used": false,
+      "createdAt": "2025-02-15T10:45:30Z"
+    },
+    {
+      "code": "GHIJ-3456-KLMN-7890",
+      "used": false,
+      "createdAt": "2025-02-15T10:45:30Z"
+    },
+    {
+      "code": "OPQR-1234-STUV-5678",
+      "used": false,
+      "createdAt": "2025-02-15T10:45:30Z"
+    },
+    {
+      "code": "WXYZ-9012-ABCD-3456",
+      "used": false,
+      "createdAt": "2025-02-15T10:45:30Z"
+    },
+    {
+      "code": "EFGH-7890-IJKL-1234",
+      "used": false,
+      "createdAt": "2025-02-15T10:45:30Z"
+    },
+    {
+      "code": "MNOP-5678-QRST-9012",
+      "used": false,
+      "createdAt": "2025-02-15T10:45:30Z"
+    },
+    {
+      "code": "UVWX-3456-YZAB-7890",
+      "used": false,
+      "createdAt": "2025-02-15T10:45:30Z"
+    }
+  ],
+  "generatedAt": "2025-02-15T10:45:30Z",
+  "remainingCount": 10,
+  "usedCount": 0
+}

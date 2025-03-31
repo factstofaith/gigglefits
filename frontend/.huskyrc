@@ -1,0 +1,6 @@
+{
+  "hooks": {
+    "pre-commit": "npm run lint:fix && npm run format",
+    "pre-push": "npm run prepush"
+  }
+}

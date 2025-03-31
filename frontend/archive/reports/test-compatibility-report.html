@@ -1,0 +1,2305 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test Compatibility Report</title>
+  <style>
+    body { font-family: system-ui, sans-serif; line-height: 1.5; margin: 0; padding: 20px; }
+    .header { margin-bottom: 20px; }
+    .summary { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 30px; }
+    .summary-item { flex: 1; min-width: 200px; background: #f5f5f5; padding: 15px; border-radius: 5px; }
+    .summary-item.error { background: #ffebee; }
+    .summary-item.warning { background: #fff8e1; }
+    .critical-files { background: #e8f5e9; padding: 15px; border-radius: 5px; margin-bottom: 30px; }
+    .test-file { margin-bottom: 20px; }
+    .test-header { background: #f5f5f5; padding: 10px; cursor: pointer; }
+    .issue { padding: 10px; border-left: 3px solid #ddd; margin: 10px 0; }
+    .issue.error { border-left-color: #f44336; }
+    .issue.warning { border-left-color: #ff9800; }
+    .fix { background: #e8f5e9; padding: 10px; margin-top: 10px; border-radius: 5px; }
+    code { font-family: monospace; background: #f5f5f5; padding: 2px 4px; border-radius: 3px; }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Test Compatibility Report</h1>
+    <p>Generated on 3/28/2025, 2:52:44 PM</p>
+  </div>
+  
+  <div class="summary">
+    <div class="summary-item">
+      <h3>Total Test Files</h3>
+      <div>161</div>
+    </div>
+    <div class="summary-item">
+      <h3>Total Source Files Tested</h3>
+      <div>66</div>
+    </div>
+    <div class="summary-item">
+      <h3>Tests with Issues</h3>
+      <div>111</div>
+    </div>
+    <div class="summary-item">
+      <h3>Total Issues</h3>
+      <div>112</div>
+    </div>
+    
+      <div class="summary-item warning">
+        <h3>missing-rtl-cleanup</h3>
+        <div>106</div>
+      </div>
+    
+      <div class="summary-item error">
+        <h3>analysis-error</h3>
+        <div>4</div>
+      </div>
+    
+      <div class="summary-item warning">
+        <h3>msw-production-endpoint</h3>
+        <div>2</div>
+      </div>
+    
+  </div>
+  
+  <div class="critical-files">
+    <h2>Critical Files (Most Test Dependencies)</h2>
+    <p>These files are used by many tests and should be modified with caution:</p>
+    <ul>
+      
+        <li><code>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/utils/a11y-utils.js</code> - used by 16 tests</li>
+      
+        <li><code>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/components/common/MockThemeProvider.jsx</code> - used by 13 tests</li>
+      
+        <li><code>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/utils/user-event-setup.js</code> - used by 12 tests</li>
+      
+        <li><code>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/services/authService.js</code> - used by 7 tests</li>
+      
+        <li><code>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/utils/notificationHelper.js</code> - used by 6 tests</li>
+      
+    </ul>
+  </div>
+  
+  <h2>Test Issues</h2>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9zY2hlbWEtZGlzY292ZXJ5LnRlc3QuanN4')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/schema-discovery.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9zY2hlbWEtZGlzY292ZXJ5LnRlc3QuanN4" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hMTF5L0J1dHRvbkExMXkudGVzdC5qc3g=')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/a11y/ButtonA11y.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hMTF5L0J1dHRvbkExMXkudGVzdC5qc3g=" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hMTF5L0Zvcm1BMTF5LnRlc3QuanN4')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/a11y/FormA11y.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hMTF5L0Zvcm1BMTF5LnRlc3QuanN4" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb250ZXh0cy9BenVyZUNvbmZpZ0NvbnRleHQudGVzdC5qcw==')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/contexts/AzureConfigContext.test.js (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb250ZXh0cy9BenVyZUNvbmZpZ0NvbnRleHQudGVzdC5qcw==" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb250ZXh0cy9Nb25pdG9yaW5nQ29udGV4dC50ZXN0Lmpz')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/contexts/MonitoringContext.test.js (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb250ZXh0cy9Nb25pdG9yaW5nQ29udGV4dC50ZXN0Lmpz" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb250ZXh0cy9SZXNvdXJjZUNvbnRleHQudGVzdC5qcw==')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/contexts/ResourceContext.test.js (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb250ZXh0cy9SZXNvdXJjZUNvbnRleHQudGVzdC5qcw==" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb250ZXh0cy9Vc2VyQ29udGV4dC50ZXN0Lmpz')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/contexts/UserContext.test.js (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb250ZXh0cy9Vc2VyQ29udGV4dC50ZXN0Lmpz" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb250ZXh0cy9XZWJob29rQ29udGV4dC50ZXN0Lmpz')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/contexts/WebhookContext.test.js (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb250ZXh0cy9XZWJob29rQ29udGV4dC50ZXN0Lmpz" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9kZXNpZ24tc3lzdGVtL0FsZXJ0LnRlc3QuanN4')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/design-system/Alert.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9kZXNpZ24tc3lzdGVtL0FsZXJ0LnRlc3QuanN4" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9kZXNpZ24tc3lzdGVtL0JveC50ZXN0LmpzeA==')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/design-system/Box.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9kZXNpZ24tc3lzdGVtL0JveC50ZXN0LmpzeA==" class="issues hidden">
+        
+          <div class="issue error">
+            <div><strong>analysis-error</strong> </div>
+            <div>Failed to analyze file: Cannot read properties of undefined (reading 'buildError')</div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9kZXNpZ24tc3lzdGVtL0JyZWFkY3J1bWJzLnRlc3QuanN4')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/design-system/Breadcrumbs.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9kZXNpZ24tc3lzdGVtL0JyZWFkY3J1bWJzLnRlc3QuanN4" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9kZXNpZ24tc3lzdGVtL0NoZWNrYm94LnRlc3QuanN4')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/design-system/Checkbox.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9kZXNpZ24tc3lzdGVtL0NoZWNrYm94LnRlc3QuanN4" class="issues hidden">
+        
+          <div class="issue error">
+            <div><strong>analysis-error</strong> </div>
+            <div>Failed to analyze file: Unexpected token, expected "from" (7:16)</div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9kZXNpZ24tc3lzdGVtL0dyaWQudGVzdC5qc3g=')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/design-system/Grid.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9kZXNpZ24tc3lzdGVtL0dyaWQudGVzdC5qc3g=" class="issues hidden">
+        
+          <div class="issue error">
+            <div><strong>analysis-error</strong> </div>
+            <div>Failed to analyze file: Unexpected token (8:0)</div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9kZXNpZ24tc3lzdGVtL0xpc3QudGVzdC5qc3g=')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/design-system/List.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9kZXNpZ24tc3lzdGVtL0xpc3QudGVzdC5qc3g=" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9kZXNpZ24tc3lzdGVtL1BhZ2luYXRpb24udGVzdC5qc3g=')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/design-system/Pagination.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9kZXNpZ24tc3lzdGVtL1BhZ2luYXRpb24udGVzdC5qc3g=" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9kZXNpZ24tc3lzdGVtL1NlbGVjdC50ZXN0LmpzeA==')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/design-system/Select.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9kZXNpZ24tc3lzdGVtL1NlbGVjdC50ZXN0LmpzeA==" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9kZXNpZ24tc3lzdGVtL1N0YWNrLnRlc3QuanN4')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/design-system/Stack.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9kZXNpZ24tc3lzdGVtL1N0YWNrLnRlc3QuanN4" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9kZXNpZ24tc3lzdGVtL1RhYmxlLnRlc3QuanN4')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/design-system/Table.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9kZXNpZ24tc3lzdGVtL1RhYmxlLnRlc3QuanN4" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9kZXNpZ24tc3lzdGVtL1RhYnMudGVzdC5qc3g=')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/design-system/Tabs.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9kZXNpZ24tc3lzdGVtL1RhYnMudGVzdC5qc3g=" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9kZXNpZ24tc3lzdGVtL1RleHRGaWVsZC50ZXN0LmpzeA==')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/design-system/TextField.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9kZXNpZ24tc3lzdGVtL1RleHRGaWVsZC50ZXN0LmpzeA==" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9kZXNpZ24tc3lzdGVtL1R5cG9ncmFwaHkudGVzdC5qc3g=')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/design-system/Typography.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9kZXNpZ24tc3lzdGVtL1R5cG9ncmFwaHkudGVzdC5qc3g=" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9leGFtcGxlcy9tb2NrRmFjdG9yeS5leGFtcGxlLnRlc3QuanM=')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/examples/mockFactory.example.test.js (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9leGFtcGxlcy9tb2NrRmFjdG9yeS5leGFtcGxlLnRlc3QuanM=" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9ob29rcy91c2VGbG93T3B0aW1pemVyLnRlc3QuanM=')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/hooks/useFlowOptimizer.test.js (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9ob29rcy91c2VGbG93T3B0aW1pemVyLnRlc3QuanM=" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9ob29rcy91c2VGbG93VGVtcGxhdGVzLnRlc3QuanM=')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/hooks/useFlowTemplates.test.js (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9ob29rcy91c2VGbG93VGVtcGxhdGVzLnRlc3QuanM=" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9ob29rcy91c2VOb3RpZmljYXRpb24udGVzdC5qcw==')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/hooks/useNotification.test.js (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9ob29rcy91c2VOb3RpZmljYXRpb24udGVzdC5qcw==" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9pbnRlZ3JhdGlvbi9Db25uZWN0aW9uQ29uZmlndXJhdGlvbi50ZXN0Lmpz')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/integration/ConnectionConfiguration.test.js (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9pbnRlZ3JhdGlvbi9Db25uZWN0aW9uQ29uZmlndXJhdGlvbi50ZXN0Lmpz" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9pbnRlZ3JhdGlvbi9FbmhhbmNlZEZsb3dDYW52YXMudGVzdC5qcw==')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/integration/EnhancedFlowCanvas.test.js (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9pbnRlZ3JhdGlvbi9FbmhhbmNlZEZsb3dDYW52YXMudGVzdC5qcw==" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9pbnRlZ3JhdGlvbi9TcGVjaWFsaXplZE5vZGVQYW5lbHMudGVzdC5qcw==')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/integration/SpecializedNodePanels.test.js (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9pbnRlZ3JhdGlvbi9TcGVjaWFsaXplZE5vZGVQYW5lbHMudGVzdC5qcw==" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9zdGFuZGFsb25lL1Rlc3RBdmF0YXJMZWdhY3kudGVzdC5qc3g=')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/standalone/TestAvatarLegacy.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9zdGFuZGFsb25lL1Rlc3RBdmF0YXJMZWdhY3kudGVzdC5qc3g=" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9zdGFuZGFsb25lL1Rlc3RCdXR0b25MZWdhY3kudGVzdC5qc3g=')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/standalone/TestButtonLegacy.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9zdGFuZGFsb25lL1Rlc3RCdXR0b25MZWdhY3kudGVzdC5qc3g=" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9zdGFuZGFsb25lL1Rlc3REYXRhVGFibGUudGVzdC5qc3g=')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/standalone/TestDataTable.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9zdGFuZGFsb25lL1Rlc3REYXRhVGFibGUudGVzdC5qc3g=" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9zdGFuZGFsb25lL1Rlc3RJbnB1dEZpZWxkTGVnYWN5LnRlc3QuanN4')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/standalone/TestInputFieldLegacy.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9zdGFuZGFsb25lL1Rlc3RJbnB1dEZpZWxkTGVnYWN5LnRlc3QuanN4" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9zdGFuZGFsb25lL1Rlc3RJbnRlZ3JhdGlvbkZsb3dDYW52YXMudGVzdC5qc3g=')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/standalone/TestIntegrationFlowCanvas.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9zdGFuZGFsb25lL1Rlc3RJbnRlZ3JhdGlvbkZsb3dDYW52YXMudGVzdC5qc3g=" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9zdGFuZGFsb25lL1Rlc3RSZXNvdXJjZUxvYWRlci50ZXN0LmpzeA==')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/standalone/TestResourceLoader.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9zdGFuZGFsb25lL1Rlc3RSZXNvdXJjZUxvYWRlci50ZXN0LmpzeA==" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9zdGFuZGFsb25lL1Rlc3RTZWxlY3RMZWdhY3kudGVzdC5qc3g=')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/standalone/TestSelectLegacy.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9zdGFuZGFsb25lL1Rlc3RTZWxlY3RMZWdhY3kudGVzdC5qc3g=" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9zdGFuZGFsb25lL1Rlc3RVc2VyUHJvZmlsZS50ZXN0LmpzeA==')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/standalone/TestUserProfile.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9zdGFuZGFsb25lL1Rlc3RVc2VyUHJvZmlsZS50ZXN0LmpzeA==" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy91dGlscy9mbG93VmFsaWRhdGlvbi50ZXN0Lmpz')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/utils/flowValidation.test.js (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy91dGlscy9mbG93VmFsaWRhdGlvbi50ZXN0Lmpz" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vYWxlcnQtbGVnYWN5LnRlc3QuanN4')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/archive/design-system/alert-legacy.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vYWxlcnQtbGVnYWN5LnRlc3QuanN4" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vYXBwbGljYXRpb25zLW1hbmFnZXItbWlncmF0aW9uLnRlc3QuanN4')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/archive/design-system/applications-manager-migration.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vYXBwbGljYXRpb25zLW1hbmFnZXItbWlncmF0aW9uLnRlc3QuanN4" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vYXp1cmUtYmxvYi1jb25maWd1cmF0aW9uLW1pZ3JhdGlvbi50ZXN0LmpzeA==')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/archive/design-system/azure-blob-configuration-migration.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vYXp1cmUtYmxvYi1jb25maWd1cmF0aW9uLW1pZ3JhdGlvbi50ZXN0LmpzeA==" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vY2FyZC1sZWdhY3kudGVzdC5qc3g=')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/archive/design-system/card-legacy.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vY2FyZC1sZWdhY3kudGVzdC5qc3g=" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vZWFybmluZ3MtY29kZS1tYW5hZ2VyLW1pZ3JhdGlvbi50ZXN0LmpzeA==')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/archive/design-system/earnings-code-manager-migration.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vZWFybmluZ3MtY29kZS1tYW5hZ2VyLW1pZ3JhdGlvbi50ZXN0LmpzeA==" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vZWFybmluZ3MtY29kZS1tYW5hZ2VyLXNlbGVjdC1taWdyYXRpb24udGVzdC5qc3g=')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/archive/design-system/earnings-code-manager-select-migration.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vZWFybmluZ3MtY29kZS1tYW5hZ2VyLXNlbGVjdC1taWdyYXRpb24udGVzdC5qc3g=" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vZWFybmluZ3MtY29tcG9uZW50cy1taWdyYXRpb24udGVzdC5qc3g=')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/archive/design-system/earnings-components-migration.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vZWFybmluZ3MtY29tcG9uZW50cy1taWdyYXRpb24udGVzdC5qc3g=" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vZWFybmluZ3MtbWFwLWVkaXRvci1taWdyYXRpb24udGVzdC5qc3g=')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/archive/design-system/earnings-map-editor-migration.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vZWFybmluZ3MtbWFwLWVkaXRvci1taWdyYXRpb24udGVzdC5qc3g=" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vZWFybmluZ3MtbWFwLWVkaXRvci1zZWxlY3QtbWlncmF0aW9uLnRlc3QuanN4')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/archive/design-system/earnings-map-editor-select-migration.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vZWFybmluZ3MtbWFwLWVkaXRvci1zZWxlY3QtbWlncmF0aW9uLnRlc3QuanN4" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vZXJyb3ItYm91bmRhcnktbWlncmF0aW9uLnRlc3QuanN4')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/archive/design-system/error-boundary-migration.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vZXJyb3ItYm91bmRhcnktbWlncmF0aW9uLnRlc3QuanN4" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vZmllbGQtbWFwcGluZy1lZGl0b3ItbWlncmF0aW9uLnRlc3QuanN4')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/archive/design-system/field-mapping-editor-migration.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vZmllbGQtbWFwcGluZy1lZGl0b3ItbWlncmF0aW9uLnRlc3QuanN4" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vZmllbGQtbWFwcGluZy1lZGl0b3Itc2VsZWN0LW1pZ3JhdGlvbi50ZXN0LmpzeA==')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/archive/design-system/field-mapping-editor-select-migration.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vZmllbGQtbWFwcGluZy1lZGl0b3Itc2VsZWN0LW1pZ3JhdGlvbi50ZXN0LmpzeA==" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vaG9tZS1wYWdlLW1pZ3JhdGlvbi50ZXN0LmpzeA==')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/archive/design-system/home-page-migration.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vaG9tZS1wYWdlLW1pZ3JhdGlvbi50ZXN0LmpzeA==" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vaW5wdXQtZmllbGQtbWlncmF0aW9uLnRlc3QuanN4')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/archive/design-system/input-field-migration.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vaW5wdXQtZmllbGQtbWlncmF0aW9uLnRlc3QuanN4" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vaW50ZWdyYXRpb24tY3JlYXRpb24tZGlhbG9nLW1pZ3JhdGlvbi50ZXN0LmpzeA==')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/archive/design-system/integration-creation-dialog-migration.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vaW50ZWdyYXRpb24tY3JlYXRpb24tZGlhbG9nLW1pZ3JhdGlvbi50ZXN0LmpzeA==" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vaW50ZWdyYXRpb24tY3JlYXRpb24tZGlhbG9nLXNlbGVjdC1taWdyYXRpb24udGVzdC5qc3g=')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/archive/design-system/integration-creation-dialog-select-migration.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vaW50ZWdyYXRpb24tY3JlYXRpb24tZGlhbG9nLXNlbGVjdC1taWdyYXRpb24udGVzdC5qc3g=" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vaW50ZWdyYXRpb24tZGV0YWlsLXZpZXctbWlncmF0aW9uLnRlc3QuanN4')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/archive/design-system/integration-detail-view-migration.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vaW50ZWdyYXRpb24tZGV0YWlsLXZpZXctbWlncmF0aW9uLnRlc3QuanN4" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vaW50ZWdyYXRpb24tZmxvdy1jYW52YXMtbWlncmF0aW9uLnRlc3QuanN4')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/archive/design-system/integration-flow-canvas-migration.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vaW50ZWdyYXRpb24tZmxvdy1jYW52YXMtbWlncmF0aW9uLnRlc3QuanN4" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vaW50ZWdyYXRpb24tdGFibGUtbWlncmF0aW9uLnRlc3QuanN4')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/archive/design-system/integration-table-migration.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vaW50ZWdyYXRpb24tdGFibGUtbWlncmF0aW9uLnRlc3QuanN4" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vaW50ZWdyYXRpb24tdGFibGUtcm93LW1pZ3JhdGlvbi50ZXN0LmpzeA==')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/archive/design-system/integration-table-row-migration.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vaW50ZWdyYXRpb24tdGFibGUtcm93LW1pZ3JhdGlvbi50ZXN0LmpzeA==" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vbGVnYWN5LXdyYXBwZXJzLnRlc3QuanN4')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/archive/design-system/legacy-wrappers.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vbGVnYWN5LXdyYXBwZXJzLnRlc3QuanN4" class="issues hidden">
+        
+          <div class="issue error">
+            <div><strong>analysis-error</strong> </div>
+            <div>Failed to analyze file: Identifier 'Box' has already been declared. (1:29)</div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vbm9kZS1wcm9wZXJ0aWVzLXBhbmVsLXNlbGVjdC1taWdyYXRpb24udGVzdC5qc3g=')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/archive/design-system/node-properties-panel-select-migration.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vbm9kZS1wcm9wZXJ0aWVzLXBhbmVsLXNlbGVjdC1taWdyYXRpb24udGVzdC5qc3g=" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vbm90aWZpY2F0aW9uLXNldHRpbmdzLXNlbGVjdC1taWdyYXRpb24udGVzdC5qc3g=')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/archive/design-system/notification-settings-select-migration.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vbm90aWZpY2F0aW9uLXNldHRpbmdzLXNlbGVjdC1taWdyYXRpb24udGVzdC5qc3g=" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vcGFnZXMtbWlncmF0aW9uLnRlc3QuanN4')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/archive/design-system/pages-migration.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vcGFnZXMtbWlncmF0aW9uLnRlc3QuanN4" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vcmVsZWFzZXMtbWFuYWdlci1pbnB1dC1maWVsZC1taWdyYXRpb24udGVzdC5qc3g=')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/archive/design-system/releases-manager-input-field-migration.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vcmVsZWFzZXMtbWFuYWdlci1pbnB1dC1maWVsZC1taWdyYXRpb24udGVzdC5qc3g=" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vcmVsZWFzZXMtbWFuYWdlci1taWdyYXRpb24udGVzdC5qc3g=')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/archive/design-system/releases-manager-migration.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vcmVsZWFzZXMtbWFuYWdlci1taWdyYXRpb24udGVzdC5qc3g=" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vcmVsZWFzZXMtbWFuYWdlci1zZWxlY3QtbWlncmF0aW9uLnRlc3QuanN4')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/archive/design-system/releases-manager-select-migration.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vcmVsZWFzZXMtbWFuYWdlci1zZWxlY3QtbWlncmF0aW9uLnRlc3QuanN4" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vc2NoZWR1bGUtY29uZmlndXJhdGlvbi1zZWxlY3QtbWlncmF0aW9uLnRlc3QuanN4')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/archive/design-system/schedule-configuration-select-migration.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vc2NoZWR1bGUtY29uZmlndXJhdGlvbi1zZWxlY3QtbWlncmF0aW9uLnRlc3QuanN4" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vc2VsZWN0LWxlZ2FjeS50ZXN0LmpzeA==')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/archive/design-system/select-legacy.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vc2VsZWN0LWxlZ2FjeS50ZXN0LmpzeA==" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vdGVuYW50LWxpc3QtbWlncmF0aW9uLnRlc3QuanN4')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/archive/design-system/tenant-list-migration.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vdGVuYW50LWxpc3QtbWlncmF0aW9uLnRlc3QuanN4" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vdGVuYW50cy1tYW5hZ2VyLW1pZ3JhdGlvbi50ZXN0LmpzeA==')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/archive/design-system/tenants-manager-migration.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vdGVuYW50cy1tYW5hZ2VyLW1pZ3JhdGlvbi50ZXN0LmpzeA==" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vdGVuYW50cy1tYW5hZ2VyLXNlbGVjdC1taWdyYXRpb24udGVzdC5qc3g=')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/archive/design-system/tenants-manager-select-migration.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vdGVuYW50cy1tYW5hZ2VyLXNlbGVjdC1taWdyYXRpb24udGVzdC5qc3g=" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vd2ViaG9vay1zZXR0aW5ncy1taWdyYXRpb24udGVzdC5qc3g=')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/archive/design-system/webhook-settings-migration.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vd2ViaG9vay1zZXR0aW5ncy1taWdyYXRpb24udGVzdC5qc3g=" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vd2ViaG9vay1zZXR0aW5ncy1zZWxlY3QtbWlncmF0aW9uLnRlc3QuanN4')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/archive/design-system/webhook-settings-select-migration.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2Rlc2lnbi1zeXN0ZW0vd2ViaG9vay1zZXR0aW5ncy1zZWxlY3QtbWlncmF0aW9uLnRlc3QuanN4" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2ludGVncmF0aW9uL05vZGVQcm9wZXJ0aWVzUGFuZWwudGVzdC5qc3g=')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/archive/integration/NodePropertiesPanel.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9hcmNoaXZlL2ludGVncmF0aW9uL05vZGVQcm9wZXJ0aWVzUGFuZWwudGVzdC5qc3g=" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2FkbWluL0F6dXJlQ29uZmlndXJhdGlvblBhbmVsLnRlc3QuanN4')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/components/admin/AzureConfigurationPanel.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2FkbWluL0F6dXJlQ29uZmlndXJhdGlvblBhbmVsLnRlc3QuanN4" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2FkbWluL0RvY3VtZW50YXRpb25IdWIudGVzdC5qc3g=')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/components/admin/DocumentationHub.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2FkbWluL0RvY3VtZW50YXRpb25IdWIudGVzdC5qc3g=" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2FkbWluL0Vycm9yTG9nVmlld2VyLnRlc3QuanN4')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/components/admin/ErrorLogViewer.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2FkbWluL0Vycm9yTG9nVmlld2VyLnRlc3QuanN4" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2FkbWluL0ludml0YXRpb25Gb3JtLnRlc3QuanN4')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/components/admin/InvitationForm.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2FkbWluL0ludml0YXRpb25Gb3JtLnRlc3QuanN4" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2FkbWluL0ludml0YXRpb25MaXN0LnRlc3QuanN4')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/components/admin/InvitationList.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2FkbWluL0ludml0YXRpb25MaXN0LnRlc3QuanN4" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2FkbWluL01vbml0b3JpbmdEYXNoYm9hcmQudGVzdC5qc3g=')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/components/admin/MonitoringDashboard.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2FkbWluL01vbml0b3JpbmdEYXNoYm9hcmQudGVzdC5qc3g=" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2FkbWluL1Jlc291cmNlSGVhbHRoQ2FyZHMudGVzdC5qc3g=')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/components/admin/ResourceHealthCards.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2FkbWluL1Jlc291cmNlSGVhbHRoQ2FyZHMudGVzdC5qc3g=" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2NvbW1vbi9BcHAudGVzdC5qc3g=')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/components/common/App.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2NvbW1vbi9BcHAudGVzdC5qc3g=" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2NvbW1vbi9BcHBSb3V0ZXMudGVzdC5qc3g=')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/components/common/AppRoutes.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2NvbW1vbi9BcHBSb3V0ZXMudGVzdC5qc3g=" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2NvbW1vbi9BdXRoTW9kYWwudGVzdC5qc3g=')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/components/common/AuthModal.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2NvbW1vbi9BdXRoTW9kYWwudGVzdC5qc3g=" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2NvbW1vbi9Nc3dGcmVlUmVzb3VyY2VMb2FkZXIudGVzdC5qc3g=')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/components/common/MswFreeResourceLoader.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2NvbW1vbi9Nc3dGcmVlUmVzb3VyY2VMb2FkZXIudGVzdC5qc3g=" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2NvbW1vbi9SZXNvdXJjZUxvYWRlci50ZXN0LmpzeA==')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/components/common/ResourceLoader.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2NvbW1vbi9SZXNvdXJjZUxvYWRlci50ZXN0LmpzeA==" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2NvbW1vbi9Vc2VyUHJvZmlsZS50ZXN0LmpzeA==')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/components/common/UserProfile.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2NvbW1vbi9Vc2VyUHJvZmlsZS50ZXN0LmpzeA==" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2NvbW1vbi9WaXJ0dWFsaXplZERhdGFUYWJsZS50ZXN0LmpzeA==')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/components/common/VirtualizedDataTable.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2NvbW1vbi9WaXJ0dWFsaXplZERhdGFUYWJsZS50ZXN0LmpzeA==" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2ludGVncmF0aW9uL0FwcGxpY2F0aW9uTm9kZVByb3BlcnRpZXNQYW5lbC50ZXN0LmpzeA==')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/components/integration/ApplicationNodePropertiesPanel.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2ludGVncmF0aW9uL0FwcGxpY2F0aW9uTm9kZVByb3BlcnRpZXNQYW5lbC50ZXN0LmpzeA==" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2ludGVncmF0aW9uL0RhdGFQcmV2aWV3UGFuZWwudGVzdC5qc3g=')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/components/integration/DataPreviewPanel.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2ludGVncmF0aW9uL0RhdGFQcmV2aWV3UGFuZWwudGVzdC5qc3g=" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2ludGVncmF0aW9uL0VuaGFuY2VkTm9kZVBhbGV0dGUudGVzdC5qc3g=')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/components/integration/EnhancedNodePalette.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2ludGVncmF0aW9uL0VuaGFuY2VkTm9kZVBhbGV0dGUudGVzdC5qc3g=" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2ludGVncmF0aW9uL0Zsb3dQZXJmb3JtYW5jZU1vbml0b3IudGVzdC5qc3g=')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/components/integration/FlowPerformanceMonitor.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2ludGVncmF0aW9uL0Zsb3dQZXJmb3JtYW5jZU1vbml0b3IudGVzdC5qc3g=" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2ludGVncmF0aW9uL0ludGVncmF0aW9uRm9ybS5pbnRlZ3JhdGlvbi50ZXN0LmpzeA==')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/components/integration/IntegrationForm.integration.test.jsx (2 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2ludGVncmF0aW9uL0ludGVncmF0aW9uRm9ybS5pbnRlZ3JhdGlvbi50ZXN0LmpzeA==" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>msw-production-endpoint</strong> - Line 126</div>
+            <div>MSW handler using production endpoint: /api/integrations</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Consider using a test-specific endpoint
+                <span>(Manual)</span>
+              </div>
+            
+          </div>
+        
+          <div class="issue warning">
+            <div><strong>msw-production-endpoint</strong> - Line 165</div>
+            <div>MSW handler using production endpoint: /api/integrations</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Consider using a test-specific endpoint
+                <span>(Manual)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2ludGVncmF0aW9uL09wdGltaXplZEVkZ2UudGVzdC5qc3g=')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/components/integration/OptimizedEdge.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2ludGVncmF0aW9uL09wdGltaXplZEVkZ2UudGVzdC5qc3g=" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2ludGVncmF0aW9uL1RlbXBsYXRlQnJvd3Nlci50ZXN0LmpzeA==')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/components/integration/TemplateBrowser.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2ludGVncmF0aW9uL1RlbXBsYXRlQnJvd3Nlci50ZXN0LmpzeA==" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2ludGVncmF0aW9uL1RlbXBsYXRlRm9ybS50ZXN0LmpzeA==')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/components/integration/TemplateForm.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2ludGVncmF0aW9uL1RlbXBsYXRlRm9ybS50ZXN0LmpzeA==" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2ludGVncmF0aW9uL1ZhbGlkYXRpb25QYW5lbC50ZXN0LmpzeA==')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/components/integration/ValidationPanel.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2ludGVncmF0aW9uL1ZhbGlkYXRpb25QYW5lbC50ZXN0LmpzeA==" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2ludGVncmF0aW9uL1Zpc3VhbEZpZWxkTWFwcGVyLnRlc3QuanN4')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/components/integration/VisualFieldMapper.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2ludGVncmF0aW9uL1Zpc3VhbEZpZWxkTWFwcGVyLnRlc3QuanN4" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2ludml0YXRpb24vQWNjZXB0SW52aXRhdGlvbi50ZXN0LmpzeA==')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/components/invitation/AcceptInvitation.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2ludml0YXRpb24vQWNjZXB0SW52aXRhdGlvbi50ZXN0LmpzeA==" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2ludml0YXRpb24vSW52aXRhdGlvbkZvcm0udGVzdC5qc3g=')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/components/invitation/InvitationForm.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2ludml0YXRpb24vSW52aXRhdGlvbkZvcm0udGVzdC5qc3g=" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2ludml0YXRpb24vT0F1dGhDYWxsYmFjay50ZXN0LmpzeA==')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/components/invitation/OAuthCallback.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2ludml0YXRpb24vT0F1dGhDYWxsYmFjay50ZXN0LmpzeA==" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL3Byb2ZpbGUvTG9naW5IaXN0b3J5LnRlc3QuanN4')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/components/profile/LoginHistory.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL3Byb2ZpbGUvTG9naW5IaXN0b3J5LnRlc3QuanN4" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL3Byb2ZpbGUvU2VjdXJpdHlTZXR0aW5ncy50ZXN0LmpzeA==')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/components/profile/SecuritySettings.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL3Byb2ZpbGUvU2VjdXJpdHlTZXR0aW5ncy50ZXN0LmpzeA==" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL3Byb2ZpbGUvVXNlclByb2ZpbGUudGVzdC5qc3g=')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/components/profile/UserProfile.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL3Byb2ZpbGUvVXNlclByb2ZpbGUudGVzdC5qc3g=" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL3NlY3VyaXR5L01GQUVucm9sbG1lbnQudGVzdC5qc3g=')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/components/security/MFAEnrollment.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL3NlY3VyaXR5L01GQUVucm9sbG1lbnQudGVzdC5qc3g=" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL3NlY3VyaXR5L01GQVZlcmlmaWNhdGlvbi50ZXN0LmpzeA==')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/components/security/MFAVerification.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL3NlY3VyaXR5L01GQVZlcmlmaWNhdGlvbi50ZXN0LmpzeA==" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb250ZXh0cy9Vc2VyQ29udGV4dC1ESS9Vc2VyQ29udGV4dC50ZXN0Lmpz')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/contexts/UserContext-DI/UserContext.test.js (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb250ZXh0cy9Vc2VyQ29udGV4dC1ESS9Vc2VyQ29udGV4dC50ZXN0Lmpz" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2FkbWluL01ldHJpY3NDaGFydHMvQXBwU2VydmljZU1ldHJpY3MudGVzdC5qc3g=')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/components/admin/MetricsCharts/AppServiceMetrics.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2FkbWluL01ldHJpY3NDaGFydHMvQXBwU2VydmljZU1ldHJpY3MudGVzdC5qc3g=" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2FkbWluL01ldHJpY3NDaGFydHMvRGF0YWJhc2VNZXRyaWNzLnRlc3QuanN4')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/components/admin/MetricsCharts/DatabaseMetrics.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2FkbWluL01ldHJpY3NDaGFydHMvRGF0YWJhc2VNZXRyaWNzLnRlc3QuanN4" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2FkbWluL01ldHJpY3NDaGFydHMvRG9jdW1lbnRhdGlvbk1ldHJpY3MudGVzdC5qc3g=')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/components/admin/MetricsCharts/DocumentationMetrics.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2FkbWluL01ldHJpY3NDaGFydHMvRG9jdW1lbnRhdGlvbk1ldHJpY3MudGVzdC5qc3g=" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2FkbWluL01ldHJpY3NDaGFydHMvS2V5VmF1bHRNZXRyaWNzLnRlc3QuanN4')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/components/admin/MetricsCharts/KeyVaultMetrics.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2FkbWluL01ldHJpY3NDaGFydHMvS2V5VmF1bHRNZXRyaWNzLnRlc3QuanN4" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2FkbWluL01ldHJpY3NDaGFydHMvTmV0d29ya01ldHJpY3MudGVzdC5qc3g=')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/components/admin/MetricsCharts/NetworkMetrics.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2FkbWluL01ldHJpY3NDaGFydHMvTmV0d29ya01ldHJpY3MudGVzdC5qc3g=" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+    <div class="test-file">
+      <div class="test-header" onclick="toggleTest('L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2FkbWluL01ldHJpY3NDaGFydHMvU3RvcmFnZU1ldHJpY3MudGVzdC5qc3g=')">
+        <h3>/home/ai-dev/Desktop/tap-integration-platform/frontend/src/tests/components/admin/MetricsCharts/StorageMetrics.test.jsx (1 issues)</h3>
+      </div>
+      <div id="L2hvbWUvYWktZGV2L0Rlc2t0b3AvdGFwLWludGVncmF0aW9uLXBsYXRmb3JtL2Zyb250ZW5kL3NyYy90ZXN0cy9jb21wb25lbnRzL2FkbWluL01ldHJpY3NDaGFydHMvU3RvcmFnZU1ldHJpY3MudGVzdC5qc3g=" class="issues hidden">
+        
+          <div class="issue warning">
+            <div><strong>missing-rtl-cleanup</strong> </div>
+            <div>Test uses React Testing Library but does not call cleanup</div>
+            
+              <div class="fix">
+                <strong>Suggested Fix:</strong> Add afterEach(cleanup) or import and use cleanup after tests
+                <span>(Automated)</span>
+              </div>
+            
+          </div>
+        
+      </div>
+    </div>
+  
+  
+  <script>
+    function toggleTest(id) {
+      const element = document.getElementById(id);
+      element.classList.toggle('hidden');
+    }
+  </script>
+</body>
+</html>
+  

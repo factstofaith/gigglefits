@@ -1,0 +1,133 @@
+# NPM and QA Testing Pipeline Configuration
+#
+# This pipeline configuration integrates NPM package building, testing, 
+# verification, and reporting into a single workflow.
+
+name: npm-qa-integrated-pipeline
+
+trigger:
+  branches:
+    include:
+    - main
+    - releases/*
+  paths:
+    include:
+    - frontend/**
+
+parameters:
+  - name: runMode
+    displayName: Pipeline Run Mode
+    type: string
+    default: 'full'
+    values:
+    - 'full'
+    - 'report-only'
+    - 'build-only'
+    - 'test-only'
+
+variables:
+  - name: nodeVersion
+    value: '18.x'
+  - name: reportDir
+    value: '$(Build.ArtifactStagingDirectory)/reports'
+
+stages:
+- stage: IntegratedPipeline
+  displayName: NPM Package Build & Test
+  jobs:
+  - job: BuildTestVerify
+    displayName: Build, Test & Verify Package
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - task: NodeTool@0
+      displayName: 'Install Node.js'
+      inputs:
+        versionSpec: $(nodeVersion)
+
+    - task: Npm@1
+      displayName: 'Install dependencies'
+      inputs:
+        command: 'install'
+        workingDir: 'frontend'
+
+    # Run the integrated pipeline with appropriate parameters
+    - bash: |
+        cd frontend
+        PIPELINE_ARGS=""
+        
+        if [ "${{ parameters.runMode }}" = "report-only" ]; then
+          PIPELINE_ARGS="--report-only"
+        elif [ "${{ parameters.runMode }}" = "build-only" ]; then
+          PIPELINE_ARGS="--skip-tests"
+        elif [ "${{ parameters.runMode }}" = "test-only" ]; then
+          PIPELINE_ARGS="--skip-build"
+        fi
+        
+        chmod +x ./scripts/run-pipeline.sh
+        ./scripts/run-pipeline.sh $PIPELINE_ARGS
+      displayName: 'Run integrated pipeline'
+      
+    # Publish test results
+    - task: PublishTestResults@2
+      displayName: 'Publish test results'
+      inputs:
+        testResultsFormat: 'JUnit'
+        testResultsFiles: 'frontend/test-results/junit/jest-*.xml'
+        mergeTestResults: true
+        testRunTitle: 'NPM Package Tests'
+      condition: succeededOrFailed()
+      
+    # Publish code coverage
+    - task: PublishCodeCoverageResults@1
+      displayName: 'Publish code coverage'
+      inputs:
+        codeCoverageTool: 'Cobertura'
+        summaryFileLocation: 'frontend/coverage/cobertura-coverage.xml'
+        reportDirectory: 'frontend/coverage/lcov-report'
+      condition: succeededOrFailed()
+    
+    # Publish pipeline reports
+    - task: CopyFiles@2
+      displayName: 'Copy reports to staging directory'
+      inputs:
+        SourceFolder: 'frontend/validation_results'
+        Contents: '**'
+        TargetFolder: '$(reportDir)'
+      condition: succeededOrFailed()
+      
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish reports as artifacts'
+      inputs:
+        PathtoPublish: '$(reportDir)'
+        ArtifactName: 'npm-qa-reports'
+        publishLocation: 'Container'
+      condition: succeededOrFailed()
+
+- stage: Verification
+  displayName: Package Verification
+  dependsOn: IntegratedPipeline
+  condition: succeeded('IntegratedPipeline')
+  jobs:
+  - job: VerifyPackageConsumption
+    displayName: Verify Package Consumption
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - task: NodeTool@0
+      displayName: 'Install Node.js'
+      inputs:
+        versionSpec: $(nodeVersion)
+    
+    - task: DownloadBuildArtifacts@0
+      displayName: 'Download built package'
+      inputs:
+        buildType: 'current'
+        downloadType: 'single'
+        artifactName: 'npm-package'
+        downloadPath: '$(System.ArtifactsDirectory)'
+        
+    - bash: |
+        cd frontend
+        npm run verify:consumption -- --package-path $(System.ArtifactsDirectory)/npm-package
+      displayName: 'Verify package consumption'

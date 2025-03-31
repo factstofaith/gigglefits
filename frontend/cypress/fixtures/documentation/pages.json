@@ -1,0 +1,136 @@
+{
+  "documentation-index": [
+    {
+      "id": "getting-started-guide",
+      "title": "Getting Started Guide",
+      "description": "Introduction to the TAP Integration Platform",
+      "category": "user-guide",
+      "path": "/documentation/user-guide/getting-started-guide",
+      "audience": "public",
+      "lastUpdated": "2025-03-15T10:00:00Z",
+      "tags": ["beginner", "introduction"],
+      "views": 156
+    },
+    {
+      "id": "user-management",
+      "title": "User Management Guide",
+      "description": "Manage users and permissions",
+      "category": "user-guide",
+      "path": "/documentation/user-guide/user-management",
+      "audience": "public",
+      "lastUpdated": "2025-03-10T08:30:00Z",
+      "tags": ["users", "permissions", "roles"],
+      "views": 87
+    },
+    {
+      "id": "integration-creation",
+      "title": "Creating Integrations",
+      "description": "Step-by-step guide for creating new integrations",
+      "category": "user-guide",
+      "path": "/documentation/user-guide/integration-creation",
+      "audience": "public",
+      "lastUpdated": "2025-03-18T14:45:00Z",
+      "tags": ["integrations", "flows", "canvas"],
+      "views": 142
+    },
+    {
+      "id": "rest-api-reference",
+      "title": "REST API Reference",
+      "description": "Complete documentation for the REST API",
+      "category": "api-reference",
+      "path": "/documentation/api-reference/rest-api",
+      "audience": "public",
+      "lastUpdated": "2025-03-20T11:15:00Z",
+      "tags": ["api", "rest", "endpoints"],
+      "views": 98
+    },
+    {
+      "id": "webhook-api",
+      "title": "Webhook API Reference",
+      "description": "Guide to using webhooks for event-driven integrations",
+      "category": "api-reference",
+      "path": "/documentation/api-reference/webhook-api",
+      "audience": "public",
+      "lastUpdated": "2025-03-12T09:20:00Z",
+      "tags": ["api", "webhooks", "events"],
+      "views": 76
+    },
+    {
+      "id": "sdk-documentation",
+      "title": "SDK Documentation",
+      "description": "Using the JavaScript and Python SDKs",
+      "category": "api-reference",
+      "path": "/documentation/api-reference/sdk-documentation",
+      "audience": "public",
+      "lastUpdated": "2025-03-05T16:10:00Z",
+      "tags": ["sdk", "javascript", "python"],
+      "views": 65
+    },
+    {
+      "id": "azure-blob-integration",
+      "title": "Azure Blob Storage Integration",
+      "description": "Connect to Azure Blob Storage",
+      "category": "integration",
+      "path": "/documentation/integration/azure-blob-storage",
+      "audience": "public",
+      "lastUpdated": "2025-03-22T13:40:00Z",
+      "tags": ["azure", "storage", "blob"],
+      "views": 92
+    },
+    {
+      "id": "salesforce-integration",
+      "title": "Salesforce Integration",
+      "description": "Connect to Salesforce APIs",
+      "category": "integration",
+      "path": "/documentation/integration/salesforce",
+      "audience": "public",
+      "lastUpdated": "2025-03-08T10:30:00Z",
+      "tags": ["salesforce", "crm", "api"],
+      "views": 87
+    },
+    {
+      "id": "oauth-configuration",
+      "title": "OAuth Configuration",
+      "description": "Set up OAuth authentication for API connections",
+      "category": "integration",
+      "path": "/documentation/integration/oauth-configuration",
+      "audience": "public",
+      "lastUpdated": "2025-03-16T09:15:00Z",
+      "tags": ["oauth", "authentication", "security"],
+      "views": 76
+    },
+    {
+      "id": "tenant-management",
+      "title": "Tenant Management",
+      "description": "Manage multi-tenant environments",
+      "category": "administration",
+      "path": "/documentation/administration/tenant-management",
+      "audience": "public",
+      "lastUpdated": "2025-03-11T14:20:00Z",
+      "tags": ["tenants", "multi-tenant", "admin"],
+      "views": 58
+    },
+    {
+      "id": "system-monitoring",
+      "title": "System Monitoring",
+      "description": "Monitor platform health and performance",
+      "category": "administration",
+      "path": "/documentation/administration/system-monitoring",
+      "audience": "public",
+      "lastUpdated": "2025-03-19T15:45:00Z",
+      "tags": ["monitoring", "alerts", "performance"],
+      "views": 52
+    },
+    {
+      "id": "backup-restore",
+      "title": "Backup and Restore",
+      "description": "Back up and restore platform data",
+      "category": "administration",
+      "path": "/documentation/administration/backup-restore",
+      "audience": "public",
+      "lastUpdated": "2025-03-13T11:30:00Z",
+      "tags": ["backup", "restore", "disaster recovery"],
+      "views": 45
+    }
+  ]
+}

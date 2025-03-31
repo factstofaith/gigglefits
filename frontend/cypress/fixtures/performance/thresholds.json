@@ -1,0 +1,75 @@
+{
+  "pageLoad": {
+    "HomePage": {
+      "domContentLoaded": 1000,
+      "load": 2000,
+      "firstPaint": 800,
+      "firstContentfulPaint": 1000
+    },
+    "IntegrationsPage": {
+      "domContentLoaded": 1200,
+      "load": 2500,
+      "firstPaint": 1000,
+      "firstContentfulPaint": 1200
+    },
+    "IntegrationDetailPage": {
+      "domContentLoaded": 1500,
+      "load": 3000,
+      "firstPaint": 1200,
+      "firstContentfulPaint": 1500
+    },
+    "AdminDashboard": {
+      "domContentLoaded": 1200,
+      "load": 2500,
+      "firstPaint": 1000,
+      "firstContentfulPaint": 1200
+    },
+    "LoginPage": {
+      "domContentLoaded": 800,
+      "load": 1500,
+      "firstPaint": 600,
+      "firstContentfulPaint": 800
+    }
+  },
+  "componentRender": {
+    "DataTable": 200,
+    "FlowCanvas": 500,
+    "Card": 100,
+    "Modal": 150,
+    "InputField": 80,
+    "Button": 50,
+    "NodePalette": 200,
+    "NodePropertiesPanel": 250,
+    "ValidationPanel": 150
+  },
+  "apiResponse": {
+    "GetIntegrations": 500,
+    "GetIntegrationDetail": 600,
+    "GetUsers": 400,
+    "Login": 800,
+    "CreateIntegration": 1000,
+    "UpdateIntegration": 800,
+    "DeleteIntegration": 600
+  },
+  "interaction": {
+    "ButtonClick": 100,
+    "ModalOpen": 200,
+    "ModalClose": 150,
+    "MenuOpen": 150,
+    "TabSwitch": 200,
+    "FormSubmit": 300,
+    "DropdownOpen": 150,
+    "NodeDrag": 300,
+    "NodeConnect": 350,
+    "NodeConfigure": 250
+  },
+  "userFlow": {
+    "Login": 2000,
+    "CreateIntegration": 5000,
+    "ConfigureNode": 3000,
+    "RunIntegration": 4000,
+    "AddDataTransformation": 3500,
+    "CreateDataset": 3000,
+    "MapFields": 4000
+  }
+}

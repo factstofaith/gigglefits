@@ -1,0 +1,135 @@
+{
+  "integrationWithExecutionErrors": {
+    "name": "Execution Error Test Integration",
+    "description": "Integration for testing execution error recovery",
+    "type": "DATA_SYNC",
+    "schedule": "MANUAL",
+    "tags": ["test", "error", "execution", "e2e"]
+  },
+  "sourceNodeConfig": {
+    "invalid": {
+      "api": {
+        "url": "https://invalid-api.example.com/data",
+        "method": "GET",
+        "headers": {
+          "Authorization": "Bearer invalid_token"
+        }
+      }
+    },
+    "valid": {
+      "api": {
+        "url": "https://valid-api.example.com/data",
+        "method": "GET",
+        "headers": {
+          "Authorization": "Bearer valid_token"
+        },
+        "useMockData": true,
+        "mockData": [
+          { "id": 1, "name": "Test Item 1" },
+          { "id": 2, "name": "Test Item 2" }
+        ]
+      }
+    }
+  },
+  "expectedErrors": {
+    "apiFailure": {
+      "code": "API_CONNECTION_ERROR",
+      "message": "Failed to connect to API endpoint",
+      "details": "Connection refused or endpoint not found",
+      "severity": "ERROR",
+      "nodeType": "API_SOURCE"
+    },
+    "authFailure": {
+      "code": "API_AUTHENTICATION_ERROR",
+      "message": "Authentication failed for API endpoint",
+      "details": "Invalid or expired token",
+      "severity": "ERROR",
+      "nodeType": "API_SOURCE"
+    },
+    "timeout": {
+      "code": "API_TIMEOUT_ERROR",
+      "message": "API request timed out",
+      "details": "Request exceeded configured timeout of 30 seconds",
+      "severity": "ERROR",
+      "nodeType": "API_SOURCE"
+    }
+  },
+  "executionResults": {
+    "failed": {
+      "status": "FAILED",
+      "startTime": "2025-04-05T15:00:00Z",
+      "endTime": "2025-04-05T15:00:30Z",
+      "processingTime": 30,
+      "itemsProcessed": 0,
+      "bytesProcessed": 0,
+      "error": {
+        "code": "API_CONNECTION_ERROR",
+        "message": "Failed to connect to API endpoint",
+        "details": "Connection refused or endpoint not found",
+        "nodeId": "node_xyz"
+      },
+      "logs": [
+        {
+          "timestamp": "2025-04-05T15:00:00Z",
+          "level": "INFO",
+          "message": "Integration execution started"
+        },
+        {
+          "timestamp": "2025-04-05T15:00:10Z",
+          "level": "INFO",
+          "message": "Executing API_SOURCE node"
+        },
+        {
+          "timestamp": "2025-04-05T15:00:15Z",
+          "level": "ERROR",
+          "message": "Failed to connect to API endpoint: Connection refused or endpoint not found"
+        },
+        {
+          "timestamp": "2025-04-05T15:00:30Z",
+          "level": "ERROR",
+          "message": "Integration execution failed: API_CONNECTION_ERROR"
+        }
+      ]
+    },
+    "successful": {
+      "status": "SUCCESS",
+      "startTime": "2025-04-05T16:00:00Z",
+      "endTime": "2025-04-05T16:00:30Z",
+      "processingTime": 30,
+      "itemsProcessed": 2,
+      "bytesProcessed": 256,
+      "logs": [
+        {
+          "timestamp": "2025-04-05T16:00:00Z",
+          "level": "INFO",
+          "message": "Integration execution started"
+        },
+        {
+          "timestamp": "2025-04-05T16:00:10Z",
+          "level": "INFO",
+          "message": "Executing API_SOURCE node"
+        },
+        {
+          "timestamp": "2025-04-05T16:00:15Z",
+          "level": "INFO",
+          "message": "Retrieved 2 records from API source"
+        },
+        {
+          "timestamp": "2025-04-05T16:00:20Z",
+          "level": "INFO",
+          "message": "Executing JSON_DESTINATION node"
+        },
+        {
+          "timestamp": "2025-04-05T16:00:25Z",
+          "level": "INFO",
+          "message": "Wrote 2 records to destination"
+        },
+        {
+          "timestamp": "2025-04-05T16:00:30Z",
+          "level": "INFO",
+          "message": "Integration execution completed successfully"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "endpoints": {
+    "integrations": {
+      "serverError": {
+        "status": 500,
+        "message": "Internal server error processing integrations request",
+        "code": "SERVER_ERROR"
+      },
+      "authError": {
+        "status": 401,
+        "message": "Authentication token expired",
+        "code": "AUTHENTICATION_ERROR"
+      },
+      "timeoutError": {
+        "status": 504,
+        "message": "Request timed out while retrieving integrations",
+        "code": "TIMEOUT_ERROR"
+      }
+    },
+    "users": {
+      "serverError": {
+        "status": 500,
+        "message": "Internal server error processing users request",
+        "code": "SERVER_ERROR"
+      },
+      "authError": {
+        "status": 403,
+        "message": "Insufficient permissions to access users",
+        "code": "AUTHORIZATION_ERROR"
+      },
+      "timeoutError": {
+        "status": 504,
+        "message": "Request timed out while retrieving users",
+        "code": "TIMEOUT_ERROR"
+      }
+    },
+    "connections": {
+      "serverError": {
+        "status": 500,
+        "message": "Internal server error processing connections request",
+        "code": "SERVER_ERROR"
+      },
+      "authError": {
+        "status": 401,
+        "message": "Authentication required to access connections",
+        "code": "AUTHENTICATION_ERROR"
+      },
+      "timeoutError": {
+        "status": 504,
+        "message": "Request timed out while retrieving connections",
+        "code": "TIMEOUT_ERROR"
+      }
+    }
+  },
+  "errorMessages": {
+    "serverError": {
+      "title": "Server Error",
+      "description": "We encountered an unexpected problem on our servers. Our team has been notified and is working to fix the issue.",
+      "action": "Please try again in a few moments."
+    },
+    "authError": {
+      "title": "Authentication Error",
+      "description": "Your session has expired or you don't have permission to access this resource.",
+      "action": "Please sign in again to continue."
+    },
+    "timeoutError": {
+      "title": "Request Timeout",
+      "description": "The server took too long to respond to your request.",
+      "action": "Please check your connection and try again."
+    },
+    "connectionError": {
+      "title": "Connection Error",
+      "description": "We couldn't connect to our servers.",
+      "action": "Please check your internet connection and try again."
+    }
+  }
+}

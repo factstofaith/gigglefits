@@ -1,0 +1,13 @@
+{
+  "buildSuccess": true,
+  "duration": 4221,
+  "errors": [],
+  "warnings": [],
+  "metrics": {
+    "totalSize": 0,
+    "jsSize": 0,
+    "cssSize": 0,
+    "chunkCount": 1,
+    "entryPoints": 1
+  }
+}

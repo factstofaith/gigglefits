@@ -1,0 +1,34 @@
+[
+  {
+    "id": "user-guide",
+    "title": "User Guides",
+    "description": "Learn how to use the TAP Integration Platform",
+    "icon": "school",
+    "color": "#4caf50",
+    "documentCount": 15
+  },
+  {
+    "id": "api-reference",
+    "title": "API Reference",
+    "description": "Detailed API documentation for developers",
+    "icon": "api",
+    "color": "#2196f3",
+    "documentCount": 22
+  },
+  {
+    "id": "integration",
+    "title": "Integration Guides",
+    "description": "Connect with other systems and services",
+    "icon": "integration_instructions",
+    "color": "#ff9800",
+    "documentCount": 18
+  },
+  {
+    "id": "administration",
+    "title": "Administrator Guides",
+    "description": "Manage and configure the platform",
+    "icon": "settings",
+    "color": "#9c27b0",
+    "documentCount": 12
+  }
+]

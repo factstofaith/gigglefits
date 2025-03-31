@@ -1,0 +1,22 @@
+# A11y component enhancement batch file
+# Format: ComponentName, ComponentType, RelativePath
+
+# Integration components
+IntegrationTable, table, integration
+IntegrationTableRow, generic, integration
+FieldMappingEditor, form, integration
+DataPreview, generic, integration
+APISourceConfiguration, form, integration
+
+# Common components
+Button, button, common
+Card, generic, common
+InputField, form, common
+ProgressBar, generic, common
+Timeline, table, common
+StatusDisplay, generic, common
+
+# Auth components
+RequireAuth, generic, auth
+RequireAdmin, generic, auth
+AuthModal, dialog, auth

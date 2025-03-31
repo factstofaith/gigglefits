@@ -1,0 +1,47 @@
+[
+  {
+    "id": "existing-123",
+    "name": "Existing Integration",
+    "description": "An existing integration for testing",
+    "type": "data-sync",
+    "source": "Sample API Source",
+    "destination": "Azure Blob Storage",
+    "status": "active",
+    "created_at": "2025-01-15T12:00:00.000Z",
+    "updated_at": "2025-03-20T14:30:00.000Z",
+    "schedule": "0 0 * * *",
+    "last_run": "2025-03-25T00:00:00.000Z",
+    "last_run_status": "success",
+    "owner": "admin"
+  },
+  {
+    "id": "draft-456",
+    "name": "Draft Integration",
+    "description": "A draft integration for testing",
+    "type": "data-transform",
+    "source": "CSV File",
+    "destination": "SQL Database",
+    "status": "draft",
+    "created_at": "2025-02-10T09:15:00.000Z",
+    "updated_at": "2025-03-22T11:45:00.000Z",
+    "schedule": null,
+    "last_run": null,
+    "last_run_status": null,
+    "owner": "admin"
+  },
+  {
+    "id": "failed-789",
+    "name": "Failed Integration",
+    "description": "An integration with failed runs",
+    "type": "data-sync",
+    "source": "SharePoint Folder",
+    "destination": "S3 Bucket",
+    "status": "active",
+    "created_at": "2025-01-30T15:45:00.000Z",
+    "updated_at": "2025-03-15T10:20:00.000Z",
+    "schedule": "0 0 * * 1-5",
+    "last_run": "2025-03-26T00:00:00.000Z",
+    "last_run_status": "failed",
+    "owner": "admin"
+  }
+]

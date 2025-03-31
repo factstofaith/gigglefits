@@ -1,0 +1,14 @@
+// Mock implementation of adminService.js
+export const getApplications = jest.fn();
+export const getApplicationById = jest.fn();
+export const createApplication = jest.fn();
+export const updateApplication = jest.fn();
+export const deleteApplication = jest.fn();
+export const getApplicationUsageStats = jest.fn();
+export const getDatasets = jest.fn();
+export const createWebhook = jest.fn();
+export const updateWebhook = jest.fn();
+export const deleteWebhook = jest.fn();
+export const testWebhook = jest.fn();
+export const discoverApplicationSchema = jest.fn();
+export const createDatasetFromSchema = jest.fn();

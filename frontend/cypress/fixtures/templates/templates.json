@@ -1,0 +1,269 @@
+[
+  {
+    "id": "template-001",
+    "name": "File to Database ETL",
+    "description": "Extract data from CSV files and load into a database with basic transformations",
+    "category": "Data Integration",
+    "industry": "Generic",
+    "complexity": "Simple",
+    "tags": ["ETL", "CSV", "Database"],
+    "author": "System",
+    "flowStructure": "ETL Standard",
+    "version": "1.0.0",
+    "createdAt": "2024-10-15T09:30:00Z",
+    "updatedAt": "2025-01-20T14:45:00Z",
+    "usageCount": 87,
+    "rating": 4.7,
+    "parameters": [
+      {
+        "id": "param-001",
+        "name": "sourceFilePattern",
+        "displayName": "Source File Pattern",
+        "description": "Pattern to match source files",
+        "type": "string",
+        "required": true,
+        "defaultValue": "*.csv"
+      },
+      {
+        "id": "param-002",
+        "name": "targetTable",
+        "displayName": "Target Table",
+        "description": "Database table to load data into",
+        "type": "string",
+        "required": true,
+        "defaultValue": "data_imports"
+      }
+    ],
+    "connections": [
+      {
+        "id": "conn-001",
+        "type": "File Storage",
+        "displayName": "Source Storage",
+        "description": "Source file storage",
+        "required": true
+      },
+      {
+        "id": "conn-002",
+        "type": "Database",
+        "displayName": "Target Database",
+        "description": "Target database connection",
+        "required": true
+      }
+    ],
+    "thumbnailUrl": "https://example.com/templates/file-to-db.png"
+  },
+  {
+    "id": "template-002",
+    "name": "Office 365 Email Sync",
+    "description": "Sync emails from Office 365 to a database for archiving and analysis",
+    "category": "Office Integration",
+    "industry": "Business Services",
+    "complexity": "Moderate",
+    "tags": ["Email", "Office 365", "Sync"],
+    "author": "System",
+    "flowStructure": "Azure Integration",
+    "version": "1.2.1",
+    "createdAt": "2024-09-05T11:15:00Z",
+    "updatedAt": "2025-02-10T16:30:00Z",
+    "usageCount": 64,
+    "rating": 4.5,
+    "parameters": [
+      {
+        "id": "param-003",
+        "name": "folderPath",
+        "displayName": "Email Folder Path",
+        "description": "Path to the email folder to sync",
+        "type": "string",
+        "required": true,
+        "defaultValue": "Inbox"
+      },
+      {
+        "id": "param-004",
+        "name": "syncSchedule",
+        "displayName": "Sync Schedule",
+        "description": "Cron expression for sync schedule",
+        "type": "string",
+        "required": true,
+        "defaultValue": "0 0 * * *"
+      }
+    ],
+    "connections": [
+      {
+        "id": "conn-003",
+        "type": "Office 365",
+        "displayName": "Office 365 Connection",
+        "description": "Office 365 account connection",
+        "required": true
+      },
+      {
+        "id": "conn-004",
+        "type": "Database",
+        "displayName": "Archive Database",
+        "description": "Database for email archiving",
+        "required": true
+      }
+    ],
+    "thumbnailUrl": "https://example.com/templates/o365-email-sync.png"
+  },
+  {
+    "id": "template-003",
+    "name": "Salesforce to Azure Blob Backup",
+    "description": "Regular backup of Salesforce data to Azure Blob Storage",
+    "category": "Backup and Recovery",
+    "industry": "Financial Services",
+    "complexity": "Moderate",
+    "tags": ["Salesforce", "Azure", "Backup"],
+    "author": "System",
+    "flowStructure": "Secure Data Backup",
+    "version": "2.0.0",
+    "createdAt": "2024-11-20T08:45:00Z",
+    "updatedAt": "2025-03-05T13:20:00Z",
+    "usageCount": 42,
+    "rating": 4.8,
+    "parameters": [
+      {
+        "id": "param-005",
+        "name": "sfObjects",
+        "displayName": "Salesforce Objects",
+        "description": "Comma-separated list of Salesforce objects to backup",
+        "type": "string",
+        "required": true,
+        "defaultValue": "Account,Contact,Opportunity"
+      },
+      {
+        "id": "param-006",
+        "name": "backupContainer",
+        "displayName": "Backup Container",
+        "description": "Azure blob container for backups",
+        "type": "string",
+        "required": true,
+        "defaultValue": "sf-backups"
+      }
+    ],
+    "connections": [
+      {
+        "id": "conn-005",
+        "type": "Salesforce",
+        "displayName": "Salesforce Connection",
+        "description": "Salesforce account connection",
+        "required": true
+      },
+      {
+        "id": "conn-006",
+        "type": "Azure Blob",
+        "displayName": "Azure Blob Storage",
+        "description": "Azure Blob Storage connection",
+        "required": true
+      }
+    ],
+    "thumbnailUrl": "https://example.com/templates/sf-azure-backup.png"
+  },
+  {
+    "id": "template-004",
+    "name": "Healthcare Data Processing",
+    "description": "Process and anonymize healthcare data for analytics",
+    "category": "Data Processing",
+    "industry": "Healthcare",
+    "complexity": "Complex",
+    "tags": ["Healthcare", "HIPAA", "Analytics"],
+    "author": "System",
+    "flowStructure": "Secure Data Processing",
+    "version": "1.5.0",
+    "createdAt": "2024-08-10T14:20:00Z",
+    "updatedAt": "2025-02-15T11:10:00Z",
+    "usageCount": 28,
+    "rating": 4.6,
+    "parameters": [
+      {
+        "id": "param-007",
+        "name": "dataRetentionDays",
+        "displayName": "Data Retention (Days)",
+        "description": "Number of days to retain processed data",
+        "type": "number",
+        "required": true,
+        "defaultValue": "90"
+      },
+      {
+        "id": "param-008",
+        "name": "anonymizationLevel",
+        "displayName": "Anonymization Level",
+        "description": "Level of data anonymization",
+        "type": "string",
+        "required": true,
+        "defaultValue": "High",
+        "allowedValues": ["Low", "Medium", "High"]
+      }
+    ],
+    "connections": [
+      {
+        "id": "conn-007",
+        "type": "FHIR API",
+        "displayName": "FHIR API Connection",
+        "description": "Connection to FHIR API",
+        "required": true
+      },
+      {
+        "id": "conn-008",
+        "type": "Data Warehouse",
+        "displayName": "Analytics Data Warehouse",
+        "description": "Data warehouse for analytics",
+        "required": true
+      }
+    ],
+    "thumbnailUrl": "https://example.com/templates/healthcare-data.png"
+  },
+  {
+    "id": "template-005",
+    "name": "Retail Inventory Sync",
+    "description": "Synchronize inventory data between point-of-sale and warehouse systems",
+    "category": "Data Synchronization",
+    "industry": "Retail",
+    "complexity": "Moderate",
+    "tags": ["Inventory", "POS", "Warehouse"],
+    "author": "System",
+    "flowStructure": "Bidirectional Sync",
+    "version": "1.1.0",
+    "createdAt": "2024-09-30T10:30:00Z",
+    "updatedAt": "2025-01-25T09:15:00Z",
+    "usageCount": 56,
+    "rating": 4.3,
+    "parameters": [
+      {
+        "id": "param-009",
+        "name": "syncInterval",
+        "displayName": "Sync Interval (Minutes)",
+        "description": "Interval between syncs in minutes",
+        "type": "number",
+        "required": true,
+        "defaultValue": "15"
+      },
+      {
+        "id": "param-010",
+        "name": "conflictResolution",
+        "displayName": "Conflict Resolution",
+        "description": "How to resolve data conflicts",
+        "type": "string",
+        "required": true,
+        "defaultValue": "SourceWins",
+        "allowedValues": ["SourceWins", "TargetWins", "NewestWins", "Manual"]
+      }
+    ],
+    "connections": [
+      {
+        "id": "conn-009",
+        "type": "POS API",
+        "displayName": "Point of Sale API",
+        "description": "Connection to POS system",
+        "required": true
+      },
+      {
+        "id": "conn-010",
+        "type": "Warehouse API",
+        "displayName": "Warehouse API",
+        "description": "Connection to warehouse management system",
+        "required": true
+      }
+    ],
+    "thumbnailUrl": "https://example.com/templates/retail-inventory.png"
+  }
+]

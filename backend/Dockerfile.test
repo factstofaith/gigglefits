@@ -1,0 +1,45 @@
+# Test Container for TAP Integration Platform Backend
+# This container is specifically designed for running tests in a consistent environment
+
+FROM python:3.12-slim
+
+# Set working directory
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    curl \
+    git \
+    libpq-dev \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PYTHONPATH=/app \
+    TEST_MODE=true
+
+# Install Python dependencies
+COPY requirements.txt /app/
+COPY test/test_requirements.txt /app/
+
+# Install test dependencies first (includes pytest and related packages)
+RUN pip install --no-cache-dir -r test_requirements.txt
+
+# Install application dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Create test results directory
+RUN mkdir -p /app/test_results
+
+# Copy test configuration files
+COPY pytest.ini /app/
+
+# Copy entrypoint script
+COPY test/scripts/test_entrypoint.sh /app/
+RUN chmod +x /app/test_entrypoint.sh
+
+# Default command runs all tests
+CMD ["./test_entrypoint.sh"]

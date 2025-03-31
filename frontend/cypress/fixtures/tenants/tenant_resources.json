@@ -1,0 +1,65 @@
+[
+  {
+    "id": "resource-001",
+    "tenantId": "tenant-001",
+    "resourceId": "res-001",
+    "resourceName": "tapdevstorage",
+    "resourceType": "Microsoft.Storage/storageAccounts",
+    "status": "Connected",
+    "createdAt": "2024-10-10T14:30:00Z"
+  },
+  {
+    "id": "resource-002",
+    "tenantId": "tenant-001",
+    "resourceId": "res-003",
+    "resourceName": "tapdevservicebus",
+    "resourceType": "Microsoft.ServiceBus/namespaces",
+    "status": "Connected",
+    "createdAt": "2024-11-15T09:45:00Z"
+  },
+  {
+    "id": "resource-003",
+    "tenantId": "tenant-001",
+    "resourceId": "res-005",
+    "resourceName": "tapdevkeyvault",
+    "resourceType": "Microsoft.KeyVault/vaults",
+    "status": "Connected",
+    "createdAt": "2025-01-05T11:20:00Z"
+  },
+  {
+    "id": "resource-004",
+    "tenantId": "tenant-002",
+    "resourceId": "res-002",
+    "resourceName": "tapdevblob",
+    "resourceType": "Microsoft.Storage/storageAccounts",
+    "status": "Connected",
+    "createdAt": "2024-12-10T15:30:00Z"
+  },
+  {
+    "id": "resource-005",
+    "tenantId": "tenant-002",
+    "resourceId": "res-006",
+    "resourceName": "tapdevappservice",
+    "resourceType": "Microsoft.Web/sites",
+    "status": "Connected",
+    "createdAt": "2025-01-20T13:15:00Z"
+  },
+  {
+    "id": "resource-006",
+    "tenantId": "tenant-003",
+    "resourceId": "res-004",
+    "resourceName": "tapteststorage",
+    "resourceType": "Microsoft.Storage/storageAccounts",
+    "status": "Connected",
+    "createdAt": "2024-09-05T10:30:00Z"
+  },
+  {
+    "id": "resource-007",
+    "tenantId": "tenant-003",
+    "resourceId": "res-007",
+    "resourceName": "tapdevsql",
+    "resourceType": "Microsoft.Sql/servers",
+    "status": "Connected",
+    "createdAt": "2024-12-15T14:45:00Z"
+  }
+]

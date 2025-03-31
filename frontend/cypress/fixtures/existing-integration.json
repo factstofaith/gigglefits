@@ -1,0 +1,77 @@
+{
+  "id": "existing-123",
+  "name": "Existing Integration",
+  "description": "An existing integration for testing",
+  "type": "data-sync",
+  "source": "Sample API Source",
+  "destination": "Azure Blob Storage",
+  "status": "active",
+  "created_at": "2025-01-15T12:00:00.000Z",
+  "updated_at": "2025-03-20T14:30:00.000Z",
+  "schedule": "0 0 * * *",
+  "last_run": "2025-03-25T00:00:00.000Z",
+  "last_run_status": "success",
+  "owner": "admin",
+  "flow": {
+    "nodes": [
+      {
+        "id": "source-node-1",
+        "type": "source",
+        "position": { "x": 250, "y": 200 },
+        "data": {
+          "type": "Sample API Source",
+          "label": "Sample API Source",
+          "config": {
+            "apiUrl": "https://api.example.com/data",
+            "authType": "apiKey",
+            "apiKey": "********"
+          }
+        }
+      },
+      {
+        "id": "transform-node-1",
+        "type": "transform",
+        "position": { "x": 450, "y": 200 },
+        "data": {
+          "type": "Data Mapping",
+          "label": "Field Mapping",
+          "config": {
+            "mappings": [
+              { "source": "id", "target": "identifier" },
+              { "source": "name", "target": "fullName" },
+              { "source": "created", "target": "creationDate" }
+            ]
+          }
+        }
+      },
+      {
+        "id": "destination-node-1",
+        "type": "destination",
+        "position": { "x": 650, "y": 200 },
+        "data": {
+          "type": "Azure Blob Storage",
+          "label": "Azure Blob Storage",
+          "config": {
+            "container": "test-container",
+            "blobPath": "output/{date}/data.json",
+            "connectionString": "DefaultEndpointsProtocol=https;AccountName=testaccount;AccountKey=********;EndpointSuffix=core.windows.net"
+          }
+        }
+      }
+    ],
+    "edges": [
+      {
+        "id": "edge-1",
+        "source": "source-node-1",
+        "target": "transform-node-1",
+        "type": "default"
+      },
+      {
+        "id": "edge-2",
+        "source": "transform-node-1",
+        "target": "destination-node-1",
+        "type": "default"
+      }
+    ]
+  }
+}

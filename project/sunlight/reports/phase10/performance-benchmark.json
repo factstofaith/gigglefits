@@ -1,0 +1,22 @@
+{
+  "date": "2025-03-29T03:45:21.916Z",
+  "buildTime": 0,
+  "bundleSize": {
+    "main": 0,
+    "vendor": 0,
+    "total": 0
+  },
+  "renderTime": {
+    "homepage": 0,
+    "dashboard": 0,
+    "average": 0
+  },
+  "technicalDebt": {
+    "eslintErrors": 0,
+    "typescriptErrors": 0,
+    "duplicateComponents": 0,
+    "hookViolations": 0,
+    "missingTests": 0,
+    "importIssues": 0
+  }
+}

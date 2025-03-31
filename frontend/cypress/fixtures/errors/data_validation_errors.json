@@ -1,0 +1,106 @@
+{
+  "csvData": {
+    "invalid": "id,name,value\n1,Test,invalid\na,Missing Column\n3,Extra,Column,Value",
+    "valid": "id,name,value\n1,Test,100\n2,Another,200\n3,Third,300",
+    "expectedErrors": [
+      {
+        "row": 2,
+        "field": "id",
+        "message": "Value 'a' is not a valid number"
+      },
+      {
+        "row": 2,
+        "field": "value",
+        "message": "Missing required field 'value'"
+      },
+      {
+        "row": 3,
+        "message": "Row has too many columns"
+      }
+    ]
+  },
+  "jsonData": {
+    "invalid": {"records": [{"id": 1, "name": "Valid"}, {"id": "invalid", "missing_name": true}, {"invalid_format": true}]}",
+    "valid": {"records": [{"id": 1, "name": "Valid"}, {"id": 2, "name": "Fixed"}, {"id": 3, "name": "Third"}]}",
+    "expectedErrors": [
+      {
+        "path": "records[1].id",
+        "message": "Value 'invalid' is not a valid number"
+      },
+      {
+        "path": "records[1].name",
+        "message": "Missing required field 'name'"
+      },
+      {
+        "path": "records[2]",
+        "message": "Object is missing required fields 'id' and 'name'"
+      }
+    ]
+  },
+  "xmlData": {
+    "invalid": "<root><item><id>1</id><name>Valid</name></item><item><id>invalid</id></item><invalid_format>true</invalid_format></root>",
+    "valid": "<root><item><id>1</id><name>Valid</name></item><item><id>2</id><name>Fixed</name></item><item><id>3</id><name>Third</name></item></root>",
+    "expectedErrors": [
+      {
+        "path": "/root/item[2]/id",
+        "message": "Value 'invalid' is not a valid number"
+      },
+      {
+        "path": "/root/item[2]/name",
+        "message": "Missing required element 'name'"
+      },
+      {
+        "path": "/root/invalid_format",
+        "message": "Unexpected element 'invalid_format'"
+      }
+    ]
+  },
+  "schemaValidation": {
+    "person": {
+      "type": "object",
+      "required": ["id", "name", "email"],
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "age": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 120
+        }
+      }
+    },
+    "transaction": {
+      "type": "object",
+      "required": ["id", "amount", "currency", "timestamp"],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "number",
+          "minimum": 0
+        },
+        "currency": {
+          "type": "string",
+          "enum": ["USD", "EUR", "GBP"]
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["pending", "completed", "failed"]
+        }
+      }
+    }
+  }
+}

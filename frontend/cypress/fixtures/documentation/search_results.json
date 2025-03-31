@@ -1,0 +1,118 @@
+{
+  "api": [
+    {
+      "id": "rest-api-reference",
+      "title": "REST API Reference",
+      "description": "Complete documentation for the REST API",
+      "category": "api-reference",
+      "path": "/documentation/api-reference/rest-api",
+      "audience": "public",
+      "lastUpdated": "2025-03-20T11:15:00Z",
+      "tags": ["api", "rest", "endpoints"],
+      "score": 0.95,
+      "highlight": ["<mark>API</mark> Reference", "REST <mark>API</mark> endpoints"]
+    },
+    {
+      "id": "webhook-api",
+      "title": "Webhook API Reference",
+      "description": "Guide to using webhooks for event-driven integrations",
+      "category": "api-reference",
+      "path": "/documentation/api-reference/webhook-api",
+      "audience": "public",
+      "lastUpdated": "2025-03-12T09:20:00Z",
+      "tags": ["api", "webhooks", "events"],
+      "score": 0.92,
+      "highlight": ["Webhook <mark>API</mark>", "webhook <mark>API</mark> reference"]
+    },
+    {
+      "id": "sdk-documentation",
+      "title": "SDK Documentation",
+      "description": "Using the JavaScript and Python SDKs",
+      "category": "api-reference",
+      "path": "/documentation/api-reference/sdk-documentation",
+      "audience": "public",
+      "lastUpdated": "2025-03-05T16:10:00Z",
+      "tags": ["sdk", "javascript", "python", "api"],
+      "score": 0.75,
+      "highlight": ["SDKs use the platform <mark>API</mark>"]
+    }
+  ],
+  "integration": [
+    {
+      "id": "integration-creation",
+      "title": "Creating Integrations",
+      "description": "Step-by-step guide for creating new integrations",
+      "category": "user-guide",
+      "path": "/documentation/user-guide/integration-creation",
+      "audience": "public",
+      "lastUpdated": "2025-03-18T14:45:00Z",
+      "tags": ["integrations", "flows", "canvas"],
+      "score": 0.98,
+      "highlight": ["Creating <mark>Integrations</mark>", "new <mark>integrations</mark>"]
+    },
+    {
+      "id": "azure-blob-integration",
+      "title": "Azure Blob Storage Integration",
+      "description": "Connect to Azure Blob Storage",
+      "category": "integration",
+      "path": "/documentation/integration/azure-blob-storage",
+      "audience": "public",
+      "lastUpdated": "2025-03-22T13:40:00Z",
+      "tags": ["azure", "storage", "blob"],
+      "score": 0.94,
+      "highlight": ["Azure Blob Storage <mark>Integration</mark>"]
+    },
+    {
+      "id": "salesforce-integration",
+      "title": "Salesforce Integration",
+      "description": "Connect to Salesforce APIs",
+      "category": "integration",
+      "path": "/documentation/integration/salesforce",
+      "audience": "public",
+      "lastUpdated": "2025-03-08T10:30:00Z",
+      "tags": ["salesforce", "crm", "api"],
+      "score": 0.93,
+      "highlight": ["Salesforce <mark>Integration</mark>"]
+    }
+  ],
+  "oauth": [
+    {
+      "id": "oauth-configuration",
+      "title": "OAuth Configuration",
+      "description": "Set up OAuth authentication for API connections",
+      "category": "integration",
+      "path": "/documentation/integration/oauth-configuration",
+      "audience": "public",
+      "lastUpdated": "2025-03-16T09:15:00Z",
+      "tags": ["oauth", "authentication", "security"],
+      "score": 0.97,
+      "highlight": ["<mark>OAuth</mark> Configuration", "Set up <mark>OAuth</mark> authentication"]
+    },
+    {
+      "id": "rest-api-reference",
+      "title": "REST API Reference",
+      "description": "Complete documentation for the REST API",
+      "category": "api-reference",
+      "path": "/documentation/api-reference/rest-api",
+      "audience": "public",
+      "lastUpdated": "2025-03-20T11:15:00Z",
+      "tags": ["api", "rest", "endpoints"],
+      "score": 0.68,
+      "highlight": ["API includes <mark>OAuth</mark> authentication"]
+    }
+  ],
+  "monitoring": [
+    {
+      "id": "system-monitoring",
+      "title": "System Monitoring",
+      "description": "Monitor platform health and performance",
+      "category": "administration",
+      "path": "/documentation/administration/system-monitoring",
+      "audience": "public",
+      "lastUpdated": "2025-03-19T15:45:00Z",
+      "tags": ["monitoring", "alerts", "performance"],
+      "score": 0.99,
+      "highlight": ["System <mark>Monitoring</mark>", "platform <mark>monitoring</mark>"]
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+[
+  {
+    "tenantId": "tenant-001",
+    "settings": {
+      "security": {
+        "mfaRequired": true,
+        "passwordPolicy": {
+          "minLength": 12,
+          "requireSpecialChars": true,
+          "requireNumbers": true,
+          "requireUppercase": true,
+          "expiryDays": 90
+        },
+        "sessionTimeout": 30
+      },
+      "integration": {
+        "maxActiveIntegrations": 50,
+        "defaultResourceGroup": "tap-dev-resources",
+        "allowExternalConnections": true
+      },
+      "notifications": {
+        "emailEnabled": true,
+        "slackEnabled": true,
+        "slackWorkspace": "acme-workspace",
+        "alertContacts": ["admin@acme.example.com"]
+      },
+      "customization": {
+        "logoUrl": "https://storage.example.com/acme-logo.png",
+        "primaryColor": "#0052CC",
+        "secondaryColor": "#00875A"
+      }
+    },
+    "createdAt": "2024-09-15T14:35:00Z",
+    "updatedAt": "2025-02-10T11:50:00Z"
+  },
+  {
+    "tenantId": "tenant-002",
+    "settings": {
+      "security": {
+        "mfaRequired": true,
+        "passwordPolicy": {
+          "minLength": 10,
+          "requireSpecialChars": true,
+          "requireNumbers": true,
+          "requireUppercase": true,
+          "expiryDays": 60
+        },
+        "sessionTimeout": 15
+      },
+      "integration": {
+        "maxActiveIntegrations": 25,
+        "defaultResourceGroup": "tap-test-resources",
+        "allowExternalConnections": false
+      },
+      "notifications": {
+        "emailEnabled": true,
+        "slackEnabled": false,
+        "slackWorkspace": null,
+        "alertContacts": ["admin@techsolutions.example.com"]
+      },
+      "customization": {
+        "logoUrl": "https://storage.example.com/techsol-logo.png",
+        "primaryColor": "#6200EE",
+        "secondaryColor": "#03DAC6"
+      }
+    },
+    "createdAt": "2024-11-05T09:25:00Z",
+    "updatedAt": "2025-01-15T16:15:00Z"
+  },
+  {
+    "tenantId": "tenant-003",
+    "settings": {
+      "security": {
+        "mfaRequired": true,
+        "passwordPolicy": {
+          "minLength": 14,
+          "requireSpecialChars": true,
+          "requireNumbers": true,
+          "requireUppercase": true,
+          "expiryDays": 30
+        },
+        "sessionTimeout": 10
+      },
+      "integration": {
+        "maxActiveIntegrations": 100,
+        "defaultResourceGroup": "tap-prod-resources",
+        "allowExternalConnections": true
+      },
+      "notifications": {
+        "emailEnabled": true,
+        "slackEnabled": true,
+        "slackWorkspace": "globalfin-workspace",
+        "alertContacts": ["admin@globalfinancial.example.com", "security@globalfinancial.example.com"]
+      },
+      "customization": {
+        "logoUrl": "https://storage.example.com/globalfin-logo.png",
+        "primaryColor": "#007BFF",
+        "secondaryColor": "#28A745"
+      }
+    },
+    "createdAt": "2024-08-22T10:50:00Z",
+    "updatedAt": "2025-03-01T13:35:00Z"
+  }
+]

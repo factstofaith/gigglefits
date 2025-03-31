@@ -1,0 +1,595 @@
+=== CLEANUP ARCHIVE VALIDATION ===
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/common/PortalModal.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/common/Footer.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/common/AuthModal.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/common/PageHeader.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/common/SearchBar.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/common/Logo.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/common/ChatSupportPanel.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/common/DashboardCard.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/common/AlertBox.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/common/Badge.jsx
+DUPLICATE EXISTS outside archive: ./frontend/src/packages/legacy-components/components/Badge.jsx
+./frontend/src/design-system/components/display/Badge.jsx
+WARNING: Archived file still imported (10 times)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/common/Card.jsx
+DUPLICATE EXISTS outside archive: ./frontend/src/packages/legacy-components/components/Card.jsx
+./frontend/src/design-system/adapted/display/Card.jsx
+./frontend/src/design-system/components/layout/Card.jsx
+./frontend/src/design-system/components/display/Card.jsx
+WARNING: Archived file still imported (89 times)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/common/OptimizedToast.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/common/ProgressBar.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/integration/DatasetApplicationAssociation.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/integration/nodes/StorageDestinationNode.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/integration/nodes/SimplifiedNode.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/integration/nodes/StorageSourceNode.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/integration/IntegrationMonitoringDashboard.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/integration/ExecutionMonitoring.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/integration/DataPreviewComponent.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/integration/StorageConfigPanel.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/documentation/PublicDocumentationPortal.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicThemeTestComponent.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicDatasetsManager.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicIntegrationCreationDialog.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicHistoryPanel.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicMFAEnrollment.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicFileNotificationSystem.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicFilePreviewComponent.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicTenantsManager.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicIntegrationMonitoringDashboard.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicSearchBar.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicDatasetApplicationAssociation.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicConnectionPropertiesPanel.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicAuthModal.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicEnhancedNodePalette.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicUserProfile.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicRunLogViewer.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicPageLayout.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicAzureBlobConfiguration.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicIntegrationDetailView.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicEarningsMappingDetail.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicReleasesManager.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicStorageConfigPanel.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicAcceptInvitation.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicDocumentationMetrics.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicIntegrationTable.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicUserManagement.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicApplicationsManager.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicDebugModePanel.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicFileTriggerMechanism.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicVirtualizedDataTable.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicCompleteRegistration.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicMFASettings.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicDataTable.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicInvitationList.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicPublicDocumentationPortal.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicAlertConfiguration.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicFlowErrorPanel.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicExecutionMonitoring.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicAzureConfigurationPanel.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicFieldMappingEditor.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicTemplateBrowser.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicErrorVisualization.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicDatasetNodePropertiesPanel.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicUserDetail.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicValidationPanel.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicFileBrowserComponent.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicEmailConfiguration.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicDocumentationAnalytics.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicDataPreviewPanel.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicStorageFileBrowserPanel.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicIntegrationFlowCanvas.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicFlowPerformanceMonitor.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicContextualPropertiesPanel.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicErrorLogViewer.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicWebhookSettings.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicKeyboardShortcutsHelp.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicApplicationNodePropertiesPanel.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicSecuritySettings.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicNavigation.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicScheduleConfiguration.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicNotificationSettings.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicDataPreviewComponent.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicVisualFieldMapper.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/dynamic/DynamicFileMonitoringSystem.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/components/admin/AlertConfiguration.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/utils/ErrorBoundary.jsx
+DUPLICATE EXISTS outside archive: ./frontend/src/components/common/ErrorBoundary.jsx
+./frontend/src/utils/ErrorBoundary.jsx
+./frontend/src/design-system/adapted/core/ErrorBoundary/ErrorBoundary.jsx
+WARNING: Archived file still imported (18 times)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/utils/enhancedCache.js
+DUPLICATE EXISTS outside archive: ./frontend/src/utils/enhancedCache.js
+WARNING: Archived file still imported (3 times)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/utils/connectionValidator.js
+DUPLICATE EXISTS outside archive: ./frontend/src/utils/connectionValidator.js
+WARNING: Archived file still imported (3 times)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/utils/apiServiceFactoryEnhanced.js
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/tests/design-system/input-field-migration.test.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/tests/design-system/integration-table-row-migration.test.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/tests/design-system/tenants-manager-migration.test.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/tests/design-system/integration-detail-view-migration.test.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/tests/design-system/integration-flow-canvas-migration.test.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/tests/design-system/tenants-manager-select-migration.test.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/tests/design-system/releases-manager-select-migration.test.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/tests/design-system/releases-manager-input-field-migration.test.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/tests/design-system/integration-creation-dialog-migration.test.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/tests/design-system/azure-blob-configuration-migration.test.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/tests/design-system/earnings-map-editor-select-migration.test.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/tests/design-system/node-properties-panel-select-migration.test.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/tests/design-system/integration-creation-dialog-select-migration.test.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/tests/design-system/field-mapping-editor-migration.test.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/tests/design-system/schedule-configuration-select-migration.test.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/tests/design-system/earnings-code-manager-migration.test.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/tests/design-system/earnings-map-editor-migration.test.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/tests/design-system/home-page-migration.test.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/tests/design-system/releases-manager-migration.test.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/tests/design-system/earnings-code-manager-select-migration.test.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/tests/design-system/select-legacy.test.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/tests/design-system/error-boundary-migration.test.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/tests/design-system/card-legacy.test.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/tests/design-system/notification-settings-select-migration.test.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/tests/design-system/webhook-settings-select-migration.test.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/tests/design-system/toast-migration.test.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/tests/design-system/alert-legacy.test.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/tests/design-system/datasets-manager-migration.test.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/tests/design-system/earnings-components-migration.test.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/tests/design-system/applications-manager-migration.test.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/tests/design-system/field-mapping-editor-select-migration.test.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/tests/design-system/pages-migration.test.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/tests/design-system/integration-table-migration.test.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/tests/design-system/legacy-wrappers.test.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/tests/design-system/user-profile-migration.test.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/tests/design-system/webhook-settings-migration.test.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/tests/design-system/tenant-list-migration.test.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/tests/NodePropertiesPanel.test.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/docs/testing/CLAUDE.md
+DUPLICATE EXISTS outside archive: ./frontend/src/docs/testing/CLAUDE.md
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/docs/design-system-migration-summary-update.md
+DUPLICATE EXISTS outside archive: ./frontend/src/docs/archived/design-system-migration-summary-update.md
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/docs/unneeded_components/enhanced-search.md
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/docs/CLAUDE.designsystem_project_old.md
+DUPLICATE EXISTS outside archive: ./frontend/src/docs/CLAUDE.designsystem_project_old.md
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/docs/features/EnhancedSearchFeature-old.md
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/docs/features/EnhancedSearchFeature.md
+DUPLICATE EXISTS outside archive: ./frontend/src/docs/cleanup-archive/EnhancedSearchFeature.md
+./frontend/src/docs/old_project_docs/EnhancedSearchFeature.md
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/docs/DesignSystem-Migration.md
+DUPLICATE EXISTS outside archive: ./frontend/src/docs/archived/DesignSystem-Migration.md
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/docs/design-system-migration-progress-report.md
+DUPLICATE EXISTS outside archive: ./frontend/src/docs/archived/design-system-migration-progress-report.md
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/docs/design-system-migration-summary.md
+DUPLICATE EXISTS outside archive: ./frontend/src/docs/archived/design-system-migration-summary.md
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/services/integrationServiceEnhanced.js
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/design-system/adapted/display/TableBody.jsx
+DUPLICATE EXISTS outside archive: ./frontend/src/packages/legacy-components/components/TableBody.jsx
+WARNING: Archived file still imported (21 times)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/design-system/adapted/display/TableHeadAdapted.d.ts
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/design-system/adapted/display/TableBodyAdapted.d.ts
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/design-system/adapted/display/__tests__/TableHeadAdapted.test.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/design-system/adapted/display/__tests__/TableBodyAdapted.test.jsx
+No duplicate outside archive
+Not imported outside archive (safe)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/design-system/adapted/display/TableHead.jsx
+DUPLICATE EXISTS outside archive: ./frontend/src/packages/legacy-components/components/TableHead.jsx
+WARNING: Archived file still imported (22 times)
+-----------------------------------
+File: ./frontend/src/cleanup-archive/design-system/components/layout/Card.jsx
+DUPLICATE EXISTS outside archive: ./frontend/src/packages/legacy-components/components/Card.jsx
+./frontend/src/design-system/adapted/display/Card.jsx
+./frontend/src/design-system/components/layout/Card.jsx
+./frontend/src/design-system/components/display/Card.jsx
+WARNING: Archived file still imported (89 times)

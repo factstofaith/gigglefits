@@ -1,0 +1,66 @@
+[
+  {
+    "id": "category-001",
+    "name": "Data Integration",
+    "description": "Templates for integrating data between different systems",
+    "iconName": "DataIntegration",
+    "sortOrder": 1,
+    "templateCount": 12
+  },
+  {
+    "id": "category-002",
+    "name": "Office Integration",
+    "description": "Templates for integrating with Microsoft Office 365 and other office productivity tools",
+    "iconName": "Office",
+    "sortOrder": 2,
+    "templateCount": 8
+  },
+  {
+    "id": "category-003",
+    "name": "Backup and Recovery",
+    "description": "Templates for creating backup and recovery solutions",
+    "iconName": "Backup",
+    "sortOrder": 3,
+    "templateCount": 5
+  },
+  {
+    "id": "category-004",
+    "name": "Data Processing",
+    "description": "Templates for processing and transforming data",
+    "iconName": "DataProcessing",
+    "sortOrder": 4,
+    "templateCount": 9
+  },
+  {
+    "id": "category-005",
+    "name": "Data Synchronization",
+    "description": "Templates for synchronizing data between systems",
+    "iconName": "Sync",
+    "sortOrder": 5,
+    "templateCount": 7
+  },
+  {
+    "id": "category-006",
+    "name": "API Integration",
+    "description": "Templates for integrating with external APIs",
+    "iconName": "Api",
+    "sortOrder": 6,
+    "templateCount": 11
+  },
+  {
+    "id": "category-007",
+    "name": "Cloud Storage",
+    "description": "Templates for working with cloud storage solutions",
+    "iconName": "CloudStorage",
+    "sortOrder": 7,
+    "templateCount": 6
+  },
+  {
+    "id": "category-008",
+    "name": "Analytics",
+    "description": "Templates for data analytics and reporting",
+    "iconName": "Analytics",
+    "sortOrder": 8,
+    "templateCount": 4
+  }
+]

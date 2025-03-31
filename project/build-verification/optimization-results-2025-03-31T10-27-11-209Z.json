@@ -1,0 +1,6 @@
+[
+  {
+    "type": "incremental-build",
+    "description": "Added incremental build script"
+  }
+]

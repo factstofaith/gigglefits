@@ -1,0 +1,190 @@
+{
+  "commonComponents": [
+    {
+      "name": "Button",
+      "selector": "[data-testid=\"button-primary\"]",
+      "description": "Primary button component",
+      "testHover": true,
+      "testFocus": true,
+      "testActive": true,
+      "testResponsive": false
+    },
+    {
+      "name": "SecondaryButton",
+      "selector": "[data-testid=\"button-secondary\"]",
+      "description": "Secondary button component",
+      "testHover": true,
+      "testFocus": true,
+      "testActive": true,
+      "testResponsive": false
+    },
+    {
+      "name": "DangerButton",
+      "selector": "[data-testid=\"button-danger\"]",
+      "description": "Danger button component",
+      "testHover": true,
+      "testFocus": true,
+      "testActive": true,
+      "testResponsive": false
+    },
+    {
+      "name": "InputField",
+      "selector": "[data-testid=\"input-field\"]",
+      "description": "Input field component",
+      "testHover": true,
+      "testFocus": true,
+      "testActive": false,
+      "testResponsive": false,
+      "states": ["default", "focus", "filled", "error"]
+    },
+    {
+      "name": "Card",
+      "selector": "[data-testid=\"card\"]",
+      "description": "Card component",
+      "testHover": true,
+      "testFocus": false,
+      "testActive": false,
+      "testResponsive": true
+    },
+    {
+      "name": "Toast",
+      "selector": "[data-testid=\"toast\"]",
+      "description": "Toast notification component",
+      "testHover": false,
+      "testFocus": false,
+      "testActive": false,
+      "testResponsive": true,
+      "setup": "cy.showToast('This is a test toast', 'info', 'Toast Title')"
+    },
+    {
+      "name": "Modal",
+      "selector": "[role=\"dialog\"]",
+      "description": "Modal dialog component",
+      "testHover": false,
+      "testFocus": false,
+      "testActive": false,
+      "testResponsive": true,
+      "setup": "cy.get('[data-testid=\"open-modal\"]').click()"
+    },
+    {
+      "name": "DataTable",
+      "selector": "[data-testid=\"data-table\"]",
+      "description": "Data table component",
+      "testHover": false,
+      "testFocus": false,
+      "testActive": false,
+      "testResponsive": true
+    },
+    {
+      "name": "Dropdown",
+      "selector": "[data-testid=\"dropdown\"]",
+      "description": "Dropdown component",
+      "testHover": true,
+      "testFocus": true,
+      "testActive": false,
+      "testResponsive": false,
+      "states": ["default", "open"],
+      "actions": {
+        "open": "cy.get('[data-testid=\"dropdown\"]').click()"
+      }
+    },
+    {
+      "name": "Badge",
+      "selector": "[data-testid=\"badge\"]",
+      "description": "Badge component",
+      "testHover": false,
+      "testFocus": false,
+      "testActive": false,
+      "testResponsive": false
+    }
+  ],
+  "integrationComponents": [
+    {
+      "name": "FlowCanvas",
+      "selector": "[data-testid=\"flow-canvas\"]",
+      "description": "Integration flow canvas",
+      "testHover": false,
+      "testFocus": false,
+      "testActive": false,
+      "testResponsive": true,
+      "setup": "cy.visit('/integrations/1')"
+    },
+    {
+      "name": "NodePalette",
+      "selector": "[data-testid=\"node-palette\"]",
+      "description": "Node palette component",
+      "testHover": false,
+      "testFocus": false,
+      "testActive": false,
+      "testResponsive": true,
+      "setup": "cy.visit('/integrations/1')"
+    },
+    {
+      "name": "NodePropertiesPanel",
+      "selector": "[data-testid=\"node-properties-panel\"]",
+      "description": "Node properties panel",
+      "testHover": false,
+      "testFocus": false,
+      "testActive": false,
+      "testResponsive": true,
+      "setup": "cy.visit('/integrations/1'); cy.get('[data-testid=\"node\"]').first().click()"
+    },
+    {
+      "name": "ValidationPanel",
+      "selector": "[data-testid=\"validation-panel\"]",
+      "description": "Validation panel",
+      "testHover": false,
+      "testFocus": false,
+      "testActive": false,
+      "testResponsive": true,
+      "setup": "cy.visit('/integrations/1')"
+    },
+    {
+      "name": "DataPreviewPanel",
+      "selector": "[data-testid=\"data-preview-panel\"]",
+      "description": "Data preview panel",
+      "testHover": false,
+      "testFocus": false,
+      "testActive": false,
+      "testResponsive": true,
+      "setup": "cy.visit('/integrations/1'); cy.get('[data-testid=\"dataset-node\"]').click()"
+    }
+  ],
+  "pages": [
+    {
+      "name": "LoginPage",
+      "url": "/login",
+      "description": "Login page",
+      "waitForSelector": "form",
+      "hideSelectors": []
+    },
+    {
+      "name": "HomePage",
+      "url": "/",
+      "description": "Home dashboard",
+      "waitForSelector": "[data-testid=\"dashboard-page\"]",
+      "hideSelectors": ["[data-testid=\"user-profile\"]", "[data-testid=\"notifications\"]"]
+    },
+    {
+      "name": "IntegrationsPage",
+      "url": "/integrations",
+      "description": "Integrations listing page",
+      "waitForSelector": "[data-testid=\"integrations-page\"]",
+      "hideSelectors": ["[data-testid=\"user-profile\"]", "[data-testid=\"notifications\"]"]
+    },
+    {
+      "name": "IntegrationDetailPage",
+      "url": "/integrations/1",
+      "description": "Integration detail page",
+      "waitForSelector": "[data-testid=\"integration-detail-page\"]",
+      "hideSelectors": ["[data-testid=\"user-profile\"]", "[data-testid=\"notifications\"]"]
+    },
+    {
+      "name": "AdminDashboard",
+      "url": "/admin",
+      "description": "Admin dashboard",
+      "waitForSelector": "[data-testid=\"admin-dashboard\"]",
+      "hideSelectors": ["[data-testid=\"user-profile\"]", "[data-testid=\"notifications\"]"]
+    }
+  ]
+}

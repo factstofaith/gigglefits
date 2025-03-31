@@ -1,0 +1,92 @@
+[
+  {
+    "id": "res-001",
+    "name": "tapdevstorage",
+    "type": "Microsoft.Storage/storageAccounts",
+    "location": "eastus",
+    "resourceGroup": "tap-dev-resources",
+    "subscriptionId": "00000000-0000-0000-0000-000000000001",
+    "properties": {
+      "provisioningState": "Succeeded",
+      "primaryEndpoints": {
+        "blob": "https://tapdevstorage.blob.core.windows.net/"
+      }
+    }
+  },
+  {
+    "id": "res-002",
+    "name": "tapdevblob",
+    "type": "Microsoft.Storage/storageAccounts",
+    "location": "eastus",
+    "resourceGroup": "tap-dev-resources",
+    "subscriptionId": "00000000-0000-0000-0000-000000000001",
+    "properties": {
+      "provisioningState": "Succeeded",
+      "primaryEndpoints": {
+        "blob": "https://tapdevblob.blob.core.windows.net/"
+      }
+    }
+  },
+  {
+    "id": "res-003",
+    "name": "tapdevservicebus",
+    "type": "Microsoft.ServiceBus/namespaces",
+    "location": "eastus",
+    "resourceGroup": "tap-dev-resources",
+    "subscriptionId": "00000000-0000-0000-0000-000000000001",
+    "properties": {
+      "provisioningState": "Succeeded",
+      "serviceBusEndpoint": "https://tapdevservicebus.servicebus.windows.net/"
+    }
+  },
+  {
+    "id": "res-004",
+    "name": "tapteststorage",
+    "type": "Microsoft.Storage/storageAccounts",
+    "location": "westus",
+    "resourceGroup": "tap-test-resources",
+    "subscriptionId": "00000000-0000-0000-0000-000000000002",
+    "properties": {
+      "provisioningState": "Succeeded",
+      "primaryEndpoints": {
+        "blob": "https://tapteststorage.blob.core.windows.net/"
+      }
+    }
+  },
+  {
+    "id": "res-005",
+    "name": "tapdevkeyvault",
+    "type": "Microsoft.KeyVault/vaults",
+    "location": "eastus",
+    "resourceGroup": "tap-dev-resources",
+    "subscriptionId": "00000000-0000-0000-0000-000000000001",
+    "properties": {
+      "provisioningState": "Succeeded",
+      "vaultUri": "https://tapdevkeyvault.vault.azure.net/"
+    }
+  },
+  {
+    "id": "res-006",
+    "name": "tapdevappservice",
+    "type": "Microsoft.Web/sites",
+    "location": "eastus",
+    "resourceGroup": "tap-dev-resources",
+    "subscriptionId": "00000000-0000-0000-0000-000000000001",
+    "properties": {
+      "provisioningState": "Succeeded",
+      "defaultHostName": "tapdevappservice.azurewebsites.net"
+    }
+  },
+  {
+    "id": "res-007",
+    "name": "tapdevsql",
+    "type": "Microsoft.Sql/servers",
+    "location": "eastus",
+    "resourceGroup": "tap-dev-resources",
+    "subscriptionId": "00000000-0000-0000-0000-000000000001",
+    "properties": {
+      "provisioningState": "Succeeded",
+      "fullyQualifiedDomainName": "tapdevsql.database.windows.net"
+    }
+  }
+]

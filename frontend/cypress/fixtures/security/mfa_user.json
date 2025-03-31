@@ -1,0 +1,23 @@
+{
+  "userId": "mfa-user-001",
+  "email": "mfa.enabled.user@example.test",
+  "fullName": "MFA Enabled User",
+  "role": "USER",
+  "status": "ACTIVE",
+  "mfa": {
+    "enabled": true,
+    "enrolledAt": "2025-02-15T10:45:00Z",
+    "lastVerified": "2025-03-25T09:15:22Z",
+    "recoveryCodesCount": 10,
+    "recoveryCodesRemaining": 10
+  },
+  "lastLogin": "2025-03-25T09:15:22Z",
+  "createdAt": "2024-11-15T16:30:00Z",
+  "preferences": {
+    "timezone": "America/Los_Angeles",
+    "notifications": {
+      "email": true,
+      "app": true
+    }
+  }
+}

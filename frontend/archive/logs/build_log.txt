@@ -1,0 +1,25 @@
+npm WARN config optional Use `--omit=optional` to exclude optional dependencies, or
+npm WARN config `--include=optional` to include them.
+npm WARN config 
+npm WARN config     Default value does install optional deps unless otherwise omitted.
+
+> tap-integration-platform-frontend@1.0.0 build
+> react-scripts build
+
+Creating an optimized production build...
+Failed to compile.
+
+SyntaxError: /home/ai-dev/Desktop/tap-integration-platform/frontend/src/components/integration/EarningsMappingDetail.jsx: Identifier 'discoverFields' has already been declared. (49:2)
+[0m [90m 47 |[39m   testEarningsMapping[33m,[39m
+ [90m 48 |[39m   getEarningsCodes[33m,[39m discoverFields[33m,[39m
+[31m[1m>[22m[39m[90m 49 |[39m   discoverFields[33m,[39m
+ [90m    |[39m   [31m[1m^[22m[39m
+ [90m 50 |[39m } [36mfrom[39m [32m'../../services/integrationService'[39m[33m;[39m
+ [90m 51 |[39m
+ [90m 52 |[39m [90m// TabPanel component for tab content[39m[0m
+    at parser.next (<anonymous>)
+    at normalizeFile.next (<anonymous>)
+    at run.next (<anonymous>)
+    at transform.next (<anonymous>)
+
+

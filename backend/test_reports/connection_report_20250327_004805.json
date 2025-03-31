@@ -1,0 +1,15 @@
+{
+  "summary": {
+    "total_connections": 0,
+    "max_concurrent": 0,
+    "leaked_connections": 0,
+    "total_tests": 0
+  },
+  "tests": {},
+  "connections": [],
+  "recommendations": [
+    "Add explicit connection cleanup in tearDown methods or fixture finalizers.",
+    "Use a session scope to ensure connections are properly returned to the pool.",
+    "Consider using a connection context manager pattern to ensure proper cleanup."
+  ]
+}

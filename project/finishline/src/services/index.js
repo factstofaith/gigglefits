@@ -3,5 +3,5 @@
  * API and data handling services
  */
 
-// No services yet - will be populated with standardized services
-export {};
+// API Service
+export { default as apiService, ApiService } from './apiService';

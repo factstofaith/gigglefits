@@ -1,0 +1,237 @@
+{
+  "integration": {
+    "name": "Storage Integration Test",
+    "description": "Integration for testing storage functionality",
+    "type": "FILE_PROCESSING",
+    "schedule": "MANUAL",
+    "tags": ["test", "storage", "e2e"]
+  },
+  "storageSourceOptions": {
+    "filePath": "/data",
+    "filePattern": "*.csv",
+    "recursive": true,
+    "triggerType": "FILE_CHANGE"
+  },
+  "storageSourceScheduleOptions": {
+    "filePath": "/data/imports",
+    "filePattern": "*.json",
+    "recursive": false,
+    "triggerType": "SCHEDULE",
+    "cronExpression": "0 0 * * * ?"
+  },
+  "storageDestinationOptions": {
+    "destinationPath": "/data/exports",
+    "fileNamePattern": "${fileName}_processed_${timestamp}.${extension}",
+    "overwrite": false,
+    "createPath": true
+  },
+  "transformOptions": {
+    "transformType": "CSV_TO_JSON",
+    "headerRow": true,
+    "delimiter": ","
+  },
+  "executionResult": {
+    "status": "SUCCESS",
+    "startTime": "2025-04-05T11:00:00Z",
+    "endTime": "2025-04-05T11:01:30Z",
+    "processingTime": 90,
+    "itemsProcessed": 3,
+    "bytesProcessed": 10240,
+    "logEntries": [
+      {
+        "timestamp": "2025-04-05T11:00:00Z",
+        "level": "INFO",
+        "message": "Integration execution started"
+      },
+      {
+        "timestamp": "2025-04-05T11:00:05Z",
+        "level": "INFO",
+        "message": "Reading files from storage source"
+      },
+      {
+        "timestamp": "2025-04-05T11:00:10Z",
+        "level": "INFO",
+        "message": "Found 3 files matching pattern"
+      },
+      {
+        "timestamp": "2025-04-05T11:00:20Z",
+        "level": "INFO",
+        "message": "Processing file 1/3: customers.csv"
+      },
+      {
+        "timestamp": "2025-04-05T11:00:40Z",
+        "level": "INFO",
+        "message": "Processing file 2/3: orders.csv"
+      },
+      {
+        "timestamp": "2025-04-05T11:01:00Z",
+        "level": "INFO",
+        "message": "Processing file 3/3: products.csv"
+      },
+      {
+        "timestamp": "2025-04-05T11:01:20Z",
+        "level": "INFO",
+        "message": "Writing results to destination"
+      },
+      {
+        "timestamp": "2025-04-05T11:01:30Z",
+        "level": "INFO",
+        "message": "Integration execution completed successfully"
+      }
+    ]
+  },
+  "errorExecutionResult": {
+    "status": "FAILED",
+    "startTime": "2025-04-05T12:00:00Z",
+    "endTime": "2025-04-05T12:00:30Z",
+    "processingTime": 30,
+    "itemsProcessed": 0,
+    "bytesProcessed": 0,
+    "logEntries": [
+      {
+        "timestamp": "2025-04-05T12:00:00Z",
+        "level": "INFO",
+        "message": "Integration execution started"
+      },
+      {
+        "timestamp": "2025-04-05T12:00:05Z",
+        "level": "INFO",
+        "message": "Reading files from storage source"
+      },
+      {
+        "timestamp": "2025-04-05T12:00:10Z",
+        "level": "ERROR",
+        "message": "Failed to connect to storage: Authentication failed"
+      },
+      {
+        "timestamp": "2025-04-05T12:00:15Z",
+        "level": "ERROR",
+        "message": "Storage connection error: Invalid credentials or expired token"
+      },
+      {
+        "timestamp": "2025-04-05T12:00:30Z",
+        "level": "ERROR",
+        "message": "Integration execution failed"
+      }
+    ],
+    "error": {
+      "code": "STORAGE_AUTHENTICATION_ERROR",
+      "message": "Failed to authenticate with storage provider",
+      "details": "The provided credentials are invalid or have expired"
+    }
+  },
+  "sharePointSourceOptions": {
+    "filePath": "/documents",
+    "filePattern": "*.docx",
+    "recursive": true,
+    "triggerType": "FILE_CHANGE",
+    "position": { "x": 200, "y": 200 }
+  },
+  "sharePointDestinationOptions": {
+    "destinationPath": "/processed-documents",
+    "fileNamePattern": "${fileName}_processed_${timestamp}.${extension}",
+    "overwrite": true,
+    "createPath": true,
+    "position": { "x": 600, "y": 200 }
+  },
+  "sharePointExecutionResult": {
+    "status": "SUCCESS",
+    "startTime": "2025-03-29T10:00:00Z",
+    "endTime": "2025-03-29T10:01:15Z",
+    "processingTime": 75,
+    "itemsProcessed": 5,
+    "bytesProcessed": 256000,
+    "logEntries": [
+      {
+        "timestamp": "2025-03-29T10:00:00Z",
+        "level": "INFO",
+        "message": "Integration execution started"
+      },
+      {
+        "timestamp": "2025-03-29T10:00:05Z",
+        "level": "INFO",
+        "message": "Reading files from SharePoint source"
+      },
+      {
+        "timestamp": "2025-03-29T10:00:10Z",
+        "level": "INFO",
+        "message": "Found 5 files matching pattern"
+      },
+      {
+        "timestamp": "2025-03-29T10:00:20Z",
+        "level": "INFO",
+        "message": "Processing file 1/5: project-scope.docx"
+      },
+      {
+        "timestamp": "2025-03-29T10:00:30Z",
+        "level": "INFO",
+        "message": "Processing file 2/5: meeting-notes.docx"
+      },
+      {
+        "timestamp": "2025-03-29T10:00:40Z",
+        "level": "INFO",
+        "message": "Processing file 3/5: requirements.docx"
+      },
+      {
+        "timestamp": "2025-03-29T10:00:50Z",
+        "level": "INFO",
+        "message": "Processing file 4/5: project-plans/timeline.docx"
+      },
+      {
+        "timestamp": "2025-03-29T10:01:00Z",
+        "level": "INFO",
+        "message": "Processing file 5/5: project-plans/budget.docx"
+      },
+      {
+        "timestamp": "2025-03-29T10:01:05Z",
+        "level": "INFO",
+        "message": "Writing files to SharePoint destination"
+      },
+      {
+        "timestamp": "2025-03-29T10:01:15Z",
+        "level": "INFO",
+        "message": "Integration execution completed successfully"
+      }
+    ]
+  },
+  "sharePointErrorExecutionResult": {
+    "status": "FAILED",
+    "startTime": "2025-03-29T11:00:00Z",
+    "endTime": "2025-03-29T11:00:20Z",
+    "processingTime": 20,
+    "itemsProcessed": 0,
+    "bytesProcessed": 0,
+    "logEntries": [
+      {
+        "timestamp": "2025-03-29T11:00:00Z",
+        "level": "INFO",
+        "message": "Integration execution started"
+      },
+      {
+        "timestamp": "2025-03-29T11:00:05Z",
+        "level": "INFO",
+        "message": "Reading files from SharePoint source"
+      },
+      {
+        "timestamp": "2025-03-29T11:00:10Z",
+        "level": "ERROR",
+        "message": "Error: Folder /nonexistent-folder does not exist in the specified document library"
+      },
+      {
+        "timestamp": "2025-03-29T11:00:15Z",
+        "level": "ERROR",
+        "message": "SharePoint error: Item does not exist or you do not have permissions"
+      },
+      {
+        "timestamp": "2025-03-29T11:00:20Z",
+        "level": "ERROR",
+        "message": "Integration execution failed"
+      }
+    ],
+    "error": {
+      "code": "SHAREPOINT_FOLDER_NOT_FOUND",
+      "message": "SharePoint folder not found",
+      "details": "The specified folder '/nonexistent-folder' does not exist in the document library or you don't have access to it"
+    }
+  }
+}

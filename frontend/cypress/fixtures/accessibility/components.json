@@ -1,0 +1,171 @@
+{
+  "commonComponents": [
+    {
+      "name": "Navigation",
+      "selector": "[data-testid='main-navigation']",
+      "description": "Main navigation component",
+      "checkKeyboard": true,
+      "checkContrast": true,
+      "keyboardFocusElements": [
+        "[data-testid='nav-home']",
+        "[data-testid='nav-integrations']",
+        "[data-testid='nav-earnings']",
+        "[data-testid='nav-admin']",
+        "[data-testid='user-profile']"
+      ]
+    },
+    {
+      "name": "Footer",
+      "selector": "footer",
+      "description": "Application footer",
+      "checkKeyboard": true,
+      "checkContrast": true
+    },
+    {
+      "name": "ToastMessages",
+      "selector": "[data-testid='toast-container']",
+      "description": "Toast notification container",
+      "checkKeyboard": true,
+      "checkContrast": true,
+      "requiresAction": true,
+      "actionSetup": "cy.showToast('Test accessibility toast', 'info', 'Accessibility Test')"
+    },
+    {
+      "name": "PortalModal",
+      "selector": "[role='dialog']",
+      "description": "Modal dialog",
+      "checkKeyboard": true,
+      "checkContrast": true,
+      "checkFocusTrap": true,
+      "requiresAction": true,
+      "actionSetup": "cy.get('[data-testid=\"open-modal\"]').click()"
+    },
+    {
+      "name": "DataTable",
+      "selector": "[data-testid='data-table']",
+      "description": "Data table component",
+      "checkKeyboard": true,
+      "checkContrast": true,
+      "requiresAction": false
+    },
+    {
+      "name": "Form",
+      "selector": "form",
+      "description": "Form component",
+      "checkKeyboard": true,
+      "checkContrast": true,
+      "checkLabels": true,
+      "requiresAction": false
+    },
+    {
+      "name": "AlertBox",
+      "selector": "[data-testid='alert-box']",
+      "description": "Alert box component",
+      "checkKeyboard": true,
+      "checkContrast": true,
+      "requiresAction": true,
+      "actionSetup": "cy.visit('/integrations')"
+    },
+    {
+      "name": "Badge",
+      "selector": "[data-testid='badge']",
+      "description": "Badge component",
+      "checkKeyboard": false,
+      "checkContrast": true,
+      "requiresAction": true,
+      "actionSetup": "cy.visit('/integrations')"
+    },
+    {
+      "name": "Card",
+      "selector": "[data-testid='card']",
+      "description": "Card component",
+      "checkKeyboard": true,
+      "checkContrast": true,
+      "requiresAction": false
+    },
+    {
+      "name": "Buttons",
+      "selector": "button:not([disabled]), [role='button']:not([disabled])",
+      "description": "Button components",
+      "checkKeyboard": true,
+      "checkContrast": true,
+      "requiresAction": false
+    }
+  ],
+  "integrationComponents": [
+    {
+      "name": "IntegrationFlowCanvas",
+      "selector": "[data-testid='flow-canvas']",
+      "description": "Integration flow canvas",
+      "checkKeyboard": true,
+      "checkContrast": true,
+      "requiresAction": true,
+      "actionSetup": "cy.visit('/integrations/1')"
+    },
+    {
+      "name": "NodePropertiesPanel",
+      "selector": "[data-testid='node-properties-panel']",
+      "description": "Node properties panel",
+      "checkKeyboard": true,
+      "checkContrast": true,
+      "requiresAction": true,
+      "actionSetup": "cy.visit('/integrations/1'); cy.get('[data-testid=\"node\"]').first().click()"
+    },
+    {
+      "name": "ValidationPanel",
+      "selector": "[data-testid='validation-panel']",
+      "description": "Validation panel",
+      "checkKeyboard": true,
+      "checkContrast": true,
+      "requiresAction": true,
+      "actionSetup": "cy.visit('/integrations/1')"
+    },
+    {
+      "name": "ErrorVisualization",
+      "selector": "[data-testid='error-visualization']",
+      "description": "Error visualization component",
+      "checkKeyboard": true,
+      "checkContrast": true,
+      "requiresAction": true,
+      "actionSetup": "cy.visit('/integrations/1'); cy.createFlowWithValidationErrors('1')"
+    },
+    {
+      "name": "DataPreviewPanel",
+      "selector": "[data-testid='data-preview-panel']",
+      "description": "Data preview panel",
+      "checkKeyboard": true,
+      "checkContrast": true,
+      "requiresAction": true,
+      "actionSetup": "cy.visit('/integrations/1'); cy.get('[data-testid=\"dataset-node\"]').click()"
+    }
+  ],
+  "adminComponents": [
+    {
+      "name": "UserManagement",
+      "selector": "[data-testid='user-management']",
+      "description": "User management component",
+      "checkKeyboard": true,
+      "checkContrast": true,
+      "requiresAction": true,
+      "actionSetup": "cy.visit('/admin/users')"
+    },
+    {
+      "name": "MonitoringDashboard",
+      "selector": "[data-testid='monitoring-dashboard']",
+      "description": "Monitoring dashboard",
+      "checkKeyboard": true,
+      "checkContrast": true,
+      "requiresAction": true,
+      "actionSetup": "cy.visit('/admin/monitoring')"
+    },
+    {
+      "name": "ErrorLogViewer",
+      "selector": "[data-testid='error-log-viewer']",
+      "description": "Error log viewer",
+      "checkKeyboard": true,
+      "checkContrast": true,
+      "requiresAction": true,
+      "actionSetup": "cy.visit('/admin/errors')"
+    }
+  ]
+}

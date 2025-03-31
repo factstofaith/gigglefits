@@ -1,0 +1,9 @@
+{
+  "default": "Thanks for your message. Our team will get back to you soon.",
+  "integrations": "For help with integrations, please check our documentation portal or provide more details about your question.",
+  "connections": "For connection issues, please make sure your credentials are correct and try again.",
+  "error": "I see you're having an issue. Could you please provide more details about the error you're encountering?",
+  "templates": "We have a variety of templates available in the Templates section of the Integrations page.",
+  "documentation": "You can find all our documentation in the Documentation Portal accessible from the main navigation menu.",
+  "help": "How can I assist you today? Please describe what you're trying to accomplish."
+}

@@ -1,265 +1,105 @@
-// IntegrationCreationDialog.jsx
-// -----------------------------------------------------------------------------
-// Dialog for creating a new integration, including source/destination selection
+/**
+ * Integration Creation Dialog
+ *
+ * A dialog component for creating new integrations.
+ *
+ * @component
+ */
 
-import React, { useState, useEffect } from 'react';
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button,
-  TextField,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { 
+  Dialog, 
+  DialogTitle, 
+  DialogContent, 
+  DialogActions, 
+  Button, 
+  TextField, 
+  FormControl, 
+  InputLabel, 
+  Select, 
+  MenuItem, 
   FormHelperText,
-  Grid,
-  CircularProgress,
-  Divider,
   Box,
-  Typography,
   Stepper,
   Step,
   StepLabel,
-  StepContent
+  Typography,
+  Stack,
 } from '@mui/material';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+import ContextualHelp from '../common/ContextualHelp';
+import { useContextualHelp } from '../../hooks';
 
-// Import services
-import { 
-  getAvailableSources, 
-  getAvailableDestinations 
-} from '../../services/integrationService';
-import authService from '../../services/authService';
+// Define steps for integration creation
+const steps = ['Basic Information', 'Connection Settings', 'Schedule'];
 
-// Import configuration components
-import AzureBlobConfiguration from './AzureBlobConfiguration';
-import ScheduleConfiguration from './ScheduleConfiguration';
+// Validation schema for the form
+const validationSchema = yup.object({
+  name: yup
+    .string()
+    .required('Name is required')
+    .min(3, 'Name should be at least 3 characters')
+    .max(50, 'Name should be at most 50 characters'),
+  description: yup
+    .string()
+    .max(200, 'Description should be at most 200 characters'),
+  type: yup
+    .string()
+    .required('Integration type is required'),
+});
 
-export default function IntegrationCreationDialog({ open, onClose, onCreate }) {
-  const [integrationData, setIntegrationData] = useState({
-    name: '',
-    type: 'API-based',
-    source: '',
-    destination: '',
-    schedule: { type: 'onDemand' },
-    azureBlobConfig: {},
-    description: ''
-  });
-  
-  const [errors, setErrors] = useState({});
-  const [isSuperUser, setIsSuperUser] = useState(false);
+/**
+ * Integration types and their descriptions
+ */
+const INTEGRATION_TYPES = [
+  { 
+    value: 'data_sync', 
+    label: 'Data Synchronization', 
+    description: 'Synchronize data between multiple systems' 
+  },
+  { 
+    value: 'data_transformation', 
+    label: 'Data Transformation', 
+    description: 'Transform data from one format to another' 
+  },
+  { 
+    value: 'data_validation', 
+    label: 'Data Validation', 
+    description: 'Validate data against business rules' 
+  },
+  { 
+    value: 'data_migration', 
+    label: 'Data Migration', 
+    description: 'Migrate data from legacy systems to new platforms' 
+  },
+];
+
+/**
+ * Integration Creation Dialog component
+ */
+const IntegrationCreationDialog = ({ open, onClose, onSubmit }) => {
   const [activeStep, setActiveStep] = useState(0);
-  const [sources, setSources] = useState([]);
-  const [destinations, setDestinations] = useState([]);
-  const [loading, setLoading] = useState({
-    sources: false,
-    destinations: false
-  });
-
-  // Options for different fields
-  const typeOptions = ['API-based', 'File-based', 'Database'];
-
-  // Check if user is a super user
-  useEffect(() => {
-    const checkUserRole = async () => {
-      const isAdmin = await authService.isAdmin();
-      setIsSuperUser(isAdmin);
-    };
-    
-    checkUserRole();
-  }, []);
-
-  // Fetch sources and destinations when integration type changes
-  useEffect(() => {
-    if (open) {
-      fetchSources(integrationData.type);
-      fetchDestinations(integrationData.type);
-    }
-  }, [integrationData.type, open]);
-
-  const fetchSources = async (type) => {
-    try {
-      setLoading(prev => ({ ...prev, sources: true }));
-      const data = await getAvailableSources(type);
-      setSources(data || []);
-    } catch (error) {
-      console.error('Error fetching sources:', error);
-      // Fallback to empty array if error
-      setSources([]);
-    } finally {
-      setLoading(prev => ({ ...prev, sources: false }));
-    }
-  };
-
-  const fetchDestinations = async (type) => {
-    try {
-      setLoading(prev => ({ ...prev, destinations: true }));
-      const data = await getAvailableDestinations(type);
-      setDestinations(data || []);
-    } catch (error) {
-      console.error('Error fetching destinations:', error);
-      // Fallback to empty array if error
-      setDestinations([]);
-    } finally {
-      setLoading(prev => ({ ...prev, destinations: false }));
-    }
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    
-    // If type changed, reset source and destination
-    if (name === 'type') {
-      setIntegrationData(prev => ({
-        ...prev,
-        [name]: value,
-        source: '',
-        destination: ''
-      }));
-    } else {
-      setIntegrationData(prev => ({
-        ...prev,
-        [name]: value
-      }));
-    }
-    
-    // Clear error for this field
-    if (errors[name]) {
-      setErrors(prev => ({
-        ...prev,
-        [name]: null
-      }));
-    }
-  };
+  const { getHelp } = useContextualHelp('integration');
   
-  // Handle changes to blob storage configuration
-  const handleBlobConfigChange = (config) => {
-    setIntegrationData(prev => ({
-      ...prev,
-      azureBlobConfig: config
-    }));
-    
-    // Clear blob config errors
-    if (errors.azureBlobConfig) {
-      setErrors(prev => ({
-        ...prev,
-        azureBlobConfig: null
-      }));
-    }
-  };
-  
-  // Handle changes to schedule configuration
-  const handleScheduleChange = (schedule) => {
-    setIntegrationData(prev => ({
-      ...prev,
-      schedule
-    }));
-    
-    // Clear schedule errors
-    if (errors.schedule) {
-      setErrors(prev => ({
-        ...prev,
-        schedule: null
-      }));
-    }
-  };
-
-  const handleClose = () => {
-    // Reset form state
-    setIntegrationData({
+  // Initialize formik
+  const formik = useFormik({
+    initialValues: {
       name: '',
-      type: 'API-based',
-      source: '',
-      destination: '',
-      schedule: { type: 'onDemand' },
-      azureBlobConfig: {},
-      description: ''
-    });
-    setErrors({});
-    setActiveStep(0);
-    onClose();
-  };
-
-  const validate = () => {
-    const newErrors = {};
-    
-    if (!integrationData.name.trim()) {
-      newErrors.name = 'Name is required';
-    }
-    
-    if (!integrationData.source) {
-      newErrors.source = 'Source is required';
-    }
-    
-    if (!integrationData.destination) {
-      newErrors.destination = 'Destination is required';
-    }
-    
-    // Validate Azure Blob configuration when selected
-    if (integrationData.source === 'Azure Blob Container' || 
-        integrationData.destination === 'Azure Blob Container') {
-      
-      const blobConfig = integrationData.azureBlobConfig;
-      const blobErrors = {};
-      
-      if (!blobConfig.containerName) {
-        blobErrors.containerName = 'Container name is required';
-      }
-      
-      if (isSuperUser) {
-        // Validation for authentication fields that only super users can configure
-        if (blobConfig.authMethod === 'connectionString' && !blobConfig.connectionString) {
-          blobErrors.connectionString = 'Connection string is required';
-        }
-        
-        if (blobConfig.authMethod === 'accountKey') {
-          if (!blobConfig.accountName) {
-            blobErrors.accountName = 'Account name is required';
-          }
-          if (!blobConfig.accountKey) {
-            blobErrors.accountKey = 'Account key is required';
-          }
-        }
-        
-        if (blobConfig.authMethod === 'sasToken') {
-          if (!blobConfig.accountName) {
-            blobErrors.accountName = 'Account name is required';
-          }
-          if (!blobConfig.sasToken) {
-            blobErrors.sasToken = 'SAS token is required';
-          }
-        }
-      }
-      
-      if (Object.keys(blobErrors).length > 0) {
-        newErrors.azureBlobConfig = blobErrors;
-      }
-    }
-    
-    // Validate schedule when not on-demand
-    if (integrationData.schedule?.type !== 'onDemand') {
-      const scheduleErrors = {};
-      
-      if (integrationData.schedule.type === 'custom' && !integrationData.schedule.cronExpression) {
-        scheduleErrors.cronExpression = 'Cron expression is required for custom schedules';
-      }
-      
-      if (Object.keys(scheduleErrors).length > 0) {
-        newErrors.schedule = scheduleErrors;
-      }
-    }
-    
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleCreate = () => {
-    if (validate()) {
-      onCreate(integrationData);
-    }
-  };
+      description: '',
+      type: '',
+      scheduleType: 'manual',
+      scheduleFrequency: '',
+    },
+    validationSchema,
+    onSubmit: (values) => {
+      onSubmit(values);
+      formik.resetForm();
+      setActiveStep(0);
+      onClose();
+    },
+  });
   
   // Handle step navigation
   const handleNext = () => {
@@ -270,201 +110,264 @@ export default function IntegrationCreationDialog({ open, onClose, onCreate }) {
     setActiveStep((prevStep) => prevStep - 1);
   };
   
-  // Check if source or destination is Azure Blob
-  const isAzureBlobSelected = 
-    integrationData.source === 'Azure Blob Container' ||
-    integrationData.destination === 'Azure Blob Container';
+  const handleReset = () => {
+    formik.resetForm();
+    setActiveStep(0);
+  };
   
-  // Define the steps for the stepper
-  const steps = [
-    {
-      label: 'Basic Information',
-      content: (
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <TextField
-              label="Integration Name"
-              name="name"
-              value={integrationData.name}
-              onChange={handleChange}
-              fullWidth
-              autoFocus
-              error={!!errors.name}
-              helperText={errors.name}
-              margin="normal"
-            />
-          </Grid>
-          
-          <Grid item xs={12}>
-            <TextField
-              label="Description (Optional)"
-              name="description"
-              value={integrationData.description}
-              onChange={handleChange}
-              fullWidth
-              multiline
-              rows={2}
-              margin="normal"
-            />
-          </Grid>
-          
-          <Grid item xs={12} sm={4}>
-            <FormControl fullWidth margin="normal">
-              <InputLabel>Integration Type</InputLabel>
-              <Select
-                name="type"
-                value={integrationData.type}
-                onChange={handleChange}
-                label="Integration Type"
-              >
-                {typeOptions.map(option => (
-                  <MenuItem key={option} value={option}>{option}</MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Grid>
-          
-          <Grid item xs={12} sm={4}>
-            <FormControl fullWidth margin="normal" error={!!errors.source}>
-              <InputLabel>Source</InputLabel>
-              <Select
-                name="source"
-                value={integrationData.source}
-                onChange={handleChange}
-                label="Source"
-                disabled={loading.sources}
-              >
-                {loading.sources ? (
-                  <MenuItem value="">
-                    <CircularProgress size={20} /> Loading...
-                  </MenuItem>
-                ) : (
-                  sources.map(option => (
-                    <MenuItem key={option} value={option}>{option}</MenuItem>
-                  ))
-                )}
-              </Select>
-              {errors.source && <FormHelperText>{errors.source}</FormHelperText>}
-            </FormControl>
-          </Grid>
-          
-          <Grid item xs={12} sm={4}>
-            <FormControl fullWidth margin="normal" error={!!errors.destination}>
-              <InputLabel>Destination</InputLabel>
-              <Select
-                name="destination"
-                value={integrationData.destination}
-                onChange={handleChange}
-                label="Destination"
-                disabled={loading.destinations}
-              >
-                {loading.destinations ? (
-                  <MenuItem value="">
-                    <CircularProgress size={20} /> Loading...
-                  </MenuItem>
-                ) : (
-                  destinations.map(option => (
-                    <MenuItem key={option} value={option}>{option}</MenuItem>
-                  ))
-                )}
-              </Select>
-              {errors.destination && <FormHelperText>{errors.destination}</FormHelperText>}
-            </FormControl>
-          </Grid>
-        </Grid>
-      )
-    },
-    {
-      label: 'Connection Configuration',
-      content: (
-        <Box>
-          {isAzureBlobSelected ? (
-            <AzureBlobConfiguration
-              config={integrationData.azureBlobConfig}
-              onChange={handleBlobConfigChange}
-              errors={errors.azureBlobConfig || {}}
-              isSuperUser={isSuperUser}
-            />
-          ) : (
-            <Typography color="textSecondary">
-              No additional configuration needed for the selected source/destination.
-            </Typography>
-          )}
-        </Box>
-      )
-    },
-    {
-      label: 'Schedule Configuration',
-      content: (
-        <ScheduleConfiguration
-          schedule={integrationData.schedule}
-          onChange={handleScheduleChange}
-          errors={errors.schedule || {}}
-        />
-      )
-    }
-  ];
-
+  // Handle dialog close
+  const handleClose = () => {
+    formik.resetForm();
+    setActiveStep(0);
+    onClose();
+  };
+  
   return (
     <Dialog 
       open={open} 
       onClose={handleClose}
-      maxWidth="md"
       fullWidth
+      maxWidth="md"
     >
       <DialogTitle>
-        <Typography variant="h6">
-          Create New Integration
-        </Typography>
-        {!isSuperUser && (
-          <Typography variant="caption" color="textSecondary">
-            Note: Some advanced configuration options are only available to administrators
-          </Typography>
-        )}
+        <Stack direction="row" alignItems="center" spacing={1}>
+          <Typography variant="h6" component="div">Create New Integration</Typography>
+          <ContextualHelp
+            id="integration-creation"
+            title="Integration Creation"
+            content={getHelp('creation')?.content || "Create a new integration by specifying its name, description, and type. An integration defines how data moves between systems."}
+            type="tooltip"
+            size="small"
+          />
+        </Stack>
       </DialogTitle>
       
-      <DialogContent dividers>
-        <Stepper activeStep={activeStep} orientation="vertical">
-          {steps.map((step, index) => (
-            <Step key={step.label}>
-              <StepLabel>{step.label}</StepLabel>
-              <StepContent>
-                {step.content}
-                <Box sx={{ mb: 2, mt: 2 }}>
-                  <div>
-                    <Button
-                      variant="contained"
-                      onClick={handleNext}
-                      sx={{ mt: 1, mr: 1 }}
-                    >
-                      {index === steps.length - 1 ? 'Finish' : 'Continue'}
-                    </Button>
-                    <Button
-                      disabled={index === 0}
-                      onClick={handleBack}
-                      sx={{ mt: 1, mr: 1 }}
-                    >
-                      Back
-                    </Button>
-                  </div>
+      <DialogContent>
+        <Box sx={{ mb: 2 }}>
+          <Stepper activeStep={activeStep}>
+            {steps.map((label) => (
+              <Step key={label}>
+                <StepLabel>{label}</StepLabel>
+              </Step>
+            ))}
+          </Stepper>
+        </Box>
+        
+        <form onSubmit={formik.handleSubmit}>
+          {/* Step 1: Basic Information */}
+          {activeStep === 0 && (
+            <Box>
+              <TextField
+                fullWidth
+                margin="normal"
+                id="name"
+                name="name"
+                label="Integration Name"
+                value={formik.values.name}
+                onChange={formik.handleChange}
+                error={formik.touched.name && Boolean(formik.errors.name)}
+                helperText={formik.touched.name && formik.errors.name}
+              />
+              
+              <TextField
+                fullWidth
+                margin="normal"
+                id="description"
+                name="description"
+                label="Description"
+                multiline
+                rows={3}
+                value={formik.values.description}
+                onChange={formik.handleChange}
+                error={formik.touched.description && Boolean(formik.errors.description)}
+                helperText={formik.touched.description && formik.errors.description}
+              />
+              
+              <FormControl 
+                fullWidth 
+                margin="normal"
+                error={formik.touched.type && Boolean(formik.errors.type)}
+              >
+                <InputLabel id="type-label">Integration Type</InputLabel>
+                <Select
+                  labelId="type-label"
+                  id="type"
+                  name="type"
+                  value={formik.values.type}
+                  onChange={formik.handleChange}
+                  label="Integration Type"
+                >
+                  {INTEGRATION_TYPES.map((type) => (
+                    <MenuItem key={type.value} value={type.value}>
+                      {type.label}
+                    </MenuItem>
+                  ))}
+                </Select>
+                {formik.touched.type && formik.errors.type && (
+                  <FormHelperText>{formik.errors.type}</FormHelperText>
+                )}
+              </FormControl>
+              
+              {formik.values.type && (
+                <Box mt={2} p={2} bgcolor="grey.100" borderRadius={1}>
+                  <Typography variant="body2">
+                    {INTEGRATION_TYPES.find(t => t.value === formik.values.type)?.description}
+                  </Typography>
                 </Box>
-              </StepContent>
-            </Step>
-          ))}
-        </Stepper>
+              )}
+            </Box>
+          )}
+          
+          {/* Step 2: Connection Settings */}
+          {activeStep === 1 && (
+            <Box>
+              <Typography variant="subtitle1" gutterBottom>
+                Connection Settings
+              </Typography>
+              <Typography variant="body2" color="textSecondary" paragraph>
+                You'll configure the detailed connection settings in the Flow Designer after creating the integration.
+              </Typography>
+              
+              <ContextualHelp
+                id="connection-settings-info"
+                title="Connection Configuration"
+                content="The Flow Designer is where you'll build your integration workflow by connecting nodes together. You'll be able to configure source and destination systems, add transformation steps, and define how data flows between them."
+                type="inline"
+                icon="info"
+                relatedLinks={[
+                  { 
+                    label: "Take Flow Designer tour", 
+                    onClick: () => console.log("Start flow designer tour") 
+                  },
+                  { 
+                    label: "View connection types", 
+                    onClick: () => console.log("Open connection types documentation") 
+                  }
+                ]}
+              />
+              
+              <Typography variant="body2" gutterBottom sx={{ mt: 2 }}>
+                The Flow Designer will allow you to:
+              </Typography>
+              <ul>
+                <li>Add source and destination nodes</li>
+                <li>Configure transformation and filter operations</li>
+                <li>Establish connections between nodes</li>
+                <li>Validate and test your integration flow</li>
+              </ul>
+            </Box>
+          )}
+          
+          {/* Step 3: Schedule */}
+          {activeStep === 2 && (
+            <Box>
+              <Stack direction="row" alignItems="center" spacing={1} mb={2}>
+                <Typography variant="subtitle1">Schedule Configuration</Typography>
+                <ContextualHelp
+                  id="schedule-config"
+                  title="Scheduling"
+                  content={getHelp('schedule')?.content || "Set up when your integration should run automatically. Supports one-time, recurring, and event-based schedules."}
+                  type="popover"
+                  size="small"
+                  relatedLinks={[
+                    { 
+                      label: "View scheduling documentation", 
+                      onClick: () => console.log("Open scheduling documentation") 
+                    },
+                    { 
+                      label: "Take scheduling tour", 
+                      onClick: () => console.log("Start scheduling tour") 
+                    }
+                  ]}
+                />
+              </Stack>
+            
+              <FormControl fullWidth margin="normal">
+                <InputLabel id="schedule-type-label">Schedule Type</InputLabel>
+                <Select
+                  labelId="schedule-type-label"
+                  id="scheduleType"
+                  name="scheduleType"
+                  value={formik.values.scheduleType}
+                  onChange={formik.handleChange}
+                  label="Schedule Type"
+                >
+                  <MenuItem value="manual">Manual Execution</MenuItem>
+                  <MenuItem value="scheduled">Scheduled</MenuItem>
+                  <MenuItem value="event_driven">Event Driven</MenuItem>
+                </Select>
+              </FormControl>
+              
+              {formik.values.scheduleType === 'scheduled' && (
+                <FormControl fullWidth margin="normal">
+                  <InputLabel id="schedule-frequency-label">Frequency</InputLabel>
+                  <Select
+                    labelId="schedule-frequency-label"
+                    id="scheduleFrequency"
+                    name="scheduleFrequency"
+                    value={formik.values.scheduleFrequency}
+                    onChange={formik.handleChange}
+                    label="Frequency"
+                  >
+                    <MenuItem value="hourly">Hourly</MenuItem>
+                    <MenuItem value="daily">Daily</MenuItem>
+                    <MenuItem value="weekly">Weekly</MenuItem>
+                    <MenuItem value="monthly">Monthly</MenuItem>
+                    <MenuItem value="custom">Custom (CRON)</MenuItem>
+                  </Select>
+                </FormControl>
+              )}
+              
+              {formik.values.scheduleType === 'event_driven' && (
+                <Box mt={2} p={2} bgcolor="grey.100" borderRadius={1}>
+                  <Typography variant="body2">
+                    Event-driven integrations will be triggered by external events such as webhook calls,
+                    file uploads, or system notifications.
+                  </Typography>
+                </Box>
+              )}
+            </Box>
+          )}
+        </form>
       </DialogContent>
       
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
-        <Button 
-          variant="contained" 
-          onClick={handleCreate}
-          color="primary"
-          disabled={activeStep !== steps.length - 1}
-        >
-          Create Integration
-        </Button>
+        
+        {activeStep > 0 && (
+          <Button onClick={handleBack}>Back</Button>
+        )}
+        
+        {activeStep < steps.length - 1 && (
+          <Button 
+            onClick={handleNext}
+            variant="contained"
+            disabled={
+              (activeStep === 0 && !(formik.values.name && formik.values.type && !formik.errors.name && !formik.errors.description))
+            }
+          >
+            Next
+          </Button>
+        )}
+        
+        {activeStep === steps.length - 1 && (
+          <Button 
+            onClick={() => formik.handleSubmit()}
+            variant="contained"
+            color="primary"
+          >
+            Create Integration
+          </Button>
+        )}
       </DialogActions>
     </Dialog>
   );
-}
+};
+
+IntegrationCreationDialog.propTypes = {
+  open: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+};
+
+export default IntegrationCreationDialog;

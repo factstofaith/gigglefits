@@ -1,0 +1,68 @@
+{
+  "success": true,
+  "startTime": 1743412761209,
+  "endTime": 1743412766292,
+  "duration": 5083,
+  "builds": {
+    "standard": {
+      "buildType": "standard",
+      "success": true,
+      "startTime": 1743412761209,
+      "endTime": 1743412766291,
+      "duration": 5082,
+      "output": "\n> tap-integration-platform-optimized@1.0.0 build\n> npm run clean && cross-env NODE_ENV=production webpack --config config/webpack.prod.js\n\n\n> tap-integration-platform-optimized@1.0.0 clean\n> rimraf dist build bundle-reports\n\nassets by path static/js/*.js 1.19 KiB\n  asset static/js/runtime.5b0fe713.js 1.01 KiB [emitted] [immutable] [minimized] (name: runtime) 1 related asset\n  asset static/js/main.b3b4e771.js 176 bytes [emitted] [immutable] [minimized] (name: main)\nasset index.html 607 bytes [emitted]\nasset favicon.ico 0 bytes [emitted]\nwebpack 5.98.0 compiled successfully in 2934 ms\n",
+      "error": null,
+      "fileCount": 5,
+      "totalSize": 8084,
+      "artifacts": [
+        {
+          "path": "/home/ai-dev/Desktop/tap-integration-platform/project/finishline/build/favicon.ico",
+          "name": "favicon.ico",
+          "size": 0,
+          "extension": ".ico",
+          "created": "2025-03-31T09:19:26.195Z",
+          "modified": "2025-03-31T09:19:26.195Z"
+        },
+        {
+          "path": "/home/ai-dev/Desktop/tap-integration-platform/project/finishline/build/index.html",
+          "name": "index.html",
+          "size": 607,
+          "extension": ".html",
+          "created": "2025-03-31T09:19:26.195Z",
+          "modified": "2025-03-31T09:19:26.203Z"
+        },
+        {
+          "path": "/home/ai-dev/Desktop/tap-integration-platform/project/finishline/build/static/js/main.b3b4e771.js",
+          "name": "main.b3b4e771.js",
+          "size": 176,
+          "extension": ".js",
+          "created": "2025-03-31T09:19:26.204Z",
+          "modified": "2025-03-31T09:19:26.207Z"
+        },
+        {
+          "path": "/home/ai-dev/Desktop/tap-integration-platform/project/finishline/build/static/js/runtime.5b0fe713.js",
+          "name": "runtime.5b0fe713.js",
+          "size": 1038,
+          "extension": ".js",
+          "created": "2025-03-31T09:19:26.204Z",
+          "modified": "2025-03-31T09:19:26.207Z"
+        },
+        {
+          "path": "/home/ai-dev/Desktop/tap-integration-platform/project/finishline/build/static/js/runtime.5b0fe713.js.map",
+          "name": "runtime.5b0fe713.js.map",
+          "size": 6263,
+          "extension": ".map",
+          "created": "2025-03-31T09:19:26.204Z",
+          "modified": "2025-03-31T09:19:26.207Z"
+        }
+      ],
+      "metrics": {
+        "bundleSize": 8084,
+        "chunkCount": 2,
+        "jsSize": 1214,
+        "cssSize": 0,
+        "compressedSize": 0
+      }
+    }
+  }
+}

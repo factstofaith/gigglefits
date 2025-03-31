@@ -1,345 +1,282 @@
-// IntegrationsPage.jsx
-// -----------------------------------------------------------------------------
-// Main page for managing integrations with a table view and an interactive flow editor
-
-import React, { useState, useEffect, useCallback } from 'react';
-import ReactFlow, {
-  ReactFlowProvider,
-  useNodesState,
-  useEdgesState,
-  addEdge,
-  MiniMap,
-  Controls,
-  Background
-} from 'reactflow';
-import 'reactflow/dist/style.css';
+import React, { useState, useCallback, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
-  Drawer, 
-  IconButton, 
+  Container, 
   Typography, 
   Box, 
-  Tabs, 
-  Tab 
-} from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
+  Paper, 
+  Button, 
+  Grid, 
+  Card, 
+  CardContent, 
+  CardActions,
+  IconButton,
+  Tooltip,
+  Stack,
+} from '../design-system/optimized';
+import {
+  Add as AddIcon,
+  PlayArrow as PlayIcon,
+  Edit as EditIcon,
+  Delete as DeleteIcon,
+  Info as InfoIcon,
+  Tour as TourIcon,
+} from '@mui/icons-material';
 
-// Common components
-import Button from '../components/common/Button';
-import ChatSupportPanel from '../components/common/ChatSupportPanel';
-import IntegrationStatsBar from '../components/common/IntegrationStatsBar';
-
-// Integration specific components
-import IntegrationTable from '../components/integration/IntegrationTable';
+// Import components
 import IntegrationCreationDialog from '../components/integration/IntegrationCreationDialog';
-import IntegrationDetailView from '../components/integration/IntegrationDetailView';
-import UserRoleSwitcher from '../components/integration/UserRoleSwitcher';
-import { useNavigate } from 'react-router-dom';
+import ContextualHelp from '../components/common/ContextualHelp';
 
-// Services (for future backend integration)
-import { 
-  getIntegrations, 
-  createIntegration, 
-  updateIntegration, 
-  deleteIntegration 
-} from '../services/integrationService';
+// Import custom hooks
+import { useContextualHelp } from '../hooks';
 
-function IntegrationsPage() {
+// Mock data for integrations
+const MOCK_INTEGRATIONS = [
+  {
+    id: '1',
+    name: 'Sales Data Sync',
+    description: 'Sync sales data from CRM to data warehouse',
+    type: 'data_sync',
+    status: 'active',
+    lastRun: '2025-03-29T14:32:00Z',
+  },
+  {
+    id: '2',
+    name: 'Customer Data Transformation',
+    description: 'Transform customer data for analytics',
+    type: 'data_transformation',
+    status: 'inactive',
+    lastRun: null,
+  }
+];
+
+/**
+ * Integrations Page - Lists all available integrations
+ */
+const IntegrationsPage = () => {
   const navigate = useNavigate();
+  const [integrations, setIntegrations] = useState(MOCK_INTEGRATIONS);
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const { 
+    getHelp, 
+    startTour, 
+    isTourCompleted 
+  } = useContextualHelp('integration');
   
-  // State for integration list view
-  const [viewMode, setViewMode] = useState('table'); // 'table' or 'canvas'
-  const [integrations, setIntegrations] = useState([
-    {
-      id: 1,
-      name: 'Employee Demo',
-      type: 'API-based',
-      source: 'Workday (HR)',
-      destination: 'Kronos (Time)',
-      schedule: 'Daily @ 2am',
-      health: 'healthy'
-    },
-    {
-      id: 2,
-      name: 'Time to Payroll',
-      type: 'API-based',
-      source: '7Shifts (Time)',
-      destination: 'Paylocity (Payroll)',
-      schedule: 'Weekly on Fridays',
-      health: 'warning'
-    },
-    {
-      id: 3,
-      name: 'File-based Blob Demo',
-      type: 'File-based',
-      source: 'Azure Blob Container /employees',
-      destination: 'Email: hr-dept@company.com',
-      schedule: 'Once daily @ 6am',
-      health: 'healthy'
+  // Start the tour when the page loads if it hasn't been completed
+  useEffect(() => {
+    // Auto-start the tour for first-time users if needed
+    if (!isTourCompleted('basics') && process.env.NODE_ENV === 'development') {
+      // In development, we'll just show the tour button
+      // In production, we could auto-start: startTour('basics');
     }
-  ]);
+  }, [isTourCompleted, startTour]);
   
-  // State for canvas flow editor
-  const [selectedTab, setSelectedTab] = useState(null);
-  const [diagramData, setDiagramData] = useState({});
-  const [nodes, setNodes, onNodesChange] = useNodesState([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-
-  // State for the creation dialog
-  const [createDialogOpen, setCreateDialogOpen] = useState(false);
-
-  // Load integrations on component mount
-  useEffect(() => {
-    const fetchIntegrations = async () => {
-      try {
-        // In a production app, this would use the real API
-        // const data = await getIntegrations();
-        // setIntegrations(data);
-      } catch (error) {
-        console.error('Error fetching integrations:', error);
-      }
-    };
+  // Handle creating a new integration
+  const handleCreateIntegration = useCallback((integrationData) => {
+    // In a real app, you would send this to your backend
+    console.log('Creating integration:', integrationData);
     
-    fetchIntegrations();
-  }, []);
-
-  // Switch to canvas view for a specific integration
-  const handleEditCanvas = (integrationId) => {
-    setSelectedTab(integrationId);
-    
-    // Initialize diagram data if needed
-    if (!diagramData[integrationId]) {
-      setDiagramData(prev => ({
-        ...prev,
-        [integrationId]: { nodes: [], edges: [] }
-      }));
-    }
-    
-    // Load diagram data
-    const { nodes = [], edges = [] } = diagramData[integrationId] || {};
-    setNodes(nodes);
-    setEdges(edges);
-    
-    // Switch to canvas view
-    setViewMode('canvas');
-  };
-
-  // Handle integration actions
-  const handleFieldMapping = (integrationId) => {
-    // Navigate to the integration detail page with field mappings tab active
-    navigate(`/integrations/${integrationId}`);
-  };
-
-  const handleModifyIntegration = (integrationId) => {
-    handleEditCanvas(integrationId);
-  };
-
-  const handleViewRunLog = (integrationId) => {
-    // Navigate to the integration detail page with history tab active
-    // We'll pass the tab info in the URL state (this would be implemented in the detail page)
-    navigate(`/integrations/${integrationId}`, { state: { tab: 'history' } });
-  };
-
-  // Canvas event handlers
-  const onConnect = useCallback(
-    (params) => {
-      const newEdges = addEdge({ ...params, label: 'Flow' }, edges);
-      updateDiagramData(nodes, newEdges);
-    },
-    [nodes, edges]
-  );
-
-  const updateDiagramData = (newNodes, newEdges) => {
-    setNodes(newNodes);
-    setEdges(newEdges);
-    setDiagramData(prev => ({ 
-      ...prev, 
-      [selectedTab]: { nodes: newNodes, edges: newEdges } 
-    }));
-  };
-
-  // Selection and drawer logic
-  const [selection, setSelection] = useState(null);
-  const [drawerOpen, setDrawerOpen] = useState(false);
-
-  const handlePaneClick = (evt) => {
-    const isInsideNoDrag = !!evt.target.closest('.nodrag');
-    if (!isInsideNoDrag) setSelection(null);
-  };
-
-  const onNodeClick = (evt, node) => {
-    evt.stopPropagation();
-    setSelection({ type: 'node', id: node.id });
-  };
-
-  const onEdgeClick = (evt, edge) => {
-    evt.stopPropagation();
-    setSelection({ type: 'edge', id: edge.id });
-  };
-
-  useEffect(() => {
-    setDrawerOpen(!!selection);
-  }, [selection]);
-
-  const handleCloseDrawer = () => setSelection(null);
-
-  // Create new integration
-  const handleOpenCreateDialog = () => {
-    setCreateDialogOpen(true);
-  };
-
-  const handleCloseCreateDialog = () => {
-    setCreateDialogOpen(false);
-  };
-
-  const handleCreateIntegration = (integrationData) => {
-    // In a real app, this would call the backend API
+    // Add to our local state for now (mock)
     const newIntegration = {
-      id: Date.now(), // temporary ID
-      name: integrationData.name,
-      type: integrationData.type,
-      source: integrationData.source,
-      destination: integrationData.destination,
-      schedule: integrationData.schedule || 'On demand',
-      health: 'healthy'
+      ...integrationData,
+      id: `${Date.now()}`,
+      status: 'inactive',
+      lastRun: null,
     };
     
-    setIntegrations(prev => [...prev, newIntegration]);
-    setCreateDialogOpen(false);
-  };
-
-  // Return to table view
-  const handleBackToTable = () => {
-    setViewMode('table');
-    setSelectedTab(null);
-  };
-
-  // Handle user role changes
-  const handleRoleChange = (role) => {
-    console.log(`User role changed to: ${role}`);
-    // In a real app, this would update permissions throughout the app
-  };
-
-  // Render different views
-  const renderTableView = () => (
-    <div style={{ padding: '2rem' }}>
-      {/* Development helper to switch between roles */}
-      <UserRoleSwitcher onRoleChange={handleRoleChange} />
-      
-      <IntegrationStatsBar 
-        total={integrations.length}
-        healthy={integrations.filter(i => i.health === 'healthy').length}
-        warnings={integrations.filter(i => i.health === 'warning').length}
-        errors={integrations.filter(i => i.health === 'error').length}
-      />
-      
-      <div style={{ marginBottom: '1rem' }}>
-        <Button 
-          style={{ backgroundColor: '#48C2C5' }}
-          onClick={handleOpenCreateDialog}
-        >
-          Create New Integration
-        </Button>
-      </div>
-      
-      <IntegrationTable 
-        integrations={integrations}
-        onFieldMapping={handleFieldMapping}
-        onModify={handleModifyIntegration}
-        onViewRunLog={handleViewRunLog}
-      />
-    </div>
-  );
-
-  const renderCanvasView = () => {
-    const currentIntegration = integrations.find(i => i.id === selectedTab);
+    setIntegrations((prevIntegrations) => [...prevIntegrations, newIntegration]);
     
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-        <div style={{ 
-          padding: '1rem', 
-          display: 'flex', 
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          borderBottom: '1px solid #eee'
-        }}>
-          <div>
-            <Button 
-              style={{ backgroundColor: '#999', marginRight: '1rem' }}
-              onClick={handleBackToTable}
-            >
-              Back to Integrations
-            </Button>
-            
-            <span style={{ fontWeight: 'bold' }}>
-              Editing: {currentIntegration?.name}
-            </span>
-          </div>
-          
-          <Button 
-            style={{ backgroundColor: '#48C2C5' }}
-            onClick={() => console.log('Saving integration...')}
-          >
-            Save Changes
-          </Button>
-        </div>
-        
-        <div style={{ flex: 1, position: 'relative' }}>
-          <ReactFlowProvider>
-            <ReactFlow
-              nodes={nodes}
-              edges={edges}
-              onNodesChange={onNodesChange}
-              onEdgesChange={onEdgesChange}
-              onConnect={onConnect}
-              onPaneClick={handlePaneClick}
-              onNodeClick={onNodeClick}
-              onEdgeClick={onEdgeClick}
-              fitView
-              style={{ width: '100%', height: '100%' }}
-            >
-              <MiniMap />
-              <Controls />
-              <Background color="#eee" gap={16} />
-            </ReactFlow>
-          </ReactFlowProvider>
-        </div>
-      </div>
+    // Navigate to the detail page for the new integration
+    navigate(`/integrations/${newIntegration.id}`);
+  }, [navigate]);
+  
+  // Handle navigating to integration details
+  const handleViewIntegration = useCallback((id) => {
+    navigate(`/integrations/${id}`);
+  }, [navigate]);
+  
+  // Handle editing an integration
+  const handleEditIntegration = useCallback((id) => {
+    navigate(`/integrations/${id}?edit=true`);
+  }, [navigate]);
+  
+  // Handle running an integration
+  const handleRunIntegration = useCallback((id) => {
+    console.log('Running integration:', id);
+    // In a real app, you would trigger the integration execution
+  }, []);
+  
+  // Handle deleting an integration
+  const handleDeleteIntegration = useCallback((id) => {
+    console.log('Deleting integration:', id);
+    
+    // Remove from our local state (mock)
+    setIntegrations((prevIntegrations) => 
+      prevIntegrations.filter(integration => integration.id !== id)
     );
+  }, []);
+  
+  // Get type label
+  const getTypeLabel = (typeValue) => {
+    const types = {
+      'data_sync': 'Data Synchronization',
+      'data_transformation': 'Data Transformation',
+      'data_validation': 'Data Validation',
+      'data_migration': 'Data Migration',
+    };
+    
+    return types[typeValue] || typeValue;
   };
 
-  // Main render
   return (
-    <div style={{ height: 'calc(100vh - 120px)' }}>
-      {viewMode === 'table' ? renderTableView() : renderCanvasView()}
-      
-      <ChatSupportPanel />
-      
-      <Drawer anchor="right" open={drawerOpen} onClose={handleCloseDrawer}>
-        <Box sx={{ width: 320, p: 2 }}>
-          <Box display="flex" justifyContent="space-between" alignItems="center">
-            <Typography variant="h6">
-              {selection?.type === 'node' ? 'Node Properties' : 'Connection Properties'}
-            </Typography>
-            <IconButton onClick={handleCloseDrawer}>
-              <CloseIcon />
-            </IconButton>
-          </Box>
-          
-          <Typography sx={{ mt: 2 }}>
-            {selection?.type === 'node' 
-              ? 'Configure node properties here...' 
-              : 'Configure connection properties here...'}
+    <Container maxWidth="lg">
+      <Box my={4}>
+        <Stack direction="row" alignItems="center" spacing={1} mb={2}>
+          <Typography variant="h4" component="h1">
+            Integrations
           </Typography>
+          <ContextualHelp
+            id="integrations-page-help"
+            title="Integrations Overview"
+            content={getHelp('overview')?.content || "Integrations allow you to connect different systems and define how data flows between them. You can create, edit, and manage all your integrations from this page."}
+            type="popover"
+            size="small"
+            relatedLinks={[
+              { 
+                label: "Learn more about integrations", 
+                onClick: () => console.log("Open integrations docs") 
+              }
+            ]}
+          />
+          <Button
+            variant="text"
+            size="small"
+            startIcon={<TourIcon />}
+            onClick={() => startTour('basics')}
+            sx={{ ml: 'auto' }}
+            color={isTourCompleted('basics') ? 'success' : 'primary'}
+          >
+            {isTourCompleted('basics') ? 'Tour Completed' : 'Take Tour'}
+          </Button>
+        </Stack>
+        
+        <Box display="flex" justifyContent="flex-end" mb={2}>
+          <Button 
+            variant="contained" 
+            color="primary" 
+            startIcon={<AddIcon />}
+            onClick={() => setIsCreateDialogOpen(true)}
+            className="create-integration-button"
+          >
+            Create New Integration
+          </Button>
         </Box>
-      </Drawer>
+        
+        {integrations.length === 0 ? (
+          <Paper sx={{ p: 3, textAlign: 'center' }}>
+            <Typography variant="subtitle1" gutterBottom>
+              You don't have any integrations yet
+            </Typography>
+            <Typography variant="body2" color="textSecondary" gutterBottom>
+              Create your first integration to get started
+            </Typography>
+            <Button 
+              variant="outlined" 
+              color="primary" 
+              startIcon={<AddIcon />}
+              onClick={() => setIsCreateDialogOpen(true)}
+              sx={{ mt: 2 }}
+            >
+              Create Integration
+            </Button>
+          </Paper>
+        ) : (
+          <Grid container spacing={3} className="integration-list">
+            {integrations.map((integration) => (
+              <Grid item xs={12} sm={6} md={4} key={integration.id}>
+                <Card>
+                  <CardContent>
+                    <Box display="flex" alignItems="center" mb={1}>
+                      <Typography variant="h6" component="h2" sx={{ flexGrow: 1 }}>
+                        {integration.name}
+                      </Typography>
+                      <Box
+                        sx={{
+                          width: 10,
+                          height: 10,
+                          borderRadius: '50%',
+                          backgroundColor: integration.status === 'active' ? 'success.main' : 'text.disabled',
+                          mr: 1,
+                        }}
+                      />
+                    </Box>
+                    
+                    <Typography variant="body2" color="textSecondary" gutterBottom>
+                      {integration.description}
+                    </Typography>
+                    
+                    <Box mt={2}>
+                      <Typography variant="caption" display="block" color="textSecondary">
+                        Type: {getTypeLabel(integration.type)}
+                      </Typography>
+                      {integration.lastRun && (
+                        <Typography variant="caption" display="block" color="textSecondary">
+                          Last Run: {new Date(integration.lastRun).toLocaleString()}
+                        </Typography>
+                      )}
+                    </Box>
+                  </CardContent>
+                  <CardActions>
+                    <Tooltip title="View Details">
+                      <Button 
+                        size="small" 
+                        onClick={() => handleViewIntegration(integration.id)}
+                      >
+                        Details
+                      </Button>
+                    </Tooltip>
+                    <Box sx={{ flexGrow: 1 }} />
+                    <Tooltip title="Run Integration">
+                      <IconButton 
+                        size="small"
+                        onClick={() => handleRunIntegration(integration.id)}
+                      >
+                        <PlayIcon fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Edit Integration">
+                      <IconButton 
+                        size="small"
+                        onClick={() => handleEditIntegration(integration.id)}
+                      >
+                        <EditIcon fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Delete Integration">
+                      <IconButton 
+                        size="small"
+                        onClick={() => handleDeleteIntegration(integration.id)}
+                      >
+                        <DeleteIcon fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
+                  </CardActions>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        )}
+      </Box>
       
+      {/* Integration Creation Dialog */}
       <IntegrationCreationDialog
-        open={createDialogOpen}
-        onClose={handleCloseCreateDialog}
-        onCreate={handleCreateIntegration}
+        open={isCreateDialogOpen}
+        onClose={() => setIsCreateDialogOpen(false)}
+        onSubmit={handleCreateIntegration}
       />
-    </div>
+    </Container>
   );
-}
+};
 
 export default IntegrationsPage;

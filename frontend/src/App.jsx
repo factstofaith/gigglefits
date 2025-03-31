@@ -1,127 +1,222 @@
 // App.jsx
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import authService from './services/authService';
+// -----------------------------------------------------------------------------
+// Main application component with routing and context providers
+// Enhanced with accessibility features and standardized layouts
 
-// Pages
-import HomePage from './pages/HomePage';
-import IntegrationsPage from './pages/IntegrationsPage';
-import IntegrationDetailPage from './pages/IntegrationDetailPage';
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { 
+  Box,
+  CircularProgress,
+  ThemeProvider,
+  KeyboardArrowUpIcon
+} from './design-system/optimized';
 
-// Components
-import Logo from './components/common/Logo';
-import AuthModal from './components/common/AuthModal';
-import Button from './components/common/Button';
+// Common components
+import { NotificationProvider } from './contexts/NotificationContext';
+import KeyboardShortcutsHelp from './components/common/KeyboardShortcutsHelp';
+import HelpButton from './components/common/HelpButton';
 
-// Assets
-import logo from './assets/logo.png';
+// Context providers
+import { UserProvider } from './contexts/UserContext';
+import { SettingsProvider } from './contexts/SettingsContext';
+import { IntegrationProvider } from './contexts/IntegrationContext';
+import { EarningsProvider } from './contexts/EarningsContext';
+import { ResourceProvider } from './contexts/ResourceContext';
+import { WebhookProvider } from './contexts/WebhookContext';
+import { BreadcrumbProvider } from './contexts/BreadcrumbContext';
+import { KeyboardShortcutsProvider } from './contexts/KeyboardShortcutsContext';
+import { HelpProvider } from './contexts/HelpContext';
 
-// Protected route wrapper
-const ProtectedRoute = ({ element }) => {
-  const isAuthenticated = authService.isAuthenticated();
-  return isAuthenticated ? element : <Navigate to="/" />;
-};
+// Centralized routes with lazy loading
+import AppRoutes from './AppRoutes';
 
-function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [showAuthModal, setShowAuthModal] = useState(false);
-  const [currentUser, setCurrentUser] = useState(null);
+// Common components
+import Navigation from './components/common/Navigation';
 
-  // Check authentication status on mount
+// Accessibility utilities
+import { useSkipNav } from './utils/accessibilityUtils';
+
+/**
+ * Scroll to top component for long pages
+ */
+function ScrollToTop() {
+  ScrollToTop.displayName = 'ScrollToTop';
+
+  const [visible, setVisible] = useState(false);
+  
+  // Handle scroll events
   useEffect(() => {
-    const checkAuth = async () => {
-      const isAuth = authService.isAuthenticated();
-      setIsLoggedIn(isAuth);
-      
-      if (isAuth) {
-        const user = await authService.getCurrentUser();
-        setCurrentUser(user);
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      if (scrollY > 100) {
+        setVisible(true);
+      } else {
+        setVisible(false);
       }
     };
     
-    checkAuth();
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Show auth modal
-  const handleShowAuthModal = () => {
-    setShowAuthModal(true);
+  const handleClick = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Hide auth modal
-  const handleCloseAuthModal = () => {
-    setShowAuthModal(false);
-  };
-
-  // Handle logout
-  const handleLogout = async () => {
-    await authService.logout();
-    setIsLoggedIn(false);
-    setCurrentUser(null);
-    window.location.href = '/'; // Redirect to homepage after logout
-  };
+  if (!visible) return null;
 
   return (
-    <Router>
-      <div>
-        <header
-          style={{
-            background: 'linear-gradient(135deg,rgb(208, 239, 248) 0%,rgb(203, 239, 247) 50%)',
-            padding: '1rem',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between'
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <div
-              style={{
-                width: '120px',
-                height: '120px',
-                borderRadius: '60px',
-                backgroundColor: '#FFFFFF',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
-                marginRight: '1rem'
-              }}
-            >
-              <Logo imageSrc={logo} text="TAP Innovations" />
-            </div>
-          </div>
-          
-          <div>
-            {isLoggedIn ? (
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                <span style={{ color: '#3B3D3D' }}>
-                  Welcome, {currentUser?.name || 'User'}
-                </span>
-                <Button onClick={handleLogout}>Logout</Button>
-              </div>
-            ) : (
-              <Button onClick={handleShowAuthModal}>Login</Button>
-            )}
-          </div>
-        </header>
+    <Box
+      onClick={handleClick}
+      role="presentation"
+      position="fixed"
+      bottom={16}
+      right={16}
+      zIndex={1000}
+      style={{
+        opacity: visible ? 1 : 0,
+        transition: 'opacity 0.3s',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 40,
+        height: 40,
+        borderRadius: '50%',
+        backgroundColor: 'primary',
+        color: 'white',
+        cursor: 'pointer',
+        boxShadow: '0 2px 10px rgba(0,0,0,0.2)',
+      }}
+      aria-label="scroll back to top"
+    >
+      <KeyboardArrowUpIcon />
+    </Box>
+  );
+}
 
-        <Routes>
-          <Route path="/" element={<HomePage onLogin={handleShowAuthModal} />} />
-          <Route 
-            path="/integrations" 
-            element={<ProtectedRoute element={<IntegrationsPage />} />} 
-          />
-          <Route 
-            path="/integrations/:id" 
-            element={<ProtectedRoute element={<IntegrationDetailPage />} />} 
-          />
-        </Routes>
-        
-        <AuthModal 
-          isOpen={showAuthModal} 
-          onClose={handleCloseAuthModal} 
-        />
-      </div>
-    </Router>
+function App() {
+  App.displayName = 'App';
+
+  // Add skip navigation functionality
+  useSkipNav('main-content');
+
+  // Set page title and lang attribute on mount
+  useEffect(() => {
+    // Set application language (can be dynamic based on user preferences)
+    document.documentElement.lang = 'en';
+
+    // Set default page title (can be updated by page components)
+    document.title = 'TAP Integration Platform';
+
+    // Initialize modal root div for portals if not exists
+    if (!document.getElementById('modal-root')) {
+      const modalRoot = document.createElement('div');
+      modalRoot.id = 'modal-root';
+      document.body.appendChild(modalRoot);
+    }
+
+    // Create screen reader announcer if it doesn't exist
+    if (!document.getElementById('sr-announcer')) {
+      const announcer = document.createElement('div');
+      announcer.id = 'sr-announcer';
+      announcer.setAttribute('aria-live', 'polite');
+      announcer.setAttribute('aria-atomic', 'true');
+      announcer.setAttribute('role', 'status');
+      announcer.style.position = 'absolute';
+      announcer.style.width = '1px';
+      announcer.style.height = '1px';
+      announcer.style.overflow = 'hidden';
+      announcer.style.clip = 'rect(0, 0, 0, 0)';
+      announcer.style.whiteSpace = 'nowrap';
+      document.body.appendChild(announcer);
+    }
+
+    return () => {
+      // Cleanup is not strictly necessary here since App is the root,
+      // but included for completeness
+      const modalRoot = document.getElementById('modal-root');
+      const announcer = document.getElementById('sr-announcer');
+      if (modalRoot) document.body.removeChild(modalRoot);
+      if (announcer) document.body.removeChild(announcer);
+    };
+  }, []);
+
+  return (
+    <ThemeProvider initialMode="light">
+      <SettingsProvider>
+        <UserProvider>
+          <NotificationProvider>
+            <KeyboardShortcutsProvider>
+              <IntegrationProvider>
+                <EarningsProvider>
+                  <ResourceProvider>
+                    <WebhookProvider>
+                      <HelpProvider>
+                        <Router>
+                          <BreadcrumbProvider>
+                            {/* Skip to main content link (hidden visually) */}
+                            <a
+                              href="#main-content"
+                              className="skip-nav"
+                              style={{
+                                position: 'absolute',
+                                top: '-40px',
+                                left: 0,
+                                backgroundColor: 'primary',
+                                color: 'white',
+                                padding: '8px',
+                                zIndex: 2000,
+                                transition: 'top 0.2s',
+                              }}
+                              onFocus={(e) => {
+                                e.target.style.top = '0';
+                              }}
+                              onBlur={(e) => {
+                                e.target.style.top = '-40px';
+                              }}
+                            >
+                              Skip to main content
+                            </a>
+
+                            {/* Navigation */}
+                            <Navigation />
+
+                            {/* Main content area with proper accessibility attributes */}
+                            <Box
+                              component="main"
+                              id="main-content"
+                              tabIndex="-1"
+                              display="flex"
+                              flexDirection="column"
+                              minHeight="calc(100vh - 64px)" // Accounting for app bar height
+                              style={{
+                                outline: 'none' // Remove focus outline for tabIndex
+                              }}
+                            >
+                              <AppRoutes />
+                            </Box>
+
+                            {/* Keyboard shortcuts help component */}
+                            <KeyboardShortcutsHelp />
+
+                            {/* Scroll to top button */}
+                            <ScrollToTop />
+
+                            {/* Help button with contextual help and guided tours */}
+                            <HelpButton />
+                          </BreadcrumbProvider>
+                        </Router>
+                      </HelpProvider>
+                    </WebhookProvider>
+                  </ResourceProvider>
+                </EarningsProvider>
+              </IntegrationProvider>
+            </KeyboardShortcutsProvider>
+          </NotificationProvider>
+        </UserProvider>
+      </SettingsProvider>
+    </ThemeProvider>
   );
 }
 

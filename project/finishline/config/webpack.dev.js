@@ -4,7 +4,7 @@
 const path = require('path');
 const { merge } = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+// Removing dependency on ReactRefreshWebpackPlugin to avoid dependency conflicts
 const commonConfig = require('./webpack.common.js');
 
 // Root directory
@@ -50,9 +50,7 @@ module.exports = (env, argv) => {
         favicon: path.resolve(publicDir, 'favicon.ico'),
         inject: true,
       }),
-      new ReactRefreshWebpackPlugin({
-        overlay: false,
-      }),
+      // ReactRefreshWebpackPlugin removed to avoid dependency conflicts
     ],
     optimization: {
       runtimeChunk: 'single',

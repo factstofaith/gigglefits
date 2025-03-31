@@ -1,0 +1,32 @@
+{
+  "timestamp": "2025-03-31T10:23:01.558Z",
+  "summary": {
+    "totalTestTypes": 4,
+    "successfulTestTypes": 1,
+    "failedTestTypes": 3
+  },
+  "results": [
+    {
+      "type": "unit",
+      "success": false,
+      "error": "spawn npx jest ENOENT"
+    },
+    {
+      "type": "component",
+      "success": false,
+      "error": "spawn npx jest ENOENT"
+    },
+    {
+      "type": "visual",
+      "success": false,
+      "error": "spawn npx jest ENOENT"
+    },
+    {
+      "type": "build",
+      "exitCode": 0,
+      "success": true,
+      "stdout": "Starting build verification...\nVerifying standard build...\n\nBuild verification report generated: /home/ai-dev/Desktop/tap-integration-platform/project/finishline/build-verification/build-verification-report-2025-03-31T10-23-01.md\n\n---------------------------------------------------------\n🏗️  Build Verification: ✅ PASSED\n---------------------------------------------------------\nAll builds completed successfully!\nVerification Report: /home/ai-dev/Desktop/tap-integration-platform/project/finishline/build-verification/build-verification-report-2025-03-31T10-23-01.md\nDuration: 3.26s\n",
+      "stderr": ""
+    }
+  ]
+}

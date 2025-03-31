@@ -1,0 +1,65 @@
+[
+  {
+    "id": "1",
+    "code": "REG",
+    "description": "Regular Hours",
+    "source_system": "HR-SYS-001",
+    "destination_system": "PAY-SYS-001",
+    "category": "Regular Pay",
+    "is_active": true
+  },
+  {
+    "id": "2",
+    "code": "OT",
+    "description": "Overtime Hours",
+    "source_system": "HR-SYS-001",
+    "destination_system": "PAY-SYS-001",
+    "category": "Premium Pay",
+    "is_active": true
+  },
+  {
+    "id": "3",
+    "code": "VAC",
+    "description": "Vacation Hours",
+    "source_system": "HR-SYS-001",
+    "destination_system": "PAY-SYS-001",
+    "category": "Paid Time Off",
+    "is_active": true
+  },
+  {
+    "id": "4",
+    "code": "SICK",
+    "description": "Sick Hours",
+    "source_system": "HR-SYS-001",
+    "destination_system": "PAY-SYS-001",
+    "category": "Paid Time Off",
+    "is_active": true
+  },
+  {
+    "id": "5",
+    "code": "HOL",
+    "description": "Holiday Hours",
+    "source_system": "HR-SYS-001",
+    "destination_system": "PAY-SYS-001",
+    "category": "Paid Time Off",
+    "is_active": true
+  },
+  {
+    "id": "6",
+    "code": "COMM",
+    "description": "Commission",
+    "source_system": "HR-SYS-003",
+    "destination_system": "PAY-SYS-002",
+    "category": "Variable Pay",
+    "is_active": true
+  },
+  {
+    "id": "7",
+    "code": "BONUS",
+    "description": "Performance Bonus",
+    "source_system": "HR-SYS-003",
+    "destination_system": "PAY-SYS-002",
+    "category": "Variable Pay",
+    "is_active": true
+  }
+]

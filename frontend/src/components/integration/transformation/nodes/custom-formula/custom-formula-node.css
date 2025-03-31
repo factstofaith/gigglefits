@@ -1,0 +1,251 @@
+/**
+ * Custom Formula Node Component Styles
+ * 
+ * Provides styling for the custom formula node component, including the formula editor,
+ * function catalog, and configuration panels.
+ */
+
+/* Main container */
+.custom-formula-node {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.custom-formula-node h3 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  color: #2c3e50;
+  font-size: 18px;
+  font-weight: 600;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 8px;
+}
+
+.custom-formula-node h4 {
+  margin-top: 0;
+  margin-bottom: 8px;
+  color: #34495e;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* Layout */
+.formula-container {
+  display: flex;
+  gap: 16px;
+}
+
+.formula-sidebar {
+  flex: 0 0 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.formula-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Function catalog */
+.function-catalog-container {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  padding: 12px;
+}
+
+/* Available fields section */
+.available-fields {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  padding: 12px;
+}
+
+.fields-list {
+  max-height: 200px;
+  overflow-y: auto;
+  margin-top: 8px;
+}
+
+.field-item {
+  padding: 6px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 4px;
+  background-color: #fff;
+  border: 1px solid #eee;
+  transition: background-color 0.2s ease;
+}
+
+.field-item:hover {
+  background-color: #e0f2fe;
+}
+
+.field-name {
+  font-weight: 500;
+  color: #3182ce;
+}
+
+.field-type {
+  font-size: 12px;
+  color: #718096;
+  margin-left: 8px;
+  font-style: italic;
+}
+
+.field-example {
+  display: block;
+  font-size: 12px;
+  color: #a0aec0;
+  margin-top: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.no-fields {
+  padding: 8px;
+  color: #718096;
+  font-style: italic;
+  text-align: center;
+}
+
+/* Formula editor section */
+.formula-editor-section {
+  margin-bottom: 16px;
+}
+
+/* Formula preview section */
+.formula-preview-section {
+  background-color: #f8fafc;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 12px;
+}
+
+.preview-content {
+  min-height: 80px;
+  padding: 8px;
+  background-color: #fff;
+  border: 1px solid #eee;
+  border-radius: 4px;
+}
+
+.preview-error {
+  color: #e53e3e;
+}
+
+.error-title {
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.error-message {
+  margin-bottom: 4px;
+}
+
+.error-position {
+  font-style: italic;
+  opacity: 0.8;
+}
+
+.preview-result {
+  font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+}
+
+.result-value {
+  color: #2b6cb0;
+  font-weight: 500;
+}
+
+.no-result {
+  color: #a0aec0;
+  font-style: italic;
+}
+
+/* Formula configuration section */
+.formula-configuration-section {
+  background-color: #f8fafc;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 12px;
+}
+
+.config-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.config-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
+}
+
+.config-field label {
+  margin-bottom: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #4a5568;
+}
+
+.config-field input,
+.config-field select {
+  padding: 8px;
+  border: 1px solid #cbd5e0;
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: #fff;
+}
+
+.config-field input:focus,
+.config-field select:focus {
+  outline: none;
+  border-color: #3182ce;
+  box-shadow: 0 0 0 2px rgba(49, 130, 206, 0.2);
+}
+
+.config-field input:disabled,
+.config-field select:disabled {
+  background-color: #f7fafc;
+  color: #a0aec0;
+  cursor: not-allowed;
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+  .formula-container {
+    flex-direction: column;
+  }
+  
+  .formula-sidebar {
+    flex: 0 0 auto;
+    flex-direction: row;
+  }
+  
+  .function-catalog-container,
+  .available-fields {
+    flex: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .formula-sidebar {
+    flex-direction: column;
+  }
+  
+  .config-form {
+    grid-template-columns: 1fr;
+  }
+}

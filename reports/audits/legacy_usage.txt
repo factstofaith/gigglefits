@@ -1,0 +1,22 @@
+Usage check for Legacy components:
+
+Component: StepContentLegacy
+Imported in:
+  Not imported outside of tests
+
+Component: LinkLegacy
+Imported in:
+  Not imported outside of tests
+
+Component: ToggleButtonGroupLegacy
+Imported in:
+  Not imported outside of tests
+
+Component: TableRowLegacy
+Imported in:
+  Not imported outside of tests
+
+Component: TableBodyLegacy
+Imported in:
+  Not imported outside of tests
+

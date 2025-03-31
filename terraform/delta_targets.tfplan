@@ -1,0 +1,50 @@
+# Target the monitoring resources
+azurerm_log_analytics_workspace.main
+azurerm_application_insights.main
+
+# Target the subnets
+azurerm_subnet.frontend
+azurerm_subnet.backend
+azurerm_subnet.database
+azurerm_subnet_network_security_group_association.frontend
+azurerm_subnet_network_security_group_association.backend
+
+# Target diagnostic settings
+azurerm_monitor_diagnostic_setting.backend_app
+azurerm_monitor_diagnostic_setting.frontend_app
+azurerm_monitor_diagnostic_setting.postgres
+azurerm_monitor_diagnostic_setting.storage
+azurerm_monitor_diagnostic_setting.keyvault
+
+# Target the private DNS link
+azurerm_private_dns_zone_virtual_network_link.postgres
+
+# Target the Azure AD resources
+azuread_application.monitoring
+azuread_service_principal.monitoring
+azuread_application_password.monitoring_secret
+
+# Target role assignments
+azurerm_role_assignment.monitoring_reader
+azurerm_role_assignment.monitoring_monitor_reader
+
+# Target Key Vault secrets
+azurerm_key_vault_secret.storage_connection
+azurerm_key_vault_secret.postgres_connection
+azurerm_key_vault_secret.jwt_secret
+azurerm_key_vault_secret.monitoring_client_id
+azurerm_key_vault_secret.monitoring_client_secret
+azurerm_key_vault_secret.monitoring_tenant_id
+
+# Target Key Vault access policies
+azurerm_key_vault_access_policy.backend
+
+# Target storage containers
+azurerm_storage_container.integration_data
+azurerm_storage_container.samples
+azurerm_storage_container.templates
+azurerm_storage_container.documentation
+
+# Target PostgreSQL database and configuration
+azurerm_postgresql_flexible_server_database.tap
+azurerm_postgresql_flexible_server_configuration.main

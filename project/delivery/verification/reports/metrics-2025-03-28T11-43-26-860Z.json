@@ -1,0 +1,187 @@
+{
+  "timestamp": "2025-03-28T11:43:26.805Z",
+  "system": {
+    "platform": "linux",
+    "release": "6.8.0-55-generic",
+    "cpuModel": "Intel(R) Core(TM) i7-10750H CPU @ 2.60GHz",
+    "cpuCount": 4,
+    "totalMemory": 13261737984,
+    "nodeVersion": "v18.19.1"
+  },
+  "sequential": {
+    "build": [
+      {
+        "iteration": 1,
+        "startTime": 1743162206806,
+        "endTime": 1743162206819,
+        "executionTime": 13,
+        "exitCode": 0,
+        "success": true
+      },
+      {
+        "iteration": 2,
+        "startTime": 1743162206819,
+        "endTime": 1743162206827,
+        "executionTime": 8,
+        "exitCode": 0,
+        "success": true
+      },
+      {
+        "iteration": 3,
+        "startTime": 1743162206827,
+        "endTime": 1743162206832,
+        "executionTime": 5,
+        "exitCode": 0,
+        "success": true
+      }
+    ],
+    "test": [
+      {
+        "iteration": 1,
+        "startTime": 1743162206833,
+        "endTime": 1743162206836,
+        "executionTime": 3,
+        "exitCode": 0,
+        "success": true
+      },
+      {
+        "iteration": 2,
+        "startTime": 1743162206836,
+        "endTime": 1743162206845,
+        "executionTime": 9,
+        "exitCode": 0,
+        "success": true
+      },
+      {
+        "iteration": 3,
+        "startTime": 1743162206845,
+        "endTime": 1743162206848,
+        "executionTime": 3,
+        "exitCode": 0,
+        "success": true
+      }
+    ],
+    "buildSummary": {
+      "count": 3,
+      "min": 5,
+      "max": 13,
+      "mean": 8.666666666666666,
+      "median": 8,
+      "stdDev": 3.2998316455372216
+    },
+    "testSummary": {
+      "count": 3,
+      "min": 3,
+      "max": 9,
+      "mean": 5,
+      "median": 3,
+      "stdDev": 2.8284271247461903
+    }
+  },
+  "concurrent": {
+    "runs": [
+      {
+        "iteration": 1,
+        "startTime": 1743162206848,
+        "endTime": 1743162206852,
+        "executionTime": 4,
+        "build": {
+          "completed": true,
+          "endTime": 1743162206852,
+          "executionTime": 4,
+          "exitCode": 0,
+          "success": true
+        },
+        "test": {
+          "completed": true,
+          "endTime": 1743162206852,
+          "executionTime": 4,
+          "exitCode": 0,
+          "success": true
+        },
+        "success": true
+      },
+      {
+        "iteration": 2,
+        "startTime": 1743162206852,
+        "endTime": 1743162206856,
+        "executionTime": 4,
+        "build": {
+          "completed": true,
+          "endTime": 1743162206856,
+          "executionTime": 4,
+          "exitCode": 0,
+          "success": true
+        },
+        "test": {
+          "completed": true,
+          "endTime": 1743162206856,
+          "executionTime": 4,
+          "exitCode": 0,
+          "success": true
+        },
+        "success": true
+      },
+      {
+        "iteration": 3,
+        "startTime": 1743162206856,
+        "endTime": 1743162206860,
+        "executionTime": 4,
+        "build": {
+          "completed": true,
+          "endTime": 1743162206860,
+          "executionTime": 4,
+          "exitCode": 0,
+          "success": true
+        },
+        "test": {
+          "completed": true,
+          "endTime": 1743162206860,
+          "executionTime": 4,
+          "exitCode": 0,
+          "success": true
+        },
+        "success": true
+      }
+    ],
+    "summary": {
+      "count": 3,
+      "min": 4,
+      "max": 4,
+      "mean": 4,
+      "median": 4,
+      "stdDev": 0
+    }
+  },
+  "summary": {
+    "sequentialBuildTime": {
+      "count": 3,
+      "min": 5,
+      "max": 13,
+      "mean": 8.666666666666666,
+      "median": 8,
+      "stdDev": 3.2998316455372216
+    },
+    "sequentialTestTime": {
+      "count": 3,
+      "min": 3,
+      "max": 9,
+      "mean": 5,
+      "median": 3,
+      "stdDev": 2.8284271247461903
+    },
+    "sequentialTotalTime": {
+      "mean": 13.666666666666666,
+      "improvement": 70.73170731707317
+    },
+    "concurrentTime": {
+      "count": 3,
+      "min": 4,
+      "max": 4,
+      "mean": 4,
+      "median": 4,
+      "stdDev": 0
+    },
+    "efficiency": 341.66666666666663
+  }
+}

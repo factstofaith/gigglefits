@@ -1,0 +1,392 @@
+{
+  "authenticationFlows": [
+    {
+      "name": "Login Flow",
+      "startUrl": "/login",
+      "description": "User login process",
+      "steps": [
+        {
+          "description": "Visit login page",
+          "action": "cy.visit('/login')",
+          "checkA11y": true
+        },
+        {
+          "description": "Focus username field",
+          "action": "cy.get('[data-testid=\"username\"]').focus()",
+          "checkA11y": true
+        },
+        {
+          "description": "Enter username",
+          "action": "cy.get('[data-testid=\"username\"]').type('testuser')",
+          "checkA11y": false
+        },
+        {
+          "description": "Press Tab to password field",
+          "action": "cy.focused().type('{tab}')",
+          "checkA11y": true
+        },
+        {
+          "description": "Enter password",
+          "action": "cy.get('[data-testid=\"password\"]').type('password')",
+          "checkA11y": false
+        },
+        {
+          "description": "Press Tab to login button",
+          "action": "cy.focused().type('{tab}')",
+          "checkA11y": true
+        },
+        {
+          "description": "Submit form with Enter key",
+          "action": "cy.focused().type('{enter}')",
+          "checkA11y": false
+        },
+        {
+          "description": "Check dashboard after login",
+          "action": "cy.get('[data-testid=\"user-profile\"]', { timeout: 10000 }).should('be.visible')",
+          "checkA11y": true
+        }
+      ]
+    },
+    {
+      "name": "MFA Verification Flow",
+      "startUrl": "/login",
+      "description": "MFA verification process",
+      "requiresSetup": true,
+      "setupSteps": [
+        "cy.intercept('POST', '/api/auth/login', { statusCode: 200, body: { requiresMFA: true, tempToken: 'temp-token' } }).as('loginRequest')",
+        "cy.visit('/login')",
+        "cy.get('[data-testid=\"username\"]').type('testuser')",
+        "cy.get('[data-testid=\"password\"]').type('password')",
+        "cy.get('[data-testid=\"submit-login\"]').click()",
+        "cy.wait('@loginRequest')"
+      ],
+      "steps": [
+        {
+          "description": "Check MFA verification screen",
+          "action": "cy.get('[data-testid=\"mfa-verification\"]').should('be.visible')",
+          "checkA11y": true
+        },
+        {
+          "description": "Focus verification code field",
+          "action": "cy.get('[data-testid=\"verification-code\"]').focus()",
+          "checkA11y": true
+        },
+        {
+          "description": "Enter verification code",
+          "action": "cy.get('[data-testid=\"verification-code\"]').type('123456')",
+          "checkA11y": false
+        },
+        {
+          "description": "Press Tab to verify button",
+          "action": "cy.focused().type('{tab}')",
+          "checkA11y": true
+        },
+        {
+          "description": "Submit verification",
+          "action": "cy.focused().type('{enter}')",
+          "checkA11y": false
+        }
+      ]
+    },
+    {
+      "name": "Registration Flow",
+      "startUrl": "/register",
+      "description": "User registration process",
+      "steps": [
+        {
+          "description": "Visit registration page",
+          "action": "cy.visit('/register')",
+          "checkA11y": true
+        },
+        {
+          "description": "Check form accessibility",
+          "action": "cy.get('form').should('be.visible')",
+          "checkA11y": true
+        },
+        {
+          "description": "Fill out registration form with keyboard navigation",
+          "action": "cy.get('[name=\"name\"]').focus()",
+          "checkA11y": true
+        },
+        {
+          "description": "Enter name",
+          "action": "cy.focused().type('Test User')",
+          "checkA11y": false
+        },
+        {
+          "description": "Tab to email field",
+          "action": "cy.focused().type('{tab}')",
+          "checkA11y": true
+        },
+        {
+          "description": "Enter email",
+          "action": "cy.focused().type('test@example.com')",
+          "checkA11y": false
+        },
+        {
+          "description": "Tab to password field",
+          "action": "cy.focused().type('{tab}')",
+          "checkA11y": true
+        },
+        {
+          "description": "Enter password",
+          "action": "cy.focused().type('password123')",
+          "checkA11y": false
+        },
+        {
+          "description": "Tab to confirm password field",
+          "action": "cy.focused().type('{tab}')",
+          "checkA11y": true
+        },
+        {
+          "description": "Enter confirm password",
+          "action": "cy.focused().type('password123')",
+          "checkA11y": false
+        },
+        {
+          "description": "Tab to submit button",
+          "action": "cy.focused().type('{tab}')",
+          "checkA11y": true
+        },
+        {
+          "description": "Submit form with Enter key",
+          "action": "cy.focused().type('{enter}')",
+          "checkA11y": false
+        }
+      ]
+    }
+  ],
+  "integrationFlows": [
+    {
+      "name": "Integration Creation Flow",
+      "startUrl": "/integrations",
+      "description": "Creating a new integration",
+      "requiresLogin": true,
+      "steps": [
+        {
+          "description": "Visit integrations page",
+          "action": "cy.visit('/integrations')",
+          "checkA11y": true
+        },
+        {
+          "description": "Open create integration dialog",
+          "action": "cy.get('[data-testid=\"create-integration-button\"]').click()",
+          "checkA11y": true
+        },
+        {
+          "description": "Check dialog accessibility",
+          "action": "cy.get('[role=\"dialog\"]').should('be.visible')",
+          "checkA11y": true
+        },
+        {
+          "description": "Focus trapped in dialog",
+          "action": "cy.testFocusTrapping('[role=\"dialog\"]')",
+          "checkA11y": false
+        },
+        {
+          "description": "Fill integration name",
+          "action": "cy.get('[data-testid=\"integration-name\"]').type('Accessibility Test Integration')",
+          "checkA11y": false
+        },
+        {
+          "description": "Tab to description field",
+          "action": "cy.focused().type('{tab}')",
+          "checkA11y": true
+        },
+        {
+          "description": "Fill description",
+          "action": "cy.focused().type('Testing accessibility of integration flow')",
+          "checkA11y": false
+        },
+        {
+          "description": "Tab to submit button",
+          "action": "cy.focused().type('{tab}')",
+          "checkA11y": true
+        },
+        {
+          "description": "Create integration",
+          "action": "cy.focused().type('{enter}')",
+          "checkA11y": false
+        },
+        {
+          "description": "Check integration canvas accessibility",
+          "action": "cy.get('[data-testid=\"flow-canvas\"]').should('be.visible')",
+          "checkA11y": true
+        }
+      ]
+    },
+    {
+      "name": "Flow Canvas Interaction",
+      "startUrl": "/integrations/1",
+      "description": "Interacting with flow canvas",
+      "requiresLogin": true,
+      "steps": [
+        {
+          "description": "Visit integration detail page",
+          "action": "cy.visit('/integrations/1')",
+          "checkA11y": true
+        },
+        {
+          "description": "Check canvas accessibility",
+          "action": "cy.get('[data-testid=\"flow-canvas\"]').should('be.visible')",
+          "checkA11y": true
+        },
+        {
+          "description": "Check node palette accessibility",
+          "action": "cy.get('[data-testid=\"node-palette\"]').should('be.visible')",
+          "checkA11y": true
+        },
+        {
+          "description": "Add node to canvas",
+          "action": "cy.get('[data-testid=\"add-source-node\"]').click()",
+          "checkA11y": false
+        },
+        {
+          "description": "Check node properties panel accessibility",
+          "action": "cy.get('[data-testid=\"node-properties-panel\"]').should('be.visible')",
+          "checkA11y": true
+        },
+        {
+          "description": "Focus first input in panel",
+          "action": "cy.get('[data-testid=\"node-properties-panel\"] input').first().focus()",
+          "checkA11y": true
+        },
+        {
+          "description": "Keyboard navigation through all form fields",
+          "action": "cy.testKeyboardNavigation('[data-testid=\"node-properties-panel\"] input:first', '[data-testid=\"save-button\"]')",
+          "checkA11y": false
+        }
+      ]
+    }
+  ],
+  "dataManagementFlows": [
+    {
+      "name": "Dataset Creation Flow",
+      "startUrl": "/datasets",
+      "description": "Creating a new dataset",
+      "requiresLogin": true,
+      "steps": [
+        {
+          "description": "Visit datasets page",
+          "action": "cy.visit('/datasets')",
+          "checkA11y": true
+        },
+        {
+          "description": "Open create dataset dialog",
+          "action": "cy.get('[data-testid=\"create-dataset-button\"]').click()",
+          "checkA11y": true
+        },
+        {
+          "description": "Check form accessibility",
+          "action": "cy.get('form').should('be.visible')",
+          "checkA11y": true
+        },
+        {
+          "description": "Test form keyboard navigation",
+          "action": "cy.testKeyboardNavigation('form input:first', '[data-testid=\"save-dataset\"]')",
+          "checkA11y": false
+        },
+        {
+          "description": "Fill dataset name",
+          "action": "cy.get('[data-testid=\"dataset-name\"]').type('Accessibility Test Dataset')",
+          "checkA11y": false
+        },
+        {
+          "description": "Fill dataset description",
+          "action": "cy.get('[data-testid=\"dataset-description\"]').type('Testing accessibility of dataset creation')",
+          "checkA11y": false
+        },
+        {
+          "description": "Submit form",
+          "action": "cy.get('[data-testid=\"save-dataset\"]').click()",
+          "checkA11y": false
+        },
+        {
+          "description": "Check dataset detail accessibility",
+          "action": "cy.get('[data-testid=\"dataset-detail\"]').should('be.visible')",
+          "checkA11y": true
+        }
+      ]
+    }
+  ],
+  "adminFlows": [
+    {
+      "name": "User Management Flow",
+      "startUrl": "/admin/users",
+      "description": "Managing users in admin panel",
+      "requiresLogin": true,
+      "requiresAdmin": true,
+      "steps": [
+        {
+          "description": "Visit admin users page",
+          "action": "cy.visit('/admin/users')",
+          "checkA11y": true
+        },
+        {
+          "description": "Check user table accessibility",
+          "action": "cy.get('[data-testid=\"user-table\"]').should('be.visible')",
+          "checkA11y": true
+        },
+        {
+          "description": "Check filter controls accessibility",
+          "action": "cy.get('[data-testid=\"user-filters\"]').should('be.visible')",
+          "checkA11y": true
+        },
+        {
+          "description": "Open user detail",
+          "action": "cy.get('[data-testid=\"user-row\"]').first().find('[data-testid=\"view-user\"]').click()",
+          "checkA11y": false
+        },
+        {
+          "description": "Check user detail accessibility",
+          "action": "cy.get('[data-testid=\"user-detail\"]').should('be.visible')",
+          "checkA11y": true
+        },
+        {
+          "description": "Check edit form accessibility",
+          "action": "cy.get('[data-testid=\"edit-user\"]').click()",
+          "checkA11y": true
+        },
+        {
+          "description": "Test form keyboard navigation",
+          "action": "cy.testKeyboardNavigation('[data-testid=\"user-form\"] input:first', '[data-testid=\"save-user\"]')",
+          "checkA11y": false
+        }
+      ]
+    }
+  ],
+  "errorFlows": [
+    {
+      "name": "Form Validation Error Flow",
+      "startUrl": "/login",
+      "description": "Form validation errors",
+      "steps": [
+        {
+          "description": "Visit login page",
+          "action": "cy.visit('/login')",
+          "checkA11y": true
+        },
+        {
+          "description": "Submit empty form",
+          "action": "cy.get('[data-testid=\"submit-login\"]').click()",
+          "checkA11y": false
+        },
+        {
+          "description": "Check validation errors accessibility",
+          "action": "cy.get('[role=\"alert\"]').should('be.visible')",
+          "checkA11y": true
+        },
+        {
+          "description": "Focus first field with error",
+          "action": "cy.get('[aria-invalid=\"true\"]').first().focus()",
+          "checkA11y": true
+        },
+        {
+          "description": "Navigate through all error fields",
+          "action": "cy.testKeyboardNavigation('[aria-invalid=\"true\"]:first', '[data-testid=\"submit-login\"]')",
+          "checkA11y": false
+        }
+      ]
+    }
+  ]
+}

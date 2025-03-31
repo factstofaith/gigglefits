@@ -1,0 +1,62 @@
+[
+  {
+    "id": "tenant-001",
+    "name": "Acme Corporation",
+    "identifier": "acme",
+    "primaryDomain": "acme.example.com",
+    "industry": "Manufacturing",
+    "tier": "Enterprise",
+    "status": "Active",
+    "description": "Manufacturing company specializing in innovative products",
+    "createdAt": "2024-09-15T14:30:00Z",
+    "updatedAt": "2025-02-10T11:45:00Z"
+  },
+  {
+    "id": "tenant-002",
+    "name": "TechSolutions Inc",
+    "identifier": "techsol",
+    "primaryDomain": "techsolutions.example.com",
+    "industry": "Technology",
+    "tier": "Business",
+    "status": "Active",
+    "description": "Software development and IT services company",
+    "createdAt": "2024-11-05T09:20:00Z",
+    "updatedAt": "2025-01-15T16:10:00Z"
+  },
+  {
+    "id": "tenant-003",
+    "name": "Global Financial Services",
+    "identifier": "globalfin",
+    "primaryDomain": "globalfinancial.example.com",
+    "industry": "Finance",
+    "tier": "Enterprise",
+    "status": "Active",
+    "description": "Financial services provider for businesses and individuals",
+    "createdAt": "2024-08-22T10:45:00Z",
+    "updatedAt": "2025-03-01T13:30:00Z"
+  },
+  {
+    "id": "tenant-004",
+    "name": "Healthcare Solutions",
+    "identifier": "healthsol",
+    "primaryDomain": "healthcaresolutions.example.com",
+    "industry": "Healthcare",
+    "tier": "Professional",
+    "status": "Inactive",
+    "description": "Medical technology and services company",
+    "createdAt": "2024-10-10T08:15:00Z",
+    "updatedAt": "2025-02-28T15:20:00Z"
+  },
+  {
+    "id": "tenant-005",
+    "name": "Retail Innovations",
+    "identifier": "retailinno",
+    "primaryDomain": "retailinnovations.example.com",
+    "industry": "Retail",
+    "tier": "Business",
+    "status": "Suspended",
+    "description": "Retail company focusing on e-commerce and physical stores",
+    "createdAt": "2024-07-18T11:30:00Z",
+    "updatedAt": "2025-01-05T09:45:00Z"
+  }
+]

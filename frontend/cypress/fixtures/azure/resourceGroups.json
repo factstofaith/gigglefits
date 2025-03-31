@@ -1,0 +1,47 @@
+[
+  {
+    "id": "rg-001",
+    "name": "tap-dev-resources",
+    "location": "eastus",
+    "subscriptionId": "00000000-0000-0000-0000-000000000001",
+    "properties": {
+      "provisioningState": "Succeeded"
+    }
+  },
+  {
+    "id": "rg-002",
+    "name": "tap-test-resources",
+    "location": "westus",
+    "subscriptionId": "00000000-0000-0000-0000-000000000002",
+    "properties": {
+      "provisioningState": "Succeeded"
+    }
+  },
+  {
+    "id": "rg-003",
+    "name": "tap-prod-resources",
+    "location": "centralus",
+    "subscriptionId": "00000000-0000-0000-0000-000000000003",
+    "properties": {
+      "provisioningState": "Succeeded"
+    }
+  },
+  {
+    "id": "rg-004",
+    "name": "tap-storage-resources",
+    "location": "eastus",
+    "subscriptionId": "00000000-0000-0000-0000-000000000001",
+    "properties": {
+      "provisioningState": "Succeeded"
+    }
+  },
+  {
+    "id": "rg-005",
+    "name": "tap-network-resources",
+    "location": "westus",
+    "subscriptionId": "00000000-0000-0000-0000-000000000001",
+    "properties": {
+      "provisioningState": "Succeeded"
+    }
+  }
+]

@@ -1,0 +1,273 @@
+npm WARN config optional Use `--omit=optional` to exclude optional dependencies, or
+npm WARN config `--include=optional` to include them.
+npm WARN config 
+npm WARN config     Default value does install optional deps unless otherwise omitted.
+
+> tap-integration-platform-frontend@1.0.0 build
+> npm run typecheck && react-app-rewired build --verbose
+
+npm WARN config optional Use `--omit=optional` to exclude optional dependencies, or
+npm WARN config `--include=optional` to include them.
+npm WARN config 
+npm WARN config     Default value does install optional deps unless otherwise omitted.
+
+> tap-integration-platform-frontend@1.0.0 typecheck
+> tsc --noEmit
+
+src/components/admin/AlertConfiguration.jsx(69,1): error TS1003: Identifier expected.
+src/components/admin/AlertConfiguration.jsx(69,8): error TS1005: ',' expected.
+src/components/admin/AlertConfiguration.jsx(69,12): error TS1005: ',' expected.
+src/components/admin/AlertConfiguration.jsx(69,17): error TS1005: ',' expected.
+src/components/admin/AlertConfiguration.jsx(76,1): error TS1128: Declaration or statement expected.
+src/components/admin/AlertConfiguration.jsx(76,3): error TS1434: Unexpected keyword or identifier.
+src/components/admin/ErrorLogViewer.jsx(38,1): error TS1003: Identifier expected.
+src/components/admin/ErrorLogViewer.jsx(38,8): error TS1005: ',' expected.
+src/components/admin/ErrorLogViewer.jsx(38,12): error TS1005: ',' expected.
+src/components/admin/ErrorLogViewer.jsx(38,17): error TS1005: ',' expected.
+src/components/admin/ErrorLogViewer.jsx(45,1): error TS1128: Declaration or statement expected.
+src/components/admin/ErrorLogViewer.jsx(45,3): error TS1434: Unexpected keyword or identifier.
+src/components/admin/MetricsCharts/DocumentationMetrics.jsx(10,1): error TS1003: Identifier expected.
+src/components/admin/MetricsCharts/DocumentationMetrics.jsx(10,8): error TS1005: ',' expected.
+src/components/admin/MetricsCharts/DocumentationMetrics.jsx(10,12): error TS1005: ',' expected.
+src/components/admin/MetricsCharts/DocumentationMetrics.jsx(10,17): error TS1005: ',' expected.
+src/components/admin/MetricsCharts/DocumentationMetrics.jsx(15,1): error TS1128: Declaration or statement expected.
+src/components/admin/MetricsCharts/DocumentationMetrics.jsx(15,3): error TS1434: Unexpected keyword or identifier.
+src/components/admin/ReleasesManager.jsx(42,1): error TS1003: Identifier expected.
+src/components/admin/ReleasesManager.jsx(42,8): error TS1005: ',' expected.
+src/components/admin/ReleasesManager.jsx(42,12): error TS1005: ',' expected.
+src/components/admin/ReleasesManager.jsx(42,17): error TS1005: ',' expected.
+src/components/admin/ReleasesManager.jsx(52,1): error TS1109: Expression expected.
+src/components/admin/ReleasesManager.jsx(52,3): error TS1434: Unexpected keyword or identifier.
+src/components/common/AuthModal.jsx(34,1): error TS1003: Identifier expected.
+src/components/common/AuthModal.jsx(34,8): error TS1005: ',' expected.
+src/components/common/AuthModal.jsx(34,12): error TS1005: ',' expected.
+src/components/common/AuthModal.jsx(34,17): error TS1005: ',' expected.
+src/components/common/AuthModal.jsx(35,12): error TS8016: Type assertion expressions can only be used in TypeScript files.
+src/components/common/AuthModal.jsx(36,16): error TS8016: Type assertion expressions can only be used in TypeScript files.
+src/components/common/AuthModal.jsx(37,12): error TS8016: Type assertion expressions can only be used in TypeScript files.
+src/components/common/AuthModal.jsx(38,1): error TS1109: Expression expected.
+src/components/common/AuthModal.jsx(38,3): error TS1434: Unexpected keyword or identifier.
+src/components/common/SearchBar.jsx(906,24): error TS1005: ';' expected.
+src/components/common/SearchBar.jsx(906,38): error TS1129: Statement expected.
+src/components/common/SearchBar.jsx(920,11): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/common/SearchBar.jsx(932,9): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/common/SearchBar.jsx(932,11): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/common/VirtualizedDataTable.jsx(73,1): error TS1003: Identifier expected.
+src/components/common/VirtualizedDataTable.jsx(73,8): error TS1005: ',' expected.
+src/components/common/VirtualizedDataTable.jsx(73,12): error TS1005: ',' expected.
+src/components/common/VirtualizedDataTable.jsx(73,17): error TS1005: ',' expected.
+src/components/common/VirtualizedDataTable.jsx(86,1): error TS1109: Expression expected.
+src/components/common/VirtualizedDataTable.jsx(86,3): error TS1434: Unexpected keyword or identifier.
+src/components/integration/FieldMappingEditor.jsx(27,1): error TS1003: Identifier expected.
+src/components/integration/FieldMappingEditor.jsx(27,8): error TS1005: ',' expected.
+src/components/integration/FieldMappingEditor.jsx(27,12): error TS1005: ',' expected.
+src/components/integration/FieldMappingEditor.jsx(27,17): error TS1005: ',' expected.
+src/components/integration/FieldMappingEditor.jsx(34,1): error TS1109: Expression expected.
+src/components/integration/FieldMappingEditor.jsx(34,3): error TS1434: Unexpected keyword or identifier.
+src/components/integration/RunLogViewer.jsx(243,45): error TS1005: ';' expected.
+src/components/integration/RunLogViewer.jsx(243,47): error TS1005: ',' expected.
+src/components/integration/RunLogViewer.jsx(243,50): error TS1002: Unterminated string literal.
+src/components/integration/RunLogViewer.jsx(244,9): error TS1005: ',' expected.
+src/components/integration/RunLogViewer.jsx(246,8): error TS1005: ',' expected.
+src/components/integration/RunLogViewer.jsx(248,5): error TS1128: Declaration or statement expected.
+src/components/integration/RunLogViewer.jsx(248,6): error TS1128: Declaration or statement expected.
+src/components/integration/RunLogViewer.jsx(260,3): error TS1128: Declaration or statement expected.
+src/components/integration/RunLogViewer.jsx(642,1): error TS1128: Declaration or statement expected.
+src/components/integration/archive/FlowErrorPanel.jsx(48,1): error TS1003: Identifier expected.
+src/components/integration/archive/FlowErrorPanel.jsx(48,8): error TS1005: ',' expected.
+src/components/integration/archive/FlowErrorPanel.jsx(48,12): error TS1005: ',' expected.
+src/components/integration/archive/FlowErrorPanel.jsx(48,17): error TS1005: ',' expected.
+src/components/integration/archive/FlowErrorPanel.jsx(53,1): error TS1128: Declaration or statement expected.
+src/components/integration/archive/FlowErrorPanel.jsx(53,3): error TS1434: Unexpected keyword or identifier.
+src/components/users/invitation/AcceptInvitation.jsx(5,1): error TS1003: Identifier expected.
+src/components/users/invitation/AcceptInvitation.jsx(5,8): error TS1005: ',' expected.
+src/components/users/invitation/AcceptInvitation.jsx(5,12): error TS1005: ',' expected.
+src/components/users/invitation/AcceptInvitation.jsx(5,17): error TS1005: ',' expected.
+src/components/users/invitation/AcceptInvitation.jsx(19,1): error TS1109: Expression expected.
+src/components/users/invitation/AcceptInvitation.jsx(19,3): error TS1434: Unexpected keyword or identifier.
+src/components/users/mfa/MFAEnrollment.jsx(4,1): error TS1003: Identifier expected.
+src/components/users/mfa/MFAEnrollment.jsx(4,8): error TS1005: ',' expected.
+src/components/users/mfa/MFAEnrollment.jsx(4,12): error TS1005: ',' expected.
+src/components/users/mfa/MFAEnrollment.jsx(4,17): error TS1005: ',' expected.
+src/components/users/mfa/MFAEnrollment.jsx(17,1): error TS1109: Expression expected.
+src/components/users/mfa/MFAEnrollment.jsx(17,3): error TS1434: Unexpected keyword or identifier.
+src/design-system/docs/DesignSystemDemo.jsx(9,1): error TS1003: Identifier expected.
+src/design-system/docs/DesignSystemDemo.jsx(9,8): error TS1005: ',' expected.
+src/design-system/docs/DesignSystemDemo.jsx(9,23): error TS1005: ',' expected.
+src/design-system/docs/DesignSystemDemo.jsx(9,28): error TS1005: ',' expected.
+src/design-system/docs/DesignSystemDemo.jsx(50,1): error TS1109: Expression expected.
+src/design-system/docs/DesignSystemDemo.jsx(50,3): error TS1434: Unexpected keyword or identifier.
+src/pages/IntegrationDetailPage.jsx(45,1): error TS1003: Identifier expected.
+src/pages/IntegrationDetailPage.jsx(45,8): error TS1005: ',' expected.
+src/pages/IntegrationDetailPage.jsx(45,12): error TS1005: ',' expected.
+src/pages/IntegrationDetailPage.jsx(45,17): error TS1005: ',' expected.
+src/pages/IntegrationDetailPage.jsx(51,1): error TS1109: Expression expected.
+src/pages/IntegrationDetailPage.jsx(51,3): error TS1434: Unexpected keyword or identifier.
+src/tests/components/integration/ComplexFlowValidator.jsx(3,1): error TS1003: Identifier expected.
+src/tests/components/integration/ComplexFlowValidator.jsx(3,8): error TS1005: ',' expected.
+src/tests/components/integration/ComplexFlowValidator.jsx(3,12): error TS1005: ',' expected.
+src/tests/components/integration/ComplexFlowValidator.jsx(3,17): error TS1005: ',' expected.
+src/tests/components/integration/ComplexFlowValidator.jsx(5,1): error TS1128: Declaration or statement expected.
+src/tests/components/integration/ComplexFlowValidator.jsx(5,3): error TS1434: Unexpected keyword or identifier.
+src/tests/components/integration/DynamicDataSourceTester.jsx(3,1): error TS1003: Identifier expected.
+src/tests/components/integration/DynamicDataSourceTester.jsx(3,8): error TS1005: ',' expected.
+src/tests/components/integration/DynamicDataSourceTester.jsx(3,12): error TS1005: ',' expected.
+src/tests/components/integration/DynamicDataSourceTester.jsx(3,17): error TS1005: ',' expected.
+src/tests/components/integration/DynamicDataSourceTester.jsx(5,1): error TS1128: Declaration or statement expected.
+src/tests/components/integration/DynamicDataSourceTester.jsx(5,3): error TS1434: Unexpected keyword or identifier.
+src/tests/components/integration/NodeTypesTester.jsx(3,1): error TS1003: Identifier expected.
+src/tests/components/integration/NodeTypesTester.jsx(3,8): error TS1005: ',' expected.
+src/tests/components/integration/NodeTypesTester.jsx(3,12): error TS1005: ',' expected.
+src/tests/components/integration/NodeTypesTester.jsx(3,17): error TS1005: ',' expected.
+src/tests/components/integration/NodeTypesTester.jsx(5,1): error TS1128: Declaration or statement expected.
+src/tests/components/integration/NodeTypesTester.jsx(5,3): error TS1434: Unexpected keyword or identifier.
+src/tests/components/integration/StorageConnectorTester.jsx(3,1): error TS1003: Identifier expected.
+src/tests/components/integration/StorageConnectorTester.jsx(3,8): error TS1005: ',' expected.
+src/tests/components/integration/StorageConnectorTester.jsx(3,12): error TS1005: ',' expected.
+src/tests/components/integration/StorageConnectorTester.jsx(3,17): error TS1005: ',' expected.
+src/tests/components/integration/StorageConnectorTester.jsx(5,1): error TS1128: Declaration or statement expected.
+src/tests/components/integration/StorageConnectorTester.jsx(5,3): error TS1434: Unexpected keyword or identifier.
+src/tests/integration/StorageConnectorTester.jsx(276,23): error TS1005: ',' expected.
+src/tests/integration/StorageConnectorTester.jsx(276,36): error TS1005: ',' expected.
+src/tests/integration/StorageConnectorTester.jsx(276,46): error TS1005: ',' expected.
+src/tests/integration/StorageConnectorTester.jsx(276,55): error TS1005: ',' expected.
+src/tests/integration/StorageConnectorTester.jsx(276,59): error TS1005: ':' expected.
+src/tests/integration/StorageConnectorTester.jsx(276,60): error TS1005: ',' expected.
+src/tests/integration/StorageConnectorTester.jsx(285,23): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(285,36): error TS1434: Unexpected keyword or identifier.
+src/tests/integration/StorageConnectorTester.jsx(285,44): error TS1434: Unexpected keyword or identifier.
+src/tests/integration/StorageConnectorTester.jsx(285,70): error TS1109: Expression expected.
+src/tests/integration/StorageConnectorTester.jsx(285,74): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(292,23): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(292,42): error TS1434: Unexpected keyword or identifier.
+src/tests/integration/StorageConnectorTester.jsx(297,24): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(297,43): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(297,60): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(309,19): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(309,37): error TS1434: Unexpected keyword or identifier.
+src/tests/integration/StorageConnectorTester.jsx(309,47): error TS1434: Unexpected keyword or identifier.
+src/tests/integration/StorageConnectorTester.jsx(309,62): error TS1005: '(' expected.
+src/tests/integration/StorageConnectorTester.jsx(309,63): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(309,72): error TS1005: ',' expected.
+src/tests/integration/StorageConnectorTester.jsx(309,79): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(309,82): error TS1005: ')' expected.
+src/tests/integration/StorageConnectorTester.jsx(322,17): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(322,30): error TS1434: Unexpected keyword or identifier.
+src/tests/integration/StorageConnectorTester.jsx(325,24): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(325,43): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(325,60): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(356,19): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(356,23): error TS1434: Unexpected keyword or identifier.
+src/tests/integration/StorageConnectorTester.jsx(356,34): error TS1434: Unexpected keyword or identifier.
+src/tests/integration/StorageConnectorTester.jsx(356,48): error TS1005: '(' expected.
+src/tests/integration/StorageConnectorTester.jsx(356,49): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(356,58): error TS1005: ',' expected.
+src/tests/integration/StorageConnectorTester.jsx(356,65): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(356,68): error TS1005: ')' expected.
+src/tests/integration/StorageConnectorTester.jsx(358,17): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(358,31): error TS1434: Unexpected keyword or identifier.
+src/tests/integration/StorageConnectorTester.jsx(384,19): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(384,23): error TS1434: Unexpected keyword or identifier.
+src/tests/integration/StorageConnectorTester.jsx(384,33): error TS8008: Type aliases can only be used in TypeScript files.
+src/tests/integration/StorageConnectorTester.jsx(384,39): error TS1005: '=' expected.
+src/tests/integration/StorageConnectorTester.jsx(384,49): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(384,53): error TS1005: '(' expected.
+src/tests/integration/StorageConnectorTester.jsx(384,54): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(384,64): error TS1005: ',' expected.
+src/tests/integration/StorageConnectorTester.jsx(386,17): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(386,23): error TS1005: ')' expected.
+src/tests/integration/StorageConnectorTester.jsx(386,31): error TS1434: Unexpected keyword or identifier.
+src/tests/integration/StorageConnectorTester.jsx(424,16): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(424,24): error TS1129: Statement expected.
+src/tests/integration/StorageConnectorTester.jsx(424,25): error TS1434: Unexpected keyword or identifier.
+src/tests/integration/StorageConnectorTester.jsx(425,37): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(425,40): error TS1129: Statement expected.
+src/tests/integration/StorageConnectorTester.jsx(425,41): error TS1434: Unexpected keyword or identifier.
+src/tests/integration/StorageConnectorTester.jsx(458,17): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(459,10): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(460,10): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(461,10): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(462,10): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(463,10): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(466,18): error TS1109: Expression expected.
+src/tests/integration/StorageConnectorTester.jsx(466,23): error TS1005: ':' expected.
+src/tests/integration/StorageConnectorTester.jsx(466,37): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(466,54): error TS1109: Expression expected.
+src/tests/integration/StorageConnectorTester.jsx(488,12): error TS1005: ':' expected.
+src/tests/integration/StorageConnectorTester.jsx(491,17): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(491,22): error TS1228: A type predicate is only allowed in return type position for functions and methods.
+src/tests/integration/StorageConnectorTester.jsx(491,25): error TS1434: Unexpected keyword or identifier.
+src/tests/integration/StorageConnectorTester.jsx(491,27): error TS1434: Unexpected keyword or identifier.
+src/tests/integration/StorageConnectorTester.jsx(491,34): error TS1434: Unexpected keyword or identifier.
+src/tests/integration/StorageConnectorTester.jsx(491,39): error TS1434: Unexpected keyword or identifier.
+src/tests/integration/StorageConnectorTester.jsx(491,52): error TS1003: Identifier expected.
+src/tests/integration/StorageConnectorTester.jsx(492,1): error TS1434: Unexpected keyword or identifier.
+src/tests/integration/StorageConnectorTester.jsx(492,4): error TS1434: Unexpected keyword or identifier.
+src/tests/integration/StorageConnectorTester.jsx(492,13): error TS1434: Unexpected keyword or identifier.
+src/tests/integration/StorageConnectorTester.jsx(492,22): error TS1434: Unexpected keyword or identifier.
+src/tests/integration/StorageConnectorTester.jsx(492,28): error TS1434: Unexpected keyword or identifier.
+src/tests/integration/StorageConnectorTester.jsx(492,36): error TS1003: Identifier expected.
+src/tests/integration/StorageConnectorTester.jsx(493,1): error TS1435: Unknown keyword or identifier. Did you mean 'this'?
+src/tests/integration/StorageConnectorTester.jsx(493,6): error TS1434: Unexpected keyword or identifier.
+src/tests/integration/StorageConnectorTester.jsx(493,11): error TS1228: A type predicate is only allowed in return type position for functions and methods.
+src/tests/integration/StorageConnectorTester.jsx(493,14): error TS1434: Unexpected keyword or identifier.
+src/tests/integration/StorageConnectorTester.jsx(493,23): error TS1005: '(' expected.
+src/tests/integration/StorageConnectorTester.jsx(493,31): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(493,35): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(493,43): error TS1005: ')' expected.
+src/tests/integration/StorageConnectorTester.jsx(493,54): error TS1003: Identifier expected.
+src/tests/integration/StorageConnectorTester.jsx(494,1): error TS1434: Unexpected keyword or identifier.
+src/tests/integration/StorageConnectorTester.jsx(494,6): error TS1434: Unexpected keyword or identifier.
+src/tests/integration/StorageConnectorTester.jsx(494,14): error TS1434: Unexpected keyword or identifier.
+src/tests/integration/StorageConnectorTester.jsx(494,24): error TS1434: Unexpected keyword or identifier.
+src/tests/integration/StorageConnectorTester.jsx(494,31): error TS1434: Unexpected keyword or identifier.
+src/tests/integration/StorageConnectorTester.jsx(494,34): error TS1434: Unexpected keyword or identifier.
+src/tests/integration/StorageConnectorTester.jsx(494,39): error TS1434: Unexpected keyword or identifier.
+src/tests/integration/StorageConnectorTester.jsx(494,42): error TS1434: Unexpected keyword or identifier.
+src/tests/integration/StorageConnectorTester.jsx(494,47): error TS1434: Unexpected keyword or identifier.
+src/tests/integration/StorageConnectorTester.jsx(494,51): error TS1434: Unexpected keyword or identifier.
+src/tests/integration/StorageConnectorTester.jsx(494,62): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(494,67): error TS1003: Identifier expected.
+src/tests/integration/StorageConnectorTester.jsx(495,1): error TS1434: Unexpected keyword or identifier.
+src/tests/integration/StorageConnectorTester.jsx(495,5): error TS1434: Unexpected keyword or identifier.
+src/tests/integration/StorageConnectorTester.jsx(495,13): error TS1434: Unexpected keyword or identifier.
+src/tests/integration/StorageConnectorTester.jsx(495,20): error TS1434: Unexpected keyword or identifier.
+src/tests/integration/StorageConnectorTester.jsx(495,23): error TS1434: Unexpected keyword or identifier.
+src/tests/integration/StorageConnectorTester.jsx(495,33): error TS1434: Unexpected keyword or identifier.
+src/tests/integration/StorageConnectorTester.jsx(495,39): error TS1434: Unexpected keyword or identifier.
+src/tests/integration/StorageConnectorTester.jsx(495,52): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(495,58): error TS1003: Identifier expected.
+src/tests/integration/StorageConnectorTester.jsx(498,25): error TS1005: ']' expected.
+src/tests/integration/StorageConnectorTester.jsx(498,37): error TS1005: '(' expected.
+src/tests/integration/StorageConnectorTester.jsx(498,38): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(498,47): error TS1005: ',' expected.
+src/tests/integration/StorageConnectorTester.jsx(498,54): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(498,58): error TS1005: ')' expected.
+src/tests/integration/StorageConnectorTester.jsx(578,36): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(578,61): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(578,101): error TS1129: Statement expected.
+src/tests/integration/StorageConnectorTester.jsx(578,106): error TS1443: Module declaration names may only use ' or " quoted strings.
+src/tests/integration/StorageConnectorTester.jsx(741,51): error TS1434: Unexpected keyword or identifier.
+src/tests/integration/StorageConnectorTester.jsx(741,100): error TS1109: Expression expected.
+src/tests/integration/StorageConnectorTester.jsx(781,51): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(781,100): error TS1109: Expression expected.
+src/tests/integration/StorageConnectorTester.jsx(819,53): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(819,102): error TS1109: Expression expected.
+src/tests/integration/StorageConnectorTester.jsx(904,46): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(904,77): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(904,94): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(923,79): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(923,110): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(928,51): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(928,82): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(934,70): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(934,101): error TS1005: ';' expected.
+src/tests/integration/StorageConnectorTester.jsx(1119,39): error TS1160: Unterminated template literal.
+src/tests/transformers/babel-html-entity-plugin.js(16,37): error TS1005: ',' expected.
+src/tests/transformers/babel-html-entity-plugin.js(16,43): error TS1002: Unterminated string literal.
+src/tests/transformers/babel-html-entity-plugin.js(17,15): error TS1005: ',' expected.
+src/tests/transformers/babel-html-entity-plugin.js(20,44): error TS1005: ')' expected.
+src/tests/transformers/setup-test-preprocessor.js(20,34): error TS1005: ',' expected.
+src/tests/transformers/setup-test-preprocessor.js(20,40): error TS1002: Unterminated string literal.
+src/tests/transformers/setup-test-preprocessor.js(21,11): error TS1005: ',' expected.
+src/tests/transformers/setup-test-preprocessor.js(25,12): error TS1005: ')' expected.

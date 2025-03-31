@@ -1,0 +1,65 @@
+{
+  "stats": {
+    "time_period": "week",
+    "start_date": "2025-03-20T00:00:00Z",
+    "end_date": "2025-03-27T00:00:00Z",
+    "total_views": 1245,
+    "unique_documents": 42,
+    "unique_users": 89,
+    "anonymous_views": 324,
+    "top_documents": [
+      { "document_id": "getting-started-guide", "views": 156, "title": "Getting Started Guide" },
+      { "document_id": "integration-creation", "views": 142, "title": "Creating Integrations" },
+      { "document_id": "rest-api-reference", "views": 98, "title": "REST API Reference" },
+      { "document_id": "azure-blob-integration", "views": 92, "title": "Azure Blob Storage Integration" },
+      { "document_id": "user-management", "views": 87, "title": "User Management Guide" },
+      { "document_id": "salesforce-integration", "views": 87, "title": "Salesforce Integration" },
+      { "document_id": "webhook-api", "views": 76, "title": "Webhook API Reference" },
+      { "document_id": "oauth-configuration", "views": 76, "title": "OAuth Configuration" },
+      { "document_id": "sdk-documentation", "views": 65, "title": "SDK Documentation" },
+      { "document_id": "tenant-management", "views": 58, "title": "Tenant Management" }
+    ],
+    "feedback": {
+      "positive": 98,
+      "negative": 12
+    }
+  },
+  "searchTerms": [
+    { "term": "api", "count": 87 },
+    { "term": "integration", "count": 65 },
+    { "term": "oauth", "count": 52 },
+    { "term": "azure", "count": 48 },
+    { "term": "salesforce", "count": 43 },
+    { "term": "webhook", "count": 39 },
+    { "term": "authentication", "count": 35 },
+    { "term": "storage", "count": 32 },
+    { "term": "connection", "count": 29 },
+    { "term": "user", "count": 27 }
+  ],
+  "categoryData": [
+    { "category": "User Guides", "views": 385, "documents": 3 },
+    { "category": "API Reference", "views": 239, "documents": 3 },
+    { "category": "Integration Guides", "views": 255, "documents": 3 },
+    { "category": "Administrator Guides", "views": 155, "documents": 3 }
+  ],
+  "engagementData": {
+    "time_period": "week",
+    "average_session_duration": 325,
+    "average_pages_per_session": 3.2,
+    "bounce_rate": 0.28,
+    "returning_users": 67,
+    "new_users": 22,
+    "device_breakdown": {
+      "desktop": 82,
+      "mobile": 12,
+      "tablet": 6
+    },
+    "browser_breakdown": {
+      "chrome": 68,
+      "firefox": 14,
+      "safari": 12,
+      "edge": 5,
+      "other": 1
+    }
+  }
+}

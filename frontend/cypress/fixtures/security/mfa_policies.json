@@ -1,0 +1,29 @@
+{
+  "organizationPolicies": {
+    "mfaRequired": true,
+    "gracePeriodDays": 7,
+    "allowExemptions": true,
+    "exemptRoles": ["READONLY_USER"],
+    "lockoutThreshold": 5,
+    "lockoutDuration": 300,
+    "recoveryCodesCount": 10,
+    "lastUpdated": "2025-02-01T00:00:00Z",
+    "updatedBy": "admin@tapplatform.test"
+  },
+  "exemptedUsers": [
+    {
+      "userId": "exempt-user-001",
+      "email": "exempt.user@example.test",
+      "reason": "Executive override",
+      "exemptedBy": "admin@tapplatform.test",
+      "exemptedAt": "2025-02-15T14:30:00Z",
+      "expiresAt": "2025-05-15T14:30:00Z"
+    }
+  ],
+  "enforcementStatus": {
+    "enabled": true,
+    "pendingUsers": 3,
+    "exemptedUsers": 1,
+    "complianceRate": 92.5
+  }
+}

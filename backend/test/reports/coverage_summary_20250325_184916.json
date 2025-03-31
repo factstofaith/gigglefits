@@ -1,0 +1,27 @@
+{
+  "total_tests": 421,
+  "total_test_files": 84,
+  "tests_by_category": {
+    "e2e": 32,
+    "security": 113,
+    "service": 65,
+    "error_handling": 30,
+    "adapter": 49,
+    "performance": 3,
+    "isolation": 6,
+    "helpers": 123
+  },
+  "test_files_by_category": {
+    "e2e": 21,
+    "security": 22,
+    "service": 17,
+    "error_handling": 2,
+    "adapter": 3,
+    "performance": 1,
+    "isolation": 2,
+    "helpers": 16
+  },
+  "overall_line_coverage": 0,
+  "overall_branch_coverage": 0,
+  "coverage_by_package": {}
+}

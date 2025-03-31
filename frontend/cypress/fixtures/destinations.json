@@ -1,0 +1,104 @@
+[
+  {
+    "id": "azure-blob",
+    "name": "Azure Blob Storage",
+    "type": "storage",
+    "description": "Microsoft Azure Blob Storage",
+    "configSchema": {
+      "required": ["connectionString", "container"],
+      "properties": {
+        "connectionString": {
+          "type": "string",
+          "format": "password",
+          "description": "Azure Storage connection string"
+        },
+        "container": {
+          "type": "string",
+          "description": "Blob container name"
+        },
+        "blobPath": {
+          "type": "string",
+          "description": "Path within container (supports variables like {date})"
+        },
+        "contentType": {
+          "type": "string",
+          "default": "application/json",
+          "description": "Content type of the uploaded blob"
+        }
+      }
+    }
+  },
+  {
+    "id": "sql-database",
+    "name": "SQL Database",
+    "type": "database",
+    "description": "SQL Database destination",
+    "configSchema": {
+      "required": ["connectionString", "table"],
+      "properties": {
+        "connectionString": {
+          "type": "string",
+          "format": "password",
+          "description": "Database connection string"
+        },
+        "table": {
+          "type": "string",
+          "description": "Target table name"
+        },
+        "schema": {
+          "type": "string",
+          "default": "dbo",
+          "description": "Database schema"
+        },
+        "createIfNotExists": {
+          "type": "boolean",
+          "default": false,
+          "description": "Create table if it doesn't exist"
+        },
+        "updateBehavior": {
+          "type": "string",
+          "enum": ["insert", "update", "upsert"],
+          "default": "insert",
+          "description": "How to handle existing records"
+        }
+      }
+    }
+  },
+  {
+    "id": "s3-bucket",
+    "name": "S3 Bucket",
+    "type": "storage",
+    "description": "AWS S3 Bucket",
+    "configSchema": {
+      "required": ["bucket", "region"],
+      "properties": {
+        "accessKeyId": {
+          "type": "string",
+          "description": "AWS access key ID"
+        },
+        "secretAccessKey": {
+          "type": "string",
+          "format": "password",
+          "description": "AWS secret access key"
+        },
+        "region": {
+          "type": "string",
+          "description": "AWS region"
+        },
+        "bucket": {
+          "type": "string",
+          "description": "S3 bucket name"
+        },
+        "keyPrefix": {
+          "type": "string",
+          "description": "Key prefix (folder path)"
+        },
+        "contentType": {
+          "type": "string",
+          "default": "application/json",
+          "description": "Content type of the uploaded file"
+        }
+      }
+    }
+  }
+]

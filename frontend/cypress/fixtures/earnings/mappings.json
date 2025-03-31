@@ -1,0 +1,47 @@
+[
+  {
+    "id": "1",
+    "roster_id": "1",
+    "source_code": "REG",
+    "destination_code": "1000",
+    "multiplier": "1.0",
+    "conditions": null,
+    "is_active": true
+  },
+  {
+    "id": "2",
+    "roster_id": "1",
+    "source_code": "OT",
+    "destination_code": "1500",
+    "multiplier": "1.5",
+    "conditions": null,
+    "is_active": true
+  },
+  {
+    "id": "3",
+    "roster_id": "1",
+    "source_code": "VAC",
+    "destination_code": "2000",
+    "multiplier": "1.0",
+    "conditions": null,
+    "is_active": true
+  },
+  {
+    "id": "4",
+    "roster_id": "2",
+    "source_code": "REG",
+    "destination_code": "1000",
+    "multiplier": "1.0",
+    "conditions": null,
+    "is_active": true
+  },
+  {
+    "id": "5",
+    "roster_id": "3",
+    "source_code": "COMM",
+    "destination_code": "5000",
+    "multiplier": "0.1",
+    "conditions": "amount > 1000",
+    "is_active": true
+  }
+]

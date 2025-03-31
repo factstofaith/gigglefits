@@ -1,0 +1,292 @@
+{
+  "template-001": {
+    "id": "flow-001",
+    "templateId": "template-001",
+    "name": "File to Database ETL Flow",
+    "nodes": [
+      {
+        "id": "node-001",
+        "type": "source",
+        "subtype": "file",
+        "name": "File Source",
+        "position": { "x": 100, "y": 100 },
+        "config": {
+          "filePattern": "${sourceFilePattern}",
+          "format": "CSV"
+        }
+      },
+      {
+        "id": "node-002",
+        "type": "transform",
+        "subtype": "datamap",
+        "name": "Column Mapping",
+        "position": { "x": 300, "y": 100 },
+        "config": {
+          "mappings": [
+            { "source": "field1", "target": "column1" },
+            { "source": "field2", "target": "column2" }
+          ]
+        }
+      },
+      {
+        "id": "node-003",
+        "type": "destination",
+        "subtype": "database",
+        "name": "Database Target",
+        "position": { "x": 500, "y": 100 },
+        "config": {
+          "table": "${targetTable}",
+          "truncate": "${truncateTable}",
+          "batchSize": "${batchSize}"
+        }
+      }
+    ],
+    "edges": [
+      { "id": "edge-001", "source": "node-001", "target": "node-002" },
+      { "id": "edge-002", "source": "node-002", "target": "node-003" }
+    ]
+  },
+  "template-002": {
+    "id": "flow-002",
+    "templateId": "template-002",
+    "name": "Office 365 Email Sync Flow",
+    "nodes": [
+      {
+        "id": "node-004",
+        "type": "source",
+        "subtype": "o365",
+        "name": "Office 365 Email",
+        "position": { "x": 100, "y": 100 },
+        "config": {
+          "folderPath": "${folderPath}",
+          "filter": "${emailFilter}",
+          "includeAttachments": "${includeAttachments}",
+          "maxEmailAge": "${maxEmailAge}"
+        }
+      },
+      {
+        "id": "node-005",
+        "type": "transform",
+        "subtype": "emailextract",
+        "name": "Email Extraction",
+        "position": { "x": 300, "y": 100 },
+        "config": {
+          "extractHeader": true,
+          "extractBody": true,
+          "extractAttachments": "${includeAttachments}"
+        }
+      },
+      {
+        "id": "node-006",
+        "type": "destination",
+        "subtype": "database",
+        "name": "Database Target",
+        "position": { "x": 500, "y": 100 },
+        "config": {
+          "table": "email_archive",
+          "batchSize": 100
+        }
+      },
+      {
+        "id": "node-007",
+        "type": "trigger",
+        "subtype": "schedule",
+        "name": "Schedule Trigger",
+        "position": { "x": 100, "y": 250 },
+        "config": {
+          "schedule": "${syncSchedule}"
+        }
+      }
+    ],
+    "edges": [
+      { "id": "edge-003", "source": "node-004", "target": "node-005" },
+      { "id": "edge-004", "source": "node-005", "target": "node-006" },
+      { "id": "edge-005", "source": "node-007", "target": "node-004" }
+    ]
+  },
+  "template-003": {
+    "id": "flow-003",
+    "templateId": "template-003",
+    "name": "Salesforce to Azure Blob Backup Flow",
+    "nodes": [
+      {
+        "id": "node-008",
+        "type": "source",
+        "subtype": "salesforce",
+        "name": "Salesforce Data",
+        "position": { "x": 100, "y": 100 },
+        "config": {
+          "objects": "${sfObjects}",
+          "batchSize": 200
+        }
+      },
+      {
+        "id": "node-009",
+        "type": "transform",
+        "subtype": "format",
+        "name": "Format Conversion",
+        "position": { "x": 300, "y": 100 },
+        "config": {
+          "format": "${backupFormat}",
+          "compress": "${compress}"
+        }
+      },
+      {
+        "id": "node-010",
+        "type": "destination",
+        "subtype": "azureblob",
+        "name": "Azure Blob Storage",
+        "position": { "x": 500, "y": 100 },
+        "config": {
+          "container": "${backupContainer}",
+          "folderPath": "salesforce-backups/${YYYY-MM-DD}/",
+          "overwrite": true
+        }
+      },
+      {
+        "id": "node-011",
+        "type": "trigger",
+        "subtype": "schedule",
+        "name": "Schedule Trigger",
+        "position": { "x": 100, "y": 250 },
+        "config": {
+          "schedule": "${backupSchedule}"
+        }
+      }
+    ],
+    "edges": [
+      { "id": "edge-006", "source": "node-008", "target": "node-009" },
+      { "id": "edge-007", "source": "node-009", "target": "node-010" },
+      { "id": "edge-008", "source": "node-011", "target": "node-008" }
+    ]
+  },
+  "template-004": {
+    "id": "flow-004",
+    "templateId": "template-004",
+    "name": "Healthcare Data Processing Flow",
+    "nodes": [
+      {
+        "id": "node-012",
+        "type": "source",
+        "subtype": "fhir",
+        "name": "FHIR API Source",
+        "position": { "x": 100, "y": 100 },
+        "config": {
+          "resources": ["Patient", "Observation", "Encounter"],
+          "fields": "${patientFields}"
+        }
+      },
+      {
+        "id": "node-013",
+        "type": "transform",
+        "subtype": "anonymize",
+        "name": "Data Anonymization",
+        "position": { "x": 300, "y": 100 },
+        "config": {
+          "level": "${anonymizationLevel}",
+          "encrypt": "${encryptData}"
+        }
+      },
+      {
+        "id": "node-014",
+        "type": "transform",
+        "subtype": "validate",
+        "name": "Data Validation",
+        "position": { "x": 300, "y": 250 },
+        "config": {
+          "schema": "healthcare-data-schema",
+          "failOnError": false
+        }
+      },
+      {
+        "id": "node-015",
+        "type": "destination",
+        "subtype": "datawarehouse",
+        "name": "Data Warehouse",
+        "position": { "x": 500, "y": 175 },
+        "config": {
+          "dataset": "healthcare_analytics",
+          "retentionDays": "${dataRetentionDays}"
+        }
+      }
+    ],
+    "edges": [
+      { "id": "edge-009", "source": "node-012", "target": "node-013" },
+      { "id": "edge-010", "source": "node-013", "target": "node-014" },
+      { "id": "edge-011", "source": "node-014", "target": "node-015" }
+    ]
+  },
+  "template-005": {
+    "id": "flow-005",
+    "templateId": "template-005",
+    "name": "Retail Inventory Sync Flow",
+    "nodes": [
+      {
+        "id": "node-016",
+        "type": "source",
+        "subtype": "api",
+        "name": "POS API Source",
+        "position": { "x": 100, "y": 100 },
+        "config": {
+          "endpoint": "/inventory",
+          "method": "GET",
+          "categories": "${productCategories}",
+          "locations": "${locationIds}"
+        }
+      },
+      {
+        "id": "node-017",
+        "type": "transform",
+        "subtype": "datamap",
+        "name": "Field Mapping",
+        "position": { "x": 300, "y": 100 },
+        "config": {
+          "mappings": [
+            { "source": "product_id", "target": "productId" },
+            { "source": "quantity", "target": "stockQuantity" }
+          ]
+        }
+      },
+      {
+        "id": "node-018",
+        "type": "destination",
+        "subtype": "api",
+        "name": "Warehouse API Target",
+        "position": { "x": 500, "y": 100 },
+        "config": {
+          "endpoint": "/inventory/update",
+          "method": "POST",
+          "conflictResolution": "${conflictResolution}"
+        }
+      },
+      {
+        "id": "node-019",
+        "type": "trigger",
+        "subtype": "interval",
+        "name": "Interval Trigger",
+        "position": { "x": 100, "y": 250 },
+        "config": {
+          "interval": "${syncInterval}",
+          "unit": "minutes"
+        }
+      },
+      {
+        "id": "node-020",
+        "type": "action",
+        "subtype": "log",
+        "name": "Logging",
+        "position": { "x": 300, "y": 250 },
+        "config": {
+          "level": "${logLevel}",
+          "destination": "system"
+        }
+      }
+    ],
+    "edges": [
+      { "id": "edge-012", "source": "node-016", "target": "node-017" },
+      { "id": "edge-013", "source": "node-017", "target": "node-018" },
+      { "id": "edge-014", "source": "node-019", "target": "node-016" },
+      { "id": "edge-015", "source": "node-017", "target": "node-020" }
+    ]
+  }
+}

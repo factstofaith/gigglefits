@@ -1,0 +1,103 @@
+{
+  "success": {
+    "verification": {
+      "success": true,
+      "message": "Verification successful",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJtZmEtdXNlci0wMDEiLCJuYW1lIjoiTUZBIEVuYWJsZWQgVXNlciIsImlhdCI6MTY4NjU2NzUzMCwiZXhwIjoxNjg2NTcxMTMwfQ.DUMMY_TOKEN_FOR_TESTING",
+      "lastVerified": "2025-03-26T10:12:45Z"
+    },
+    "recoveryCode": {
+      "success": true,
+      "message": "Recovery code accepted",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJtZmEtdXNlci0wMDEiLCJuYW1lIjoiTUZBIEVuYWJsZWQgVXNlciIsImlhdCI6MTY4NjU2NzUzMCwiZXhwIjoxNjg2NTcxMTMwfQ.DUMMY_TOKEN_FOR_TESTING",
+      "remainingCodes": 9,
+      "usedCode": "ABCD-1234-EFGH-5678"
+    },
+    "enable": {
+      "success": true,
+      "message": "MFA successfully enabled",
+      "recoveryCodes": [
+        "ABCD-1234-EFGH-5678",
+        "IJKL-9012-MNOP-3456",
+        "QRST-7890-UVWX-1234",
+        "YZAB-5678-CDEF-9012",
+        "GHIJ-3456-KLMN-7890",
+        "OPQR-1234-STUV-5678",
+        "WXYZ-9012-ABCD-3456",
+        "EFGH-7890-IJKL-1234",
+        "MNOP-5678-QRST-9012",
+        "UVWX-3456-YZAB-7890"
+      ],
+      "enrolledAt": "2025-03-26T10:05:30Z"
+    },
+    "disable": {
+      "success": true,
+      "message": "MFA successfully disabled",
+      "disabledAt": "2025-03-26T14:23:10Z"
+    },
+    "getRecoveryCodes": {
+      "success": true,
+      "message": "Recovery codes retrieved",
+      "recoveryCodes": [
+        {
+          "code": "ABCD-1234-EFGH-5678",
+          "used": false
+        },
+        {
+          "code": "IJKL-9012-MNOP-3456",
+          "used": false
+        },
+        {
+          "code": "QRST-7890-UVWX-1234",
+          "used": false
+        },
+        {
+          "code": "YZAB-5678-CDEF-9012",
+          "used": false
+        },
+        {
+          "code": "GHIJ-3456-KLMN-7890",
+          "used": false
+        },
+        {
+          "code": "OPQR-1234-STUV-5678",
+          "used": false
+        },
+        {
+          "code": "WXYZ-9012-ABCD-3456",
+          "used": false
+        },
+        {
+          "code": "EFGH-7890-IJKL-1234",
+          "used": false
+        },
+        {
+          "code": "MNOP-5678-QRST-9012",
+          "used": false
+        },
+        {
+          "code": "UVWX-3456-YZAB-7890",
+          "used": false
+        }
+      ],
+      "generatedAt": "2025-02-15T10:45:30Z"
+    },
+    "regenerateRecoveryCodes": {
+      "success": true,
+      "message": "Recovery codes regenerated",
+      "recoveryCodes": [
+        "ZYXW-9876-VUSL-5432",
+        "QRST-1098-MNLI-7654",
+        "GHIJ-3210-FEDC-9876",
+        "ZYXW-5432-VUSL-1098",
+        "QPON-7654-MLGF-3210",
+        "EDCB-9876-AZXY-5432",
+        "WVUT-1098-SQRP-7654",
+        "ONML-3210-KJIH-9876",
+        "GFED-5432-CBAW-1098",
+        "VUTS-7654-RQPO-3210"
+      ],
+      "generatedAt": "2025-03-26T15:22:45Z"
+    }
+  }
+}

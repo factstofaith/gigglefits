@@ -11,15 +11,23 @@ terraform {
     }
   }
   
-  backend "azurerm" {
-    resource_group_name  = "terraform-state"
-    storage_account_name = "tapinfratfstate"
-    container_name       = "tfstate"
-    key                  = "tap.terraform.tfstate"
-  }
+  # Using local backend for simplicity in development
+  # To use an Azure backend, this section would need to be configured:
+  # backend "azurerm" {
+  #   resource_group_name  = "terraform-state"
+  #   storage_account_name = "tapinfratfstate"
+  #   container_name       = "tfstate"
+  #   key                  = "tap.terraform.tfstate"
+  # }
 }
 
 provider "azurerm" {
+  # Explicitly set the subscription ID (requires az login first)
+  subscription_id = var.subscription_id
+  
+  # Skip provider registration to avoid requiring Owner permissions
+  skip_provider_registration = true
+  
   features {
     resource_group {
       prevent_deletion_if_contains_resources = false
@@ -54,6 +62,11 @@ variable "admin_username" {
 variable "admin_password" {
   description = "Admin password for services"
   sensitive   = true
+}
+
+variable "subscription_id" {
+  description = "Azure subscription ID to deploy resources to"
+  type        = string
 }
 
 # Local variables for naming and tagging
@@ -208,27 +221,23 @@ resource "azurerm_postgresql_flexible_server" "main" {
   resource_group_name    = azurerm_resource_group.main.name
   location               = azurerm_resource_group.main.location
   version                = "14"
-  delegated_subnet_id    = azurerm_subnet.database.id
-  private_dns_zone_id    = azurerm_private_dns_zone.postgres.id
   administrator_login    = var.admin_username
   administrator_password = var.admin_password
-  zone                   = "1"
   storage_mb             = 32768
   sku_name               = "B_Standard_B1ms"
   backup_retention_days  = 7
   
-  tags                   = local.common_tags
+  # Use public network access for simplicity in development
+  public_network_access_enabled = true
   
-  depends_on = [
-    azurerm_private_dns_zone_virtual_network_link.postgres
-  ]
+  tags                   = local.common_tags
 }
 
 resource "azurerm_postgresql_flexible_server_database" "tap" {
   name      = "tapdb"
   server_id = azurerm_postgresql_flexible_server.main.id
   charset   = "UTF8"
-  collation = "en_US.UTF8"
+  collation = "en_US.utf8"
 }
 
 resource "azurerm_postgresql_flexible_server_configuration" "main" {
@@ -288,6 +297,12 @@ resource "azurerm_storage_container" "templates" {
   container_access_type = "private"
 }
 
+resource "azurerm_storage_container" "documentation" {
+  name                  = "documentation"
+  storage_account_name  = azurerm_storage_account.main.name
+  container_access_type = "blob"
+}
+
 ######################################################
 # Key Vault for secrets management
 ######################################################
@@ -334,6 +349,19 @@ resource "azurerm_key_vault_secret" "postgres_connection" {
   key_vault_id = azurerm_key_vault.main.id
 }
 
+# Store JWT secret for authentication
+resource "random_password" "jwt_secret" {
+  length           = 32
+  special          = true
+  override_special = "_%@"
+}
+
+resource "azurerm_key_vault_secret" "jwt_secret" {
+  name         = "jwt-secret-key"
+  value        = random_password.jwt_secret.result
+  key_vault_id = azurerm_key_vault.main.id
+}
+
 ######################################################
 # App Service for Backend API
 ######################################################
@@ -343,7 +371,7 @@ resource "azurerm_service_plan" "backend" {
   resource_group_name = azurerm_resource_group.main.name
   location            = azurerm_resource_group.main.location
   os_type             = "Linux"
-  sku_name            = "B1"
+  sku_name            = "F1"
   tags                = local.common_tags
 }
 
@@ -363,16 +391,31 @@ resource "azurerm_linux_web_app" "backend" {
     cors {
       allowed_origins = ["https://${local.resource_prefix}-frontend.azurewebsites.net"]
     }
+    
+    minimum_tls_version = "1.2"
+    ftps_state = "Disabled"
+    
+    # Security headers through web.config
+    app_command_line = "startup.sh"
   }
   
   app_settings = {
     "SCM_DO_BUILD_DURING_DEPLOYMENT" = "true"
     "WEBSITES_PORT"                  = "8000"
-    "DB_CONNECTION"                  = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.postgres_connection.versionless_id})"
+    "DATABASE_URL"                   = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.postgres_connection.versionless_id})"
     "STORAGE_CONNECTION"             = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.storage_connection.versionless_id})"
     "ENVIRONMENT"                    = var.environment
     "ENABLE_SCHEDULER"               = "true"
     "CORS_ORIGINS"                   = "https://${local.resource_prefix}-frontend.azurewebsites.net"
+    "DEMO_MODE"                      = "true"  # Enable demo mode for development
+    "SECRET_KEY"                     = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.jwt_secret.versionless_id})"
+    "ACCESS_TOKEN_EXPIRE_MINUTES"    = "10080"  # 7 days
+    "LOG_LEVEL"                      = "INFO"
+    "ENABLE_PERFORMANCE_LOGGING"     = "true"
+    "ENABLE_SQL_LOGGING"             = "true"  # Useful for development debugging
+    "UPLOAD_FOLDER"                  = "/home/site/wwwroot/uploads"
+    "DB_POOL_SIZE"                   = "5"
+    "DB_MAX_OVERFLOW"                = "10"
   }
   
   identity {
@@ -402,7 +445,7 @@ resource "azurerm_service_plan" "frontend" {
   resource_group_name = azurerm_resource_group.main.name
   location            = azurerm_resource_group.main.location
   os_type             = "Linux"
-  sku_name            = "B1"
+  sku_name            = "F1"
   tags                = local.common_tags
 }
 
@@ -418,13 +461,21 @@ resource "azurerm_linux_web_app" "frontend" {
     }
     
     always_on = true
+    minimum_tls_version = "1.2"
+    ftps_state = "Disabled"
+    
+    # Security headers
+    health_check_path = "/health"
   }
   
   app_settings = {
     "SCM_DO_BUILD_DURING_DEPLOYMENT" = "true"
     "WEBSITES_PORT"                  = "3000"
-    "API_URL"                        = "https://${azurerm_linux_web_app.backend.name}.azurewebsites.net"
-    "ENVIRONMENT"                    = var.environment
+    "REACT_APP_API_URL"              = "https://${azurerm_linux_web_app.backend.name}.azurewebsites.net/api"
+    "REACT_APP_ENVIRONMENT"          = var.environment
+    "REACT_APP_DEMO_MODE"            = "true"
+    "GENERATE_SOURCEMAP"             = "true"  # Helpful for development debugging
+    "REACT_APP_DOCUMENTATION_URL"    = "https://${azurerm_storage_account.main.name}.blob.core.windows.net/documentation/index.html"
   }
   
   tags = local.common_tags
@@ -441,6 +492,244 @@ resource "azurerm_container_registry" "main" {
   sku                 = "Basic"
   admin_enabled       = true
   tags                = local.common_tags
+}
+
+######################################################
+# Monitoring Resources
+######################################################
+
+# Log Analytics Workspace for centralized logging
+resource "azurerm_log_analytics_workspace" "main" {
+  name                = "${local.resource_prefix}-law"
+  location            = azurerm_resource_group.main.location
+  resource_group_name = azurerm_resource_group.main.name
+  sku                 = "PerGB2018"
+  retention_in_days   = 30
+  tags                = local.common_tags
+}
+
+# Application Insights for application monitoring
+resource "azurerm_application_insights" "main" {
+  name                = "${local.resource_prefix}-appinsights"
+  location            = azurerm_resource_group.main.location
+  resource_group_name = azurerm_resource_group.main.name
+  application_type    = "web"
+  workspace_id        = azurerm_log_analytics_workspace.main.id
+  tags                = local.common_tags
+}
+
+# Diagnostic settings for App Service (Backend)
+resource "azurerm_monitor_diagnostic_setting" "backend_app" {
+  name                       = "backend-diagnostics"
+  target_resource_id         = azurerm_linux_web_app.backend.id
+  log_analytics_workspace_id = azurerm_log_analytics_workspace.main.id
+
+  log {
+    category = "AppServiceHTTPLogs"
+    enabled  = true
+    retention_policy {
+      enabled = true
+      days    = 30
+    }
+  }
+
+  log {
+    category = "AppServiceConsoleLogs"
+    enabled  = true
+    retention_policy {
+      enabled = true
+      days    = 30
+    }
+  }
+
+  log {
+    category = "AppServiceAppLogs"
+    enabled  = true
+    retention_policy {
+      enabled = true
+      days    = 30
+    }
+  }
+
+  metric {
+    category = "AllMetrics"
+    enabled  = true
+    retention_policy {
+      enabled = true
+      days    = 30
+    }
+  }
+}
+
+# Diagnostic settings for App Service (Frontend)
+resource "azurerm_monitor_diagnostic_setting" "frontend_app" {
+  name                       = "frontend-diagnostics"
+  target_resource_id         = azurerm_linux_web_app.frontend.id
+  log_analytics_workspace_id = azurerm_log_analytics_workspace.main.id
+
+  log {
+    category = "AppServiceHTTPLogs"
+    enabled  = true
+    retention_policy {
+      enabled = true
+      days    = 30
+    }
+  }
+
+  log {
+    category = "AppServiceConsoleLogs"
+    enabled  = true
+    retention_policy {
+      enabled = true
+      days    = 30
+    }
+  }
+
+  log {
+    category = "AppServiceAppLogs"
+    enabled  = true
+    retention_policy {
+      enabled = true
+      days    = 30
+    }
+  }
+
+  metric {
+    category = "AllMetrics"
+    enabled  = true
+    retention_policy {
+      enabled = true
+      days    = 30
+    }
+  }
+}
+
+# Diagnostic settings for PostgreSQL
+resource "azurerm_monitor_diagnostic_setting" "postgres" {
+  name                       = "postgres-diagnostics"
+  target_resource_id         = azurerm_postgresql_flexible_server.main.id
+  log_analytics_workspace_id = azurerm_log_analytics_workspace.main.id
+
+  log {
+    category = "PostgreSQLLogs"
+    enabled  = true
+    retention_policy {
+      enabled = true
+      days    = 30
+    }
+  }
+
+  metric {
+    category = "AllMetrics"
+    enabled  = true
+    retention_policy {
+      enabled = true
+      days    = 30
+    }
+  }
+}
+
+# Diagnostic settings for Storage Account
+resource "azurerm_monitor_diagnostic_setting" "storage" {
+  name                       = "storage-diagnostics"
+  target_resource_id         = azurerm_storage_account.main.id
+  log_analytics_workspace_id = azurerm_log_analytics_workspace.main.id
+
+  metric {
+    category = "Transaction"
+    enabled  = true
+    retention_policy {
+      enabled = true
+      days    = 30
+    }
+  }
+
+  metric {
+    category = "Capacity"
+    enabled  = true
+    retention_policy {
+      enabled = true
+      days    = 30
+    }
+  }
+}
+
+# Diagnostic settings for Key Vault
+resource "azurerm_monitor_diagnostic_setting" "keyvault" {
+  name                       = "keyvault-diagnostics"
+  target_resource_id         = azurerm_key_vault.main.id
+  log_analytics_workspace_id = azurerm_log_analytics_workspace.main.id
+
+  log {
+    category = "AuditEvent"
+    enabled  = true
+    retention_policy {
+      enabled = true
+      days    = 30
+    }
+  }
+
+  metric {
+    category = "AllMetrics"
+    enabled  = true
+    retention_policy {
+      enabled = true
+      days    = 30
+    }
+  }
+}
+
+# Create a service principal for monitoring (used by the dashboard)
+resource "azuread_application" "monitoring" {
+  display_name = "${local.resource_prefix}-monitoring-app"
+  
+  web {
+    homepage_url  = "https://${azurerm_linux_web_app.frontend.name}.azurewebsites.net"
+    redirect_uris = ["https://${azurerm_linux_web_app.frontend.name}.azurewebsites.net/auth/callback"]
+  }
+}
+
+resource "azuread_service_principal" "monitoring" {
+  client_id                    = azuread_application.monitoring.client_id
+  app_role_assignment_required = false
+}
+
+resource "azuread_application_password" "monitoring_secret" {
+  application_id = azuread_application.monitoring.id
+  display_name   = "Monitoring Secret"
+  end_date_relative = "8760h" # 1 year
+}
+
+# Store monitoring service principal credentials in Key Vault
+resource "azurerm_key_vault_secret" "monitoring_client_id" {
+  name         = "monitoring-client-id"
+  value        = azuread_application.monitoring.client_id
+  key_vault_id = azurerm_key_vault.main.id
+}
+
+resource "azurerm_key_vault_secret" "monitoring_client_secret" {
+  name         = "monitoring-client-secret"
+  value        = azuread_application_password.monitoring_secret.value
+  key_vault_id = azurerm_key_vault.main.id
+}
+
+resource "azurerm_key_vault_secret" "monitoring_tenant_id" {
+  name         = "monitoring-tenant-id"
+  value        = data.azurerm_client_config.current.tenant_id
+  key_vault_id = azurerm_key_vault.main.id
+}
+
+# Grant the monitoring service principal required roles
+resource "azurerm_role_assignment" "monitoring_reader" {
+  scope                = azurerm_resource_group.main.id
+  role_definition_name = "Reader"
+  principal_id         = azuread_service_principal.monitoring.object_id
+}
+
+resource "azurerm_role_assignment" "monitoring_monitor_reader" {
+  scope                = azurerm_resource_group.main.id
+  role_definition_name = "Monitoring Reader"
+  principal_id         = azuread_service_principal.monitoring.object_id
 }
 
 ######################################################
@@ -477,4 +766,25 @@ output "frontend_app_url" {
 
 output "container_registry_login_server" {
   value = azurerm_container_registry.main.login_server
+}
+
+output "documentation_url" {
+  value = "https://${azurerm_storage_account.main.name}.blob.core.windows.net/documentation/index.html"
+}
+
+output "app_insights_connection_string" {
+  value     = azurerm_application_insights.main.connection_string
+  sensitive = true
+}
+
+output "monitoring_service_principal_id" {
+  value = azuread_service_principal.monitoring.id
+}
+
+output "monitoring_service_principal_app_id" {
+  value = azuread_application.monitoring.client_id
+}
+
+output "log_analytics_workspace_id" {
+  value = azurerm_log_analytics_workspace.main.id
 }

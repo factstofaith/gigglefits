@@ -1,0 +1,238 @@
+npm WARN config optional Use `--omit=optional` to exclude optional dependencies, or
+npm WARN config `--include=optional` to include them.
+npm WARN config 
+npm WARN config     Default value does install optional deps unless otherwise omitted.
+
+> tap-integration-platform-frontend@1.0.0 build
+> npm run typecheck && react-app-rewired build --verbose
+
+npm WARN config optional Use `--omit=optional` to exclude optional dependencies, or
+npm WARN config `--include=optional` to include them.
+npm WARN config 
+npm WARN config     Default value does install optional deps unless otherwise omitted.
+
+> tap-integration-platform-frontend@1.0.0 typecheck
+> tsc --noEmit
+
+src/components/admin/AlertConfiguration.jsx(69,1): error TS1003: Identifier expected.
+src/components/admin/AlertConfiguration.jsx(69,8): error TS1005: ',' expected.
+src/components/admin/AlertConfiguration.jsx(69,12): error TS1005: ',' expected.
+src/components/admin/AlertConfiguration.jsx(69,17): error TS1005: ',' expected.
+src/components/admin/AlertConfiguration.jsx(76,1): error TS1128: Declaration or statement expected.
+src/components/admin/AlertConfiguration.jsx(76,3): error TS1434: Unexpected keyword or identifier.
+src/components/admin/ApplicationsManager.jsx(759,60): error TS1005: ',' expected.
+src/components/admin/ApplicationsManager.jsx(759,61): error TS1005: ',' expected.
+src/components/admin/ApplicationsManager.jsx(759,68): error TS1005: ',' expected.
+src/components/admin/ApplicationsManager.jsx(764,20): error TS1005: ',' expected.
+src/components/admin/ApplicationsManager.jsx(764,28): error TS1005: ',' expected.
+src/components/admin/ApplicationsManager.jsx(764,40): error TS1005: ',' expected.
+src/components/admin/ApplicationsManager.jsx(764,47): error TS1005: ',' expected.
+src/components/admin/ApplicationsManager.jsx(764,50): error TS1005: ',' expected.
+src/components/admin/DatasetsManager.jsx(362,56): error TS1005: ',' expected.
+src/components/admin/DatasetsManager.jsx(362,57): error TS1005: ',' expected.
+src/components/admin/DatasetsManager.jsx(362,64): error TS1005: ',' expected.
+src/components/admin/DatasetsManager.jsx(367,20): error TS1005: ',' expected.
+src/components/admin/DatasetsManager.jsx(367,28): error TS1005: ',' expected.
+src/components/admin/DatasetsManager.jsx(367,36): error TS1005: ',' expected.
+src/components/admin/DatasetsManager.jsx(367,43): error TS1005: ',' expected.
+src/components/admin/DatasetsManager.jsx(367,46): error TS1005: ',' expected.
+src/components/admin/ErrorLogViewer.jsx(38,1): error TS1003: Identifier expected.
+src/components/admin/ErrorLogViewer.jsx(38,8): error TS1005: ',' expected.
+src/components/admin/ErrorLogViewer.jsx(38,12): error TS1005: ',' expected.
+src/components/admin/ErrorLogViewer.jsx(38,17): error TS1005: ',' expected.
+src/components/admin/ErrorLogViewer.jsx(45,1): error TS1128: Declaration or statement expected.
+src/components/admin/ErrorLogViewer.jsx(45,3): error TS1434: Unexpected keyword or identifier.
+src/components/admin/MetricsCharts/DocumentationMetrics.jsx(10,1): error TS1003: Identifier expected.
+src/components/admin/MetricsCharts/DocumentationMetrics.jsx(10,8): error TS1005: ',' expected.
+src/components/admin/MetricsCharts/DocumentationMetrics.jsx(10,12): error TS1005: ',' expected.
+src/components/admin/MetricsCharts/DocumentationMetrics.jsx(10,17): error TS1005: ',' expected.
+src/components/admin/MetricsCharts/DocumentationMetrics.jsx(15,1): error TS1128: Declaration or statement expected.
+src/components/admin/MetricsCharts/DocumentationMetrics.jsx(15,3): error TS1434: Unexpected keyword or identifier.
+src/components/admin/ReleasesManager.jsx(42,1): error TS1003: Identifier expected.
+src/components/admin/ReleasesManager.jsx(42,8): error TS1005: ',' expected.
+src/components/admin/ReleasesManager.jsx(42,12): error TS1005: ',' expected.
+src/components/admin/ReleasesManager.jsx(42,17): error TS1005: ',' expected.
+src/components/admin/ReleasesManager.jsx(52,1): error TS1109: Expression expected.
+src/components/admin/ReleasesManager.jsx(52,3): error TS1434: Unexpected keyword or identifier.
+src/components/common/AuthModal.jsx(34,1): error TS1003: Identifier expected.
+src/components/common/AuthModal.jsx(34,8): error TS1005: ',' expected.
+src/components/common/AuthModal.jsx(34,12): error TS1005: ',' expected.
+src/components/common/AuthModal.jsx(34,17): error TS1005: ',' expected.
+src/components/common/AuthModal.jsx(35,12): error TS8016: Type assertion expressions can only be used in TypeScript files.
+src/components/common/AuthModal.jsx(36,16): error TS8016: Type assertion expressions can only be used in TypeScript files.
+src/components/common/AuthModal.jsx(37,12): error TS8016: Type assertion expressions can only be used in TypeScript files.
+src/components/common/AuthModal.jsx(38,1): error TS1109: Expression expected.
+src/components/common/AuthModal.jsx(38,3): error TS1434: Unexpected keyword or identifier.
+src/components/common/VirtualizedDataTable.jsx(73,1): error TS1003: Identifier expected.
+src/components/common/VirtualizedDataTable.jsx(73,8): error TS1005: ',' expected.
+src/components/common/VirtualizedDataTable.jsx(73,12): error TS1005: ',' expected.
+src/components/common/VirtualizedDataTable.jsx(73,17): error TS1005: ',' expected.
+src/components/common/VirtualizedDataTable.jsx(86,1): error TS1109: Expression expected.
+src/components/common/VirtualizedDataTable.jsx(86,3): error TS1434: Unexpected keyword or identifier.
+src/components/integration/DataPreviewComponent.jsx(216,32): error TS1005: ',' expected.
+src/components/integration/DataPreviewComponent.jsx(216,33): error TS1005: ',' expected.
+src/components/integration/DataPreviewComponent.jsx(216,39): error TS1005: ',' expected.
+src/components/integration/DataPreviewComponent.jsx(216,45): error TS1005: ',' expected.
+src/components/integration/DataPreviewComponent.jsx(216,77): error TS1005: ',' expected.
+src/components/integration/DataPreviewComponent.jsx(216,78): error TS1005: ',' expected.
+src/components/integration/DataPreviewComponent.jsx(216,86): error TS1005: ':' expected.
+src/components/integration/DataPreviewComponent.jsx(216,103): error TS1005: ',' expected.
+src/components/integration/DataPreviewComponent.jsx(216,119): error TS1005: ',' expected.
+src/components/integration/DataPreviewComponent.jsx(216,120): error TS1005: ',' expected.
+src/components/integration/DataPreviewComponent.jsx(216,126): error TS1005: ',' expected.
+src/components/integration/DataPreviewComponent.jsx(245,25): error TS1005: ',' expected.
+src/components/integration/DataPreviewComponent.jsx(246,13): error TS1005: ',' expected.
+src/components/integration/DataPreviewComponent.jsx(246,14): error TS1128: Declaration or statement expected.
+src/components/integration/DataPreviewComponent.jsx(248,9): error TS1005: ',' expected.
+src/components/integration/DataPreviewComponent.jsx(249,7): error TS1005: ',' expected.
+src/components/integration/DataPreviewComponent.jsx(249,8): error TS1005: ',' expected.
+src/components/integration/DataPreviewComponent.jsx(261,5): error TS1128: Declaration or statement expected.
+src/components/integration/DataPreviewComponent.jsx(261,6): error TS1128: Declaration or statement expected.
+src/components/integration/DataPreviewComponent.jsx(268,3): error TS1128: Declaration or statement expected.
+src/components/integration/DataPreviewComponent.jsx(268,4): error TS1128: Declaration or statement expected.
+src/components/integration/DataPreviewComponent.jsx(268,20): error TS1005: ';' expected.
+src/components/integration/DataPreviewComponent.jsx(586,1): error TS1128: Declaration or statement expected.
+src/components/integration/FieldMappingEditor.jsx(27,1): error TS1003: Identifier expected.
+src/components/integration/FieldMappingEditor.jsx(27,8): error TS1005: ',' expected.
+src/components/integration/FieldMappingEditor.jsx(27,12): error TS1005: ',' expected.
+src/components/integration/FieldMappingEditor.jsx(27,17): error TS1005: ',' expected.
+src/components/integration/FieldMappingEditor.jsx(34,1): error TS1109: Expression expected.
+src/components/integration/FieldMappingEditor.jsx(34,3): error TS1434: Unexpected keyword or identifier.
+src/components/integration/FileBrowserComponent.jsx(628,39): error TS1005: ':' expected.
+src/components/integration/FileBrowserComponent.jsx(630,15): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/integration/archive/FlowErrorPanel.jsx(48,1): error TS1003: Identifier expected.
+src/components/integration/archive/FlowErrorPanel.jsx(48,8): error TS1005: ',' expected.
+src/components/integration/archive/FlowErrorPanel.jsx(48,12): error TS1005: ',' expected.
+src/components/integration/archive/FlowErrorPanel.jsx(48,17): error TS1005: ',' expected.
+src/components/integration/archive/FlowErrorPanel.jsx(53,1): error TS1128: Declaration or statement expected.
+src/components/integration/archive/FlowErrorPanel.jsx(53,3): error TS1434: Unexpected keyword or identifier.
+src/components/users/invitation/AcceptInvitation.jsx(5,1): error TS1003: Identifier expected.
+src/components/users/invitation/AcceptInvitation.jsx(5,8): error TS1005: ',' expected.
+src/components/users/invitation/AcceptInvitation.jsx(5,12): error TS1005: ',' expected.
+src/components/users/invitation/AcceptInvitation.jsx(5,17): error TS1005: ',' expected.
+src/components/users/invitation/AcceptInvitation.jsx(19,1): error TS1109: Expression expected.
+src/components/users/invitation/AcceptInvitation.jsx(19,3): error TS1434: Unexpected keyword or identifier.
+src/components/users/mfa/MFAEnrollment.jsx(4,1): error TS1003: Identifier expected.
+src/components/users/mfa/MFAEnrollment.jsx(4,8): error TS1005: ',' expected.
+src/components/users/mfa/MFAEnrollment.jsx(4,12): error TS1005: ',' expected.
+src/components/users/mfa/MFAEnrollment.jsx(4,17): error TS1005: ',' expected.
+src/components/users/mfa/MFAEnrollment.jsx(17,1): error TS1109: Expression expected.
+src/components/users/mfa/MFAEnrollment.jsx(17,3): error TS1434: Unexpected keyword or identifier.
+src/design-system/adapted/display/DataPreviewAdapted.jsx(255,32): error TS1005: ',' expected.
+src/design-system/adapted/display/DataPreviewAdapted.jsx(255,33): error TS1005: ',' expected.
+src/design-system/adapted/display/DataPreviewAdapted.jsx(255,39): error TS1005: ',' expected.
+src/design-system/adapted/display/DataPreviewAdapted.jsx(255,45): error TS1005: ',' expected.
+src/design-system/adapted/display/DataPreviewAdapted.jsx(255,77): error TS1005: ',' expected.
+src/design-system/adapted/display/DataPreviewAdapted.jsx(255,78): error TS1005: ',' expected.
+src/design-system/adapted/display/DataPreviewAdapted.jsx(255,86): error TS1005: ':' expected.
+src/design-system/adapted/display/DataPreviewAdapted.jsx(255,103): error TS1005: ',' expected.
+src/design-system/adapted/display/DataPreviewAdapted.jsx(255,119): error TS1005: ',' expected.
+src/design-system/adapted/display/DataPreviewAdapted.jsx(255,120): error TS1005: ',' expected.
+src/design-system/adapted/display/DataPreviewAdapted.jsx(255,126): error TS1005: ',' expected.
+src/design-system/adapted/display/DataPreviewAdapted.jsx(286,25): error TS1005: ',' expected.
+src/design-system/adapted/display/DataPreviewAdapted.jsx(287,13): error TS1005: ',' expected.
+src/design-system/adapted/display/DataPreviewAdapted.jsx(287,14): error TS1128: Declaration or statement expected.
+src/design-system/adapted/display/DataPreviewAdapted.jsx(289,9): error TS1005: ',' expected.
+src/design-system/adapted/display/DataPreviewAdapted.jsx(290,7): error TS1005: ',' expected.
+src/design-system/adapted/display/DataPreviewAdapted.jsx(302,5): error TS1128: Declaration or statement expected.
+src/design-system/adapted/display/DataPreviewAdapted.jsx(302,6): error TS1128: Declaration or statement expected.
+src/design-system/adapted/display/DataPreviewAdapted.jsx(309,3): error TS1128: Declaration or statement expected.
+src/design-system/adapted/display/DataPreviewAdapted.jsx(309,4): error TS1128: Declaration or statement expected.
+src/design-system/adapted/display/DataPreviewAdapted.jsx(309,36): error TS1005: ';' expected.
+src/design-system/adapted/display/DataPreviewAdapted.jsx(725,1): error TS1128: Declaration or statement expected.
+src/design-system/adapted/display/DataPreviewAdapted.jsx(725,2): error TS1128: Declaration or statement expected.
+src/design-system/docs/DesignSystemDemo.jsx(9,1): error TS1003: Identifier expected.
+src/design-system/docs/DesignSystemDemo.jsx(9,8): error TS1005: ',' expected.
+src/design-system/docs/DesignSystemDemo.jsx(9,23): error TS1005: ',' expected.
+src/design-system/docs/DesignSystemDemo.jsx(9,28): error TS1005: ',' expected.
+src/design-system/docs/DesignSystemDemo.jsx(50,1): error TS1109: Expression expected.
+src/design-system/docs/DesignSystemDemo.jsx(50,3): error TS1434: Unexpected keyword or identifier.
+src/pages/IntegrationDetailPage.jsx(45,1): error TS1003: Identifier expected.
+src/pages/IntegrationDetailPage.jsx(45,8): error TS1005: ',' expected.
+src/pages/IntegrationDetailPage.jsx(45,12): error TS1005: ',' expected.
+src/pages/IntegrationDetailPage.jsx(45,17): error TS1005: ',' expected.
+src/pages/IntegrationDetailPage.jsx(51,1): error TS1109: Expression expected.
+src/pages/IntegrationDetailPage.jsx(51,3): error TS1434: Unexpected keyword or identifier.
+src/tests/components/integration/ComplexFlowValidator.jsx(3,1): error TS1003: Identifier expected.
+src/tests/components/integration/ComplexFlowValidator.jsx(3,8): error TS1005: ',' expected.
+src/tests/components/integration/ComplexFlowValidator.jsx(3,12): error TS1005: ',' expected.
+src/tests/components/integration/ComplexFlowValidator.jsx(3,17): error TS1005: ',' expected.
+src/tests/components/integration/ComplexFlowValidator.jsx(5,1): error TS1128: Declaration or statement expected.
+src/tests/components/integration/ComplexFlowValidator.jsx(5,3): error TS1434: Unexpected keyword or identifier.
+src/tests/components/integration/DynamicDataSourceTester.jsx(3,1): error TS1003: Identifier expected.
+src/tests/components/integration/DynamicDataSourceTester.jsx(3,8): error TS1005: ',' expected.
+src/tests/components/integration/DynamicDataSourceTester.jsx(3,12): error TS1005: ',' expected.
+src/tests/components/integration/DynamicDataSourceTester.jsx(3,17): error TS1005: ',' expected.
+src/tests/components/integration/DynamicDataSourceTester.jsx(5,1): error TS1128: Declaration or statement expected.
+src/tests/components/integration/DynamicDataSourceTester.jsx(5,3): error TS1434: Unexpected keyword or identifier.
+src/tests/components/integration/NodeTypesTester.jsx(3,1): error TS1003: Identifier expected.
+src/tests/components/integration/NodeTypesTester.jsx(3,8): error TS1005: ',' expected.
+src/tests/components/integration/NodeTypesTester.jsx(3,12): error TS1005: ',' expected.
+src/tests/components/integration/NodeTypesTester.jsx(3,17): error TS1005: ',' expected.
+src/tests/components/integration/NodeTypesTester.jsx(5,1): error TS1128: Declaration or statement expected.
+src/tests/components/integration/NodeTypesTester.jsx(5,3): error TS1434: Unexpected keyword or identifier.
+src/tests/components/integration/StorageConnectorTester.jsx(3,1): error TS1003: Identifier expected.
+src/tests/components/integration/StorageConnectorTester.jsx(3,8): error TS1005: ',' expected.
+src/tests/components/integration/StorageConnectorTester.jsx(3,12): error TS1005: ',' expected.
+src/tests/components/integration/StorageConnectorTester.jsx(3,17): error TS1005: ',' expected.
+src/tests/components/integration/StorageConnectorTester.jsx(5,1): error TS1128: Declaration or statement expected.
+src/tests/components/integration/StorageConnectorTester.jsx(5,3): error TS1434: Unexpected keyword or identifier.
+src/tests/integration/DynamicDataSourceTester.jsx(1164,29): error TS1005: ',' expected.
+src/tests/integration/DynamicDataSourceTester.jsx(1164,30): error TS1005: ',' expected.
+src/tests/integration/DynamicDataSourceTester.jsx(1185,18): error TS1005: ';' expected.
+src/tests/integration/DynamicDataSourceTester.jsx(1193,16): error TS1005: ';' expected.
+src/tests/integration/DynamicDataSourceTester.jsx(1194,20): error TS1005: ';' expected.
+src/utils/errorHandling.js(111,79): error TS1005: ':' expected.
+src/utils/errorHandling.js(111,80): error TS1005: ',' expected.
+src/utils/errorHandling.js(111,87): error TS1005: ',' expected.
+src/utils/errorHandling.js(111,94): error TS1005: ',' expected.
+src/utils/errorHandling.js(112,21): error TS1005: ';' expected.
+src/utils/errorHandling.js(112,58): error TS1005: ':' expected.
+src/utils/errorHandling.js(113,20): error TS1005: ';' expected.
+src/utils/errorHandling.js(113,66): error TS1005: ':' expected.
+src/utils/errorHandling.js(114,23): error TS1005: ';' expected.
+src/utils/errorHandling.js(114,80): error TS1005: ':' expected.
+src/utils/errorHandling.js(115,20): error TS1005: ';' expected.
+src/utils/errorHandling.js(115,52): error TS1005: ':' expected.
+src/utils/errorHandling.js(117,16): error TS1005: ',' expected.
+src/utils/errorHandling.js(117,30): error TS8010: Type annotations can only be used in TypeScript files.
+src/utils/errorHandling.js(127,16): error TS1005: ',' expected.
+src/utils/errorHandling.js(127,34): error TS8010: Type annotations can only be used in TypeScript files.
+src/utils/errorHandling.js(129,63): error TS1005: '}' expected.
+src/utils/errorHandling.js(129,65): error TS1131: Property or signature expected.
+src/utils/errorHandling.js(129,68): error TS1005: ';' expected.
+src/utils/errorHandling.js(130,23): error TS1005: ';' expected.
+src/utils/errorHandling.js(131,28): error TS1005: ';' expected.
+src/utils/errorHandling.js(131,83): error TS1005: ':' expected.
+src/utils/errorHandling.js(132,19): error TS1005: ';' expected.
+src/utils/errorHandling.js(133,5): error TS1128: Declaration or statement expected.
+src/utils/errorHandling.js(133,6): error TS1128: Declaration or statement expected.
+src/utils/errorHandling.js(134,27): error TS1005: ';' expected.
+src/utils/errorHandling.js(136,27): error TS1005: ';' expected.
+src/utils/errorHandling.js(136,81): error TS1005: ':' expected.
+src/utils/errorHandling.js(137,27): error TS1005: ';' expected.
+src/utils/errorHandling.js(138,14): error TS1005: ';' expected.
+src/utils/errorHandling.js(139,23): error TS1005: ';' expected.
+src/utils/errorHandling.js(140,6): error TS1128: Declaration or statement expected.
+src/utils/errorHandling.js(141,28): error TS1005: ';' expected.
+src/utils/errorHandling.js(143,31): error TS1005: ';' expected.
+src/utils/errorHandling.js(144,19): error TS1005: ';' expected.
+src/utils/errorHandling.js(145,16): error TS1005: ';' expected.
+src/utils/errorHandling.js(146,6): error TS1128: Declaration or statement expected.
+src/utils/errorHandling.js(147,31): error TS1005: ';' expected.
+src/utils/errorHandling.js(149,21): error TS1005: ';' expected.
+src/utils/errorHandling.js(150,26): error TS1005: ';' expected.
+src/utils/errorHandling.js(151,24): error TS1005: ';' expected.
+src/utils/errorHandling.js(152,6): error TS1128: Declaration or statement expected.
+src/utils/errorHandling.js(153,24): error TS1005: ';' expected.
+src/utils/errorHandling.js(155,20): error TS1005: ';' expected.
+src/utils/errorHandling.js(156,21): error TS1005: ';' expected.
+src/utils/errorHandling.js(157,23): error TS1005: ';' expected.
+src/utils/errorHandling.js(158,23): error TS1005: ';' expected.
+src/utils/errorHandling.js(159,6): error TS1128: Declaration or statement expected.
+src/utils/errorHandling.js(160,20): error TS1005: ';' expected.
+src/utils/errorHandling.js(162,18): error TS1005: ';' expected.
+src/utils/errorHandling.js(163,24): error TS1005: ';' expected.
+src/utils/errorHandling.js(164,19): error TS1005: ';' expected.
+src/utils/errorHandling.js(166,3): error TS1128: Declaration or statement expected.
+src/utils/errorHandling.js(175,1): error TS1128: Declaration or statement expected.
