@@ -1,8 +1,19 @@
 """
 Unified Storage Connector Base Class
 
-This module provides a unified interface for interacting with different
+This module provides a standardized interface for interacting with different
 storage platforms like AWS S3, Azure Blob Storage, and SharePoint.
+
+The StorageConnector abstract base class defines the contract that all storage
+connectors must implement, ensuring consistent behavior across different
+storage providers.
+
+Implementation Guidelines:
+1. All methods should handle exceptions internally and raise appropriate exception types
+2. Methods should provide detailed error information when operations fail
+3. Connection state should be tracked and accessible via a connection_status property
+4. Methods should log operations at appropriate levels (debug, info, warning, error)
+5. Container and blob naming conventions should be validated according to provider requirements
 """
 
 from typing import Dict, Any, Optional, List, BinaryIO, Union
@@ -10,11 +21,43 @@ import abc
 import os
 import io
 import mimetypes
+import logging
 import pandas as pd
+
+from utils.error_handling.exceptions import StorageError, ConnectionError, AuthenticationError, OperationError
+
+# Setup logging
+logger = logging.getLogger(__name__)
 
 
 class StorageConnector(abc.ABC):
-    """Base class for storage platform connectors"""
+    """
+    Abstract base class for storage platform connectors
+    
+    This class defines the interface that all storage connectors must implement.
+    Storage connectors provide standardized access to different storage systems
+    like S3, Azure Blob Storage, SharePoint, etc.
+    """
+    
+    @property
+    def connection_status(self) -> Dict[str, Any]:
+        """
+        Get the current connection status
+        
+        Returns:
+            Dict[str, Any]: Status information including at least:
+                - connected: Whether currently connected
+                - last_connection_attempt: Timestamp of last connection attempt
+                - last_successful_connection: Timestamp of last successful connection
+                - connection_errors: List of recent connection errors
+        """
+        # Subclasses should override this property
+        return {
+            "connected": False,
+            "last_connection_attempt": None,
+            "last_successful_connection": None,
+            "connection_errors": []
+        }
     
     @abc.abstractmethod
     def connect(self) -> bool:
@@ -411,51 +454,83 @@ class StorageConnector(abc.ABC):
         Returns:
             List[Dict[str, str]]: List of discovered fields
         """
-        # Handle different file types
-        if blob_name.lower().endswith('.csv'):
-            df = self.read_csv_blob(container_name, blob_name, nrows=100)
-        elif blob_name.lower().endswith(('.xls', '.xlsx')):
-            df = self.read_excel_blob(container_name, blob_name, nrows=100)
-        elif blob_name.lower().endswith('.json'):
-            df = self.read_json_blob(container_name, blob_name)
-        else:
-            # For unsupported file types
-            return []
-        
-        if df is None or df.empty:
-            return []
-        
-        # Analyze DataFrame to discover fields
-        fields = []
-        for column in df.columns:
-            # Try to infer type from data
-            dtype = df[column].dtype
-            sample = df[column].iloc[0] if not df[column].empty else None
-            
-            if pd.api.types.is_numeric_dtype(dtype):
-                if pd.api.types.is_integer_dtype(dtype):
-                    field_type = 'integer'
-                else:
-                    field_type = 'number'
-            elif pd.api.types.is_bool_dtype(dtype):
-                field_type = 'boolean'
-            elif pd.api.types.is_datetime64_dtype(dtype):
-                field_type = 'datetime'
+        try:
+            # Handle different file types
+            if blob_name.lower().endswith('.csv'):
+                df = self.read_csv_blob(container_name, blob_name, nrows=100)
+            elif blob_name.lower().endswith(('.xls', '.xlsx')):
+                df = self.read_excel_blob(container_name, blob_name, nrows=100)
+            elif blob_name.lower().endswith('.json'):
+                df = self.read_json_blob(container_name, blob_name)
             else:
-                # Check for date strings
-                if isinstance(sample, str) and (
-                    len(sample) >= 10 and
-                    (sample[4:5] == '-' and sample[7:8] == '-' or  # YYYY-MM-DD
-                     sample[2:3] == '/' and sample[5:6] == '/')    # MM/DD/YYYY
-                ):
-                    field_type = 'date'
-                else:
-                    field_type = 'string'
+                # For unsupported file types
+                logger.warning(f"Unsupported file type for field discovery: {blob_name}")
+                return []
             
-            fields.append({
-                'name': column,
-                'type': field_type,
-                'description': f'Field {column}'
-            })
+            if df is None or df.empty:
+                logger.info(f"No data found in {blob_name} for field discovery")
+                return []
+            
+            # Analyze DataFrame to discover fields
+            fields = []
+            for column in df.columns:
+                # Try to infer type from data
+                dtype = df[column].dtype
+                sample = df[column].iloc[0] if not df[column].empty else None
+                
+                if pd.api.types.is_numeric_dtype(dtype):
+                    if pd.api.types.is_integer_dtype(dtype):
+                        field_type = 'integer'
+                    else:
+                        field_type = 'number'
+                elif pd.api.types.is_bool_dtype(dtype):
+                    field_type = 'boolean'
+                elif pd.api.types.is_datetime64_dtype(dtype):
+                    field_type = 'datetime'
+                else:
+                    # Check for date strings
+                    if isinstance(sample, str) and (
+                        len(sample) >= 10 and
+                        (sample[4:5] == '-' and sample[7:8] == '-' or  # YYYY-MM-DD
+                         sample[2:3] == '/' and sample[5:6] == '/')    # MM/DD/YYYY
+                    ):
+                        field_type = 'date'
+                    else:
+                        field_type = 'string'
+                
+                fields.append({
+                    'name': column,
+                    'type': field_type,
+                    'description': f'Field {column}'
+                })
+            
+            logger.info(f"Discovered {len(fields)} fields in {blob_name}")
+            return fields
+        except Exception as e:
+            logger.error(f"Error discovering fields in {blob_name}: {str(e)}")
+            # Return empty list rather than raising an exception to allow graceful fallback
+            return []
+
+    def __enter__(self):
+        """
+        Enter context manager - connect to the storage service
         
-        return fields
+        Returns:
+            StorageConnector: Self
+            
+        Raises:
+            ConnectionError: If connection fails
+        """
+        self.connect()
+        return self
+    
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        """
+        Exit context manager - disconnect from the storage service
+        
+        Args:
+            exc_type: Exception type
+            exc_val: Exception value
+            exc_tb: Exception traceback
+        """
+        self.disconnect()
