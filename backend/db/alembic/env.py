@@ -1,30 +1,45 @@
+"""
+Alembic environment configuration for TAP Integration Platform
+Generated with docker-alembic-standardizer
+"""
+
 import os
 import sys
+from pathlib import Path
 from logging.config import fileConfig
 
-from sqlalchemy import engine_from_config
-from sqlalchemy import pool
+# Add parent directory to path for imports
+sys.path.append(str(Path(__file__).resolve().parent.parent.parent))
+
+# Import TAP models and configuration
+from db.base import Base
+from db.models import *  # noqa
+from core.config_factory import ConfigFactory, EnvironmentType
 
 from alembic import context
-
-# Add the parent directory to the path so we can import the models
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
-
-# Import the models
-from db.base import Base
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
 
+# Get database URL from environment
+environment = os.getenv('APP_ENVIRONMENT', 'development')
+try:
+    env_type = EnvironmentType[environment.upper()]
+    app_config = ConfigFactory.create_config(env_type)
+    database_url = app_config.DATABASE_URL
+    if database_url:
+        config.set_main_option('sqlalchemy.url', database_url)
+except (KeyError, ImportError) as e:
+    # Fallback to config file if ConfigFactory is not available
+    database_url = os.getenv('DATABASE_URL')
+    if database_url:
+        config.set_main_option('sqlalchemy.url', database_url)
+
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
-fileConfig(config.config_file_name)
-
-# Get database URL from environment variable if available
-db_url = os.environ.get('DATABASE_URL')
-if db_url:
-    config.set_main_option('sqlalchemy.url', db_url)
+if config.config_file_name is not None:
+    fileConfig(config.config_file_name)
 
 # add your model's MetaData object here
 # for 'autogenerate' support
@@ -36,7 +51,7 @@ target_metadata = Base.metadata
 # ... etc.
 
 
-def run_migrations_offline():
+def run_migrations_offline() -> None:
     """Run migrations in 'offline' mode.
 
     This configures the context with just a URL
@@ -60,20 +75,25 @@ def run_migrations_offline():
         context.run_migrations()
 
 
-def run_migrations_online():
+def run_migrations_online() -> None:
     """Run migrations in 'online' mode.
 
     In this scenario we need to create an Engine
     and associate a connection with the context.
 
     """
-    connectable = engine_from_config(
-        config.get_section(config.config_ini_section),
-        prefix="sqlalchemy.",
-        poolclass=pool.NullPool,
-    )
+    from sqlalchemy import create_engine
 
-    with connectable.connect() as connection:
+    url = config.get_main_option("sqlalchemy.url")
+    
+    # Connect with connect_args for SQLite (needed for SQLite support)
+    connect_args = {}
+    if url and url.startswith('sqlite'):
+        connect_args['check_same_thread'] = False
+    
+    engine = create_engine(url, connect_args=connect_args)
+
+    with engine.connect() as connection:
         context.configure(
             connection=connection, target_metadata=target_metadata
         )
