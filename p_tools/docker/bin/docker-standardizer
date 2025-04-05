@@ -1,0 +1,183 @@
+#!/usr/bin/env node
+
+/**
+ * Docker Standardizer CLI
+ * 
+ * Command-line tool for standardizing Docker configurations in the TAP Integration Platform.
+ * This tool analyzes and standardizes Dockerfiles and docker-compose.yml files to ensure
+ * consistent configuration and optimal performance.
+ */
+
+const path = require('path');
+const fs = require('fs');
+const { standardizeDocker, standardizeOptimizedDockerfile, validateAndUpdateChecklist } = require('../modules/docker-standardizer');
+
+// Command-line arguments parsing
+const argv = require('minimist')(process.argv.slice(2), {
+  boolean: ['help', 'analyze', 'fix', 'validate'],
+  string: ['path'],
+  alias: {
+    h: 'help',
+    a: 'analyze',
+    f: 'fix',
+    v: 'validate',
+    p: 'path'
+  },
+  default: {
+    path: process.cwd(),
+    fix: true
+  }
+});
+
+// Help text
+function printHelp() {
+  console.log(`
+Docker Standardizer
+-------------------
+Standardizes Docker configurations in the TAP Integration Platform.
+
+Usage:
+  docker-standardizer [options]
+
+Options:
+  -h, --help      Show this help message
+  -a, --analyze   Only analyze Docker configurations without making changes
+  -f, --fix       Apply fixes to standardize Docker configurations (default: true)
+  -v, --validate  Validate Docker standardization and update implementation checklist
+  -p, --path      Path to the project root (default: current directory)
+
+Examples:
+  docker-standardizer
+  docker-standardizer --analyze
+  docker-standardizer --path=/path/to/project --fix
+  docker-standardizer --validate
+`);
+}
+
+// Main function
+async function main() {
+  // Print help and exit if requested
+  if (argv.help) {
+    printHelp();
+    process.exit(0);
+  }
+
+  // Resolve path
+  const basePath = path.resolve(argv.path);
+  
+  console.log(`Docker Standardizer`);
+  console.log(`-----------------`);
+  console.log(`Project path: ${basePath}`);
+
+  // Validate Docker standardization and update checklist
+  if (argv.validate) {
+    console.log(`Validating Docker standardization...`);
+    const isStandardized = validateAndUpdateChecklist(basePath);
+    if (isStandardized) {
+      console.log(`✅ Docker environment is fully standardized (100%)`);
+      console.log(`✅ Implementation checklist updated`);
+    } else {
+      console.log(`❌ Docker environment is not fully standardized`);
+      console.log(`Run docker-standardizer --fix to apply standardization`);
+    }
+    process.exit(isStandardized ? 0 : 1);
+  }
+
+  // Analyze mode - don't apply fixes
+  if (argv.analyze) {
+    console.log(`Analyzing Docker configurations...`);
+    const results = standardizeDocker({ basePath, applyFixes: false });
+    
+    // Print analysis results
+    printResults(results);
+    
+    process.exit(0);
+  }
+
+  // Fix mode - apply standardization
+  console.log(`Standardizing Docker configurations...`);
+  const results = standardizeDocker({ basePath, applyFixes: argv.fix });
+  
+  // Standardize optimized Dockerfile if it exists
+  standardizeOptimizedDockerfile(basePath);
+  
+  // Print standardization results
+  printResults(results);
+  
+  // Validate and update checklist
+  validateAndUpdateChecklist(basePath);
+  
+  process.exit(results.success ? 0 : 1);
+}
+
+// Print standardization results
+function printResults(results) {
+  // Print Dockerfile results
+  console.log(`\nDockerfile Analysis:`);
+  if (results.dockerfiles.length === 0) {
+    console.log(`  No Dockerfiles found`);
+  } else {
+    for (const result of results.dockerfiles) {
+      console.log(`  ${result.path}:`);
+      if (result.issues.length === 0) {
+        console.log(`    ✅ No issues found`);
+      } else {
+        console.log(`    ${result.issues.length} issue(s) found:`);
+        for (const issue of result.issues) {
+          console.log(`    - [${issue.severity}] ${issue.message}`);
+          if (issue.fix) {
+            console.log(`      Fix: ${issue.fix}`);
+          }
+        }
+        if (result.standardized) {
+          console.log(`    ✅ Issues fixed`);
+        } else {
+          console.log(`    ❌ Issues not fixed (run with --fix to apply fixes)`);
+        }
+      }
+    }
+  }
+
+  // Print docker-compose.yml results
+  console.log(`\ndocker-compose.yml Analysis:`);
+  if (results.composeFiles.length === 0) {
+    console.log(`  No docker-compose.yml files found`);
+  } else {
+    for (const result of results.composeFiles) {
+      console.log(`  ${result.path}:`);
+      if (result.issues.length === 0) {
+        console.log(`    ✅ No issues found`);
+      } else {
+        console.log(`    ${result.issues.length} issue(s) found:`);
+        for (const issue of result.issues) {
+          console.log(`    - [${issue.severity}] ${issue.message}`);
+          if (issue.fix) {
+            console.log(`      Fix: ${issue.fix}`);
+          }
+        }
+        if (result.standardized) {
+          console.log(`    ✅ Issues fixed`);
+        } else {
+          console.log(`    ❌ Issues not fixed (run with --fix to apply fixes)`);
+        }
+      }
+    }
+  }
+
+  // Print summary
+  console.log(`\nSummary:`);
+  if (results.success) {
+    console.log(`✅ Docker configurations standardized successfully`);
+  } else {
+    console.log(`❌ Docker standardization incomplete`);
+    if (results.error) {
+      console.log(`Error: ${results.error}`);
+    }
+  }
+}
+
+// Run the main function
+main().catch(error => {
+  console.error(`Error: ${error.message}`);
+  process.exit(1);
+});

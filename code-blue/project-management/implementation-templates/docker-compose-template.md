@@ -1,3 +1,8 @@
+# Docker Compose Implementation Template
+
+This document provides a template for the updated `docker-compose.yml` file with standardized Docker configuration for the TAP Integration Platform.
+
+```yaml
 services:
   frontend:
     build:
@@ -112,3 +117,34 @@ volumes:
     name: tap-backend-venv-${ENV:-dev}
   backend_data:
     name: tap-backend-data-${ENV:-dev}
+```
+
+## Key Improvements:
+
+1. **Standardized Environment Variables**:
+   - Grouped environment variables by purpose
+   - Added descriptive comments
+   - Ensured consistent naming conventions
+
+2. **Health Check Configuration**:
+   - Changed curl healthcheck to use the CMD form for better compatibility
+   - Added appropriate intervals and timeouts
+   - Set reasonable start periods to allow for service initialization
+
+3. **Dependencies and Orchestration**:
+   - Used condition: service_healthy for dependencies
+   - Ensured proper restart policies
+   - Added container names for better identification
+
+4. **Docker-Specific Configuration**:
+   - Added Docker-specific environment variables
+   - Configured file watching for Docker environments
+   - Added graceful shutdown timeout
+
+## Implementation Notes:
+
+1. This template standardizes the Docker Compose configuration while maintaining compatibility with existing services.
+2. All environment variables have sensible defaults for local development.
+3. Health checks are properly configured for both services.
+4. Restart policies ensure services recover from failures.
+5. Volume mounts are standardized for development environments.
