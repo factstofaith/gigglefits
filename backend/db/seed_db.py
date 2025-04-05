@@ -67,8 +67,8 @@ def seed_database(config: Optional[Dict[str, Any]] = None):
                 description="Demo tenant for development and testing",
                 status="active",
                 tier="standard",
-                created_at=datetime.utcnow(),
-                updated_at=datetime.utcnow()
+                created_at=datetime.now(timezone.utc),
+                updated_at=datetime.now(timezone.utc)
             )
             db.add(demo_tenant)
             db.commit()
@@ -87,7 +87,7 @@ def seed_database(config: Optional[Dict[str, Any]] = None):
                 is_active=True,
                 account_status=UserAccountStatus.ACTIVE,
                 bypass_mfa=True,
-                created_at=datetime.utcnow()
+                created_at=datetime.now(timezone.utc)
             )
             db.add(admin_user)
             db.commit()
@@ -106,7 +106,7 @@ def seed_database(config: Optional[Dict[str, Any]] = None):
                 is_active=True,
                 account_status=UserAccountStatus.ACTIVE,
                 bypass_mfa=True,
-                created_at=datetime.utcnow()
+                created_at=datetime.now(timezone.utc)
             )
             db.add(ai_dev_user)
             db.commit()
@@ -125,7 +125,7 @@ def seed_database(config: Optional[Dict[str, Any]] = None):
                 hashed_password=get_password_hash(demo_password),
                 is_active=True,
                 account_status=UserAccountStatus.ACTIVE,
-                created_at=datetime.utcnow()
+                created_at=datetime.now(timezone.utc)
             )
             db.add(demo_user)
             db.commit()
@@ -140,7 +140,7 @@ def seed_database(config: Optional[Dict[str, Any]] = None):
         db.commit()
         
         # Create some integrations
-        now = datetime.utcnow()
+        now = datetime.now(timezone.utc)
         
         integration1 = Integration(
             name="Employee Demo",

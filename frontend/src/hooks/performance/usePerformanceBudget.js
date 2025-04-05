@@ -8,13 +8,7 @@
  */
 
 import { useState, useEffect, useCallback, useRef } from 'react';
-import {
-  getPerformanceMetrics,
-  onBudgetViolation,
-  checkAllBudgets,
-  setPerformanceBudget,
-  getPerformanceBudget
-} from '../../utils/performance';
+import { getPerformanceMetrics, onBudgetViolation, checkAllBudgets, setPerformanceBudget, getPerformanceBudget } from "@/utils/performance";
 
 /**
  * Custom hook for monitoring performance budget violations
@@ -42,30 +36,32 @@ function usePerformanceBudget({
     navigation: [],
     bundleSizes: []
   });
-  
+
   // Store monitoring state
   const [isMonitoring, setIsMonitoring] = useState(enableMonitoring);
-  
+
   // Store references for cleanup and state
   const timerRef = useRef(null);
   const budgetViolationHandlerRef = useRef(null);
-  
+
   // Set custom budget if provided
   useEffect(() => {
     if (customBudgets) {
       setPerformanceBudget(customBudgets);
     }
   }, [customBudgets]);
-  
+
   /**
    * Check performance budgets
    */
   const checkBudgets = useCallback(() => {
-    const currentViolations = checkAllBudgets({ logToConsole });
+    const currentViolations = checkAllBudgets({
+      logToConsole
+    });
     setViolations(currentViolations);
     return currentViolations;
   }, [logToConsole]);
-  
+
   /**
    * Handle budget violations
    */
@@ -74,7 +70,7 @@ function usePerformanceBudget({
       onViolation(violation);
     }
   }, [onViolation]);
-  
+
   /**
    * Start monitoring
    */
@@ -83,24 +79,24 @@ function usePerformanceBudget({
     if (timerRef.current) {
       clearInterval(timerRef.current);
     }
-    
+
     // Set up new timer
     timerRef.current = setInterval(() => {
       checkBudgets();
     }, interval);
-    
+
     // Set up violation handler if not already set
     if (!budgetViolationHandlerRef.current) {
       budgetViolationHandlerRef.current = onBudgetViolation(handleViolation);
     }
-    
+
     // Update state
     setIsMonitoring(true);
-    
+
     // Perform initial check
     checkBudgets();
   }, [interval, checkBudgets, handleViolation]);
-  
+
   /**
    * Stop monitoring
    */
@@ -110,24 +106,22 @@ function usePerformanceBudget({
       clearInterval(timerRef.current);
       timerRef.current = null;
     }
-    
+
     // Remove violation handler
     if (budgetViolationHandlerRef.current) {
       budgetViolationHandlerRef.current();
       budgetViolationHandlerRef.current = null;
     }
-    
+
     // Update state
     setIsMonitoring(false);
   }, []);
-  
+
   /**
    * Calculate overall status based on violations
    */
   const calculateStatus = useCallback(() => {
-    const totalViolations = Object.values(violations)
-      .reduce((sum, categoryViolations) => sum + categoryViolations.length, 0);
-    
+    const totalViolations = Object.values(violations).reduce((sum, categoryViolations) => sum + categoryViolations.length, 0);
     if (totalViolations === 0) {
       return 'success';
     } else if (totalViolations < 5) {
@@ -136,7 +130,7 @@ function usePerformanceBudget({
       return 'error';
     }
   }, [violations]);
-  
+
   // Start/stop monitoring based on enableMonitoring
   useEffect(() => {
     if (enableMonitoring && !isMonitoring) {
@@ -145,20 +139,19 @@ function usePerformanceBudget({
       stopMonitoring();
     }
   }, [enableMonitoring, isMonitoring, startMonitoring, stopMonitoring]);
-  
+
   // Clean up on unmount
   useEffect(() => {
     return () => {
       if (timerRef.current) {
         clearInterval(timerRef.current);
       }
-      
       if (budgetViolationHandlerRef.current) {
         budgetViolationHandlerRef.current();
       }
     };
   }, []);
-  
+
   /**
    * Update custom budget
    */
@@ -167,29 +160,29 @@ function usePerformanceBudget({
     // Recheck with new budget
     checkBudgets();
   }, [checkBudgets]);
-  
+
   /**
    * Get component violation count
    */
   const getComponentViolationCount = useCallback((componentName) => {
-    return violations.components.filter(v => v.name === componentName).length;
+    return violations.components.filter((v) => v.name === componentName).length;
   }, [violations.components]);
-  
+
   /**
    * Get interaction violation count
    */
   const getInteractionViolationCount = useCallback((interactionName) => {
-    return violations.interactions.filter(v => v.name === interactionName).length;
+    return violations.interactions.filter((v) => v.name === interactionName).length;
   }, [violations.interactions]);
-  
+
   /**
    * Get critical violations
    */
   const getCriticalViolations = useCallback(() => {
     const critical = [];
-    
+
     // Check component violations
-    violations.components.forEach(violation => {
+    violations.components.forEach((violation) => {
       if (violation.overagePercent > 100) {
         critical.push({
           ...violation,
@@ -197,9 +190,9 @@ function usePerformanceBudget({
         });
       }
     });
-    
+
     // Check interaction violations
-    violations.interactions.forEach(violation => {
+    violations.interactions.forEach((violation) => {
       if (violation.overagePercent > 100) {
         critical.push({
           ...violation,
@@ -207,9 +200,9 @@ function usePerformanceBudget({
         });
       }
     });
-    
+
     // Check navigation violations for high impact
-    violations.navigation.forEach(violation => {
+    violations.navigation.forEach((violation) => {
       if (violation.overagePercent > 50) {
         critical.push({
           ...violation,
@@ -217,9 +210,9 @@ function usePerformanceBudget({
         });
       }
     });
-    
+
     // Check bundle size violations
-    violations.bundleSizes.forEach(violation => {
+    violations.bundleSizes.forEach((violation) => {
       if (violation.overagePercent > 20) {
         critical.push({
           ...violation,
@@ -227,10 +220,8 @@ function usePerformanceBudget({
         });
       }
     });
-    
     return critical;
   }, [violations]);
-  
   return {
     violations,
     budgets: getPerformanceBudget(),
@@ -245,5 +236,4 @@ function usePerformanceBudget({
     getCriticalViolations
   };
 }
-
 export default usePerformanceBudget;

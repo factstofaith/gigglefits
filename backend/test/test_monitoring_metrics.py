@@ -73,7 +73,7 @@ class MockDatabase:
             "client_id": "client-id",
             "is_connected": True,
             "auth_method": "service_principal",
-            "last_connected_at": datetime.utcnow() - timedelta(minutes=30)
+            "last_connected_at": datetime.now(timezone.utc) - timedelta(minutes=30)
         }
     
     async def fetch_all(self, query, values=None):

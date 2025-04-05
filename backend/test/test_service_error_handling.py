@@ -6,7 +6,7 @@ This module contains tests for error handling across all services.
 
 import pytest
 from unittest.mock import MagicMock, patch
-from datetime import datetime, UTC
+from datetime import datetime, timezone
 from sqlalchemy.exc import SQLAlchemyError, IntegrityError
 
 # Import service classes

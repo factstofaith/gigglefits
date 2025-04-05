@@ -7,18 +7,19 @@ This module provides methods for tracking and analyzing documentation usage.
 import logging
 import json
 from typing import List, Optional, Dict, Any, Union
-from datetime import datetime, timedelta, UTC
-from sqlalchemy.orm import Session
-from sqlalchemy.exc import SQLAlchemyError
-from sqlalchemy import and_, func, text
+from datetime import datetime, timedelta, timezone
+from sqlalchemy import Column, Integer, String, Text, DateTime, Boolean, ForeignKey, Enum, JSON, Table, Float, Sequence, UniqueConstraint, ForeignKeyConstraint, event
+from sqlalchemy.orm import relationship, backref, validates
+from sqlalchemy.ext.declarative import declared_attr
+from sqlalchemy.sql import func
+from datetime import datetime, timezone
+import enum
+import uuid
 
-from ...db.models import (
-    DocumentView,
-    User,
-)
-
-logger = logging.getLogger(__name__)
-
+from db.base import Base
+from utils.encryption.crypto import EncryptedString, EncryptedJSON
+from utils.helpers import generate_uid
+from utils.error_handling.exceptions import ValidationError
 class DocumentationService:
     """Service for documentation analytics"""
     
@@ -42,7 +43,7 @@ class DocumentationService:
             view = DocumentView(
                 document_id=document_id,
                 user_id=user_id,
-                timestamp=datetime.now(UTC),
+                timestamp=datetime.now(timezone.utc),
                 feedback=None
             )
             
@@ -88,9 +89,9 @@ class DocumentationService:
                     try:
                         timestamp = datetime.fromisoformat(timestamp_str)
                     except (ValueError, TypeError):
-                        timestamp = datetime.now(UTC)
+                        timestamp = datetime.now(timezone.utc)
                 else:
-                    timestamp = datetime.now(UTC)
+                    timestamp = datetime.now(timezone.utc)
                 
                 # Create the view record
                 view = DocumentView(
@@ -129,7 +130,7 @@ class DocumentationService:
         """
         try:
             # Determine the date range based on time_period
-            now = datetime.now(UTC)
+            now = datetime.now(timezone.utc)
             if time_period == "day":
                 start_date = now - timedelta(days=1)
             elif time_period == "week":
@@ -139,7 +140,7 @@ class DocumentationService:
             elif time_period == "year":
                 start_date = now - timedelta(days=365)
             else:  # "all"
-                start_date = datetime(1970, 1, 1, tzinfo=UTC)
+                start_date = datetime(1970, 1, 1, tzinfo=timezone.utc)
             
             # Get total views in the time period
             total_views = self.db.query(func.count(DocumentView.id)).filter(

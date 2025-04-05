@@ -1,11 +1,12 @@
 """User management controllers for the TAP Integration Platform"""
 
 from typing import Optional, List, Dict, Any
+import uuid
 from fastapi import APIRouter, Depends, HTTPException, status, Request
 from sqlalchemy.orm import Session
 
 from core.auth import get_current_user, get_current_active_user
-from db.base import get_db
+from db.base import get_db_session as get_db
 from db.models import User, UserRole
 from modules.users.models import (
     InvitationCreate, InvitationResponse, InvitationVerify, InvitationList,
@@ -15,9 +16,40 @@ from modules.users.models import (
     TestEmailRequest, EmailTemplateCreate, EmailTemplateResponse, MFASettingsUpdate,
     MFASettingsResponse, LoginHistoryResponse, LoginHistoryList, MFABypassUpdate
 )
-from modules.users.service import (
-    InvitationService, MFAService, UserService, EmailService, MFASettingsService
-)
+from modules.users.service import UserService, InvitationService, MFAService, EmailService
+
+from datetime import datetime
+from pydantic import BaseModel
+
+# Standard API Response Models
+class ResponseMetadata(BaseModel):
+    timestamp: datetime
+    request_id: str
+    api_version: str = "1.0"
+
+class StandardResponse(BaseModel):
+    data: Any
+    metadata: ResponseMetadata
+
+class PaginationMetadata(BaseModel):
+    page: int
+    page_size: int
+    total_items: int
+    total_pages: int
+
+class PaginatedResponse(BaseModel):
+    data: List[Any]
+    pagination: PaginationMetadata
+    metadata: ResponseMetadata
+
+class ErrorDetail(BaseModel):
+    code: str
+    message: str
+    details: Optional[Dict[str, Any]] = None
+
+class ErrorResponse(BaseModel):
+    error: ErrorDetail
+    metadata: ResponseMetadata
 
 # Create router
 router = APIRouter()
@@ -151,7 +183,7 @@ async def verify_mfa(
     db: Session = Depends(get_db)
 ):
     """Verify MFA code and complete enrollment"""
-    mfa_service = MFAService(db)
+    mfa_service = MFAService(db, response_model=StandardResponse)
     mfa_service.verify_mfa_code(current_user, verification_data.code)
     return mfa_service.get_mfa_status(current_user)
 
@@ -161,7 +193,7 @@ async def get_mfa_status(
     db: Session = Depends(get_db)
 ):
     """Get current MFA status"""
-    mfa_service = MFAService(db)
+    mfa_service = MFAService(db, response_model=StandardResponse)
     return mfa_service.get_mfa_status(current_user)
 
 @router.get("/users/mfa/recovery-codes", response_model=MFARecoveryCodesResponse)
@@ -186,15 +218,17 @@ async def regenerate_recovery_codes(
 
 @router.post("/users/mfa/disable")
 async def disable_mfa(
+    request: Request,
     current_user: User = Depends(get_current_active_user),
     db: Session = Depends(get_db)
 ):
     """Disable MFA for current user"""
     mfa_service = MFAService(db)
     mfa_service.disable_mfa(current_user)
-    return {"success": True, "message": "MFA disabled successfully"}
+    request_id = str(uuid.uuid4())
+    return {"data": {"success": True, "message": "MFA disabled successfully"}, "metadata": {"timestamp": datetime.now().isoformat(), "request_id": request_id, "api_version": "1.0"}}
 
-@router.post("/admin/users/{user_id}/mfa/reset")
+@router.post("/admin/users/{user_id}/mfa/reset", response_model=StandardResponse)
 async def reset_user_mfa(
     user_id: str,
     current_user: User = Depends(get_current_active_user),
@@ -316,7 +350,7 @@ async def update_current_user_profile(
     
     return user
 
-@router.patch("/admin/users/{user_id}/status")
+@router.patch("/admin/users/{user_id}/status", response_model=UserProfileResponse)
 async def update_user_status(
     user_id: str,
     status_data: UserStatusUpdate,
@@ -334,8 +368,7 @@ async def update_user_status(
     user = user_service.update_user_status(user_id, status_data.status, current_user)
     
     return {"success": True, "message": f"User status updated to {status_data.status.value}"}
-
-@router.patch("/admin/users/{user_id}/mfa-bypass")
+@router.patch("/admin/users/{user_id}/mfa-bypass", response_model=StandardResponse)
 async def update_user_mfa_bypass(
     user_id: str,
     bypass_data: MFABypassUpdate,
@@ -367,7 +400,7 @@ async def update_user_mfa_bypass(
         "bypass_mfa": bypass_data.bypass_mfa
     }
 
-@router.delete("/admin/users/{user_id}")
+@router.delete("/admin/users/{user_id}", response_model=StandardResponse)
 async def delete_user(
     user_id: str,
     current_user: User = Depends(get_current_active_user),
@@ -469,7 +502,7 @@ async def update_email_config(
     
     return config
 
-@router.post("/admin/email/test")
+@router.post("/admin/email/test", response_model=StandardResponse)
 async def send_test_email(
     test_data: TestEmailRequest,
     current_user: User = Depends(get_current_active_user),

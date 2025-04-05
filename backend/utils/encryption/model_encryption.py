@@ -6,21 +6,42 @@ This module provides helper functions and classes for working with encrypted dat
 
 import logging
 from typing import List, Dict, Any, Type, Optional
-from sqlalchemy import Column, inspect
-from sqlalchemy.ext.declarative import DeclarativeMeta
-from sqlalchemy.orm import Session
-from sqlalchemy.sql import select
+from sqlalchemy import Column, Integer, String, Text, DateTime, Boolean, ForeignKey, Enum, JSON, Table, Float, Sequence, UniqueConstraint, ForeignKeyConstraint, event
+from sqlalchemy.orm import relationship, backref, validates, Session
+from sqlalchemy.ext.declarative import declared_attr
+from sqlalchemy.sql import func
+from datetime import datetime, timezone
+import enum
+import uuid
 
 from db.base import Base
-from utils.encryption.crypto import EncryptedString, EncryptedJSON, is_encrypted
+from utils.encryption.crypto import EncryptedString, EncryptedJSON
+from utils.helpers import generate_uid
+from utils.error_handling.exceptions import ValidationError
 
-# Setup logging
+# Set up logging
 logger = logging.getLogger(__name__)
 
-# Dictionary to track which models have encrypted fields
-MODELS_WITH_ENCRYPTION: Dict[str, List[str]] = {}
+# Dictionary to store models with encrypted fields
+MODELS_WITH_ENCRYPTION = {}
 
-def register_encrypted_model(model_class: Type[Base], encrypted_fields: List[str]):
+def is_encrypted(value: str) -> bool:
+    """
+    Check if a string value appears to be encrypted.
+    
+    Args:
+        value: The string value to check
+        
+    Returns:
+        True if the value appears to be encrypted, False otherwise
+    """
+    if not isinstance(value, str):
+        return False
+    
+    # A simple heuristic: encrypted data is base64 and starts with a specific prefix
+    return value.startswith("enc:") or (len(value) > 24 and "=" in value[-3:])
+
+def register_encrypted_fields(model_class: Type[Base], encrypted_fields: List[str]):
     """
     Register a model class and its encrypted fields.
     

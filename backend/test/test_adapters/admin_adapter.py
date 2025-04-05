@@ -5,7 +5,7 @@ This module provides a test adapter for admin functionality, implementing the Ba
 """
 
 import uuid
-from datetime import datetime, UTC
+from datetime import datetime, timezone
 from typing import Dict, List, Optional, Any, Union
 
 from .entity_registry import BaseTestAdapter, EntityAction
@@ -45,7 +45,7 @@ class AdminTestAdapter(BaseTestAdapter):
         app_id = len(self.applications) + 1
         
         # Create timestamps
-        now = datetime.now(UTC)
+        now = datetime.now(timezone.utc)
         
         # Create the application
         application = {
@@ -74,7 +74,7 @@ class AdminTestAdapter(BaseTestAdapter):
         # Update the application
         application = self.applications[app_id]
         application.update({
-            "updated_at": datetime.now(UTC),
+            "updated_at": datetime.now(timezone.utc),
             **app_data
         })
         
@@ -106,7 +106,7 @@ class AdminTestAdapter(BaseTestAdapter):
         dataset_id = len(self.datasets) + 1
         
         # Create timestamps
-        now = datetime.now(UTC)
+        now = datetime.now(timezone.utc)
         
         # Create the dataset
         dataset = {
@@ -135,7 +135,7 @@ class AdminTestAdapter(BaseTestAdapter):
         # Update the dataset
         dataset = self.datasets[dataset_id]
         dataset.update({
-            "updated_at": datetime.now(UTC),
+            "updated_at": datetime.now(timezone.utc),
             **dataset_data
         })
         
@@ -167,7 +167,7 @@ class AdminTestAdapter(BaseTestAdapter):
         release_id = len(self.releases) + 1
         
         # Create timestamps
-        now = datetime.now(UTC)
+        now = datetime.now(timezone.utc)
         
         # Create the release
         release = {
@@ -197,7 +197,7 @@ class AdminTestAdapter(BaseTestAdapter):
         # Update the release
         release = self.releases[release_id]
         release.update({
-            "updated_at": datetime.now(UTC),
+            "updated_at": datetime.now(timezone.utc),
             **release_data
         })
         
@@ -230,7 +230,7 @@ class AdminTestAdapter(BaseTestAdapter):
         created_by = tenant_data.get("created_by")
         
         # Create timestamps
-        now = datetime.now(UTC)
+        now = datetime.now(timezone.utc)
         
         # Create the tenant
         tenant = {
@@ -274,7 +274,7 @@ class AdminTestAdapter(BaseTestAdapter):
         # Update the tenant
         tenant = self.tenants[tenant_id]
         tenant.update({
-            "updated_at": datetime.now(UTC),
+            "updated_at": datetime.now(timezone.utc),
             **tenant_data
         })
         
@@ -325,7 +325,7 @@ class AdminTestAdapter(BaseTestAdapter):
             
         # Create the assignment
         assignment_id = str(uuid.uuid4())
-        now = datetime.now(UTC)
+        now = datetime.now(timezone.utc)
         
         assignment = {
             "id": assignment_id,
@@ -439,7 +439,7 @@ class AdminTestAdapter(BaseTestAdapter):
             
         # Create the resource
         resource_id = str(uuid.uuid4())
-        now = datetime.now(UTC)
+        now = datetime.now(timezone.utc)
         
         resource = {
             "id": resource_id,
@@ -515,7 +515,7 @@ class AdminTestAdapter(BaseTestAdapter):
         # Create the log entry
         log_entry = {
             "id": str(uuid.uuid4()),
-            "timestamp": datetime.now(UTC),
+            "timestamp": datetime.now(timezone.utc),
             "operation_type": operation_type,
             "performed_by": performed_by,
             "details": details
@@ -546,7 +546,7 @@ class AdminTestAdapter(BaseTestAdapter):
             tenant["settings"] = {}
             
         tenant["settings"].update(settings)
-        tenant["updated_at"] = datetime.now(UTC)
+        tenant["updated_at"] = datetime.now(timezone.utc)
         
         # Update the tenant entity
         self._update_entity("Tenant", tenant_id, tenant)
@@ -626,8 +626,8 @@ class AdminTestAdapter(BaseTestAdapter):
         # Store the provider configuration
         self.auth_providers[provider_id] = {
             "id": provider_id,
-            "created_at": datetime.now(UTC),
-            "updated_at": datetime.now(UTC),
+            "created_at": datetime.now(timezone.utc),
+            "updated_at": datetime.now(timezone.utc),
             **provider_data
         }
         
@@ -737,7 +737,7 @@ class AdminTestAdapter(BaseTestAdapter):
             tenant["system_overrides"] = {}
             
         tenant["system_overrides"].update(overrides)
-        tenant["updated_at"] = datetime.now(UTC)
+        tenant["updated_at"] = datetime.now(timezone.utc)
         
         # Update the tenant entity
         self._update_entity("Tenant", tenant_id, tenant)
@@ -797,7 +797,7 @@ class AdminTestAdapter(BaseTestAdapter):
         # Create the log entry
         log_entry = {
             "id": str(uuid.uuid4()),
-            "timestamp": datetime.now(UTC),
+            "timestamp": datetime.now(timezone.utc),
             "operation_type": operation_type,
             "performed_by": performed_by,
             "details": details
@@ -855,8 +855,8 @@ class AdminTestAdapter(BaseTestAdapter):
                     "role": role,
                     "department": user_data.get("department"),
                     "title": user_data.get("title"),
-                    "created_at": datetime.now(UTC),
-                    "updated_at": datetime.now(UTC),
+                    "created_at": datetime.now(timezone.utc),
+                    "updated_at": datetime.now(timezone.utc),
                     "created_by": created_by,
                     "status": "ACTIVE",
                     "welcome_email_sent": send_welcome_email
@@ -932,12 +932,12 @@ class AdminTestAdapter(BaseTestAdapter):
         if user_id not in self.user_details:
             self.user_details[user_id] = {
                 "id": user_id,
-                "created_at": datetime.now(UTC)
+                "created_at": datetime.now(timezone.utc)
             }
             
         # Update user details
         self.user_details[user_id].update(update_data)
-        self.user_details[user_id]["updated_at"] = datetime.now(UTC)
+        self.user_details[user_id]["updated_at"] = datetime.now(timezone.utc)
         self.user_details[user_id]["updated_by"] = updated_by
         
         # Add a user audit log
@@ -977,13 +977,13 @@ class AdminTestAdapter(BaseTestAdapter):
         if user_id not in self.user_details:
             self.user_details[user_id] = {
                 "id": user_id,
-                "created_at": datetime.now(UTC)
+                "created_at": datetime.now(timezone.utc)
             }
             
         # Update status
         self.user_details[user_id]["status"] = status
         self.user_details[user_id]["status_reason"] = reason
-        self.user_details[user_id]["updated_at"] = datetime.now(UTC)
+        self.user_details[user_id]["updated_at"] = datetime.now(timezone.utc)
         self.user_details[user_id]["updated_by"] = updated_by
         
         # Add a user audit log
@@ -1065,12 +1065,12 @@ class AdminTestAdapter(BaseTestAdapter):
             if user_id not in self.user_details:
                 self.user_details[user_id] = {
                     "id": user_id,
-                    "created_at": datetime.now(UTC)
+                    "created_at": datetime.now(timezone.utc)
                 }
                 
             # Update user details
             self.user_details[user_id].update(update_data)
-            self.user_details[user_id]["updated_at"] = datetime.now(UTC)
+            self.user_details[user_id]["updated_at"] = datetime.now(timezone.utc)
             self.user_details[user_id]["updated_by"] = updated_by
             
             # Add a user audit log
@@ -1143,7 +1143,7 @@ class AdminTestAdapter(BaseTestAdapter):
         # Create the log entry
         log_entry = {
             "id": str(uuid.uuid4()),
-            "timestamp": datetime.now(UTC),
+            "timestamp": datetime.now(timezone.utc),
             "operation_type": operation_type,
             "performed_by": performed_by,
             "details": details
@@ -1163,7 +1163,7 @@ class AdminTestAdapter(BaseTestAdapter):
         assoc_key = f"{tenant_id}_{app_id}"
         
         # Create timestamps
-        now = datetime.now(UTC)
+        now = datetime.now(timezone.utc)
         
         # Create the association
         association = {
@@ -1227,7 +1227,7 @@ class AdminTestAdapter(BaseTestAdapter):
         webhook_id = len(self.webhooks) + 1
         
         # Create timestamps
-        now = datetime.now(UTC)
+        now = datetime.now(timezone.utc)
         
         # Create the webhook
         webhook = {
@@ -1258,7 +1258,7 @@ class AdminTestAdapter(BaseTestAdapter):
         # Update the webhook
         webhook = self.webhooks[webhook_id]
         webhook.update({
-            "updated_at": datetime.now(UTC),
+            "updated_at": datetime.now(timezone.utc),
             **webhook_data
         })
         

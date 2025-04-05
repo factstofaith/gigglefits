@@ -2,15 +2,19 @@
 SQLAlchemy database models
 """
 
-from sqlalchemy import Column, Integer, String, Text, DateTime, Boolean, ForeignKey, Enum, JSON, Table
-from sqlalchemy.orm import relationship
-from datetime import datetime
-import uuid
+from sqlalchemy import Column, Integer, String, Text, DateTime, Boolean, ForeignKey, Enum, JSON, Table, Float, Sequence, UniqueConstraint, ForeignKeyConstraint, event
+from sqlalchemy.orm import relationship, backref, validates
+from sqlalchemy.ext.declarative import declared_attr
+from sqlalchemy.sql import func
+from datetime import datetime, timezone
 import enum
+import uuid
 import sqlalchemy as sa
 
 from db.base import Base
 from utils.encryption.crypto import EncryptedString, EncryptedJSON
+from utils.helpers import generate_uid
+from utils.error_handling.exceptions import ValidationError
 
 # Many-to-many relationship table for tags
 integration_tags = Table(
@@ -35,7 +39,6 @@ integration_datasets = Table(
     Column('integration_id', Integer, ForeignKey('integrations.id', ondelete="CASCADE"), primary_key=True),
     Column('dataset_id', Integer, ForeignKey('datasets.id', ondelete="CASCADE"), primary_key=True)
 )
-
 class IntegrationType(str, enum.Enum):
     API = "API-based"
     FILE = "File-based"
@@ -45,6 +48,18 @@ class IntegrationHealth(str, enum.Enum):
     HEALTHY = "healthy"
     WARNING = "warning"
     ERROR = "error"
+
+# Auth-related models
+class LoginAttempt(Base):
+    """Tracks login attempts for security monitoring and brute force protection"""
+    __tablename__ = 'login_attempts'
+    
+    id = Column(Integer, primary_key=True)
+    username = Column(String(255), nullable=False, index=True)
+    success = Column(Boolean, nullable=False, default=False)
+    message = Column(String(255))
+    timestamp = Column(DateTime(timezone=True), nullable=False, default=lambda: datetime.now(timezone.utc))
+    ip_address = Column(String(45))  # IPv6 addresses can be up to 45 chars
 
 class UserRole(str, enum.Enum):
     ADMIN = "admin"
@@ -119,8 +134,8 @@ class Integration(Base):
     schedule = Column(JSON, nullable=True)
     azure_blob_config = Column(EncryptedJSON, nullable=True)
     application_id = Column(Integer, ForeignKey("applications.id"), nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
     last_run_at = Column(DateTime, nullable=True)
     
     # Relationships
@@ -129,10 +144,46 @@ class Integration(Base):
     tags = relationship("Tag", secondary=integration_tags, backref="integrations")
     webhooks = relationship("Webhook", back_populates="integration", cascade="all, delete-orphan")
     datasets = relationship("Dataset", secondary=integration_datasets, backref="integrations")
-    application = relationship("Application", back_populates="integrations")
+    application = relationship("Application", back_populates="integrations", cascade="all, delete-orphan")
     earnings_maps = relationship("IntegrationEarningsMap", back_populates="integration", cascade="all, delete-orphan")
-    rosters = relationship("EmployeeRoster", back_populates="integration")
+    rosters = relationship("EmployeeRoster", back_populates="integration", cascade="all, delete-orphan")
 
+    # Validation methods
+    @validates('name')
+    def validate_name(self, key, value):
+        """Validate name field"""
+        if value is None:
+            raise ValidationError(f"{key} cannot be None")
+        return value
+    
+    @validates('type')
+    def validate_type(self, key, value):
+        """Validate type field"""
+        if value is None:
+            raise ValidationError(f"{key} cannot be None")
+        return value
+    
+    @validates('source')
+    def validate_source(self, key, value):
+        """Validate source field"""
+        if value is None:
+            raise ValidationError(f"{key} cannot be None")
+        return value
+    
+    @validates('destination')
+    def validate_destination(self, key, value):
+        """Validate destination field"""
+        if value is None:
+            raise ValidationError(f"{key} cannot be None")
+        return value
+    
+    @validates('health')
+    def validate_health(self, key, value):
+        """Validate health field"""
+        if value is None:
+            raise ValidationError(f"{key} cannot be None")
+        return value
+    
 class Application(Base):
     """Applications that can be integrated with the platform"""
     __tablename__ = "applications"
@@ -148,13 +199,13 @@ class Application(Base):
     documentation_url = Column(String(255), nullable=True)
     support_url = Column(String(255), nullable=True)
     tenant_id = Column(String(50), nullable=True)  # Creator tenant
-    created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
     
     # Relationships
     datasets = relationship("Dataset", secondary=application_datasets, backref="applications")
-    integrations = relationship("Integration", back_populates="application")
-    webhooks = relationship("Webhook", back_populates="application")
+    integrations = relationship("Integration", back_populates="application", cascade="all, delete-orphan")
+    webhooks = relationship("Webhook", back_populates="application", cascade="all, delete-orphan")
     tenants = relationship("Tenant", secondary="tenant_application_associations", 
                          back_populates="applications")
 
@@ -169,8 +220,8 @@ class Dataset(Base):
     schema = Column(JSON, nullable=True)  # JSON Schema definition
     sample_data = Column(JSON, nullable=True)  # Sample data for preview
     tenant_id = Column(String(50), nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
     
     # Relationships
     fields = relationship("DatasetField", back_populates="dataset", cascade="all, delete-orphan")
@@ -190,11 +241,11 @@ class DatasetField(Base):
     is_primary_key = Column(Boolean, default=False)
     format = Column(String(50), nullable=True)  # Format specification for the field
     constraints = Column(JSON, nullable=True)  # Validation constraints
-    created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
     
     # Relationships
-    dataset = relationship("Dataset", back_populates="fields")
+    dataset = relationship("Dataset", back_populates="fields", cascade="all, delete-orphan")
 
 class FieldMapping(Base):
     __tablename__ = "field_mappings"
@@ -207,11 +258,11 @@ class FieldMapping(Base):
     transform_params = Column(JSON, nullable=True)
     required = Column(Boolean, default=False)
     description = Column(Text, nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
     
     # Relationships
-    integration = relationship("Integration", back_populates="field_mappings")
+    integration = relationship("Integration", back_populates="field_mappings", cascade="all, delete-orphan")
 
 class User(Base):
     __tablename__ = "users"
@@ -225,7 +276,7 @@ class User(Base):
     provider = Column(String(50), nullable=True)
     hashed_password = Column(EncryptedString, nullable=True)  # NULL for external auth (encrypted)
     is_active = Column(Boolean, default=True, nullable=False)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
     
     # New fields for the invitation system
     zoho_account = Column(String(100), nullable=True)
@@ -250,14 +301,14 @@ class IntegrationRun(Base):
     id = Column(Integer, primary_key=True, index=True)
     integration_id = Column(Integer, ForeignKey("integrations.id"), nullable=False)
     status = Column(Enum(IntegrationRunStatus), nullable=False)
-    start_time = Column(DateTime, default=datetime.utcnow)
+    start_time = Column(DateTime, default=lambda: datetime.now(timezone.utc))
     end_time = Column(DateTime, nullable=True)
     records_processed = Column(Integer, nullable=True)
     warnings = Column(JSON, nullable=True)
     error = Column(Text, nullable=True)
     
     # Relationships
-    integration = relationship("Integration", back_populates="runs")
+    integration = relationship("Integration", back_populates="runs", cascade="all, delete-orphan")
 
 class Tag(Base):
     __tablename__ = "tags"
@@ -341,13 +392,13 @@ class Webhook(Base):
     retry_interval_seconds = Column(Integer, default=60)
     
     # Timestamps
-    created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
     last_triggered_at = Column(DateTime, nullable=True)
     
     # Relationships
-    integration = relationship("Integration", back_populates="webhooks")
-    application = relationship("Application", back_populates="webhooks")
+    integration = relationship("Integration", back_populates="webhooks", cascade="all, delete-orphan")
+    application = relationship("Application", back_populates="webhooks", cascade="all, delete-orphan")
     webhook_logs = relationship("WebhookLog", back_populates="webhook", cascade="all, delete-orphan")
 
 
@@ -364,11 +415,11 @@ class WebhookLog(Base):
     is_success = Column(Boolean, default=False)
     error_message = Column(Text, nullable=True)
     attempt_count = Column(Integer, default=1)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
     completed_at = Column(DateTime, nullable=True)
     
     # Relationships
-    webhook = relationship("Webhook", back_populates="webhook_logs")
+    webhook = relationship("Webhook", back_populates="webhook_logs", cascade="all, delete-orphan")
 
 
 # Employee Earnings Mapping Models
@@ -386,14 +437,14 @@ class EmployeeRoster(Base):
     owner_id = Column(String(50), nullable=True)
     integration_id = Column(Integer, ForeignKey("integrations.id"), nullable=True)  # Optional integration association
     last_sync_at = Column(DateTime, nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
     
     # Relationships
     employees = relationship("Employee", back_populates="roster", cascade="all, delete-orphan")
     earnings_maps = relationship("EarningsMap", back_populates="roster", cascade="all, delete-orphan")
     business_rules = relationship("BusinessRule", back_populates="roster", cascade="all, delete-orphan")
-    integration = relationship("Integration", back_populates="rosters")
+    integration = relationship("Integration", back_populates="rosters", cascade="all, delete-orphan")
 
 class Employee(Base):
     """Employee record for earnings mapping"""
@@ -408,11 +459,11 @@ class Employee(Base):
     last_name = Column(String(50), nullable=True)
     email = Column(String(100), nullable=True)
     attributes = Column(JSON, nullable=True)  # Additional employee attributes
-    created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
     
     # Relationships
-    roster = relationship("EmployeeRoster", back_populates="employees")
+    roster = relationship("EmployeeRoster", back_populates="employees", cascade="all, delete-orphan")
     earnings = relationship("EmployeeEarnings", back_populates="employee", cascade="all, delete-orphan")
 
 class EmployeeEarnings(Base):
@@ -427,10 +478,10 @@ class EmployeeEarnings(Base):
     period_start = Column(DateTime, nullable=True)
     period_end = Column(DateTime, nullable=True)
     attributes = Column(JSON, nullable=True)  # Additional earnings attributes
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
     
     # Relationships
-    employee = relationship("Employee", back_populates="earnings")
+    employee = relationship("Employee", back_populates="earnings", cascade="all, delete-orphan")
 
 class EarningsCode(Base):
     """Earnings code definition"""
@@ -443,12 +494,12 @@ class EarningsCode(Base):
     destination_system = Column(String(50), nullable=False)  # HCM system identifier
     is_overtime = Column(Boolean, default=False)
     attributes = Column(JSON, nullable=True)  # Additional code attributes
-    created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
     
     # Relationships
-    earnings_maps = relationship("EarningsMap", back_populates="earnings_code")
-    integration_earnings_maps = relationship("IntegrationEarningsMap", back_populates="earnings_code")
+    earnings_maps = relationship("EarningsMap", back_populates="earnings_code", cascade="all, delete-orphan")
+    integration_earnings_maps = relationship("IntegrationEarningsMap", back_populates="earnings_code", cascade="all, delete-orphan")
 
 class EarningsMap(Base):
     """Mapping between source earnings and destination earnings codes for employee rosters"""
@@ -460,12 +511,12 @@ class EarningsMap(Base):
     earnings_code_id = Column(Integer, ForeignKey("earnings_codes.id"), nullable=False)
     default_map = Column(Boolean, default=False)  # Is this the default mapping
     condition = Column(Text, nullable=True)  # Condition expression for conditional mapping
-    created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
     
     # Relationships
-    roster = relationship("EmployeeRoster", back_populates="earnings_maps")
-    earnings_code = relationship("EarningsCode", back_populates="earnings_maps")
+    roster = relationship("EmployeeRoster", back_populates="earnings_maps", cascade="all, delete-orphan")
+    earnings_code = relationship("EarningsCode", back_populates="earnings_maps", cascade="all, delete-orphan")
 
 class IntegrationEarningsMap(Base):
     """Mapping between source earnings and destination earnings codes for integrations"""
@@ -478,13 +529,13 @@ class IntegrationEarningsMap(Base):
     default_map = Column(Boolean, default=False)  # Is this the default mapping
     condition = Column(Text, nullable=True)  # Condition expression for conditional mapping
     dataset_id = Column(Integer, ForeignKey("datasets.id"), nullable=True)  # Optional dataset association
-    created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
     
     # Relationships
-    integration = relationship("Integration", back_populates="earnings_maps")
-    earnings_code = relationship("EarningsCode", back_populates="integration_earnings_maps")
-    dataset = relationship("Dataset")
+    integration = relationship("Integration", back_populates="earnings_maps", cascade="all, delete-orphan")
+    earnings_code = relationship("EarningsCode", back_populates="integration_earnings_maps", cascade="all, delete-orphan")
+    dataset = relationship("Dataset", back_populates="", cascade="all, delete-orphan")
 
 
 class Tenant(Base):
@@ -497,8 +548,8 @@ class Tenant(Base):
     status = Column(String(20), default="active")  # active, inactive, suspended
     tier = Column(String(20), default="standard")  # standard, premium, enterprise
     settings = Column(JSON, nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
     
     # Relationships
     applications = relationship("Application", secondary="tenant_application_associations", 
@@ -552,12 +603,12 @@ class BusinessRule(Base):
     rule_definition = Column(JSON, nullable=False)  # Definition of the rule in structured format
     earnings_code_id = Column(Integer, ForeignKey("earnings_codes.id"), nullable=True)
     is_active = Column(Boolean, default=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
     
     # Relationships
-    roster = relationship("EmployeeRoster", back_populates="business_rules")
-    earnings_code = relationship("EarningsCode")
+    roster = relationship("EmployeeRoster", back_populates="business_rules", cascade="all, delete-orphan")
+    earnings_code = relationship("EarningsCode", back_populates="", cascade="all, delete-orphan")
 
 
 # User Invitation System Models
@@ -573,8 +624,8 @@ class Invitation(Base):
     created_by = Column(String(50), ForeignKey("users.id"), nullable=False)
     status = Column(Enum(InvitationStatus), nullable=False, default=InvitationStatus.PENDING)
     role = Column(String(20), nullable=False)  # ADMIN or USER
-    created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
     accepted_at = Column(DateTime, nullable=True)
     reminder_sent_at = Column(DateTime, nullable=True)
     reminder_count = Column(Integer, default=0)
@@ -594,12 +645,12 @@ class UserMFA(Base):
     mfa_verified = Column(Boolean, default=False)
     mfa_secret = Column(EncryptedString, nullable=True)  # Encrypted MFA secret
     mfa_recovery_codes = Column(EncryptedJSON, nullable=True)  # Encrypted recovery codes
-    created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
     last_verified = Column(DateTime, nullable=True)
     
     # Relationships
-    user = relationship("User", back_populates="mfa")
+    user = relationship("User", back_populates="mfa", cascade="all, delete-orphan")
 
 
 class UserLoginHistory(Base):
@@ -610,12 +661,12 @@ class UserLoginHistory(Base):
     user_id = Column(String(50), ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     ip_address = Column(String(45), nullable=True)  # IPv6 can be up to 45 chars
     user_agent = Column(String(255), nullable=True)
-    login_time = Column(DateTime, default=datetime.utcnow)
+    login_time = Column(DateTime, default=lambda: datetime.now(timezone.utc))
     success = Column(Boolean, default=True)
     failure_reason = Column(String(100), nullable=True)
     
     # Relationships
-    user = relationship("User", back_populates="login_history")
+    user = relationship("User", back_populates="login_history", cascade="all, delete-orphan")
 
 
 class EmailConfiguration(Base):
@@ -629,8 +680,8 @@ class EmailConfiguration(Base):
     from_email = Column(String(100), nullable=False)
     from_name = Column(String(100), nullable=False)
     reply_to = Column(String(100), nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
     
     # Relationships
     tenant = relationship("Tenant", backref="email_configuration")
@@ -646,8 +697,8 @@ class EmailTemplate(Base):
     html_content = Column(Text, nullable=False)
     text_content = Column(Text, nullable=False)
     tenant_id = Column(String(50), ForeignKey("tenants.id", ondelete="CASCADE"), nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
     
     # Relationships
     tenant = relationship("Tenant", backref="email_templates")
@@ -667,8 +718,8 @@ class MFASettings(Base):
     recovery_codes_enabled = Column(Boolean, default=True)
     recovery_codes_count = Column(Integer, default=10)
     recovery_code_length = Column(Integer, default=8)
-    created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
     
     # Relationships
     tenant = relationship("Tenant", backref="mfa_settings")
@@ -686,4 +737,4 @@ class DocumentView(Base):
     doc_metadata = Column(JSON, nullable=True)  # Renamed from 'metadata' to avoid SQLAlchemy reserved name
     
     # Relationships
-    user = relationship("User", back_populates="document_views")
+    user = relationship("User", back_populates="document_views", cascade="all, delete-orphan")

@@ -246,7 +246,7 @@ class IntegrationRunner:
             "adapter_type": type(source_adapter).__name__
         }
         
-        start_time = datetime.utcnow()
+        start_time = datetime.now(timezone.utc)
         
         # Handle different adapter types differently
         try:
@@ -276,7 +276,7 @@ class IntegrationRunner:
                 raise ValueError(error_msg)
             
             # Log extraction stats
-            end_time = datetime.utcnow()
+            end_time = datetime.now(timezone.utc)
             duration = (end_time - start_time).total_seconds()
             
             # Describe the data that was extracted

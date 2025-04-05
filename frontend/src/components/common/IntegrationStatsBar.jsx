@@ -1,10 +1,13 @@
-// IntegrationStatsBar.jsx
+import { ErrorBoundary, useErrorHandler, withErrorBoundary } from "@/error-handling"; // IntegrationStatsBar.jsx
 // -----------------------------------------------------------------------------
 // A modern stats bar showing integration counts (total, healthy, warnings, errors).
-
 import React from 'react';
-
-function IntegrationStatsBar({ total = 0, healthy = 0, warnings = 0, errors = 0 }) {
+function IntegrationStatsBar({
+  total = 0,
+  healthy = 0,
+  warnings = 0,
+  errors = 0
+}) {
   const containerStyle = {
     display: 'flex',
     gap: '2rem',
@@ -16,19 +19,15 @@ function IntegrationStatsBar({ total = 0, healthy = 0, warnings = 0, errors = 0 
     justifyContent: 'center',
     marginBottom: '1rem'
   };
-
   const statBoxStyle = {
     textAlign: 'center',
     color: '#3B3D3D'
   };
-
   const statNumberStyle = {
     fontSize: '1.2rem',
     fontWeight: 'bold'
   };
-
-  return (
-    <div style={containerStyle}>
+  return <div style={containerStyle}>
       <div style={statBoxStyle}>
         <div style={statNumberStyle}>{total}</div>
         <div>Total Integrations</div>
@@ -45,8 +44,8 @@ function IntegrationStatsBar({ total = 0, healthy = 0, warnings = 0, errors = 0 
         <div style={statNumberStyle}>{errors}</div>
         <div>Errors</div>
       </div>
-    </div>
-  );
+    </div>;
 }
-
-export default IntegrationStatsBar;
+export default withErrorBoundary(IntegrationStatsBar, {
+  boundary: 'IntegrationStatsBar'
+});

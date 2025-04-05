@@ -26,8 +26,18 @@ from .exceptions import (
     ERROR_HANDLERS
 )
 
-# Setup logging
-logger = logging.getLogger(__name__)
+# Import structured logging
+try:
+    from utils.logging import get_logger
+    from utils.logging.errors import log_exception, get_error_logger
+    # Use structured logger if available
+    logger = get_logger(__name__)
+    error_logger = get_error_logger(__name__)
+    structured_logging_available = True
+except ImportError:
+    # Fallback to standard logging if structured logging not available
+    logger = logging.getLogger(__name__)
+    structured_logging_available = False
 
 
 def with_error_logging(func: Callable):
@@ -47,9 +57,22 @@ def with_error_logging(func: Callable):
         try:
             return func(*args, **kwargs)
         except Exception as e:
-            logger.error(
-                f"Error in {func.__name__}: {e}\n{traceback.format_exc()}"
-            )
+            if structured_logging_available:
+                # Use structured logging if available
+                error_logger.exception(
+                    f"Error in {func.__name__}",
+                    context={
+                        "function": func.__name__,
+                        "module": func.__module__,
+                        "args_count": len(args),
+                        "kwargs_keys": list(kwargs.keys())
+                    }
+                )
+            else:
+                # Fallback to standard logging
+                logger.error(
+                    f"Error in {func.__name__}: {e}\n{traceback.format_exc()}"
+                )
             raise
     
     return wrapper
@@ -60,7 +83,8 @@ def create_error_response(
     error_code: str,
     message: str,
     detail: Optional[Dict[str, Any]] = None,
-    path: Optional[str] = None
+    path: Optional[str] = None,
+    request_id: Optional[str] = None
 ) -> Dict[str, Any]:
     """
     Create a standardized error response structure.
@@ -71,6 +95,7 @@ def create_error_response(
         message: Human-readable error message
         detail: Additional error details
         path: Request path that caused the error
+        request_id: Unique request ID for tracing
         
     Returns:
         Standardized error response structure
@@ -81,7 +106,8 @@ def create_error_response(
             "message": message,
             "detail": detail or {},
             "path": path,
-            "timestamp": time.time()
+            "timestamp": time.time(),
+            "request_id": request_id
         }
     }
 
@@ -95,284 +121,186 @@ def log_exception(request: Request, exc: Exception):
         exc: Exception to log
     """
     try:
+        # Extract request information
+        path = request.url.path
+        method = request.method
+        client_ip = request.client.host if request.client else None
+        
+        # Get request ID if available
+        request_id = request.headers.get("X-Request-ID")
+        
+        # Get user agent
+        user_agent = request.headers.get("User-Agent", "Unknown")
+        
         # Determine log level based on exception type
         if isinstance(exc, (ResourceNotFoundError, AuthenticationError, AuthorizationError)):
             # These are common client errors, log at INFO level
             log_level = logging.INFO
-        elif isinstance(exc, ValidationError):
-            # Validation errors are client errors, log at WARNING level
-            log_level = logging.WARNING
-        elif isinstance(exc, ApplicationError):
-            # Application errors are server errors, log at ERROR level
-            log_level = logging.ERROR
         else:
-            # Unknown errors are server errors, log at ERROR level
+            # For server errors, log at ERROR level
             log_level = logging.ERROR
         
-        # Get request details
-        method = request.method
-        url = str(request.url)
-        client_host = request.client.host if request.client else "unknown"
+        # Context for structured logging
+        context = {
+            "request": {
+                "method": method,
+                "path": path,
+                "request_id": request_id,
+                "ip": client_ip,
+                "user_agent": user_agent
+            },
+            "error": {
+                "type": type(exc).__name__,
+                "message": str(exc)
+            }
+        }
         
-        # Create log message
-        log_message = f"{method} {url} from {client_host} - {type(exc).__name__}: {str(exc)}"
+        # Add exception traceback for server errors
+        if log_level >= logging.ERROR:
+            context["error"]["traceback"] = traceback.format_exception(type(exc), exc, exc.__traceback__)
         
-        # Log with appropriate level
-        if log_level == logging.INFO:
-            logger.info(log_message)
-        elif log_level == logging.WARNING:
-            logger.warning(log_message)
-        else:  # ERROR
-            if isinstance(exc, ApplicationError) and exc.original_error:
-                # Log original error details for application errors
-                logger.error(
-                    f"{log_message}\nOriginal error: {exc.original_error}\n{traceback.format_exc()}"
+        # Log with structured logging if available
+        if structured_logging_available:
+            from utils.logging.context import set_request_context
+            
+            # Set request context for structured logging
+            if request_id:
+                set_request_context(
+                    request_id=request_id,
+                    ip_address=client_ip,
+                    user_agent=user_agent
                 )
-            else:
-                logger.error(f"{log_message}\n{traceback.format_exc()}")
-    except Exception as e:
-        logger.error(f"Error in log_exception: {e}")
+            
+            # Log using structured logger
+            error_logger.log_error(
+                f"Exception in {method} {path}: {type(exc).__name__}: {str(exc)}",
+                exc=exc,
+                level=log_level,
+                context=context
+            )
+        else:
+            # Fallback to standard logging
+            logger.log(
+                log_level,
+                f"Exception in {method} {path}: {type(exc).__name__}: {str(exc)}"
+            )
+            
+            # Log traceback for errors
+            if log_level >= logging.ERROR:
+                logger.error(traceback.format_exc())
+    except Exception as logging_error:
+        # If error logging fails, log a simple message as fallback
+        logger.error(f"Error while logging exception: {logging_error}")
+        logger.error(f"Original exception: {exc}")
 
 
-@with_error_logging
-def handle_application_error(request: Request, exc: ApplicationError):
-    """
-    Handle ApplicationError exceptions.
-    
-    Args:
-        request: FastAPI request
-        exc: ApplicationError instance
-    
-    Returns:
-        JSON response with error details
-    """
-    try:
-        # Log the exception
-        log_exception(request, exc)
-        
-        # Create error response
-        response_content = create_error_response(
-            status_code=exc.status_code,
-            error_code=exc.error_code,
-            message=exc.message,
-            detail=exc.detail,
-            path=str(request.url.path)
-        )
-        
-        # Return JSON response
-        return JSONResponse(
-            status_code=exc.status_code,
-            content=response_content
-        )
-    except Exception as e:
-        logger.error(f"Error in handle_application_error: {e}")
-        # Fallback response if error handling fails
-        return JSONResponse(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            content={"error": "Internal server error in error handler"}
-        )
-
-
-@with_error_logging
-def handle_validation_error(request: Request, exc: RequestValidationError):
-    """
-    Handle FastAPI RequestValidationError exceptions.
-    
-    Args:
-        request: FastAPI request
-        exc: RequestValidationError instance
-    
-    Returns:
-        JSON response with validation error details
-    """
-    try:
-        # Log the exception
-        log_exception(request, exc)
-        
-        # Extract validation errors
-        errors = exc.errors()
-        
-        # Create error response
-        response_content = create_error_response(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-            error_code="VALIDATION_ERROR",
-            message="Request validation error",
-            detail={"errors": errors},
-            path=str(request.url.path)
-        )
-        
-        # Return JSON response
-        return JSONResponse(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-            content=response_content
-        )
-    except Exception as e:
-        logger.error(f"Error in handle_validation_error: {e}")
-        # Fallback response if error handling fails
-        return JSONResponse(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            content={"error": "Internal server error in error handler"}
-        )
-
-
-@with_error_logging
-def handle_pydantic_validation_error(request: Request, exc: PydanticValidationError):
-    """
-    Handle Pydantic ValidationError exceptions.
-    
-    Args:
-        request: FastAPI request
-        exc: PydanticValidationError instance
-    
-    Returns:
-        JSON response with validation error details
-    """
-    try:
-        # Log the exception
-        log_exception(request, exc)
-        
-        # Extract validation errors
-        errors = exc.errors()
-        
-        # Create error response
-        response_content = create_error_response(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-            error_code="VALIDATION_ERROR",
-            message="Data validation error",
-            detail={"errors": errors},
-            path=str(request.url.path)
-        )
-        
-        # Return JSON response
-        return JSONResponse(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-            content=response_content
-        )
-    except Exception as e:
-        logger.error(f"Error in handle_pydantic_validation_error: {e}")
-        # Fallback response if error handling fails
-        return JSONResponse(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            content={"error": "Internal server error in error handler"}
-        )
-
-
-@with_error_logging
-def handle_not_found_error(request: Request, exc: Exception):
-    """
-    Handle 404 Not Found errors.
-    
-    Args:
-        request: FastAPI request
-        exc: Exception instance
-    
-    Returns:
-        JSON response with not found error details
-    """
-    try:
-        # Log the exception
-        not_found_error = ResourceNotFoundError(
-            message=f"Resource not found: {request.url.path}"
-        )
-        log_exception(request, not_found_error)
-        
-        # Create error response
-        response_content = create_error_response(
-            status_code=status.HTTP_404_NOT_FOUND,
-            error_code="NOT_FOUND",
-            message=f"Resource not found: {request.url.path}",
-            path=str(request.url.path)
-        )
-        
-        # Return JSON response
-        return JSONResponse(
-            status_code=status.HTTP_404_NOT_FOUND,
-            content=response_content
-        )
-    except Exception as e:
-        logger.error(f"Error in handle_not_found_error: {e}")
-        # Fallback response if error handling fails
-        return JSONResponse(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            content={"error": "Internal server error in error handler"}
-        )
-
-
-@with_error_logging
-def handle_generic_error(request: Request, exc: Exception):
-    """
-    Handle generic exceptions.
-    
-    Args:
-        request: FastAPI request
-        exc: Exception instance
-    
-    Returns:
-        JSON response with error details
-    """
-    try:
-        # Log the exception
-        log_exception(request, exc)
-        
-        # Create error response
-        response_content = create_error_response(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            error_code="INTERNAL_ERROR",
-            message="An unexpected error occurred",
-            detail={"error_type": type(exc).__name__},
-            path=str(request.url.path)
-        )
-        
-        # Return JSON response
-        return JSONResponse(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            content=response_content
-        )
-    except Exception as e:
-        logger.error(f"Error in handle_generic_error: {e}")
-        # Fallback response if error handling fails
-        return JSONResponse(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            content={"error": "Internal server error in error handler"}
-        )
-
-
-# Import container-specific functions
-from .container import (
-    register_signal_handlers,
-    setup_container_health_check,
-    add_container_middleware
-)
-
-
-@with_error_logging
 def setup_exception_handlers(app: FastAPI):
     """
-    Set up exception handlers for a FastAPI application.
-    
-    This function registers handlers for various exception types to ensure
-    consistent error responses across the application.
+    Register exception handlers with a FastAPI application.
     
     Args:
-        app: FastAPI application
+        app: FastAPI application instance
     """
-    try:
-        # Register handler for ApplicationError and subclasses
-        app.add_exception_handler(ApplicationError, handle_application_error)
+    # Register handler for ApplicationError base class
+    @app.exception_handler(ApplicationError)
+    async def application_error_handler(request: Request, exc: ApplicationError):
+        """Handle all application exceptions."""
+        log_exception(request, exc)
         
-        # Register handler for FastAPI's RequestValidationError
-        app.add_exception_handler(RequestValidationError, handle_validation_error)
+        # Create error response
+        response = create_error_response(
+            status_code=exc.status_code,
+            error_code=exc.error_code,
+            message=str(exc),
+            detail=exc.detail,
+            path=request.url.path,
+            request_id=request.headers.get("X-Request-ID")
+        )
         
-        # Register handler for Pydantic's ValidationError
-        app.add_exception_handler(PydanticValidationError, handle_pydantic_validation_error)
+        return JSONResponse(
+            status_code=exc.status_code,
+            content=response
+        )
+    
+    # Register handler for validation errors
+    @app.exception_handler(RequestValidationError)
+    async def validation_error_handler(request: Request, exc: RequestValidationError):
+        """Handle request validation errors."""
+        log_exception(request, exc)
         
-        # Register handler for 404 Not Found
-        app.exception_handler(404)(handle_not_found_error)
+        # Create error response
+        response = create_error_response(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            error_code="validation_error",
+            message="Request validation error",
+            detail={"errors": exc.errors()},
+            path=request.url.path,
+            request_id=request.headers.get("X-Request-ID")
+        )
         
-        # Register handler for generic exceptions
-        app.add_exception_handler(Exception, handle_generic_error)
+        return JSONResponse(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            content=response
+        )
+    
+    # Register handler for Pydantic validation errors
+    @app.exception_handler(PydanticValidationError)
+    async def pydantic_validation_error_handler(request: Request, exc: PydanticValidationError):
+        """Handle Pydantic validation errors."""
+        log_exception(request, exc)
         
-        logger.info("Exception handlers set up for FastAPI application")
-    except Exception as e:
-        logger.error(f"Error in setup_exception_handlers: {e}")
-        raise ApplicationError(message=f"Error in setup_exception_handlers", original_error=e)
+        # Create error response
+        response = create_error_response(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            error_code="validation_error",
+            message="Data validation error",
+            detail={"errors": exc.errors()},
+            path=request.url.path,
+            request_id=request.headers.get("X-Request-ID")
+        )
+        
+        return JSONResponse(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            content=response
+        )
+    
+    # Register handler for all other exceptions
+    @app.exception_handler(Exception)
+    async def generic_exception_handler(request: Request, exc: Exception):
+        """Handle all unhandled exceptions."""
+        log_exception(request, exc)
+        
+        # For security, don't expose internal error details in production
+        from core.config_factory import get_config
+        config = get_config()
+        
+        if config.ENVIRONMENT == "production":
+            message = "An internal server error occurred"
+            detail = None
+        else:
+            message = str(exc)
+            detail = {
+                "exception": type(exc).__name__,
+                "traceback": traceback.format_exception(type(exc), exc, exc.__traceback__)
+            }
+        
+        # Create error response
+        response = create_error_response(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            error_code="internal_server_error",
+            message=message,
+            detail=detail,
+            path=request.url.path,
+            request_id=request.headers.get("X-Request-ID")
+        )
+        
+        return JSONResponse(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            content=response
+        )
+    
+    # Register specific handlers for custom exception types
+    for exception_class, handler in ERROR_HANDLERS.items():
+        app.add_exception_handler(exception_class, handler)
+    
+    logger.info("Exception handlers configured for FastAPI application")

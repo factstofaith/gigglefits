@@ -3,7 +3,17 @@ File Type Detection and Handling Utilities
 
 This module provides utilities for detecting and handling different file types,
 including MIME type detection, file format validation, and content extraction.
+
+Dependencies:
+    - python-magic: Optional library for more accurate MIME type detection. 
+      If not available, fallbacks to mimetypes module and basic content inspection.
+    - pandas: Required for data loading and conversion between formats.
+    - openpyxl: Required for Excel file handling.
+    - PIL: Required for image file handling.
+    - yaml: Required for YAML file handling.
 """
+
+from __future__ import annotations
 
 import os
 import io
@@ -16,6 +26,7 @@ import uuid
 import tempfile
 import zipfile
 import tarfile
+from functools import lru_cache
 from typing import Dict, Any, Optional, List, Union, BinaryIO, Tuple
 from datetime import datetime
 
@@ -35,12 +46,52 @@ logger = logging.getLogger(__name__)
 # Initialize mime types
 mimetypes.init()
 
+# Constants for MIME type groups
+TABULAR_MIME_TYPES = [
+    'text/csv', 
+    'application/vnd.ms-excel',
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    'application/json'
+]
+
+IMAGE_MIME_TYPES = [
+    'image/png',
+    'image/jpeg',
+    'image/gif',
+    'image/bmp',
+    'image/tiff'
+]
+
+ARCHIVE_MIME_TYPES = [
+    'application/zip',
+    'application/x-zip-compressed',
+    'application/gzip',
+    'application/x-gzip'
+]
+
+# File signature patterns
+FILE_SIGNATURES = {
+    'image/png': b'\x89PNG\r\n\x1a\n',
+    'image/jpeg': b'\xff\xd8',
+    'image/gif': [b'GIF87a', b'GIF89a'],
+    'application/pdf': b'%PDF',
+    'application/zip': b'PK\x03\x04',
+    'application/gzip': b'\x1f\x8b',
+    'application/xml': b'<?xml'
+}
+
 
 class FileTypeError(Exception):
-    """Exception raised for file type errors"""
+    """
+    Exception raised for file type errors
+    
+    This is the base exception class for all file type related errors in this module.
+    It includes errors related to file detection, conversion, validation, and data extraction.
+    """
     pass
 
 
+@lru_cache(maxsize=128)
 def detect_mime_type(file_path: str = None, file_data: bytes = None, file_name: str = None) -> str:
     """
     Detect the MIME type of a file
@@ -79,21 +130,15 @@ def detect_mime_type(file_path: str = None, file_data: bytes = None, file_name: 
     
     # Basic content-based detection if file_data is provided
     if file_data:
-        # Check for common file signatures
-        if file_data[:4] == b'\x89PNG':
-            return 'image/png'
-        elif file_data[:3] == b'GIF':
-            return 'image/gif'
-        elif file_data[:2] == b'\xff\xd8':
-            return 'image/jpeg'
-        elif file_data[:4] == b'%PDF':
-            return 'application/pdf'
-        elif file_data[:4] == b'PK\x03\x04':
-            return 'application/zip'
-        elif file_data[:5] == b'<?xml':
-            return 'application/xml'
-        elif file_data[:2] == b'\x1f\x8b':
-            return 'application/gzip'
+        # Check for common file signatures using our constants
+        for mime_type, signature in FILE_SIGNATURES.items():
+            if isinstance(signature, list):
+                # Handle multiple possible signatures (like GIF)
+                for sig in signature:
+                    if file_data[:len(sig)] == sig:
+                        return mime_type
+            elif file_data[:len(signature)] == signature:
+                return mime_type
         
         # Check if it's text
         try:
@@ -131,6 +176,7 @@ def detect_mime_type(file_path: str = None, file_data: bytes = None, file_name: 
     return 'application/octet-stream'
 
 
+@lru_cache(maxsize=128)
 def get_file_extension(mime_type: str) -> str:
     """
     Get the appropriate file extension for a MIME type
@@ -188,9 +234,7 @@ def convert_to_standard_format(file_data: bytes, source_mime_type: str, target_f
     temp_file = None
     try:
         # Load data into memory using pandas if it's tabular
-        if source_mime_type in ['text/csv', 'application/vnd.ms-excel', 
-                                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                                'application/json']:
+        if source_mime_type in TABULAR_MIME_TYPES:
             # Load source data into pandas DataFrame
             df = load_dataframe(file_data, source_mime_type)
             
@@ -304,14 +348,23 @@ def convert_to_standard_format(file_data: bytes, source_mime_type: str, target_f
             
         else:
             raise ValueError(f"Conversion from {source_mime_type} to {target_mime} is not supported")
+    
+    except Exception as e:
+        logger.error(f"Error during file format conversion: {str(e)}")
+        if temp_file and os.path.exists(temp_file):
+            try:
+                os.remove(temp_file)
+            except Exception as cleanup_error:
+                logger.warning(f"Failed to remove temporary file {temp_file}: {cleanup_error}")
+        raise FileTypeError(f"Failed to convert from {source_mime_type} to {target_format}: {str(e)}")
             
     finally:
         # Clean up temporary file if created
         if temp_file and os.path.exists(temp_file):
             try:
                 os.remove(temp_file)
-            except:
-                pass
+            except Exception as cleanup_error:
+                logger.warning(f"Failed to remove temporary file {temp_file}: {cleanup_error}")
 
 
 def extract_metadata(file_data: bytes, mime_type: str) -> Dict[str, Any]:
@@ -469,13 +522,24 @@ def extract_metadata(file_data: bytes, mime_type: str) -> Dict[str, Any]:
                 except Exception as e:
                     logger.warning(f"Error extracting tar.gz metadata: {str(e)}")
     
+    except Exception as e:
+        logger.error(f"Error extracting metadata: {str(e)}")
+        if temp_file and os.path.exists(temp_file):
+            try:
+                os.remove(temp_file)
+            except Exception as cleanup_error:
+                logger.warning(f"Failed to remove temporary file {temp_file}: {cleanup_error}")
+        # Return partial metadata if we have any
+        if not metadata:
+            metadata = {'error': str(e)}
+    
     finally:
         # Clean up temporary file if created
         if temp_file and os.path.exists(temp_file):
             try:
                 os.remove(temp_file)
-            except:
-                pass
+            except Exception as cleanup_error:
+                logger.warning(f"Failed to remove temporary file {temp_file}: {cleanup_error}")
     
     return metadata
 
@@ -493,30 +557,35 @@ def validate_file_format(file_data: bytes, mime_type: str) -> bool:
     """
     try:
         # Basic validation based on file signatures and parsing
-        if mime_type == 'image/png' and not file_data[:8].startswith(b'\x89PNG\r\n\x1a\n'):
-            return False
-        elif mime_type == 'image/jpeg' and not file_data[:2] == b'\xff\xd8':
-            return False
-        elif mime_type == 'image/gif' and not file_data[:6] in [b'GIF87a', b'GIF89a']:
-            return False
-        elif mime_type == 'application/pdf' and not file_data[:4] == b'%PDF':
-            return False
-        elif mime_type == 'application/zip' and not file_data[:4] == b'PK\x03\x04':
-            return False
+        if mime_type in FILE_SIGNATURES:
+            signature = FILE_SIGNATURES[mime_type]
+            if isinstance(signature, list):
+                # Check multiple signatures (like GIF)
+                valid = False
+                for sig in signature:
+                    if file_data[:len(sig)] == sig:
+                        valid = True
+                        break
+                if not valid:
+                    return False
+            elif not file_data[:len(signature)].startswith(signature):
+                return False
         
         # More sophisticated validation by attempting to parse/process
-        if mime_type.startswith('image/'):
+        if mime_type in IMAGE_MIME_TYPES:
             try:
                 Image.open(io.BytesIO(file_data)).verify()
                 return True
-            except:
+            except Exception as e:
+                logger.debug(f"Image validation failed: {str(e)}")
                 return False
         
         elif mime_type == 'application/json':
             try:
                 json.loads(file_data)
                 return True
-            except:
+            except Exception as e:
+                logger.debug(f"JSON validation failed: {str(e)}")
                 return False
         
         elif mime_type == 'text/csv':
@@ -526,25 +595,28 @@ def validate_file_format(file_data: bytes, mime_type: str) -> bool:
                 dialect = csv.Sniffer().sniff(text_data[:4096])
                 csv.reader(io.StringIO(text_data), dialect)
                 return True
-            except:
+            except Exception as e:
+                logger.debug(f"CSV validation failed: {str(e)}")
                 return False
         
         elif mime_type == 'application/xml':
             try:
                 ET.fromstring(file_data.decode('utf-8'))
                 return True
-            except:
+            except Exception as e:
+                logger.debug(f"XML validation failed: {str(e)}")
                 return False
         
         elif mime_type == 'application/yaml':
             try:
                 yaml.safe_load(file_data)
                 return True
-            except:
+            except Exception as e:
+                logger.debug(f"YAML validation failed: {str(e)}")
                 return False
         
-        elif mime_type in ['application/vnd.ms-excel', 
-                           'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']:
+        elif 'excel' in mime_type.lower() or (mime_type in TABULAR_MIME_TYPES and 'sheet' in mime_type.lower()):
+            temp_file = None
             try:
                 # Write to temp file for validation
                 temp_file = tempfile.mktemp(suffix='.xlsx')
@@ -552,22 +624,28 @@ def validate_file_format(file_data: bytes, mime_type: str) -> bool:
                     f.write(file_data)
                 
                 openpyxl.load_workbook(temp_file, read_only=True)
-                os.remove(temp_file)
                 return True
-            except:
+            except Exception as e:
+                logger.warning(f"Error validating Excel file: {str(e)}")
+                return False
+            finally:
                 # Clean up temp file
-                if 'temp_file' in locals():
+                if temp_file and os.path.exists(temp_file):
                     try:
                         os.remove(temp_file)
-                    except:
-                        pass
-                return False
+                    except Exception as cleanup_error:
+                        logger.warning(f"Failed to remove temporary file {temp_file}: {cleanup_error}")
         
-        elif mime_type in ['application/zip', 'application/x-zip-compressed']:
+        elif mime_type in ARCHIVE_MIME_TYPES and ('zip' in mime_type.lower()):
             try:
-                zipfile.ZipFile(io.BytesIO(file_data)).testzip()
-                return True
-            except:
+                with zipfile.ZipFile(io.BytesIO(file_data)) as zip_file:
+                    test_result = zip_file.testzip()
+                    if test_result is not None:
+                        logger.warning(f"ZIP validation found corrupted file: {test_result}")
+                        return False
+                    return True
+            except Exception as e:
+                logger.debug(f"ZIP validation failed: {str(e)}")
                 return False
         
         # For other types, assume valid if we've reached this point
@@ -578,6 +656,7 @@ def validate_file_format(file_data: bytes, mime_type: str) -> bool:
         return False
 
 
+@lru_cache(maxsize=64)
 def load_dataframe(file_data: bytes, mime_type: str) -> pd.DataFrame:
     """
     Load file data into a pandas DataFrame
@@ -593,8 +672,7 @@ def load_dataframe(file_data: bytes, mime_type: str) -> pd.DataFrame:
         if mime_type == 'text/csv':
             return pd.read_csv(io.BytesIO(file_data))
         
-        elif mime_type in ['application/vnd.ms-excel', 
-                          'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']:
+        elif 'excel' in mime_type.lower() or (mime_type in TABULAR_MIME_TYPES and 'sheet' in mime_type.lower()):
             return pd.read_excel(io.BytesIO(file_data))
         
         elif mime_type == 'application/json':

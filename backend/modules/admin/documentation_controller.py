@@ -8,6 +8,11 @@ from .models import AdminModel
 from core.auth import get_current_active_user, get_current_admin_user
 from db.models import User
 
+from typing import List, Dict, Any, Optional
+from datetime import timezone
+from pydantic import BaseModel
+from backend.utils.api.models import DataResponse, PaginatedResponse, ErrorResponse, create_response, create_paginated_response, create_error_response
+
 analytics_router = APIRouter(
     prefix="/api/documentation/analytics",
     tags=["documentation"],
@@ -49,5 +54,16 @@ async def get_documentation_stats(
     Get documentation usage statistics
     Only available to admin users
     """
+
+
+def standardize_response(data, skip=0, limit=10, total=None):
+    """Helper function to create standardized responses"""
+    # For collections with pagination
+    if isinstance(data, list) and total is not None:
+        return create_paginated_response(items=data, total=total, skip=skip, limit=limit)
+    # For single items or collections without pagination
+    return create_response(data=data)
+
+
     admin_service = AdminService()
     return admin_service.get_documentation_stats(time_period)

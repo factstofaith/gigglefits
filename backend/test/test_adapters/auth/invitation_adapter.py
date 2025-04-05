@@ -26,7 +26,7 @@ logger.setLevel(logging.INFO)
 
 # Timezone utilities
 def ensure_timezone_aware(dt):
-    """Ensure a datetime is timezone-aware, converting to UTC if it's naive."""
+    """Ensure a datetime is timezone-aware, converting to timezone if it's naive."""
     if dt is None:
         return None
     if dt.tzinfo is None:

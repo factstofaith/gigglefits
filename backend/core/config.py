@@ -9,6 +9,12 @@ from typing import List, Dict, Any, Optional
 from pydantic_settings import BaseSettings
 from pydantic import field_validator
 
+# Import the environment variable adapter
+from core.settings.env_adapter import initialize as initialize_env_adapter
+
+# Initialize the adapter to ensure compatibility with standardized variables
+initialize_env_adapter()
+
 # Configure logging
 logger = logging.getLogger(__name__)
 
@@ -30,6 +36,9 @@ class Settings(BaseSettings):
     
     # CORS settings
     CORS_ORIGINS: List[str] = ["http://localhost:3000", "http://localhost:3456"]
+    CORS_ALLOW_CREDENTIALS: bool = os.environ.get("CORS_ALLOW_CREDENTIALS", "true").lower() == "true"
+    CORS_ALLOW_METHODS: List[str] = ["*"]
+    CORS_ALLOW_HEADERS: List[str] = ["*"]
     
     # Database settings
     DATABASE_URL: str = os.environ.get("DATABASE_URL", "sqlite:///data/local_dev.sqlite")
@@ -41,7 +50,15 @@ class Settings(BaseSettings):
     
     # Security settings
     SECRET_KEY: str = os.environ.get("JWT_SECRET_KEY", "local_development_secret_change_in_production")
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = int(os.environ.get("ACCESS_TOKEN_EXPIRE_MINUTES", "30"))
+    REFRESH_TOKEN_EXPIRE_DAYS: int = int(os.environ.get("REFRESH_TOKEN_EXPIRE_DAYS", "7"))
+    
+    # Authentication cookie settings
+    AUTH_COOKIE_DOMAIN: Optional[str] = os.environ.get("AUTH_COOKIE_DOMAIN")
+    AUTH_COOKIE_PATH: str = os.environ.get("AUTH_COOKIE_PATH", "/")
+    AUTH_COOKIE_SECURE: bool = os.environ.get("AUTH_COOKIE_SECURE", "true").lower() == "true"
+    AUTH_COOKIE_HTTPONLY: bool = os.environ.get("AUTH_COOKIE_HTTPONLY", "true").lower() == "true"
+    AUTH_COOKIE_SAMESITE: str = os.environ.get("AUTH_COOKIE_SAMESITE", "lax")
     
     # Feature flags
     DEBUG_MODE: bool = os.environ.get("DEBUG_MODE", "true").lower() == "true"

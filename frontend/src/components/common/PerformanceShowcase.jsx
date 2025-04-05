@@ -1,69 +1,47 @@
-/**
- * Performance Optimization Showcase
- * 
- * A demonstration component that showcases performance optimization techniques.
- * Part of the zero technical debt performance implementation.
- * 
- * @module components/common/PerformanceShowcase
- */
-
+import { ErrorBoundary, useErrorHandler, withErrorBoundary } from "@/error-handling"; /**
+                                                                                      * Performance Optimization Showcase
+                                                                                      * 
+                                                                                      * A demonstration component that showcases performance optimization techniques.
+                                                                                      * Part of the zero technical debt performance implementation.
+                                                                                      * 
+                                                                                      * @module components/common/PerformanceShowcase
+                                                                                      */
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
-import { 
-  Grid, 
-  Typography, 
-  Paper, 
-  Box, 
-  Button, 
-  Divider, 
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  TextField,
-  CircularProgress,
-  List,
-  ListItem,
-  ListItemText,
-  ListItemButton,
-  Switch,
-  FormControlLabel
-} from '@mui/material';
+import { Grid, Typography, Paper, Box, Button, Divider, Accordion, AccordionSummary, AccordionDetails, TextField, CircularProgress, List, ListItem, ListItemText, ListItemButton, Switch, FormControlLabel } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import {
-  optimizeComponent,
-  createOptimizedHandlers,
-  DeferredRender,
-  withRenderTiming,
-  enablePerformanceMonitoring,
-  timeFunction,
-  timeAsyncFunction,
-  createPerformantEventHandler,
-  printRenderStats
-} from '../../utils/performance';
+import { optimizeComponent, createOptimizedHandlers, DeferredRender, withRenderTiming, enablePerformanceMonitoring, timeFunction, timeAsyncFunction, createPerformantEventHandler, printRenderStats } from "@/utils/performance";
 
 // Import our new Performance Monitoring Panel
 import PerformanceMonitoringPanel from './PerformanceMonitoringPanel';
 
 // Demo component with expensive rendering
-const ExpensiveComponent = ({ itemCount = 50, optimized = false }) => {
+const ExpensiveComponent = ({
+  itemCount = 50,
+  optimized = false
+}) => {
   // Generate a lot of items
   const items = useMemo(() => {
     console.log('Generating expensive items...');
-    return Array.from({ length: itemCount }, (_, index) => ({
+    return Array.from({
+      length: itemCount
+    }, (_, index) => ({
       id: index,
       name: `Item ${index}`,
       description: `Description for item ${index} with some additional text`,
       value: Math.floor(Math.random() * 1000)
     }));
   }, [itemCount]); // Only regenerate when itemCount changes
-  
+
   // If not optimized, we don't use the useMemo pattern
-  const nonOptimizedItems = optimized ? items : Array.from({ length: itemCount }, (_, index) => ({
+  const nonOptimizedItems = optimized ? items : Array.from({
+    length: itemCount
+  }, (_, index) => ({
     id: index,
     name: `Item ${index}`,
     description: `Description for item ${index} with some additional text`,
     value: Math.floor(Math.random() * 1000)
   }));
-  
+
   // Do some "expensive" calculations
   const startTime = performance.now();
   let total = 0;
@@ -71,32 +49,25 @@ const ExpensiveComponent = ({ itemCount = 50, optimized = false }) => {
     total += Math.random() * i;
   }
   const renderTime = performance.now() - startTime;
-  
-  return (
-    <Box>
+  return <Box>
       <Typography variant="subtitle1">
         Render time: {renderTime.toFixed(2)}ms
       </Typography>
-      <List
-        sx={{
-          height: 200,
-          overflow: 'auto',
-          bgcolor: 'background.paper'
-        }}
-      >
-        {(optimized ? items : nonOptimizedItems).map(item => (
-          <ListItem key={item.id} disablePadding>
+      <List sx={{
+      height: 200,
+      overflow: 'auto',
+      bgcolor: 'background.paper'
+    }}>
+
+        {(optimized ? items : nonOptimizedItems).map(item => <ListItem key={item.id} disablePadding>
             <ListItemButton>
-              <ListItemText 
-                primary={item.name} 
-                secondary={`${item.description} - Value: ${item.value}`}
-              />
+              <ListItemText primary={item.name} secondary={`${item.description} - Value: ${item.value}`} />
+
             </ListItemButton>
-          </ListItem>
-        ))}
+          </ListItem>)}
+
       </List>
-    </Box>
-  );
+    </Box>;
 };
 
 // Optimized version using HOC
@@ -106,7 +77,9 @@ const OptimizedExpensiveComponent = optimizeComponent(ExpensiveComponent, {
 });
 
 // Component with render timing
-const TimedComponent = withRenderTiming(({ iterations = 100 }) => {
+const TimedComponent = withRenderTiming(({
+  iterations = 100
+}) => {
   // Do something computationally expensive
   const value = useMemo(() => {
     let result = 0;
@@ -115,23 +88,21 @@ const TimedComponent = withRenderTiming(({ iterations = 100 }) => {
     }
     return result;
   }, [iterations]);
-  
-  return (
-    <Box p={2} bgcolor="rgba(0, 0, 0, 0.04)" borderRadius={1}>
+  return <Box p={2} bgcolor="rgba(0, 0, 0, 0.04)" borderRadius={1}>
       <Typography variant="body2">
         Computed value: {value.toFixed(4)}
       </Typography>
       <Typography variant="caption" color="text.secondary">
         (Check console for timing information)
       </Typography>
-    </Box>
-  );
+    </Box>;
 });
 
 /**
  * A showcase component for performance optimization techniques
  */
 const PerformanceShowcase = () => {
+  const [formError, setFormError] = useState(null);
   // State for demo controls
   const [isMonitoring, setIsMonitoring] = useState(false);
   const [isOptimized, setIsOptimized] = useState(false);
@@ -139,10 +110,10 @@ const PerformanceShowcase = () => {
   const [iterations, setIterations] = useState(100);
   const [showDeferred, setShowDeferred] = useState(false);
   const [showMonitoringPanel, setShowMonitoringPanel] = useState(false);
-  
+
   // Cleanup function for performance monitoring
   const cleanupRef = React.useRef(null);
-  
+
   // Toggle performance monitoring
   const toggleMonitoring = useCallback(() => {
     if (isMonitoring) {
@@ -161,19 +132,19 @@ const PerformanceShowcase = () => {
     }
     setIsMonitoring(!isMonitoring);
   }, [isMonitoring]);
-  
+
   // Create optimized event handlers
   const handlers = createOptimizedHandlers({
     handleOptimize: () => setIsOptimized(prev => !prev),
-    handleItemCountChange: (e) => setItemCount(parseInt(e.target.value) || 10),
-    handleIterationChange: (e) => setIterations(parseInt(e.target.value) || 10),
+    handleItemCountChange: e => setItemCount(parseInt(e.target.value) || 10),
+    handleIterationChange: e => setIterations(parseInt(e.target.value) || 10),
     handlePrintStats: () => {
       printRenderStats();
       console.log('Performance statistics printed to console');
     },
     handleDeferredToggle: () => setShowDeferred(prev => !prev)
   }, []);
-  
+
   // Demo of performance-timed function
   const runTimedFunction = () => {
     const result = timeFunction(() => {
@@ -183,10 +154,9 @@ const PerformanceShowcase = () => {
       }
       return sum;
     }, 'Demo Calculation');
-    
     console.log('Timed function result:', result);
   };
-  
+
   // Demo of async timed function
   const runTimedAsyncFunction = async () => {
     try {
@@ -197,21 +167,20 @@ const PerformanceShowcase = () => {
           }, 1000);
         });
       }, 'Demo Async Operation');
-      
       console.log('Async operation completed and timed');
     } catch (error) {
       console.error('Async operation failed:', error);
     }
   };
-  
+
   // Debounced event handler for search demo
-  const handleSearch = createPerformantEventHandler(
-    (value) => {
-      console.log('Searching for:', value);
-    },
-    { debounce: 300, name: 'search' }
-  );
-  
+  const handleSearch = createPerformantEventHandler(value => {
+    console.log('Searching for:', value);
+  }, {
+    debounce: 300,
+    name: 'search'
+  });
+
   // Cleanup monitoring on unmount
   useEffect(() => {
     return () => {
@@ -220,19 +189,19 @@ const PerformanceShowcase = () => {
       }
     };
   }, []);
-  
-  return (
-    <Grid container spacing={4}>
+  return <Grid container spacing={4}>
       <Grid item xs={12}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+        <Box sx={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        mb: 2
+      }}>
           <Typography variant="h4" component="h1">
             Performance Optimization Showcase
           </Typography>
-          <Button 
-            variant="contained" 
-            color="primary"
-            onClick={() => setShowMonitoringPanel(prev => !prev)}
-          >
+          <Button variant="contained" color="primary" onClick={() => setShowMonitoringPanel(prev => !prev)}>
+
             {showMonitoringPanel ? 'Hide' : 'Show'} Performance Monitor
           </Button>
         </Box>
@@ -242,105 +211,71 @@ const PerformanceShowcase = () => {
           and measure performance metrics.
         </Typography>
         
-        {showMonitoringPanel && (
-          <Box sx={{ mb: 3 }}>
+        {showMonitoringPanel && <Box sx={{
+        mb: 3
+      }}>
             <PerformanceMonitoringPanel onClose={() => setShowMonitoringPanel(false)} />
-          </Box>
-        )}
+          </Box>}
+
       </Grid>
       
       <Grid item xs={12}>
-        <Paper elevation={2} sx={{ p: 3 }}>
+        <Paper elevation={2} sx={{
+        p: 3
+      }}>
           <Typography variant="h5" component="h2" gutterBottom>
             Performance Monitoring Controls
           </Typography>
           
           <Box display="flex" flexDirection="column" gap={2}>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={isMonitoring}
-                  onChange={toggleMonitoring}
-                  color="primary"
-                />
-              }
-              label="Enable performance monitoring"
-            />
+            <FormControlLabel control={<Switch checked={isMonitoring} onChange={toggleMonitoring} color="primary" />} label="Enable performance monitoring" />
+
             
-            <Button 
-              variant="outlined" 
-              onClick={handlers.handlePrintStats}
-              disabled={!isMonitoring}
-            >
+            <Button variant="outlined" onClick={handlers.handlePrintStats} disabled={!isMonitoring}>
+
               Print performance statistics
             </Button>
             
-            <Divider sx={{ my: 1 }} />
+            <Divider sx={{
+            my: 1
+          }} />
             
             <Typography variant="subtitle1">Demo Settings</Typography>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={isOptimized}
-                  onChange={handlers.handleOptimize}
-                  color="primary"
-                />
-              }
-              label="Use optimized components"
-            />
+            <FormControlLabel control={<Switch checked={isOptimized} onChange={handlers.handleOptimize} color="primary" />} label="Use optimized components" />
+
             
-            <TextField
-              label="Item Count"
-              type="number"
-              value={itemCount}
-              onChange={handlers.handleItemCountChange}
-              variant="outlined"
-              size="small"
-              sx={{ maxWidth: 200 }}
-            />
+            <TextField label="Item Count" type="number" value={itemCount} onChange={handlers.handleItemCountChange} variant="outlined" size="small" sx={{
+            maxWidth: 200
+          }} />
+
             
-            <TextField
-              label="Iterations"
-              type="number"
-              value={iterations}
-              onChange={handlers.handleIterationChange}
-              variant="outlined"
-              size="small"
-              sx={{ maxWidth: 200 }}
-            />
+            <TextField label="Iterations" type="number" value={iterations} onChange={handlers.handleIterationChange} variant="outlined" size="small" sx={{
+            maxWidth: 200
+          }} />
+
           </Box>
         </Paper>
       </Grid>
       
       <Grid item xs={12} md={6}>
-        <Paper elevation={2} sx={{ p: 3 }}>
+        <Paper elevation={2} sx={{
+        p: 3
+      }}>
           <Typography variant="h5" component="h2" gutterBottom>
             Component Optimization Demo
           </Typography>
           
           <Typography variant="body2" paragraph>
-            {isOptimized ? 
-              'Optimized component using memoization and optimizeComponent HOC' : 
-              'Unoptimized component with redundant re-renders'}
+            {isOptimized ? 'Optimized component using memoization and optimizeComponent HOC' : 'Unoptimized component with redundant re-renders'}
           </Typography>
           
-          {isOptimized ? (
-            <OptimizedExpensiveComponent 
-              itemCount={itemCount} 
-              optimized={true}
-            />
-          ) : (
-            <ExpensiveComponent 
-              itemCount={itemCount} 
-              optimized={false}
-            />
-          )}
+          {isOptimized ? <OptimizedExpensiveComponent itemCount={itemCount} optimized={true} /> : <ExpensiveComponent itemCount={itemCount} optimized={false} />}
+
+
           
           <Box mt={2}>
-            <Button 
-              variant="contained" 
-              onClick={() => setItemCount(prev => prev + 10)}
-            >
+            <Button variant="contained" onClick={() => setItemCount(prev => prev + 10)}>
+
               Add 10 Items (Force Re-render)
             </Button>
           </Box>
@@ -348,7 +283,9 @@ const PerformanceShowcase = () => {
       </Grid>
       
       <Grid item xs={12} md={6}>
-        <Paper elevation={2} sx={{ p: 3 }}>
+        <Paper elevation={2} sx={{
+        p: 3
+      }}>
           <Typography variant="h5" component="h2" gutterBottom>
             Deferred Rendering
           </Typography>
@@ -357,16 +294,14 @@ const PerformanceShowcase = () => {
             Non-critical UI elements can be deferred until after initial load
           </Typography>
           
-          <Button 
-            variant="outlined" 
-            onClick={handlers.handleDeferredToggle}
-            sx={{ mb: 2 }}
-          >
+          <Button variant="outlined" onClick={handlers.handleDeferredToggle} sx={{
+          mb: 2
+        }}>
+
             {showDeferred ? 'Hide' : 'Show'} Deferred Content
           </Button>
           
-          {showDeferred && (
-            <DeferredRender delay={500}>
+          {showDeferred && <DeferredRender delay={500}>
               <Box p={2} bgcolor="rgba(0, 0, 0, 0.04)" borderRadius={1}>
                 <Typography variant="body1">
                   This content was rendered after a short delay
@@ -375,13 +310,15 @@ const PerformanceShowcase = () => {
                   Deferring non-critical UI improves initial load performance
                 </Typography>
               </Box>
-            </DeferredRender>
-          )}
+            </DeferredRender>}
+
         </Paper>
       </Grid>
       
       <Grid item xs={12}>
-        <Paper elevation={2} sx={{ p: 3 }}>
+        <Paper elevation={2} sx={{
+        p: 3
+      }}>
           <Typography variant="h5" component="h2" gutterBottom>
             Performance Measurement Tools
           </Typography>
@@ -398,12 +335,10 @@ const PerformanceShowcase = () => {
                 
                 <TimedComponent iterations={iterations} />
                 
-                <Button 
-                  variant="outlined"
-                  onClick={() => setIterations(prev => prev * 2)}
-                  size="small"
-                  sx={{ mt: 1 }}
-                >
+                <Button variant="outlined" onClick={() => setIterations(prev => prev * 2)} size="small" sx={{
+                mt: 1
+              }}>
+
                   Double iterations
                 </Button>
               </Box>
@@ -418,18 +353,15 @@ const PerformanceShowcase = () => {
                   Measure execution time of functions
                 </Typography>
                 
-                <Button 
-                  variant="outlined"
-                  onClick={runTimedFunction}
-                  sx={{ mb: 1 }}
-                >
+                <Button variant="outlined" onClick={runTimedFunction} sx={{
+                mb: 1
+              }}>
+
                   Run timed function
                 </Button>
                 
-                <Button 
-                  variant="outlined"
-                  onClick={runTimedAsyncFunction}
-                >
+                <Button variant="outlined" onClick={runTimedAsyncFunction}>
+
                   Run timed async function
                 </Button>
               </Box>
@@ -444,13 +376,8 @@ const PerformanceShowcase = () => {
                   Performance-optimized event handlers
                 </Typography>
                 
-                <TextField
-                  label="Search (debounced)"
-                  fullWidth
-                  variant="outlined"
-                  onChange={(e) => handleSearch(e.target.value)}
-                  helperText="Type quickly to see debouncing in action (check console)"
-                />
+                <TextField label="Search (debounced)" fullWidth variant="outlined" onChange={e => handleSearch(e.target.value)} helperText="Type quickly to see debouncing in action (check console)" />
+
               </Box>
             </Grid>
           </Grid>
@@ -458,7 +385,9 @@ const PerformanceShowcase = () => {
       </Grid>
       
       <Grid item xs={12}>
-        <Paper elevation={2} sx={{ p: 3 }}>
+        <Paper elevation={2} sx={{
+        p: 3
+      }}>
           <Typography variant="h5" component="h2" gutterBottom>
             Implementation Details
           </Typography>
@@ -524,8 +453,6 @@ const PerformanceShowcase = () => {
           </Accordion>
         </Paper>
       </Grid>
-    </Grid>
-  );
+    </Grid>;
 };
-
 export default PerformanceShowcase;

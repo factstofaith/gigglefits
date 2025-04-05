@@ -92,7 +92,7 @@ def _load_security_events(
     if log_file and os.path.exists(log_file):
         try:
             # Calculate cutoff time
-            cutoff_time = datetime.utcnow() - timedelta(hours=time_range)
+            cutoff_time = datetime.now(timezone.utc) - timedelta(hours=time_range)
             
             # Filter for specified levels
             level_filter = set(levels) if levels else None

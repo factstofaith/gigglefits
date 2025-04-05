@@ -1,0 +1,13 @@
+// Standardized webpack config for TAP Integration Platform
+// This is the master configuration that uses the master env file
+
+const path = require("path");
+
+// Load the appropriate config based on NODE_ENV
+const NODE_ENV = process.env.NODE_ENV || "development";
+
+if (NODE_ENV === "production") {
+  module.exports = require("./webpack.prod.master.js");
+} else {
+  module.exports = require("./webpack.dev.master.js");
+}

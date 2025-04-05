@@ -6,51 +6,19 @@
  */
 
 import React, { useState } from 'react';
-import {
-  Box,
-  Container,
-  Typography,
-  Paper,
-  Divider,
-  Button,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  TextField,
-  Grid,
-  Card,
-  CardContent,
-  CardHeader,
-  Switch,
-  FormControlLabel,
-  IconButton,
-  Tooltip
-} from '@mui/material';
-
-import {
-  UploadFile as UploadFileIcon,
-  RemoveCircle as RemoveCircleIcon,
-  Language as LanguageIcon,
-  Article as ArticleIcon,
-  DataObject as DataObjectIcon,
-  Image as ImageIcon,
-  PictureAsPdf as PdfIcon,
-  Description as DocumentIcon,
-  TableChart as TableIcon,
-  Code as CodeIcon
-} from '@mui/icons-material';
+import { Box, Container, Typography, Paper, Divider, Button, FormControl, InputLabel, Select, MenuItem, TextField, Grid, Card, CardContent, CardHeader, Switch, FormControlLabel, IconButton, Tooltip } from '@mui/material';
+import { UploadFile as UploadFileIcon, RemoveCircle as RemoveCircleIcon, Language as LanguageIcon, Article as ArticleIcon, DataObject as DataObjectIcon, Image as ImageIcon, PictureAsPdf as PdfIcon, Description as DocumentIcon, TableChart as TableIcon, Code as CodeIcon } from '@mui/icons-material';
 
 // Import file viewer components
 import SpecializedFileViewer from './SpecializedFileViewer';
-import { FILE_TYPES } from '../../utils/fileTypeDetector';
+import { FILE_TYPES } from "@/utils/fileTypeDetector";
 
 /**
  * Sample data for various file types
  */
+import { withErrorBoundary } from "@/error-handling/withErrorBoundary";
 const SAMPLE_DATA = {
   CSV: 'Name,Age,Email,Country\nJohn Doe,32,john@example.com,USA\nJane Smith,28,jane@example.com,Canada\nMichael Johnson,45,michael@example.com,UK\nEmily Davis,22,emily@example.com,Australia\nRobert Wilson,39,robert@example.com,Germany',
-  
   JSON: `{
   "users": [
     {
@@ -113,7 +81,6 @@ const SAMPLE_DATA = {
     }
   }
 }`,
-  
   XML: `<?xml version="1.0" encoding="UTF-8"?>
 <users>
   <user id="1">
@@ -161,7 +128,6 @@ const SAMPLE_DATA = {
     <active>false</active>
   </user>
 </users>`,
-  
   TEXT: `# TAP Integration Platform
 
 ## Overview
@@ -219,25 +185,25 @@ const SpecializedFileViewerDemo = () => {
   // State for file handling
   const [selectedFile, setSelectedFile] = useState(null);
   const [fileContent, setFileContent] = useState('');
-  
+
   // State for demo options
   const [sampleType, setSampleType] = useState('');
   const [sampleUrl, setSampleUrl] = useState('');
   const [customUrl, setCustomUrl] = useState('');
   const [showDetector, setShowDetector] = useState(true);
   const [detailLevel, setDetailLevel] = useState('full');
-  
+
   // Handle file selection
-  const handleFileSelect = (event) => {
+  const handleFileSelect = event => {
     const files = event.target.files;
     if (files && files.length > 0) {
       setSelectedFile(files[0]);
       setSampleType('');
       setSampleUrl('');
-      
+
       // Read file content for text files
       const reader = new FileReader();
-      reader.onload = (e) => {
+      reader.onload = e => {
         try {
           setFileContent(e.target.result);
         } catch (error) {
@@ -248,35 +214,34 @@ const SpecializedFileViewerDemo = () => {
       reader.readAsText(files[0]);
     }
   };
-  
+
   // Handle sample type selection
-  const handleSampleTypeChange = (event) => {
+  const handleSampleTypeChange = event => {
     const type = event.target.value;
     setSampleType(type);
     setSampleUrl('');
     setSelectedFile(null);
-    
     if (type && SAMPLE_DATA[type]) {
       setFileContent(SAMPLE_DATA[type]);
     } else {
       setFileContent('');
     }
   };
-  
+
   // Handle sample URL selection
-  const handleSampleUrlChange = (event) => {
+  const handleSampleUrlChange = event => {
     const url = event.target.value;
     setSampleUrl(url);
     setSampleType('');
     setSelectedFile(null);
     setFileContent('');
   };
-  
+
   // Handle custom URL input
-  const handleCustomUrlChange = (event) => {
+  const handleCustomUrlChange = event => {
     setCustomUrl(event.target.value);
   };
-  
+
   // Handle custom URL set
   const handleSetCustomUrl = () => {
     if (customUrl) {
@@ -286,7 +251,7 @@ const SpecializedFileViewerDemo = () => {
       setFileContent('');
     }
   };
-  
+
   // Handle clear all
   const handleClearAll = () => {
     setSelectedFile(null);
@@ -295,16 +260,14 @@ const SpecializedFileViewerDemo = () => {
     setSampleUrl('');
     setCustomUrl('');
   };
-  
+
   // Get current file type
   const getCurrentFileType = () => {
     if (sampleType) {
       return sampleType;
     }
-    
     if (selectedFile) {
       const extension = selectedFile.name.split('.').pop().toUpperCase();
-      
       switch (extension) {
         case 'CSV':
           return 'CSV';
@@ -328,25 +291,22 @@ const SpecializedFileViewerDemo = () => {
           return null;
       }
     }
-    
     return null;
   };
-  
+
   // Get current URL
   const getCurrentUrl = () => {
     if (sampleUrl === 'CUSTOM') {
       return customUrl;
     }
-    
     if (sampleUrl && SAMPLE_URLS[sampleUrl]) {
       return SAMPLE_URLS[sampleUrl];
     }
-    
     return null;
   };
-  
-  return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
+  return <Container maxWidth="lg" sx={{
+    py: 4
+  }}>
       <Typography variant="h4" gutterBottom>
         Specialized File Viewer Demo
       </Typography>
@@ -356,7 +316,10 @@ const SpecializedFileViewerDemo = () => {
         Choose from sample data, sample URLs, or upload your own file to test the viewer.
       </Typography>
       
-      <Paper sx={{ p: 3, mb: 4 }}>
+      <Paper sx={{
+      p: 3,
+      mb: 4
+    }}>
         <Typography variant="h6" gutterBottom>
           Select Content to View
         </Typography>
@@ -366,28 +329,28 @@ const SpecializedFileViewerDemo = () => {
             <Card variant="outlined">
               <CardHeader title="Upload a File" />
               <CardContent>
-                <Button
-                  variant="outlined"
-                  component="label"
-                  startIcon={<UploadFileIcon />}
-                  fullWidth
-                  sx={{ mb: 2 }}
-                >
+                <Button variant="outlined" component="label" startIcon={<UploadFileIcon />} fullWidth sx={{
+                mb: 2
+              }}>
+
                   Browse Files
-                  <input
-                    type="file"
-                    hidden
-                    onChange={handleFileSelect}
-                  />
+                  <input type="file" hidden onChange={handleFileSelect} />
+
                 </Button>
                 
-                {selectedFile && (
-                  <Box sx={{ mt: 2 }}>
+                {selectedFile && <Box sx={{
+                mt: 2
+              }}>
                     <Typography variant="subtitle2" gutterBottom>
                       Selected File:
                     </Typography>
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                      <Typography variant="body2" noWrap sx={{ flexGrow: 1 }}>
+                    <Box sx={{
+                  display: 'flex',
+                  alignItems: 'center'
+                }}>
+                      <Typography variant="body2" noWrap sx={{
+                    flexGrow: 1
+                  }}>
                         {selectedFile.name}
                       </Typography>
                       <Tooltip title="Remove file">
@@ -396,8 +359,8 @@ const SpecializedFileViewerDemo = () => {
                         </IconButton>
                       </Tooltip>
                     </Box>
-                  </Box>
-                )}
+                  </Box>}
+
               </CardContent>
             </Card>
           </Grid>
@@ -408,25 +371,30 @@ const SpecializedFileViewerDemo = () => {
               <CardContent>
                 <FormControl fullWidth>
                   <InputLabel>Sample Data Type</InputLabel>
-                  <Select
-                    value={sampleType}
-                    onChange={handleSampleTypeChange}
-                    label="Sample Data Type"
-                  >
+                  <Select value={sampleType} onChange={handleSampleTypeChange} label="Sample Data Type">
+
                     <MenuItem value="">
                       <em>None</em>
                     </MenuItem>
                     <MenuItem value="CSV">
-                      <TableIcon fontSize="small" sx={{ mr: 1 }} /> CSV Data
+                      <TableIcon fontSize="small" sx={{
+                      mr: 1
+                    }} /> CSV Data
                     </MenuItem>
                     <MenuItem value="JSON">
-                      <DataObjectIcon fontSize="small" sx={{ mr: 1 }} /> JSON Data
+                      <DataObjectIcon fontSize="small" sx={{
+                      mr: 1
+                    }} /> JSON Data
                     </MenuItem>
                     <MenuItem value="XML">
-                      <CodeIcon fontSize="small" sx={{ mr: 1 }} /> XML Data
+                      <CodeIcon fontSize="small" sx={{
+                      mr: 1
+                    }} /> XML Data
                     </MenuItem>
                     <MenuItem value="TEXT">
-                      <ArticleIcon fontSize="small" sx={{ mr: 1 }} /> Markdown Text
+                      <ArticleIcon fontSize="small" sx={{
+                      mr: 1
+                    }} /> Markdown Text
                     </MenuItem>
                   </Select>
                 </FormControl>
@@ -438,70 +406,66 @@ const SpecializedFileViewerDemo = () => {
             <Card variant="outlined">
               <CardHeader title="Use Sample URL" />
               <CardContent>
-                <FormControl fullWidth sx={{ mb: 2 }}>
+                <FormControl fullWidth sx={{
+                mb: 2
+              }}>
                   <InputLabel>Sample URL Type</InputLabel>
-                  <Select
-                    value={sampleUrl}
-                    onChange={handleSampleUrlChange}
-                    label="Sample URL Type"
-                  >
+                  <Select value={sampleUrl} onChange={handleSampleUrlChange} label="Sample URL Type">
+
                     <MenuItem value="">
                       <em>None</em>
                     </MenuItem>
                     <MenuItem value="IMAGE">
-                      <ImageIcon fontSize="small" sx={{ mr: 1 }} /> Sample Image
+                      <ImageIcon fontSize="small" sx={{
+                      mr: 1
+                    }} /> Sample Image
                     </MenuItem>
                     <MenuItem value="PDF">
-                      <PdfIcon fontSize="small" sx={{ mr: 1 }} /> Sample PDF
+                      <PdfIcon fontSize="small" sx={{
+                      mr: 1
+                    }} /> Sample PDF
                     </MenuItem>
                     <MenuItem value="CUSTOM">
-                      <LanguageIcon fontSize="small" sx={{ mr: 1 }} /> Custom URL
+                      <LanguageIcon fontSize="small" sx={{
+                      mr: 1
+                    }} /> Custom URL
                     </MenuItem>
                   </Select>
                 </FormControl>
                 
-                {sampleUrl === 'CUSTOM' && (
-                  <Box sx={{ display: 'flex', gap: 1 }}>
-                    <TextField
-                      label="Custom URL"
-                      value={customUrl}
-                      onChange={handleCustomUrlChange}
-                      fullWidth
-                      size="small"
-                    />
-                    <Button 
-                      variant="outlined" 
-                      onClick={handleSetCustomUrl}
-                      disabled={!customUrl}
-                    >
+                {sampleUrl === 'CUSTOM' && <Box sx={{
+                display: 'flex',
+                gap: 1
+              }}>
+                    <TextField label="Custom URL" value={customUrl} onChange={handleCustomUrlChange} fullWidth size="small" />
+
+                    <Button variant="outlined" onClick={handleSetCustomUrl} disabled={!customUrl}>
+
                       Set
                     </Button>
-                  </Box>
-                )}
+                  </Box>}
+
               </CardContent>
             </Card>
           </Grid>
         </Grid>
         
-        <Box sx={{ mt: 3, display: 'flex', justifyContent: 'space-between' }}>
+        <Box sx={{
+        mt: 3,
+        display: 'flex',
+        justifyContent: 'space-between'
+      }}>
           <Box>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={showDetector}
-                  onChange={(e) => setShowDetector(e.target.checked)}
-                />
-              }
-              label="Show File Type Detector"
-            />
+            <FormControlLabel control={<Switch checked={showDetector} onChange={e => setShowDetector(e.target.checked)} />} label="Show File Type Detector" />
+
             
-            <FormControl sx={{ ml: 2, minWidth: 150 }} size="small">
+            <FormControl sx={{
+            ml: 2,
+            minWidth: 150
+          }} size="small">
               <InputLabel>Detail Level</InputLabel>
-              <Select
-                value={detailLevel}
-                onChange={(e) => setDetailLevel(e.target.value)}
-                label="Detail Level"
-              >
+              <Select value={detailLevel} onChange={e => setDetailLevel(e.target.value)} label="Detail Level">
+
                 <MenuItem value="minimal">Minimal</MenuItem>
                 <MenuItem value="standard">Standard</MenuItem>
                 <MenuItem value="full">Full</MenuItem>
@@ -509,42 +473,35 @@ const SpecializedFileViewerDemo = () => {
             </FormControl>
           </Box>
           
-          <Button
-            variant="outlined"
-            color="primary"
-            onClick={handleClearAll}
-          >
+          <Button variant="outlined" color="primary" onClick={handleClearAll}>
+
             Clear All
           </Button>
         </Box>
       </Paper>
       
-      <Divider sx={{ my: 4 }} />
+      <Divider sx={{
+      my: 4
+    }} />
       
       <Typography variant="h5" gutterBottom>
         File Viewer
       </Typography>
       
-      {(selectedFile || fileContent || getCurrentUrl()) ? (
-        <Box sx={{ mt: 3 }}>
-          <SpecializedFileViewer
-            file={selectedFile}
-            content={fileContent}
-            url={getCurrentUrl()}
-            fileType={getCurrentFileType()}
-            showDetector={showDetector}
-            detailLevel={detailLevel}
-          />
-        </Box>
-      ) : (
-        <Paper sx={{ p: 4, textAlign: 'center' }}>
+      {selectedFile || fileContent || getCurrentUrl() ? <Box sx={{
+      mt: 3
+    }}>
+          <SpecializedFileViewer file={selectedFile} content={fileContent} url={getCurrentUrl()} fileType={getCurrentFileType()} showDetector={showDetector} detailLevel={detailLevel} />
+
+        </Box> : <Paper sx={{
+      p: 4,
+      textAlign: 'center'
+    }}>
           <Typography variant="body1" color="text.secondary">
             Select a file, sample data type, or URL to display the file viewer
           </Typography>
-        </Paper>
-      )}
-    </Container>
-  );
-};
+        </Paper>}
 
+    </Container>;
+};
 export default SpecializedFileViewerDemo;

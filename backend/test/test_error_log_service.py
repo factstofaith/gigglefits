@@ -31,21 +31,21 @@ mock_logs = [
         severity=LogSeverity.ERROR,
         component="backend",
         message="Database connection failed",
-        timestamp=datetime.utcnow() - timedelta(hours=1)
+        timestamp=datetime.now(timezone.utc) - timedelta(hours=1)
     ),
     ErrorLog(
         id="log-2",
         severity=LogSeverity.WARNING,
         component="frontend",
         message="API request timed out",
-        timestamp=datetime.utcnow() - timedelta(hours=2)
+        timestamp=datetime.now(timezone.utc) - timedelta(hours=2)
     ),
     ErrorLog(
         id="log-3",
         severity=LogSeverity.CRITICAL,
         component="database",
         message="Out of memory error",
-        timestamp=datetime.utcnow() - timedelta(hours=3)
+        timestamp=datetime.now(timezone.utc) - timedelta(hours=3)
     ),
 ]
 
@@ -93,8 +93,8 @@ async def test_get_error_logs_with_filters():
     assert all(log.component == "backend" for log in component_response.logs)
     
     # Test with date range filter
-    start_date = datetime.utcnow() - timedelta(days=1)
-    end_date = datetime.utcnow()
+    start_date = datetime.now(timezone.utc) - timedelta(days=1)
+    end_date = datetime.now(timezone.utc)
     date_response = await get_error_logs(start_date=start_date, end_date=end_date)
     assert all(start_date <= log.timestamp <= end_date for log in date_response.logs)
     

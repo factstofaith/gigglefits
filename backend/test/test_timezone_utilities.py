@@ -22,7 +22,7 @@ from test.test_adapters.auth.timezone_test_utils import (
 
 def test_create_datetime():
     """Test creating timezone-aware datetimes."""
-    # Create datetime in UTC
+    # Create datetime in timezone
     dt_utc = TimezoneTestUtilities.create_datetime(2025, 4, 15, 10, 30, 0, "UTC")
     assert dt_utc.tzinfo is not None
     assert dt_utc.year == 2025

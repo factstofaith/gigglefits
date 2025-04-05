@@ -14,6 +14,43 @@ from ...db.models import User
 from ..users.models import UserRole
 from . import service as admin_service
 from .models import (
+from pydantic import BaseModel
+
+from typing import List, Dict, Any, Optional
+from datetime import timezone
+from pydantic import BaseModel
+from backend.utils.api.models import DataResponse, PaginatedResponse, ErrorResponse, create_response, create_paginated_response, create_error_response
+
+# Standard API Response Models
+class ResponseMetadata(BaseModel):
+    timestamp: datetime
+    request_id: str
+    api_version: str = "1.0"
+
+class StandardResponse(BaseModel):
+    data: Any
+    metadata: ResponseMetadata
+
+class PaginationMetadata(BaseModel):
+    page: int
+    page_size: int
+    total_items: int
+    total_pages: int
+
+class PaginatedResponse(BaseModel):
+    data: List[Any]
+    pagination: PaginationMetadata
+    metadata: ResponseMetadata
+
+class ErrorDetail(BaseModel):
+    code: str
+    message: str
+    details: Optional[Dict[str, Any]] = None
+
+class ErrorResponse(BaseModel):
+    error: ErrorDetail
+    metadata: ResponseMetadata
+
     AzureConfigCreate,
     AzureConfigUpdate,
     AzureConfig,
@@ -47,6 +84,17 @@ router = APIRouter(prefix="/monitoring", tags=["monitoring"])
 def is_admin_user(user: User) -> bool:
     """Check if the user has admin role"""
     return user.role in [UserRole.ADMIN, UserRole.SUPER_ADMIN]
+
+
+
+def standardize_response(data, skip=0, limit=10, total=None):
+    """Helper function to create standardized responses"""
+    # For collections with pagination
+    if isinstance(data, list) and total is not None:
+        return create_paginated_response(items=data, total=total, skip=skip, limit=limit)
+    # For single items or collections without pagination
+    return create_response(data=data)
+
 
 # Azure configuration endpoints
 
@@ -148,7 +196,7 @@ async def test_azure_connection(
             success=False,
             message="Failed to connect to Azure",
             details={"error": str(e)},
-            timestamp=datetime.utcnow()
+            timestamp=datetime.now(timezone.utc)
         )
 
 @router.get("/azure-config/status", response_model=Dict[str, bool])
@@ -311,7 +359,7 @@ async def get_resource_metrics(
     
     try:
         # Parse timeframe into datetime objects
-        now = datetime.utcnow()
+        now = datetime.now(timezone.utc)
         if timeframe == "1h":
             start_time = now - timedelta(hours=1)
         elif timeframe == "6h":
@@ -370,7 +418,7 @@ async def get_storage_analytics(
     
     try:
         # Parse timeframe into datetime objects
-        now = datetime.utcnow()
+        now = datetime.now(timezone.utc)
         if timeframe == "1h":
             start_time = now - timedelta(hours=1)
         elif timeframe == "6h":

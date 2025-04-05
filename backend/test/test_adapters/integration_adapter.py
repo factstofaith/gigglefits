@@ -5,7 +5,7 @@ This module provides a test adapter for integration functionality, implementing 
 """
 
 import uuid
-from datetime import datetime, UTC
+from datetime import datetime, timezone
 from typing import Dict, List, Optional, Any, Union
 
 from .entity_registry import BaseTestAdapter, EntityAction
@@ -95,7 +95,7 @@ class IntegrationTestAdapter(BaseTestAdapter):
         # Create a mock file entry
         file_id = str(uuid.uuid4())
         
-        now = datetime.now(UTC)
+        now = datetime.now(timezone.utc)
         
         # Determine file size
         if hasattr(file_content, "read"):
@@ -174,7 +174,7 @@ class IntegrationTestAdapter(BaseTestAdapter):
                 "metadata": {
                     "filename": "employees_opt.csv",
                     "transformed": True,
-                    "transformation_date": datetime.now(UTC).isoformat()
+                    "transformation_date": datetime.now(timezone.utc).isoformat()
                 }
             }
             
@@ -209,7 +209,7 @@ class IntegrationTestAdapter(BaseTestAdapter):
                     "size": len(content),
                     "metadata": {
                         "filename": file_name,
-                        "created_at": datetime.now(UTC).isoformat()
+                        "created_at": datetime.now(timezone.utc).isoformat()
                     }
                 }
                 
@@ -285,7 +285,7 @@ class IntegrationTestAdapter(BaseTestAdapter):
                     "transformed": True,
                     "metadata": {
                         "transformed": True,
-                        "transformation_date": datetime.now(UTC).isoformat(),
+                        "transformation_date": datetime.now(timezone.utc).isoformat(),
                         "transformations_applied": 3
                     }
                 }
@@ -369,7 +369,7 @@ class IntegrationTestAdapter(BaseTestAdapter):
         connector_id = str(uuid.uuid4())
         
         # Create timestamps
-        now = datetime.now(UTC)
+        now = datetime.now(timezone.utc)
         
         # Create the connector
         connector = {
@@ -420,14 +420,14 @@ class IntegrationTestAdapter(BaseTestAdapter):
                 "file_id": str(uuid.uuid4()),
                 "path": file_path,
                 "size": 200,
-                "uploaded_at": datetime.now(UTC),
+                "uploaded_at": datetime.now(timezone.utc),
                 "connector_id": connector_id,
                 "connector_type": "azure_blob",
                 "metadata": {
                     "filename": "employees_opt.csv",
                     "created_by": user_id_to_use,
                     "transformed": True,
-                    "transformation_date": datetime.now(UTC).isoformat()
+                    "transformation_date": datetime.now(timezone.utc).isoformat()
                 }
             }
             
@@ -452,12 +452,12 @@ class IntegrationTestAdapter(BaseTestAdapter):
                     "file_id": str(uuid.uuid4()),
                     "path": file_path,
                     "size": 500,
-                    "uploaded_at": datetime.now(UTC),
+                    "uploaded_at": datetime.now(timezone.utc),
                     "connector_id": connector_id,
                     "connector_type": self.storage_connectors[connector_id]["type"],
                     "metadata": {
                         "filename": file_path.split("/")[-1],
-                        "created_at": datetime.now(UTC).isoformat(),
+                        "created_at": datetime.now(timezone.utc).isoformat(),
                         "combined_file": "Combined" in file_path,
                         "archive_file": "archive" in file_path
                     }
@@ -990,7 +990,7 @@ class IntegrationTestAdapter(BaseTestAdapter):
                 "id": file_id,
                 "path": destination_path,
                 "size": len(combined_content),
-                "uploaded_at": datetime.now(UTC),
+                "uploaded_at": datetime.now(timezone.utc),
                 "connector_id": destination_connector_id,
                 "connector_type": self.storage_connectors[destination_connector_id]["type"],
                 "metadata": {
@@ -1228,7 +1228,7 @@ class IntegrationTestAdapter(BaseTestAdapter):
         integration_id = len(self.integrations) + 1
         
         # Create timestamps
-        now = datetime.now(UTC)
+        now = datetime.now(timezone.utc)
         
         # Create the integration
         integration = {
@@ -1259,7 +1259,7 @@ class IntegrationTestAdapter(BaseTestAdapter):
         # Update the integration
         integration = self.integrations[integration_id]
         integration.update({
-            "updated_at": datetime.now(UTC),
+            "updated_at": datetime.now(timezone.utc),
             **integration_data
         })
         
@@ -1344,7 +1344,7 @@ class IntegrationTestAdapter(BaseTestAdapter):
         
         # Create a new run
         run_id = len(self.integration_runs) + 1
-        now = datetime.now(UTC)
+        now = datetime.now(timezone.utc)
         
         run = {
             "id": run_id,
@@ -1392,7 +1392,7 @@ class IntegrationTestAdapter(BaseTestAdapter):
         mapping_id = len(self.field_mappings) + 1
         
         # Create timestamps
-        now = datetime.now(UTC)
+        now = datetime.now(timezone.utc)
         
         # Create the field mapping
         mapping = {
@@ -1427,7 +1427,7 @@ class IntegrationTestAdapter(BaseTestAdapter):
         
         # Update the mapping
         mapping.update({
-            "updated_at": datetime.now(UTC),
+            "updated_at": datetime.now(timezone.utc),
             **mapping_data
         })
         
@@ -1461,7 +1461,7 @@ class IntegrationTestAdapter(BaseTestAdapter):
         dataset_id = len(self.datasets) + 1
         
         # Create timestamps
-        now = datetime.now(UTC)
+        now = datetime.now(timezone.utc)
         
         # Create the dataset
         dataset = {
@@ -1491,7 +1491,7 @@ class IntegrationTestAdapter(BaseTestAdapter):
         field_id = len(self.dataset_fields) + 1
         
         # Create timestamps
-        now = datetime.now(UTC)
+        now = datetime.now(timezone.utc)
         
         # Create the field
         field = {
@@ -1575,7 +1575,7 @@ class IntegrationTestAdapter(BaseTestAdapter):
         code_id = len(self.earnings_codes) + 1
         
         # Create timestamps
-        now = datetime.now(UTC)
+        now = datetime.now(timezone.utc)
         
         # Create the earnings code
         code = {
@@ -1612,7 +1612,7 @@ class IntegrationTestAdapter(BaseTestAdapter):
         mapping_id = len(self.earnings_mappings) + 1
         
         # Create timestamps
-        now = datetime.now(UTC)
+        now = datetime.now(timezone.utc)
         
         # Create the earnings mapping
         mapping = {

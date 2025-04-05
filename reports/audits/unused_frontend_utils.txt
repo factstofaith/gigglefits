@@ -1,5 +1,0 @@
-./frontend/src/utils/browserCompatibility.js
-./frontend/src/utils/complexTransformValidation.js
-./frontend/src/utils/reactAdapters.js
-./frontend/src/utils/bidirectionalSync.js
-./frontend/src/utils/constants.js

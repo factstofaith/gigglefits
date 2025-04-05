@@ -393,7 +393,7 @@ class TestErrorHandlingAndRecovery:
             "cron_expression": "0 0 * * *",  # Daily at midnight
             "enabled": True,
             "start_date": datetime.now(timezone.utc).isoformat(),
-            "time_zone": "UTC"
+            "time_zone": "timezone"
         })
         
         # Step 8: Verify that scheduling failed

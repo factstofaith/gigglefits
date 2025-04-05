@@ -3,6 +3,28 @@
 
 FROM python:3.10-slim
 
+# Create non-root user
+RUN groupadd -g 1000 appuser && \
+    useradd -u 1000 -g appuser -s /bin/bash -m appuser && \
+    mkdir -p /home/appuser/app && \
+    chown -R appuser:appuser /home/appuser
+
+
+# Add metadata labels
+LABEL \
+    org.opencontainers.image.vendor="TAP Integration Platform" \
+    org.opencontainers.image.authors="TAP Platform Team <tap-team@example.com>" \
+    org.opencontainers.image.licenses="Proprietary" \
+    org.label-schema.schema-version="1.0" \
+    org.label-schema.vendor="TAP Integration Platform" \
+    com.tap.component.version="1.0.0" \
+    com.tap.image.environment="testing" \
+RUN chown -R appuser:appuser /app
+    com.tap.maintainer="TAP Platform Team" \
+    com.tap.component.type="backend" \
+    org.opencontainers.image.created="2025-04-03T02:06:45.344Z"
+
+
 # Set working directory
 WORKDIR /app
 
@@ -91,6 +113,10 @@ exit $TEST_EXIT_CODE\n\
 
 # Add Docker healthcheck
 HEALTHCHECK --interval=10s --timeout=5s --start-period=5s --retries=1 CMD [ "/app/healthcheck.sh" ]
+
+
+# Use non-root user
+USER appuser
 
 # Default command runs all tests
 ENTRYPOINT ["/app/test_entrypoint.sh"]

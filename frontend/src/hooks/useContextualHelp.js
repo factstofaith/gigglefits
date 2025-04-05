@@ -6,7 +6,7 @@
  */
 
 import { useCallback } from 'react';
-import { useHelp } from '../contexts/HelpContext';
+import { useHelp } from "@/contexts/HelpContext";
 
 /**
  * Custom hook for implementing contextual help and guided tours
@@ -22,7 +22,7 @@ const useContextualHelp = (section) => {
     addHelpContent,
     getHelpContent,
     helpPreferences,
-    handleTourComplete,
+    handleTourComplete
   } = useHelp();
 
   /**
@@ -46,24 +46,24 @@ const useContextualHelp = (section) => {
     (key, content) => addHelpContent(section, key, content),
     [section, addHelpContent]
   );
-  
+
   /**
    * Check if help is enabled
    * 
    * @returns {boolean} Whether help is enabled
    */
   const isHelpEnabled = helpPreferences.showHelp;
-  
+
   /**
    * Get all tours related to this section
    * 
    * @returns {Array} Tours related to this section
    */
   const getSectionTours = useCallback(
-    () => tours.filter(tour => tour.id.startsWith(`${section}-`)),
+    () => tours.filter((tour) => tour.id.startsWith(`${section}-`)),
     [section, tours]
   );
-  
+
   /**
    * Start a tour specific to this section
    * 
@@ -76,7 +76,7 @@ const useContextualHelp = (section) => {
     },
     [section, startTour]
   );
-  
+
   /**
    * Check if a tour has been completed
    * 
@@ -99,7 +99,7 @@ const useContextualHelp = (section) => {
     getSectionTours,
     startTour: startSectionTour,
     isTourCompleted,
-    completeTour: handleTourComplete,
+    completeTour: handleTourComplete
   };
 };
 

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docker Container Error</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: #f8f9fa;
+            color: #343a40;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0 20px;
+            text-align: center;
+        }
+        .error-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            max-width: 600px;
+            width: 100%;
+        }
+        h1 {
+            color: #e74c3c;
+            margin-bottom: 1rem;
+        }
+        p {
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        .action-button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        .action-button:hover {
+            background-color: #2980b9;
+        }
+        .error-details {
+            margin-top: 2rem;
+            padding: 1rem;
+            background-color: #f1f1f1;
+            border-radius: 4px;
+            text-align: left;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+        .docker-info {
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <h1>Container Service Error</h1>
+        <p>The application encountered an error in the container environment. This error has been logged to the container's stdout/stderr for monitoring and diagnosis.</p>
+        
+        <p>Please try the following:</p>
+        <ul style="text-align: left;">
+            <li>Refresh the page</li>
+            <li>Check container logs for more information</li>
+            <li>Verify network connectivity between containers</li>
+            <li>Ensure all required environment variables are set</li>
+        </ul>
+        
+        <button class="action-button" onclick="window.location.href='/'">Return to Home Page</button>
+        
+        <div class="docker-info">
+            <p>Container Environment: Docker</p>
+            <p id="timestamp"></p>
+        </div>
+        
+        <div class="error-details">
+            Error ID: <span id="errorId"></span>
+            Request Path: <span id="requestPath"></span>
+            Time: <span id="errorTime"></span>
+        </div>
+    </div>
+
+    <script>
+        // Generate a unique error ID for tracking in logs
+        function generateErrorId() {
+            return 'docker-err-' + Math.random().toString(36).substring(2, 15);
+        }
+        
+        // Set current information
+        document.addEventListener('DOMContentLoaded', function() {
+            const now = new Date();
+            const errorId = generateErrorId();
+            const path = window.location.pathname;
+            
+            document.getElementById('errorId').textContent = errorId;
+            document.getElementById('requestPath').textContent = path;
+            document.getElementById('errorTime').textContent = now.toISOString();
+            document.getElementById('timestamp').textContent = 'Error occurred at: ' + now.toLocaleString();
+            
+            // Log to console for container stderr capture
+            console.error('[DOCKER_CONTAINER_ERROR]', {
+                errorId: errorId,
+                path: path,
+                time: now.toISOString(),
+                userAgent: navigator.userAgent
+            });
+        });
+        
+        // Send error info to Docker error service
+        window.addEventListener('load', function() {
+            if (window.dockerErrorService && typeof window.dockerErrorService.logContainerError === 'function') {
+                window.dockerErrorService.logContainerError({
+                    errorId: document.getElementById('errorId').textContent,
+                    path: document.getElementById('requestPath').textContent,
+                    time: document.getElementById('errorTime').textContent
+                });
+            }
+        });
+    </script>
+</body>
+</html>

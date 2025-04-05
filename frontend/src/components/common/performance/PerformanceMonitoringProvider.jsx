@@ -1,3 +1,5 @@
+import { ErrorBoundary, useErrorHandler, withErrorBoundary } from "@/error-handling";
+
 /**
  * Performance Monitoring Provider Component
  * 
@@ -6,20 +8,13 @@
  * 
  * @module components/common/performance/PerformanceMonitoringProvider
  */
-
-import React, { useState, useEffect, createContext, useContext, useCallback } from 'react';
+import React, { useState, useEffect, createContext, useContext, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { 
-  initializePerformanceMonitoring, 
-  checkAllBudgets,
-  clearPerformanceMetrics,
-  clearViolations,
-  generatePerformanceReport,
-  generateBudgetReport
-} from '../../../utils/performance';
+import { initializePerformanceMonitoring, checkAllBudgets, clearPerformanceMetrics, clearViolations, generatePerformanceReport, generateBudgetReport } from "@/utils/performance";
 import PerformanceBudgetPanel from '../PerformanceBudgetPanel';
 
 // Create performance context
+import { ENV } from "@/utils/environmentConfig";
 export const PerformanceContext = createContext({
   isMonitoringEnabled: false,
   toggleMonitoring: () => {},
@@ -37,10 +32,10 @@ export const PerformanceContext = createContext({
  * @param {Object} props - Component props
  * @returns {JSX.Element} Rendered component
  */
-export const PerformanceMonitoringProvider = ({ 
+export const PerformanceMonitoringProvider = ({
   children,
-  initiallyEnabled = process.env.NODE_ENV === 'development',
-  showBudgetPanel = process.env.NODE_ENV === 'development',
+  initiallyEnabled = ENV.NODE_ENV === 'development',
+  showBudgetPanel = ENV.NODE_ENV === 'development',
   budgetPanelPosition = 'bottom-right',
   monitoringOptions = {}
 }) => {
@@ -49,29 +44,29 @@ export const PerformanceMonitoringProvider = ({
   const [performanceData, setPerformanceData] = useState({});
   const [violationCount, setViolationCount] = useState(0);
   const [cleanupFn, setCleanupFn] = useState(null);
-  
+
   // Check if we're in development environment
-  const isDevelopment = process.env.NODE_ENV === 'development';
-  
+  const isDevelopment = ENV.NODE_ENV === 'development';
+
   /**
    * Toggle monitoring
    */
   const toggleMonitoring = useCallback(() => {
     setIsMonitoringEnabled(prev => !prev);
   }, []);
-  
+
   /**
    * Check performance against budgets
    */
   const checkPerformance = useCallback(() => {
-    const violations = checkAllBudgets({ logToConsole: isDevelopment });
-    const totalViolations = Object.values(violations)
-      .reduce((sum, categoryViolations) => sum + categoryViolations.length, 0);
-    
+    const violations = checkAllBudgets({
+      logToConsole: isDevelopment
+    });
+    const totalViolations = Object.values(violations).reduce((sum, categoryViolations) => sum + categoryViolations.length, 0);
     setViolationCount(totalViolations);
     return violations;
   }, [isDevelopment]);
-  
+
   /**
    * Reset all performance metrics
    */
@@ -80,7 +75,7 @@ export const PerformanceMonitoringProvider = ({
     clearViolations();
     setViolationCount(0);
   }, []);
-  
+
   /**
    * Generate performance reports
    */
@@ -91,7 +86,7 @@ export const PerformanceMonitoringProvider = ({
       return generatePerformanceReport();
     }
   }, []);
-  
+
   /**
    * Update function for metrics
    */
@@ -104,7 +99,7 @@ export const PerformanceMonitoringProvider = ({
       }
     }));
   }, []);
-  
+
   // Initialize performance monitoring when enabled
   useEffect(() => {
     if (isMonitoringEnabled) {
@@ -113,9 +108,8 @@ export const PerformanceMonitoringProvider = ({
         ...monitoringOptions,
         onMetricUpdate: handleMetricUpdate
       });
-      
       setCleanupFn(() => cleanup);
-      
+
       // Perform initial check
       checkPerformance();
     } else if (cleanupFn) {
@@ -123,16 +117,15 @@ export const PerformanceMonitoringProvider = ({
       cleanupFn();
       setCleanupFn(null);
     }
-    
     return () => {
       if (cleanupFn) {
         cleanupFn();
       }
     };
   }, [isMonitoringEnabled, monitoringOptions, checkPerformance, handleMetricUpdate]);
-  
-  // Create context value
-  const contextValue = {
+
+  // Create context value with useMemo for performance optimization
+  const contextValue = useMemo(() => ({
     isMonitoringEnabled,
     toggleMonitoring,
     checkPerformance,
@@ -141,23 +134,14 @@ export const PerformanceMonitoringProvider = ({
     performanceData,
     violationCount,
     isDevelopment
-  };
-  
-  return (
-    <PerformanceContext.Provider value={contextValue}>
+  }), [isMonitoringEnabled, toggleMonitoring, checkPerformance, resetMetrics, generateReport, performanceData, violationCount, isDevelopment]);
+  return <PerformanceContext.Provider value={contextValue}>
       {children}
       
-      {isDevelopment && showBudgetPanel && isMonitoringEnabled && (
-        <PerformanceBudgetPanel
-          position={budgetPanelPosition}
-          autoExpandViolations={true}
-          initiallyOpen={false}
-          refreshInterval={30000}
-          logToConsole={false}
-        />
-      )}
-    </PerformanceContext.Provider>
-  );
+      {isDevelopment && showBudgetPanel && isMonitoringEnabled && <PerformanceBudgetPanel position={budgetPanelPosition} autoExpandViolations={true} initiallyOpen={false} refreshInterval={30000} logToConsole={false} />}
+
+
+    </PerformanceContext.Provider>;
 };
 
 /**
@@ -167,14 +151,11 @@ export const PerformanceMonitoringProvider = ({
  */
 export const usePerformanceMonitoring = () => {
   const context = useContext(PerformanceContext);
-  
   if (!context) {
     throw new Error('usePerformanceMonitoring must be used within a PerformanceMonitoringProvider');
   }
-  
   return context;
 };
-
 PerformanceMonitoringProvider.propTypes = {
   children: PropTypes.node.isRequired,
   initiallyEnabled: PropTypes.bool,
@@ -182,5 +163,10 @@ PerformanceMonitoringProvider.propTypes = {
   budgetPanelPosition: PropTypes.oneOf(['top-left', 'top-right', 'bottom-left', 'bottom-right']),
   monitoringOptions: PropTypes.object
 };
-
-export default PerformanceMonitoringProvider;
+export default withErrorBoundary(PerformanceMonitoringProvider, {
+  fallback: (error, resetErrorBoundary) => <div className="error-boundary-fallback">
+      <h3>Performance Monitoring Error</h3>
+      <p>{error.message}</p>
+      <button onClick={resetErrorBoundary}>Reset</button>
+    </div>
+});

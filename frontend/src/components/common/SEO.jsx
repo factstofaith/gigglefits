@@ -22,9 +22,9 @@ const SEO = ({
   const fullTitle = title ? `${title} | ${siteName}` : siteName;
   const defaultDescription = 'Default description for your website';
   const siteUrl = 'https://yourdomain.com';
-  // Simplified logic for canonical URL
+  // Simplified logic for canonical URL - using Docker-compatible window check
   const fullCanonical = canonical ? canonical : 
-    (typeof window !== 'undefined' ? window.location.href : '');
+    (typeof window !== 'undefined' && window ? window.location.href : '');
   const defaultImage = '/logo.png';
   
   return (
@@ -71,25 +71,25 @@ SEO.propTypes = {
 
 export default SEO;
 
-/* 
-Usage Example:
-
-import SEO from '../components/common/SEO';
-import { productStructuredData } from '../utils/structured-data';
-
-const ProductPage = ({ product }) => {
-  return (
-    <>
-      <SEO
-        title={product.name}
-        description={product.description}
-        image={product.imageUrl}
-        type="product"
-        structuredData={productStructuredData(product)}
-      />
-      
-      {/* Rest of your component */}
-    </>
-  );
-};
-*/
+/**
+ * Usage Example:
+ *
+ * import SEO from '@/components/common/SEO';
+ * import { productStructuredData } from '@/utils/structured-data';
+ *
+ * const ProductPage = ({ product }) => {
+ *   return (
+ *     <>
+ *       <SEO
+ *         title={product.name}
+ *         description={product.description}
+ *         image={product.imageUrl}
+ *         type="product"
+ *         structuredData={productStructuredData(product)}
+ *       />
+ *       
+ *       {- Rest of your component -}
+ *     </>
+ *   );
+ * };
+ */

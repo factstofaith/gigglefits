@@ -1,19 +1,20 @@
 /**
- * Source Configuration Step
- *
- * Third step of the dataset creation wizard that dynamically renders
- * configuration options based on the selected source type.
- *
- * @component
+ * Fixed for Docker compatibility:
+ * - Removed duplicate imports
+ * - Standardized error-handling import path
  */
-
+import { ErrorBoundary, useErrorHandler, withErrorBoundary } from "@/error-handling"; /**
+                                                                                      * Source Configuration Step
+                                                                                      *
+                                                                                      * Third step of the dataset creation wizard that dynamically renders
+                                                                                      * configuration options based on the selected source type.
+                                                                                      *
+                                                                                      * @component
+                                                                                      */
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Box, Typography, Alert } from '@mui/material';
-import {
-  DATASET_SOURCE_TYPES,
-  getSourceConfigComponent,
-} from '../dataset_wizard_utils';
+import { DATASET_SOURCE_TYPES, getSourceConfigComponent } from '../dataset_wizard_utils';
 
 // Source configuration components
 import S3ConfigurationForm from '../source-config/S3ConfigurationForm';
@@ -32,7 +33,9 @@ import GenericConfigurationForm from '../source-config/GenericConfigurationForm'
  * @param {Object} props.formik - Formik instance
  * @returns {JSX.Element} The SourceConfigStep component
  */
-const SourceConfigStep = ({ formik }) => {
+const SourceConfigStep = ({
+  formik
+}) => {
   const sourceType = formik.values.sourceType;
 
   // Get the appropriate configuration component based on the source type
@@ -59,22 +62,17 @@ const SourceConfigStep = ({ formik }) => {
 
   // If no source type is selected, show an alert
   if (!sourceType) {
-    return (
-      <Alert severity="warning">
+    return <Alert severity="warning">
         Please select a source type in the previous step.
-      </Alert>
-    );
+      </Alert>;
   }
-
-  return (
-    <Box>
+  return <Box>
       <ConfigComponent formik={formik} />
-    </Box>
-  );
+    </Box>;
 };
-
 SourceConfigStep.propTypes = {
-  formik: PropTypes.object.isRequired,
+  formik: PropTypes.object.isRequired
 };
-
-export default SourceConfigStep;
+export default withErrorBoundary(SourceConfigStep, {
+  boundary: 'SourceConfigStep'
+});

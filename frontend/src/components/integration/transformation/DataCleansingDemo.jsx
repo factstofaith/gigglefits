@@ -9,25 +9,22 @@ import DataCleansing from './nodes/DataCleansing';
  * the DataCleansing node functionality with sample data input and real-time
  * cleansing result display.
  */
+import { withErrorBoundary } from "@/error-handling/withErrorBoundary";
 const DataCleansingDemo = () => {
   // Sample configuration for basic cleansing operations
   const [config, setConfig] = useState({
     inputField: 'sampleInput',
     outputField: 'cleanedOutput',
-    cleansingOperations: [
-      {
-        type: 'trim',
-        id: '1'
-      },
-      {
-        type: 'removeExtraSpaces',
-        id: '2'
-      },
-      {
-        type: 'removeHtml',
-        id: '3'
-      }
-    ],
+    cleansingOperations: [{
+      type: 'trim',
+      id: '1'
+    }, {
+      type: 'removeExtraSpaces',
+      id: '2'
+    }, {
+      type: 'removeHtml',
+      id: '3'
+    }],
     applyToNullValues: false,
     treatEmptyAsNull: true,
     nullReplacement: '',
@@ -39,24 +36,32 @@ const DataCleansingDemo = () => {
   });
 
   // Handle configuration changes from the node
-  const handleConfigChange = (newConfig) => {
+  const handleConfigChange = newConfig => {
     setConfig(newConfig);
   };
-
-  return (
-    <Container maxWidth="lg" sx={{ pt: 4, pb: 8 }}>
+  return <Container maxWidth="lg" sx={{
+    pt: 4,
+    pb: 8
+  }}>
       <Typography variant="h4" gutterBottom align="center">
         Data Cleansing Transformation Demo
       </Typography>
       
-      <Typography variant="body1" paragraph sx={{ mb: 3 }}>
+      <Typography variant="body1" paragraph sx={{
+      mb: 3
+    }}>
         This demo showcases the DataCleansing transformation node, which provides comprehensive
         text data cleansing capabilities. It supports multiple cleansing operations that can
         be applied in sequence, with validation options and null value handling.
       </Typography>
       
-      <Box sx={{ mt: 4 }}>
-        <Paper elevation={3} sx={{ p: 3, mb: 4 }}>
+      <Box sx={{
+      mt: 4
+    }}>
+        <Paper elevation={3} sx={{
+        p: 3,
+        mb: 4
+      }}>
           <Typography variant="h6" gutterBottom>
             Configuration
           </Typography>
@@ -65,10 +70,8 @@ const DataCleansingDemo = () => {
             applied in sequence from top to bottom.
           </Typography>
           
-          <DataCleansing 
-            initialConfig={config} 
-            onConfigChange={handleConfigChange} 
-          />
+          <DataCleansing initialConfig={config} onConfigChange={handleConfigChange} />
+
         </Paper>
         
         <Grid container spacing={3}>
@@ -80,7 +83,9 @@ const DataCleansingDemo = () => {
               The DataCleansing component provides a powerful set of text cleansing operations:
             </Typography>
             
-            <Box component="ul" sx={{ pl: 2 }}>
+            <Box component="ul" sx={{
+            pl: 2
+          }}>
               <Typography component="li" variant="body2">
                 <strong>Multiple Operations:</strong> Apply a sequence of cleansing operations in order
               </Typography>
@@ -103,8 +108,6 @@ const DataCleansingDemo = () => {
           </Grid>
         </Grid>
       </Box>
-    </Container>
-  );
+    </Container>;
 };
-
 export default DataCleansingDemo;

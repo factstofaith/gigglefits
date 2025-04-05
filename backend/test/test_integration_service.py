@@ -5,7 +5,7 @@ This module contains tests for the integration service functionality.
 """
 
 import pytest
-from datetime import datetime, UTC
+from datetime import datetime, timezone
 from unittest.mock import MagicMock, patch
 
 from modules.integrations.service import IntegrationService
@@ -74,7 +74,7 @@ class TestIntegrationService:
         # Arrange
         schedule_config = ScheduleConfig(
             type=ScheduleType.DAILY_2AM,
-            timezone="UTC"
+            timezone="timezone"
         )
         
         integration_create = IntegrationCreate(
@@ -315,7 +315,7 @@ class TestIntegrationService:
         mock_run.id = 1
         mock_run.integration_id = integration_id
         mock_run.status.value = "running"
-        mock_run.start_time = datetime.now(UTC)
+        mock_run.start_time = datetime.now(timezone.utc)
         
         # Act
         result = self.service.run_integration(integration_id)
@@ -441,8 +441,8 @@ class TestIntegrationService:
         mock_mapping.transformation = mapping_create.transformation
         mock_mapping.required = mapping_create.required
         mock_mapping.description = mapping_create.description
-        mock_mapping.created_at = datetime.now(UTC)
-        mock_mapping.updated_at = datetime.now(UTC)
+        mock_mapping.created_at = datetime.now(timezone.utc)
+        mock_mapping.updated_at = datetime.now(timezone.utc)
         
         # Set up query mocks for mapping operations
         mapping_query_mock = MagicMock()

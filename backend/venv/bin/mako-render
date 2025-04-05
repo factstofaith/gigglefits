@@ -1,4 +1,4 @@
-#!/home/ai-dev/Desktop/tap-integration-platform/backend/venv/bin/python3
+#!/home/ai-dev/Desktop/tap-integration-platform/backend/venv/bin/python3.12
 # -*- coding: utf-8 -*-
 import re
 import sys

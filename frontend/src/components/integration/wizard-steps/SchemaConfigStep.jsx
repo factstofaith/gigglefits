@@ -1,3 +1,14 @@
+
+/**
+ * Fixed for Docker compatibility:
+ * - Removed duplicate imports
+ * - Standardized error-handling import path
+ */
+import {
+  ErrorBoundary,
+  useErrorHandler,
+  withErrorBoundary 
+} from '@/error-handling';
 /**
  * Schema Configuration Step
  *
@@ -7,10 +18,9 @@
  *
  * @component
  */
-
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import {
+import { 
   Box,
   TextField,
   Grid,
@@ -32,7 +42,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Collapse,
+  Collapse 
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -41,7 +51,7 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 
-import { FIELD_TYPES, getFieldTypeOptions } from '../dataset_wizard_utils';
+import { FIELD_TYPES, getFieldTypeOptions } from '@/dataset_wizard_utils';
 
 /**
  * Schema Configuration Step component
@@ -51,9 +61,11 @@ import { FIELD_TYPES, getFieldTypeOptions } from '../dataset_wizard_utils';
  * @returns {JSX.Element} The SchemaConfigStep component
  */
 const SchemaConfigStep = ({ formik }) => {
+  const { error, handleError } = useErrorHandler('SchemaConfigStep');
+  const [formError, setFormError] = useState(null);
   const [schemaDefinitionMethod, setSchemaDefinitionMethod] = useState(
-    formik.values.schemaDefinitionMethod || 'auto'
-  );
+  formik.values.schemaDefinitionMethod || 'auto');
+
   const [expandedField, setExpandedField] = useState(null);
   const fieldTypeOptions = getFieldTypeOptions();
 
@@ -77,7 +89,7 @@ const SchemaConfigStep = ({ formik }) => {
       description: '',
       required: false,
       defaultValue: '',
-      constraints: {},
+      constraints: {}
     };
 
     formik.setFieldValue('schema', [...formik.values.schema, newField]);
@@ -93,7 +105,7 @@ const SchemaConfigStep = ({ formik }) => {
     const updatedSchema = [...formik.values.schema];
     updatedSchema[index] = {
       ...updatedSchema[index],
-      [fieldName]: value,
+      [fieldName]: value
     };
     formik.setFieldValue('schema', updatedSchema);
   };
@@ -137,20 +149,20 @@ const SchemaConfigStep = ({ formik }) => {
             <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
               <Typography variant="h6">Define Schema Fields</Typography>
               <Button
-                variant="outlined"
-                startIcon={<AddIcon />}
-                onClick={handleAddField}
-              >
+              variant="outlined"
+              startIcon={<AddIcon />}
+              onClick={handleAddField}>
+
                 Add Field
               </Button>
             </Box>
 
-            {formik.values.schema.length === 0 ? (
-              <Alert severity="info" sx={{ mb: 2 }}>
+            {formik.values.schema.length === 0 ?
+            <Alert severity="info" sx={{ mb: 2 }}>
                 No fields defined yet. Click "Add Field" to start defining your schema.
-              </Alert>
-            ) : (
-              <TableContainer component={Paper} sx={{ mb: 2 }}>
+              </Alert> :
+
+            <TableContainer component={Paper} sx={{ mb: 2 }}>
                 <Table>
                   <TableHead>
                     <TableRow>
@@ -161,48 +173,48 @@ const SchemaConfigStep = ({ formik }) => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {formik.values.schema.map((field, index) => (
-                      <React.Fragment key={index}>
+                    {formik.values.schema.map((field, index) =>
+                  <React.Fragment key={index}>
                         <TableRow>
                           <TableCell>
                             <TextField
-                              fullWidth
-                              size="small"
-                              value={field.name}
-                              onChange={(e) =>
-                                handleFieldChange(index, 'name', e.target.value)
-                              }
-                              placeholder="Field name"
-                            />
+                        fullWidth
+                        size="small"
+                        value={field.name}
+                        onChange={(e) =>
+                        handleFieldChange(index, 'name', e.target.value)}
+
+                        placeholder="Field name" />
+
                           </TableCell>
                           <TableCell>
                             <FormControl fullWidth size="small">
                               <Select
-                                value={field.type}
-                                onChange={(e) =>
-                                  handleFieldChange(index, 'type', e.target.value)
-                                }
-                              >
-                                {fieldTypeOptions.map((option) => (
-                                  <MenuItem key={option.id} value={option.id}>
+                          value={field.type}
+                          onChange={(e) =>
+                          handleFieldChange(index, 'type', e.target.value)}>
+
+
+                                {fieldTypeOptions.map((option) =>
+                            <MenuItem key={option.id} value={option.id}>
                                     {option.name}
-                                  </MenuItem>
-                                ))}
+                                  </MenuItem>)}
+
                               </Select>
                             </FormControl>
                           </TableCell>
                           <TableCell>
                             <Select
-                              value={field.required ? 'yes' : 'no'}
-                              onChange={(e) =>
-                                handleFieldChange(
-                                  index,
-                                  'required',
-                                  e.target.value === 'yes'
-                                )
-                              }
-                              size="small"
-                            >
+                        value={field.required ? 'yes' : 'no'}
+                        onChange={(e) =>
+                        handleFieldChange(
+                        index,
+                        'required',
+                        e.target.value === 'yes')}
+
+
+                        size="small">
+
                               <MenuItem value="yes">Yes</MenuItem>
                               <MenuItem value="no">No</MenuItem>
                             </Select>
@@ -211,21 +223,21 @@ const SchemaConfigStep = ({ formik }) => {
                             <Box sx={{ display: 'flex', gap: 1 }}>
                               <Tooltip title="Expand">
                                 <IconButton
-                                  size="small"
-                                  onClick={() => toggleFieldExpansion(index)}
-                                >
-                                  {expandedField === index ? (
-                                    <ExpandLessIcon />
-                                  ) : (
-                                    <ExpandMoreIcon />
-                                  )}
+                            size="small"
+                            onClick={() => toggleFieldExpansion(index)}>
+
+                                  {expandedField === index ?
+                              <ExpandLessIcon /> :
+
+                              <ExpandMoreIcon />}
+
                                 </IconButton>
                               </Tooltip>
                               <Tooltip title="Remove">
                                 <IconButton
-                                  size="small"
-                                  onClick={() => handleRemoveField(index)}
-                                >
+                            size="small"
+                            onClick={() => handleRemoveField(index)}>
+
                                   <DeleteIcon />
                                 </IconButton>
                               </Tooltip>
@@ -235,55 +247,55 @@ const SchemaConfigStep = ({ formik }) => {
                         <TableRow>
                           <TableCell colSpan={4} sx={{ p: 0 }}>
                             <Collapse
-                              in={expandedField === index}
-                              timeout="auto"
-                              unmountOnExit
-                            >
+                        in={expandedField === index}
+                        timeout="auto"
+                        unmountOnExit>
+
                               <Box sx={{ p: 2, backgroundColor: '#f5f5f5' }}>
                                 <Grid container spacing={2}>
                                   <Grid item xs={12}>
                                     <TextField
-                                      fullWidth
-                                      label="Description"
-                                      value={field.description}
-                                      onChange={(e) =>
-                                        handleFieldChange(
-                                          index,
-                                          'description',
-                                          e.target.value
-                                        )
-                                      }
-                                      multiline
-                                      rows={2}
-                                    />
+                                fullWidth
+                                label="Description"
+                                value={field.description}
+                                onChange={(e) =>
+                                handleFieldChange(
+                                index,
+                                'description',
+                                e.target.value)}
+
+
+                                multiline
+                                rows={2} />
+
                                   </Grid>
                                   <Grid item xs={12} sm={6}>
                                     <TextField
-                                      fullWidth
-                                      label="Default Value"
-                                      value={field.defaultValue || ''}
-                                      onChange={(e) =>
-                                        handleFieldChange(
-                                          index,
-                                          'defaultValue',
-                                          e.target.value
-                                        )
-                                      }
-                                    />
+                                fullWidth
+                                label="Default Value"
+                                value={field.defaultValue || ''}
+                                onChange={(e) =>
+                                handleFieldChange(
+                                index,
+                                'defaultValue',
+                                e.target.value)} />
+
+
+
                                   </Grid>
                                 </Grid>
                               </Box>
                             </Collapse>
                           </TableCell>
                         </TableRow>
-                      </React.Fragment>
-                    ))}
+                      </React.Fragment>)}
+
                   </TableBody>
                 </Table>
-              </TableContainer>
-            )}
-          </Box>
-        );
+              </TableContainer>}
+
+          </Box>);
+
 
       case 'auto':
         return (
@@ -293,35 +305,35 @@ const SchemaConfigStep = ({ formik }) => {
               detect the schema based on this sample.
             </Alert>
             <TextField
-              fullWidth
-              multiline
-              rows={10}
-              label="Sample Data"
-              name="sampleData"
-              value={formik.values.sampleData}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={
-                formik.touched.sampleData && Boolean(formik.errors.sampleData)
-              }
-              helperText={
-                formik.touched.sampleData && formik.errors.sampleData
-              }
-              placeholder="Paste JSON, CSV, or other structured data here"
-            />
+            fullWidth
+            multiline
+            rows={10}
+            label="Sample Data"
+            name="sampleData"
+            value={formik.values.sampleData}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={
+            formik.touched.sampleData && Boolean(formik.errors.sampleData)}
+
+            helperText={
+            formik.touched.sampleData && formik.errors.sampleData}
+
+            placeholder="Paste JSON, CSV, or other structured data here" />
+
             <Button
-              variant="contained"
-              color="primary"
-              startIcon={<AutoFixHighIcon />}
-              sx={{ mt: 2 }}
-              // In a real implementation, this would trigger schema discovery
-              // For now it's just a placeholder
-              onClick={() => console.log('Discover schema from sample data')}
-            >
+            variant="contained"
+            color="primary"
+            startIcon={<AutoFixHighIcon />}
+            sx={{ mt: 2 }}
+            // In a real implementation, this would trigger schema discovery
+            // For now it's just a placeholder
+            onClick={() => console.log('Discover schema from sample data')}>
+
               Discover Schema
             </Button>
-          </Box>
-        );
+          </Box>);
+
 
       case 'upload':
         return (
@@ -330,27 +342,27 @@ const SchemaConfigStep = ({ formik }) => {
               Upload a schema file (JSON Schema, XSD, etc.) to define your dataset structure.
             </Alert>
             <Box
-              sx={{
-                border: '2px dashed #ccc',
-                borderRadius: 2,
-                p: 3,
-                textAlign: 'center',
-                mb: 2,
-              }}
-            >
+            sx={{
+              border: '2px dashed #ccc',
+              borderRadius: 2,
+              p: 3,
+              textAlign: 'center',
+              mb: 2
+            }}>
+
               <input
-                accept=".json,.xsd,.xml,.avsc"
-                id="schema-file-upload"
-                type="file"
-                style={{ display: 'none' }}
-                onChange={handleFileUpload}
-              />
+              accept=".json,.xsd,.xml,.avsc"
+              id="schema-file-upload"
+              type="file"
+              style={{ display: 'none' }}
+              onChange={handleFileUpload} />
+
               <label htmlFor="schema-file-upload">
                 <Button
-                  variant="contained"
-                  component="span"
-                  startIcon={<CloudUploadIcon />}
-                >
+                variant="contained"
+                component="span"
+                startIcon={<CloudUploadIcon />}>
+
                   Upload Schema File
                 </Button>
               </label>
@@ -358,17 +370,17 @@ const SchemaConfigStep = ({ formik }) => {
                 Supported formats: JSON Schema, XSD, Avro Schema
               </Typography>
             </Box>
-            {formik.values.schemaFile && (
-              <Alert severity="success">
+            {formik.values.schemaFile &&
+            <Alert severity="success">
                 File uploaded: {formik.values.schemaFile.name}
-              </Alert>
-            )}
-          </Box>
-        );
+              </Alert>}
+
+          </Box>);
+
 
       default:
-        return null;
-    }
+        return null;}
+
   };
 
   return (
@@ -378,12 +390,12 @@ const SchemaConfigStep = ({ formik }) => {
           Schema Definition Method
         </InputLabel>
         <Select
-          labelId="schema-definition-method-label"
-          id="schemaDefinitionMethod"
-          value={schemaDefinitionMethod}
-          onChange={handleMethodChange}
-          label="Schema Definition Method"
-        >
+        labelId="schema-definition-method-label"
+        id="schemaDefinitionMethod"
+        value={schemaDefinitionMethod}
+        onChange={handleMethodChange}
+        label="Schema Definition Method">
+
           <MenuItem value="auto">Automatic Schema Discovery</MenuItem>
           <MenuItem value="manual">Manual Schema Definition</MenuItem>
           <MenuItem value="upload">Upload Schema File</MenuItem>
@@ -396,12 +408,12 @@ const SchemaConfigStep = ({ formik }) => {
       <Divider sx={{ mb: 3 }} />
 
       {renderSchemaForm()}
-    </Box>
-  );
+    </Box>);
+
 };
 
 SchemaConfigStep.propTypes = {
-  formik: PropTypes.object.isRequired,
+  formik: PropTypes.object.isRequired
 };
 
 export default SchemaConfigStep;

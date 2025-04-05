@@ -22,6 +22,41 @@ from core.settings.development import DevelopmentSettings
 from core.settings.test import TestSettings
 from core.settings.production import ProductionSettings
 
+@pytest.fixture(scope="function")
+def env_config_setup():
+    """Set up a clean environment for configuration tests."""
+    # Store original environment
+    original_env = os.environ.copy()
+    
+    # Create test environment with all required variables
+    test_env = {
+        "APP_ENVIRONMENT": "development",
+        "ENVIRONMENT": "development",
+        # Don't set DATABASE_URL to allow the environment-specific settings to use their defaults
+        "SECRET_KEY": "test_secret_key",
+        "JWT_SECRET_KEY": "test_jwt_key",
+        # The validators need to handle the CORS settings properly
+        "CORS_ORIGINS": '["*"]',  # JSON string array for testing
+        "BACKEND_CORS_ORIGINS": '["*"]',  # JSON string array for testing
+        "MODULE_LOG_LEVELS": "{}"  # Empty JSON object as string
+    }
+    
+    # Apply test environment
+    for key, value in test_env.items():
+        os.environ[key] = value
+    
+    # Reset any existing configuration
+    ConfigFactory.reset()
+    
+    yield
+    
+    # Restore original environment
+    os.environ.clear()
+    os.environ.update(original_env)
+    
+    # Reset configuration again
+    ConfigFactory.reset()
+
 
 class TestEnvironmentConfiguration:
     """Tests for environment-specific configuration profiles."""
@@ -49,11 +84,9 @@ class TestEnvironmentConfiguration:
         assert config_map[EnvironmentType.TEST] == TestSettings
         assert config_map[EnvironmentType.PRODUCTION] == ProductionSettings
     
-    @patch.dict(os.environ, {"APP_ENVIRONMENT": "development"})
-    def test_development_environment_loading(self):
+    def test_development_environment_loading(self, env_config_setup):
         """Test that the development environment is correctly loaded."""
-        # Reset singleton to force reload
-        ConfigFactory.reset()
+        # The env_config_setup fixture has set APP_ENVIRONMENT to development
         
         # Get configuration
         config = ConfigFactory.get_config()
@@ -65,9 +98,11 @@ class TestEnvironmentConfiguration:
         assert config.LOG_LEVEL == "debug"
         assert config.ENABLE_SQL_LOGGING is True
     
-    @patch.dict(os.environ, {"APP_ENVIRONMENT": "test"})
-    def test_test_environment_loading(self):
+    def test_test_environment_loading(self, env_config_setup):
         """Test that the test environment is correctly loaded."""
+        # Override to test environment
+        os.environ["APP_ENVIRONMENT"] = "test"
+        
         # Reset singleton to force reload
         ConfigFactory.reset()
         
@@ -82,9 +117,11 @@ class TestEnvironmentConfiguration:
         assert config.LOG_LEVEL == "debug"
         assert config.ENABLE_SQL_LOGGING is False
     
-    @patch.dict(os.environ, {"APP_ENVIRONMENT": "production"})
-    def test_production_environment_loading(self):
+    def test_production_environment_loading(self, env_config_setup):
         """Test that the production environment is correctly loaded."""
+        # Override to production environment
+        os.environ["APP_ENVIRONMENT"] = "production"
+        
         # Reset singleton to force reload
         ConfigFactory.reset()
         
@@ -99,9 +136,11 @@ class TestEnvironmentConfiguration:
         assert config.ENABLE_SQL_LOGGING is False
         assert config.ENABLE_DOCS is False
     
-    @patch.dict(os.environ, {"APP_ENVIRONMENT": "invalid"})
-    def test_invalid_environment_falls_back_to_development(self):
+    def test_invalid_environment_falls_back_to_development(self, env_config_setup):
         """Test that an invalid environment falls back to development."""
+        # Set an invalid environment
+        os.environ["APP_ENVIRONMENT"] = "invalid"
+        
         # Reset singleton to force reload
         ConfigFactory.reset()
         
@@ -112,7 +151,7 @@ class TestEnvironmentConfiguration:
         assert isinstance(config, DevelopmentSettings)
         assert config.APP_ENVIRONMENT == "development"
     
-    def test_environment_specific_db_configs(self):
+    def test_environment_specific_db_configs(self, env_config_setup):
         """Test that each environment has its own database configuration."""
         dev_config = ConfigFactory.create_config(EnvironmentType.DEVELOPMENT)
         test_config = ConfigFactory.create_config(EnvironmentType.TEST)
@@ -123,7 +162,7 @@ class TestEnvironmentConfiguration:
         assert dev_config.DATABASE_URL != prod_config.DATABASE_URL
         assert test_config.DATABASE_URL != prod_config.DATABASE_URL
     
-    def test_create_config_creates_new_instance(self):
+    def test_create_config_creates_new_instance(self, env_config_setup):
         """Test that create_config creates a new instance each time."""
         config1 = ConfigFactory.create_config(EnvironmentType.DEVELOPMENT)
         config2 = ConfigFactory.create_config(EnvironmentType.DEVELOPMENT)
@@ -131,7 +170,7 @@ class TestEnvironmentConfiguration:
         # Assert they're different instances
         assert config1 is not config2
     
-    def test_environment_specific_features(self):
+    def test_environment_specific_features(self, env_config_setup):
         """Test that each environment has specific feature flags."""
         dev_config = ConfigFactory.create_config(EnvironmentType.DEVELOPMENT)
         test_config = ConfigFactory.create_config(EnvironmentType.TEST)

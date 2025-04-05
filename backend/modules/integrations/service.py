@@ -7,12 +7,21 @@ based on UI configuration.
 """
 
 from typing import List, Optional, Dict, Any, Union
-from datetime import datetime, UTC
+from datetime import datetime, timezone
 import random
 import logging
 import json
-from sqlalchemy.orm import Session
-from sqlalchemy import desc
+from sqlalchemy import Column, Integer, String, Text, DateTime, Boolean, ForeignKey, Enum, JSON, Table, Float, Sequence, UniqueConstraint, ForeignKeyConstraint, event, desc
+from sqlalchemy.orm import relationship, backref, validates, Session
+from sqlalchemy.ext.declarative import declared_attr
+from sqlalchemy.sql import func
+import enum
+import uuid
+
+from db.base import Base
+from utils.encryption.crypto import EncryptedString, EncryptedJSON
+from utils.helpers import generate_uid
+from utils.error_handling.exceptions import ValidationError
 
 from db.models import (
     Integration as DbIntegration,
@@ -24,7 +33,7 @@ from db.models import (
     IntegrationRunStatus,
     Dataset as DbDataset,
     DatasetField as DbDatasetField,
-    IntegrationEarningsMap as DbIntegrationEarningsMap,
+    IntegrationEarningsMap as DbIntegrationEarningsMap, 
     EarningsCode as DbEarningsCode,
     integration_datasets
 )
@@ -33,24 +42,19 @@ from .models import (
     Integration,
     IntegrationCreate,
     IntegrationUpdate,
-    IntegrationHealth as ModelHealth,
     FieldMapping,
     FieldMappingCreate,
     FieldMappingUpdate,
-    Dataset,
+    IntegrationRun,
     DatasetField,
+    Dataset,
     EarningsCode,
-    EarningsCodeCreate,
-    EarningsCodeUpdate,
     EarningsMapping,
     EarningsMappingCreate,
-    EarningsMappingUpdate
+    EarningsMappingUpdate,
+    EarningsCodeCreate,
+    EarningsCodeUpdate
 )
-
-# Set up logging
-logger = logging.getLogger(__name__)
-
-
 class IntegrationService:
     """Service for managing integrations using database"""
     
@@ -229,8 +233,8 @@ class IntegrationService:
             health=IntegrationHealth.HEALTHY,
             schedule=integration.schedule.model_dump() if hasattr(integration.schedule, "model_dump") else integration.schedule,
             azure_blob_config=integration.azure_blob_config.model_dump() if integration.azure_blob_config else None,
-            created_at=datetime.now(UTC),
-            updated_at=datetime.now(UTC),
+            created_at=datetime.now(timezone.utc),
+            updated_at=datetime.now(timezone.utc),
             tags=tags
         )
         
@@ -292,7 +296,7 @@ class IntegrationService:
             setattr(db_integration, field, value)
         
         # Update the updated_at timestamp
-        db_integration.updated_at = datetime.now(UTC)
+        db_integration.updated_at = datetime.now(timezone.utc)
         
         # Commit changes
         self.db.commit()
@@ -323,7 +327,7 @@ class IntegrationService:
             return None
         
         # Create a new run record
-        now = datetime.now(UTC)
+        now = datetime.now(timezone.utc)
         
         db_run = DbIntegrationRun(
             integration_id=integration_id,
@@ -422,8 +426,8 @@ class IntegrationService:
             transformation=mapping.transformation or "direct",
             required=mapping.required,
             description=mapping.description,
-            created_at=datetime.utcnow(),
-            updated_at=datetime.utcnow()
+            created_at=datetime.now(timezone.utc),
+            updated_at=datetime.now(timezone.utc)
         )
         
         # Add to database
@@ -455,7 +459,7 @@ class IntegrationService:
             setattr(db_mapping, field, value)
         
         # Update the updated_at timestamp
-        db_mapping.updated_at = datetime.utcnow()
+        db_mapping.updated_at = datetime.now(timezone.utc)
         
         # Commit changes
         self.db.commit()
@@ -685,8 +689,8 @@ class IntegrationService:
             default_map=mapping.default_map,
             condition=mapping.condition,
             dataset_id=mapping.dataset_id,
-            created_at=datetime.utcnow(),
-            updated_at=datetime.utcnow()
+            created_at=datetime.now(timezone.utc),
+            updated_at=datetime.now(timezone.utc)
         )
         
         # Add to database
@@ -732,7 +736,7 @@ class IntegrationService:
             setattr(db_mapping, field, value)
         
         # Update the updated_at timestamp
-        db_mapping.updated_at = datetime.utcnow()
+        db_mapping.updated_at = datetime.now(timezone.utc)
         
         # Commit changes
         self.db.commit()
@@ -788,8 +792,8 @@ class IntegrationService:
             destination_system=code.destination_system,
             is_overtime=code.is_overtime,
             attributes=code.attributes,
-            created_at=datetime.utcnow(),
-            updated_at=datetime.utcnow()
+            created_at=datetime.now(timezone.utc),
+            updated_at=datetime.now(timezone.utc)
         )
         
         # Add to database
@@ -816,12 +820,12 @@ class IntegrationService:
         # For demo purposes, we'll allow any tenant with admin role to update
         
         # Update fields if provided
-        update_dict = update.dict(exclude_unset=True)
+        update_dict = update.model_dump(exclude_unset=True)
         for field, value in update_dict.items():
             setattr(db_code, field, value)
         
         # Update the updated_at timestamp
-        db_code.updated_at = datetime.utcnow()
+        db_code.updated_at = datetime.now(timezone.utc)
         
         # Commit changes
         self.db.commit()

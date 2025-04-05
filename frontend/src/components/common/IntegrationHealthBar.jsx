@@ -1,14 +1,13 @@
-// IntegrationHealthBar.jsx
+import { ErrorBoundary, useErrorHandler, withErrorBoundary } from "@/error-handling"; // IntegrationHealthBar.jsx
 // -----------------------------------------------------------------------------
 // A color-coded label indicating "Healthy", "At Risk", or "Error"
-
 import React from 'react';
-
-function IntegrationHealthBar({ health = 'healthy' }) {
+function IntegrationHealthBar({
+  health = 'healthy'
+}) {
   let backgroundColor;
   let labelText;
-
-  switch(health) {
+  switch (health) {
     case 'warning':
       backgroundColor = '#FFAA3B'; // Light orange
       labelText = 'At Risk';
@@ -22,7 +21,6 @@ function IntegrationHealthBar({ health = 'healthy' }) {
       labelText = 'Healthy';
       break;
   }
-
   const containerStyle = {
     display: 'inline-block',
     padding: '0.3rem 0.6rem',
@@ -30,12 +28,10 @@ function IntegrationHealthBar({ health = 'healthy' }) {
     color: '#FFFFFF',
     backgroundColor
   };
-
-  return (
-    <div style={containerStyle}>
+  return <div style={containerStyle}>
       {labelText}
-    </div>
-  );
+    </div>;
 }
-
-export default IntegrationHealthBar;
+export default withErrorBoundary(IntegrationHealthBar, {
+  boundary: 'IntegrationHealthBar'
+});

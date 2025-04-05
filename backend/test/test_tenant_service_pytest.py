@@ -9,7 +9,7 @@ Author: TAP Integration Platform Team
 
 import pytest
 import uuid
-from datetime import datetime, UTC
+from datetime import datetime, timezone
 from unittest.mock import MagicMock, patch
 
 from sqlalchemy.orm import Session
@@ -51,8 +51,8 @@ def tenant_data(tenant_id):
         "status": "active",
         "tier": "standard",
         "settings": {"allowed_users": 5},
-        "created_at": datetime.now(UTC),
-        "updated_at": datetime.now(UTC)
+        "created_at": datetime.now(timezone.utc),
+        "updated_at": datetime.now(timezone.utc)
     }
 
 
@@ -76,8 +76,8 @@ def db_application(app_id):
         name="Test App",
         type="API",
         status="active",
-        created_at=datetime.now(UTC),
-        updated_at=datetime.now(UTC)
+        created_at=datetime.now(timezone.utc),
+        updated_at=datetime.now(timezone.utc)
     )
 
 
@@ -94,8 +94,8 @@ def db_dataset(dataset_id):
         id=dataset_id,
         name="Test Dataset",
         status="active",
-        created_at=datetime.now(UTC),
-        updated_at=datetime.now(UTC)
+        created_at=datetime.now(timezone.utc),
+        updated_at=datetime.now(timezone.utc)
     )
 
 
@@ -190,8 +190,8 @@ class TestTenantService:
             description=tenant_create.description,
             status=tenant_create.status,
             tier=tenant_create.tier,
-            created_at=datetime.now(UTC),
-            updated_at=datetime.now(UTC)
+            created_at=datetime.now(timezone.utc),
+            updated_at=datetime.now(timezone.utc)
         )
         
         # Call the method
@@ -261,7 +261,7 @@ class TestTenantService:
             tenant_id=tenant_id,
             application_id=app_id,
             is_active=True,
-            granted_at=datetime.now(UTC),
+            granted_at=datetime.now(timezone.utc),
             granted_by=user_id
         )
         mock_db_session.query.return_value.filter.return_value.first.return_value = association

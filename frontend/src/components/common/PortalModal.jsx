@@ -1,4 +1,4 @@
-// PortalModal.jsx
+import { ErrorBoundary, useErrorHandler, withErrorBoundary } from "@/error-handling"; // PortalModal.jsx
 // -----------------------------------------------------------------------------
 // A "portal" based modal that reduces Layout/ResizeObserver triggers, because
 // it's mounted outside of the main React root flow. 
@@ -19,24 +19,29 @@
 // This approach doesn't guarantee removing the "ResizeObserver loop" warning
 // in all cases, but it usually helps by removing the modal from the measured
 // layout of the main page.
-
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-function PortalModal({ isOpen, onClose, children }) {
+function PortalModal({
+  isOpen,
+  onClose,
+  children
+}) {
   if (!isOpen) return null;
 
   // The overlay and modal container styles are minimal, but you can adjust
   const overlayStyle = {
     position: 'fixed',
-    top: 0, left: 0, right: 0, bottom: 0,
-    backgroundColor: 'rgba(59,61,61,0.5)', // black #3B3D3D with alpha
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(59,61,61,0.5)',
+    // black #3B3D3D with alpha
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     zIndex: 9999
   };
-
   const modalStyle = {
     backgroundColor: '#FFFFFF',
     borderRadius: '8px',
@@ -46,7 +51,6 @@ function PortalModal({ isOpen, onClose, children }) {
     boxShadow: '0 4px 20px rgba(0,0,0,0.2)',
     position: 'relative'
   };
-
   const closeButtonStyle = {
     position: 'absolute',
     top: '1rem',
@@ -60,25 +64,19 @@ function PortalModal({ isOpen, onClose, children }) {
   };
 
   // The content of the modal:
-  const modalContent = (
-    <div style={overlayStyle}>
+  const modalContent = <div style={overlayStyle}>
       <div style={modalStyle}>
-        <button 
-          style={closeButtonStyle}
-          onClick={onClose}
-        >
+        <button style={closeButtonStyle} onClick={onClose}>
+        
           X
         </button>
         {children}
       </div>
-    </div>
-  );
+    </div>;
 
   // We "portal" this to #modal-root to keep it separate from the main layout flow.
-  return ReactDOM.createPortal(
-    modalContent,
-    document.getElementById('modal-root')
-  );
+  return ReactDOM.createPortal(modalContent, document.getElementById('modal-root'));
 }
-
-export default PortalModal;
+export default withErrorBoundary(PortalModal, {
+  boundary: 'PortalModal'
+});

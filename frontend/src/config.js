@@ -1,3 +1,4 @@
+import { ENV } from "@/utils/environmentConfig";
 /**
  * Application Configuration
  * 
@@ -8,10 +9,9 @@
 const config = {
   // API Configuration
   api: {
-    baseUrl: process.env.REACT_APP_API_URL || '/api',
-    timeout: 30000,
+    baseUrl: ENV.REACT_APP_API_URL || '/api',
+    timeout: 30000
   },
-
   // Authentication Configuration
   auth: {
     providers: {
@@ -20,9 +20,8 @@ const config = {
       gmail: true
     },
     tokenStorageKey: 'auth_token',
-    userInfoStorageKey: 'user_info',
+    userInfoStorageKey: 'user_info'
   },
-
   // Feature Flags
   features: {
     multiTenant: true,
@@ -31,14 +30,12 @@ const config = {
     fieldMapping: true,
     canvas: true
   },
-
   // UI Configuration
   ui: {
     theme: 'light',
     primaryColor: '#48C2C5',
     secondaryColor: '#FC741C',
     logo: '/logo.png'
-  },
+  }
 };
-
 export default config;

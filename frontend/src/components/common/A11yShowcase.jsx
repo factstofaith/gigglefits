@@ -1,95 +1,120 @@
-/**
- * Accessibility Components Showcase
- * 
- * A demonstration component that showcases all accessibility-enhanced components.
- * Part of the zero technical debt accessibility implementation.
- * 
- * @module components/common/A11yShowcase
- */
-
+import { ErrorBoundary, useErrorHandler, withErrorBoundary } from "@/error-handling"; /**
+                                                                                      * Accessibility Components Showcase
+                                                                                      * 
+                                                                                      * A demonstration component that showcases all accessibility-enhanced components.
+                                                                                      * Part of the zero technical debt accessibility implementation.
+                                                                                      * 
+                                                                                      * @module components/common/A11yShowcase
+                                                                                      */
 import React, { useState, useRef } from 'react';
-import { 
-  Grid, 
-  Typography, 
-  Paper, 
-  TextField, 
-  MenuItem, 
-  Box, 
-  Divider, 
-  FormControlLabel,
-  Switch,
-  Stack,
-  Link,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails
-} from '@mui/material';
+import { Grid, Typography, Paper, TextField, MenuItem, Box, Divider, FormControlLabel, Switch, Stack, Link, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MenuIcon from '@mui/icons-material/Menu';
 import InfoIcon from '@mui/icons-material/Info';
-import { 
-  A11yButton, 
-  A11yDialog, 
-  A11yForm, 
-  A11yTable, 
-  A11yMenu,
-  A11yTooltip
-} from './a11y';
-import { 
-  useA11yAnnouncement,
-  useA11yKeyboard
-} from '../../hooks/a11y';
+import { A11yButton, A11yDialog, A11yForm, A11yTable, A11yMenu, A11yTooltip } from './a11y';
+import { useA11yAnnouncement, useA11yKeyboard } from "@/hooks/a11y";
 
 /**
  * A showcase component for all accessibility-enhanced components
  */
 const A11yShowcase = () => {
+  const [formError, setFormError] = useState(null);
   // Dialog state
   const [dialogOpen, setDialogOpen] = useState(false);
-  
+
   // Form references
   const formRef = useRef(null);
-  
+
   // Announcement hooks
-  const { announcePolite, announceAssertive } = useA11yAnnouncement();
-  
+  const {
+    announcePolite,
+    announceAssertive
+  } = useA11yAnnouncement();
+
   // Keyboard hooks
-  const { getArrowKeyHandler } = useA11yKeyboard();
-  
+  const {
+    getArrowKeyHandler
+  } = useA11yKeyboard();
+
   // Table data
-  const tableData = [
-    { id: 1, name: 'Button', usage: 'Interactive elements', status: 'Complete' },
-    { id: 2, name: 'Dialog', usage: 'Modal interfaces', status: 'Complete' },
-    { id: 3, name: 'Form', usage: 'User input', status: 'Complete' },
-    { id: 4, name: 'Table', usage: 'Data presentation', status: 'Complete' },
-    { id: 5, name: 'Menu', usage: 'Navigation', status: 'Complete' },
-    { id: 6, name: 'Tooltip', usage: 'Contextual help', status: 'Complete' }
-  ];
-  
-  const tableColumns = [
-    { id: 'id', label: 'ID', align: 'left' },
-    { id: 'name', label: 'Component', align: 'left' },
-    { id: 'usage', label: 'Usage', align: 'left' },
-    { id: 'status', label: 'Status', align: 'left' }
-  ];
-  
+  const tableData = [{
+    id: 1,
+    name: 'Button',
+    usage: 'Interactive elements',
+    status: 'Complete'
+  }, {
+    id: 2,
+    name: 'Dialog',
+    usage: 'Modal interfaces',
+    status: 'Complete'
+  }, {
+    id: 3,
+    name: 'Form',
+    usage: 'User input',
+    status: 'Complete'
+  }, {
+    id: 4,
+    name: 'Table',
+    usage: 'Data presentation',
+    status: 'Complete'
+  }, {
+    id: 5,
+    name: 'Menu',
+    usage: 'Navigation',
+    status: 'Complete'
+  }, {
+    id: 6,
+    name: 'Tooltip',
+    usage: 'Contextual help',
+    status: 'Complete'
+  }];
+  const tableColumns = [{
+    id: 'id',
+    label: 'ID',
+    align: 'left'
+  }, {
+    id: 'name',
+    label: 'Component',
+    align: 'left'
+  }, {
+    id: 'usage',
+    label: 'Usage',
+    align: 'left'
+  }, {
+    id: 'status',
+    label: 'Status',
+    align: 'left'
+  }];
+
   // Menu items
-  const menuItems = [
-    { label: 'Button Example', onClick: () => announcePolite('Button menu item clicked') },
-    { label: 'Dialog Example', onClick: () => setDialogOpen(true) },
-    { label: 'Form Example', onClick: () => formRef.current.scrollIntoView() },
-    { divider: true },
-    { label: 'Make Announcement', onClick: () => announceAssertive('This is a screen reader announcement') }
-  ];
-  
+  const menuItems = [{
+    label: 'Button Example',
+    onClick: () => announcePolite('Button menu item clicked')
+  }, {
+    label: 'Dialog Example',
+    onClick: () => setDialogOpen(true)
+  }, {
+    label: 'Form Example',
+    onClick: () => formRef.current.scrollIntoView()
+  }, {
+    divider: true
+  }, {
+    label: 'Make Announcement',
+    onClick: () => announceAssertive('This is a screen reader announcement')
+  }];
+
   // Handle form submission
-  const handleSubmit = (data) => {
-    announcePolite(`Form submitted with name: ${data.name} and type: ${data.componentType}`);
-    console.log('Form data:', data);
+  const handleSubmit = data => {
+    try {
+      announcePolite(`Form submitted with name: ${data.name} and type: ${data.componentType}`);
+      console.log('Form data:', data);
+    } // Placeholder for original code
+    catch (error) {
+      setFormError(error.message || 'An error occurred');
+      console.error('Form submission error:', error);
+    }
   };
-  
-  return (
-    <Grid container spacing={4}>
+  return <Grid container spacing={4}>
       <Grid item xs={12}>
         <Typography variant="h4" component="h1">
           Accessibility Components Showcase
@@ -101,39 +126,30 @@ const A11yShowcase = () => {
       </Grid>
       
       <Grid item xs={12}>
-        <Paper elevation={2} sx={{ p: 3 }}>
+        <Paper elevation={2} sx={{
+        p: 3
+      }}>
           <Typography variant="h5" component="h2" gutterBottom>
             A11yButton Examples
           </Typography>
           <Box display="flex" gap={2} flexWrap="wrap">
-            <A11yButton 
-              variant="contained" 
-              a11yAnnouncement="Primary button clicked"
-            >
+            <A11yButton variant="contained" a11yAnnouncement="Primary button clicked">
+
               Primary Button
             </A11yButton>
             
-            <A11yButton 
-              variant="outlined" 
-              a11yAnnouncement="Secondary button clicked"
-            >
+            <A11yButton variant="outlined" a11yAnnouncement="Secondary button clicked">
+
               Secondary Button
             </A11yButton>
             
-            <A11yButton 
-              variant="text" 
-              a11yLabel="Text button with custom label"
-              a11yAnnouncement="Text button clicked"
-            >
+            <A11yButton variant="text" a11yLabel="Text button with custom label" a11yAnnouncement="Text button clicked">
+
               Text Button
             </A11yButton>
             
-            <A11yButton 
-              variant="contained" 
-              color="error"
-              a11yAnnouncement="Danger action initiated"
-              disabled
-            >
+            <A11yButton variant="contained" color="error" a11yAnnouncement="Danger action initiated" disabled>
+
               Disabled Button
             </A11yButton>
           </Box>
@@ -141,7 +157,9 @@ const A11yShowcase = () => {
       </Grid>
       
       <Grid item xs={12} md={6}>
-        <Paper elevation={2} sx={{ p: 3 }}>
+        <Paper elevation={2} sx={{
+        p: 3
+      }}>
           <Typography variant="h5" component="h2" gutterBottom>
             A11yDialog Example
           </Typography>
@@ -149,56 +167,40 @@ const A11yShowcase = () => {
             Dialogs with enhanced keyboard navigation, focus management, and screen reader announcements.
           </Typography>
           
-          <A11yButton 
-            variant="contained" 
-            onClick={() => setDialogOpen(true)}
-            a11yAnnouncement="Opening dialog"
-          >
+          <A11yButton variant="contained" onClick={() => setDialogOpen(true)} a11yAnnouncement="Opening dialog">
+
             Open Dialog
           </A11yButton>
           
-          <A11yDialog
-            open={dialogOpen}
-            onClose={() => setDialogOpen(false)}
-            title="Accessible Dialog Example"
-            a11yAnnouncement="Dialog opened with important information"
-            actions={
-              <>
-                <A11yButton 
-                  a11yAnnouncement="Dialog closed without action"
-                  onClick={() => setDialogOpen(false)}
-                >
+          <A11yDialog open={dialogOpen} onClose={() => setDialogOpen(false)} title="Accessible Dialog Example" a11yAnnouncement="Dialog opened with important information" actions={<>
+                <A11yButton a11yAnnouncement="Dialog closed without action" onClick={() => setDialogOpen(false)}>
+
                   Cancel
                 </A11yButton>
-                <A11yButton 
-                  variant="contained" 
-                  a11yAnnouncement="Dialog action confirmed"
-                  onClick={() => {
-                    announcePolite('Action confirmed and dialog closed');
-                    setDialogOpen(false);
-                  }}
-                >
+                <A11yButton variant="contained" a11yAnnouncement="Dialog action confirmed" onClick={() => {
+            announcePolite('Action confirmed and dialog closed');
+            setDialogOpen(false);
+          }}>
+
                   Confirm
                 </A11yButton>
-              </>
-            }
-          >
+              </>}>
+
+
             <Typography paragraph>
               This dialog demonstrates proper focus management and screen reader announcements.
               When opened, focus is trapped within the dialog and returned to the trigger element when closed.
             </Typography>
-            <TextField 
-              label="Sample Input Field" 
-              fullWidth 
-              margin="normal"
-              aria-label="Sample input field for demonstration"
-            />
+            <TextField label="Sample Input Field" fullWidth margin="normal" aria-label="Sample input field for demonstration" />
+
           </A11yDialog>
         </Paper>
       </Grid>
       
       <Grid item xs={12} md={6}>
-        <Paper elevation={2} sx={{ p: 3 }}>
+        <Paper elevation={2} sx={{
+        p: 3
+      }}>
           <Typography variant="h5" component="h2" gutterBottom>
             A11yMenu Example
           </Typography>
@@ -207,19 +209,13 @@ const A11yShowcase = () => {
           </Typography>
           
           <Box display="flex" gap={2}>
-            <A11yMenu
-              items={menuItems}
-              a11yLabel="Component examples menu"
-              a11yAnnouncement="Menu opened with 5 items"
-            >
+            <A11yMenu items={menuItems} a11yLabel="Component examples menu" a11yAnnouncement="Menu opened with 5 items">
+
               Menu Examples
             </A11yMenu>
             
-            <A11yMenu
-              items={menuItems}
-              triggerAs="icon"
-              a11yLabel="Icon menu for examples"
-            >
+            <A11yMenu items={menuItems} triggerAs="icon" a11yLabel="Icon menu for examples">
+
               <MenuIcon />
             </A11yMenu>
           </Box>
@@ -227,7 +223,9 @@ const A11yShowcase = () => {
       </Grid>
       
       <Grid item xs={12}>
-        <Paper elevation={2} sx={{ p: 3 }}>
+        <Paper elevation={2} sx={{
+        p: 3
+      }}>
           <Typography variant="h5" component="h2" gutterBottom ref={formRef}>
             A11yForm Example
           </Typography>
@@ -235,34 +233,17 @@ const A11yShowcase = () => {
             Forms with built-in validation, error messaging, and screen reader announcements.
           </Typography>
           
-          <A11yForm
-            onSubmit={handleSubmit}
-            a11yLabel="Accessibility component form"
-            a11yAnnouncement="Form submitted successfully"
-            a11yFocusOnError={true}
-            a11yRegion="form"
-          >
+          <A11yForm onSubmit={handleSubmit} a11yLabel="Accessibility component form" a11yAnnouncement="Form submitted successfully" a11yFocusOnError={true} a11yRegion="form">
+
             <Grid container spacing={2}>
               <Grid item xs={12} md={6}>
-                <TextField
-                  label="Component Name"
-                  name="name"
-                  required
-                  fullWidth
-                  margin="normal"
-                />
+                <TextField label="Component Name" name="name" required fullWidth margin="normal" />
+
               </Grid>
               
               <Grid item xs={12} md={6}>
-                <TextField
-                  select
-                  label="Component Type"
-                  name="componentType"
-                  required
-                  fullWidth
-                  margin="normal"
-                  defaultValue=""
-                >
+                <TextField select label="Component Type" name="componentType" required fullWidth margin="normal" defaultValue="">
+
                   <MenuItem value="">Select a type</MenuItem>
                   <MenuItem value="button">Button</MenuItem>
                   <MenuItem value="dialog">Dialog</MenuItem>
@@ -273,21 +254,13 @@ const A11yShowcase = () => {
               </Grid>
               
               <Grid item xs={12}>
-                <TextField
-                  label="Description"
-                  name="description"
-                  multiline
-                  rows={3}
-                  fullWidth
-                  margin="normal"
-                />
+                <TextField label="Description" name="description" multiline rows={3} fullWidth margin="normal" />
+
               </Grid>
               
               <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Switch name="enabledFlag" />}
-                  label="Enable Component"
-                />
+                <FormControlLabel control={<Switch name="enabledFlag" />} label="Enable Component" />
+
               </Grid>
               
               <Grid item xs={12}>
@@ -295,11 +268,8 @@ const A11yShowcase = () => {
                   <A11yButton type="reset">
                     Reset
                   </A11yButton>
-                  <A11yButton 
-                    type="submit" 
-                    variant="contained"
-                    a11yAnnouncement="Form is being submitted"
-                  >
+                  <A11yButton type="submit" variant="contained" a11yAnnouncement="Form is being submitted">
+
                     Submit
                   </A11yButton>
                 </Box>
@@ -310,7 +280,9 @@ const A11yShowcase = () => {
       </Grid>
       
       <Grid item xs={12}>
-        <Paper elevation={2} sx={{ p: 3 }}>
+        <Paper elevation={2} sx={{
+        p: 3
+      }}>
           <Typography variant="h5" component="h2" gutterBottom>
             A11yTable Example
           </Typography>
@@ -318,23 +290,17 @@ const A11yShowcase = () => {
             Accessible data tables with ARIA attributes, sortable columns, and screen reader support.
           </Typography>
           
-          <A11yTable
-            data={tableData}
-            columns={tableColumns}
-            a11yLabel="Accessibility Components Table"
-            a11yCaption="List of accessibility components and their status"
-            a11ySummary="A table showing 6 accessibility components with their ID, name, usage, and status"
-            sortBy="id"
-            sortDirection="asc"
-            onSort={(column, direction) => {
-              announcePolite(`Table sorted by ${column} in ${direction} order`);
-            }}
-          />
+          <A11yTable data={tableData} columns={tableColumns} a11yLabel="Accessibility Components Table" a11yCaption="List of accessibility components and their status" a11ySummary="A table showing 6 accessibility components with their ID, name, usage, and status" sortBy="id" sortDirection="asc" onSort={(column, direction) => {
+          announcePolite(`Table sorted by ${column} in ${direction} order`);
+        }} />
+
         </Paper>
       </Grid>
       
       <Grid item xs={12}>
-        <Paper elevation={2} sx={{ p: 3 }}>
+        <Paper elevation={2} sx={{
+        p: 3
+      }}>
           <Typography variant="h5" component="h2" gutterBottom>
             A11yTooltip Examples
           </Typography>
@@ -343,34 +309,25 @@ const A11yShowcase = () => {
           </Typography>
           
           <Stack direction="row" spacing={3} flexWrap="wrap">
-            <A11yTooltip 
-              title="Basic tooltip with keyboard focus support" 
-              a11yKeyboardFocusable={true}
-            >
+            <A11yTooltip title="Basic tooltip with keyboard focus support" a11yKeyboardFocusable={true}>
+
               <A11yButton variant="outlined">
                 Hover or Focus
               </A11yButton>
             </A11yTooltip>
             
-            <A11yTooltip 
-              title={
-                <Box>
+            <A11yTooltip title={<Box>
                   <Typography variant="subtitle2">Rich Content Tooltip</Typography>
                   <Typography variant="body2">With extended description text</Typography>
-                </Box>
-              } 
-              a11yLabel="Button with rich tooltip content"
-            >
+                </Box>} a11yLabel="Button with rich tooltip content">
+
               <A11yButton variant="outlined">
                 Rich Tooltip
               </A11yButton>
             </A11yTooltip>
             
-            <A11yTooltip 
-              title="Tooltip with reduced motion settings" 
-              a11yRespectMotionPreferences={true}
-              placement="top"
-            >
+            <A11yTooltip title="Tooltip with reduced motion settings" a11yRespectMotionPreferences={true} placement="top">
+
               <IconButton aria-label="Information about motion preferences">
                 <InfoIcon />
               </IconButton>
@@ -380,7 +337,9 @@ const A11yShowcase = () => {
       </Grid>
       
       <Grid item xs={12}>
-        <Paper elevation={2} sx={{ p: 3 }}>
+        <Paper elevation={2} sx={{
+        p: 3
+      }}>
           <Typography variant="h5" component="h2" gutterBottom>
             Additional Resources
           </Typography>
@@ -433,8 +392,6 @@ const A11yShowcase = () => {
           </Accordion>
         </Paper>
       </Grid>
-    </Grid>
-  );
+    </Grid>;
 };
-
 export default A11yShowcase;

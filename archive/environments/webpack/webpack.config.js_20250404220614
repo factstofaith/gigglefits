@@ -1,0 +1,4 @@
+const path = require("path");
+
+// Simple config that just loads the dev config
+module.exports = require("./webpack.dev.js");

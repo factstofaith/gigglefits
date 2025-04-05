@@ -1,3 +1,10 @@
+
+# Create non-root user
+RUN groupadd -g 1000 appuser && \
+    useradd -u 1000 -g appuser -s /bin/bash -m appuser && \
+    mkdir -p /home/appuser/app && \
+    chown -R appuser:appuser /home/appuser
+
 # Standardized optimized Dockerfile for TAP Integration Platform Backend
 FROM python:3.10-slim AS builder
 
@@ -22,6 +29,10 @@ ENV PATH="/opt/venv/bin:$PATH"
 
 # Install Python dependencies
 COPY requirements.txt .
+
+# Use non-root user
+USER appuser
+
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application code
@@ -32,6 +43,20 @@ RUN python -m compileall .
 
 # Stage 2: Runtime image
 FROM python:3.10-slim
+
+# Add metadata labels
+LABEL \
+    org.opencontainers.image.vendor="TAP Integration Platform" \
+    org.opencontainers.image.authors="TAP Platform Team <tap-team@example.com>" \
+    org.opencontainers.image.licenses="Proprietary" \
+    org.label-schema.schema-version="1.0" \
+    org.label-schema.vendor="TAP Integration Platform" \
+    com.tap.component.version="1.0.0" \
+    com.tap.image.environment="production" \
+    com.tap.maintainer="TAP Platform Team" \
+    com.tap.component.type="backend" \
+    org.opencontainers.image.created="2025-04-03T02:06:45.343Z"
+
 
 # Set working directory
 WORKDIR /app
@@ -90,6 +115,10 @@ ENV WORKERS=4 \
     APP_ENVIRONMENT=production \
     API_VERSION=v1 \
     ENVIRONMENT=production \
+
+# Use non-root user
+USER appuser
+
     LOG_LEVEL=INFO \
     DB_SSL_REQUIRED=true
 

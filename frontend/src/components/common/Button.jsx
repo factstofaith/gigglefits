@@ -1,15 +1,17 @@
-// Button.jsx
+import { ErrorBoundary, useErrorHandler, withErrorBoundary } from "@/error-handling"; // Button.jsx
 // -----------------------------------------------------------------------------
 // A modern button component using your color scheme and minimal, clean styling.
 // Uses a slight hover effect and consistent borderRadius.
-
 import React from 'react';
-
-function Button({ onClick, children, style, disabled = false }) {
+function Button({
+  onClick,
+  children,
+  style,
+  disabled = false
+}) {
   // Primary brand color as a fallback if no style overrides
   const defaultBackground = '#3B3D3D';
   const disabledColor = '#DDDDDD';
-
   const buttonStyle = {
     display: 'inline-block',
     padding: '0.35rem .9rem',
@@ -25,29 +27,21 @@ function Button({ onClick, children, style, disabled = false }) {
 
   // Basic hover behavior (darken or lighten). 
   // We'll rely on inline style + event for demonstration.
-  const handleMouseEnter = (e) => {
+  const handleMouseEnter = e => {
     if (!disabled) {
       e.currentTarget.style.backgroundColor = '#FC741C'; // slightly darker teal
     }
   };
-
-  const handleMouseLeave = (e) => {
+  const handleMouseLeave = e => {
     if (!disabled) {
       e.currentTarget.style.backgroundColor = defaultBackground;
     }
   };
-
-  return (
-    <button
-      onClick={onClick}
-      style={buttonStyle}
-      disabled={disabled}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
+  return <button onClick={onClick} style={buttonStyle} disabled={disabled} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+      
       {children}
-    </button>
-  );
+    </button>;
 }
-
-export default Button;
+export default withErrorBoundary(Button, {
+  boundary: 'Button'
+});

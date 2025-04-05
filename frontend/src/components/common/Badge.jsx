@@ -1,10 +1,12 @@
-// Badge.jsx
+import { ErrorBoundary, useErrorHandler, withErrorBoundary } from "@/error-handling"; // Badge.jsx
 // -----------------------------------------------------------------------------
 // Simple badge component for displaying status labels
-
 import React from 'react';
-
-function Badge({ label, color = '#48C2C5', style }) {
+function Badge({
+  label,
+  color = '#48C2C5',
+  style
+}) {
   const badgeStyle = {
     display: 'inline-block',
     backgroundColor: color,
@@ -15,8 +17,8 @@ function Badge({ label, color = '#48C2C5', style }) {
     fontWeight: 'bold',
     ...style
   };
-
   return <span style={badgeStyle}>{label}</span>;
 }
-
-export default Badge;
+export default withErrorBoundary(Badge, {
+  boundary: 'Badge'
+});

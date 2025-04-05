@@ -36,9 +36,9 @@ SAMPLE_CONFIG = {
     "client_secret": None,  # Sensitive value not returned from DB
     "refresh_interval": 300,
     "is_connected": True,
-    "last_connected_at": datetime.utcnow() - timedelta(minutes=10),
-    "created_at": datetime.utcnow() - timedelta(days=1),
-    "updated_at": datetime.utcnow() - timedelta(minutes=10)
+    "last_connected_at": datetime.now(timezone.utc) - timedelta(minutes=10),
+    "created_at": datetime.now(timezone.utc) - timedelta(days=1),
+    "updated_at": datetime.now(timezone.utc) - timedelta(minutes=10)
 }
 
 # Mock for database
@@ -369,7 +369,7 @@ async def test_check_azure_connection_expired():
     """Test checking Azure connection status when last check is expired"""
     # Mock the database with connected config but old timestamp
     mock_config = dict(SAMPLE_CONFIG)
-    mock_config["last_connected_at"] = datetime.utcnow() - timedelta(hours=2)  # 2 hours old
+    mock_config["last_connected_at"] = datetime.now(timezone.utc) - timedelta(hours=2)  # 2 hours old
     
     mock_db = MockDatabase(has_config=True)
     mock_db.fetch_one = AsyncMock(return_value=mock_config)

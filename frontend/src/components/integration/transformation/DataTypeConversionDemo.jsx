@@ -8,6 +8,7 @@ import { DataTypeConversion } from './nodes';
  * This component showcases the DataTypeConversion node in a standalone environment
  * for testing and demonstration purposes.
  */
+import { withErrorBoundary } from "@/error-handling/withErrorBoundary";
 const DataTypeConversionDemo = () => {
   const [config, setConfig] = useState({
     inputField: 'sourceField',
@@ -19,15 +20,15 @@ const DataTypeConversionDemo = () => {
     preserveOriginal: true,
     errorHandling: 'keepOriginal'
   });
-
-  const handleConfigChange = (newConfig) => {
+  const handleConfigChange = newConfig => {
     setConfig(newConfig);
     console.log('Configuration updated:', newConfig);
   };
-
-  return (
-    <Container maxWidth="md">
-      <Paper sx={{ p: 3, my: 3 }}>
+  return <Container maxWidth="md">
+      <Paper sx={{
+      p: 3,
+      my: 3
+    }}>
         <Typography variant="h4" gutterBottom>
           Data Type Conversion Demo
         </Typography>
@@ -35,35 +36,45 @@ const DataTypeConversionDemo = () => {
           This demo showcases the DataTypeConversion transformation node, which converts data between different types.
           Try changing the configuration below to see how the component works.
         </Typography>
-        <Divider sx={{ my: 2 }} />
+        <Divider sx={{
+        my: 2
+      }} />
         
-        <Box sx={{ mt: 3 }}>
+        <Box sx={{
+        mt: 3
+      }}>
           <Typography variant="h6" gutterBottom>
             Configuration Panel
           </Typography>
-          <Paper variant="outlined" sx={{ p: 2, mb: 3 }}>
-            <DataTypeConversion 
-              id="demo-conversion-node"
-              testId="demo-conversion-node"
-              initialConfig={config}
-              onConfigChange={handleConfigChange}
-            />
+          <Paper variant="outlined" sx={{
+          p: 2,
+          mb: 3
+        }}>
+            <DataTypeConversion id="demo-conversion-node" testId="demo-conversion-node" initialConfig={config} onConfigChange={handleConfigChange} />
+
           </Paper>
         </Box>
         
-        <Box sx={{ mt: 3 }}>
+        <Box sx={{
+        mt: 3
+      }}>
           <Typography variant="h6" gutterBottom>
             Current Configuration
           </Typography>
-          <Paper variant="outlined" sx={{ p: 2, bgcolor: 'grey.50' }}>
-            <pre style={{ margin: 0, fontFamily: 'monospace', whiteSpace: 'pre-wrap' }}>
+          <Paper variant="outlined" sx={{
+          p: 2,
+          bgcolor: 'grey.50'
+        }}>
+            <pre style={{
+            margin: 0,
+            fontFamily: 'monospace',
+            whiteSpace: 'pre-wrap'
+          }}>
               {JSON.stringify(config, null, 2)}
             </pre>
           </Paper>
         </Box>
       </Paper>
-    </Container>
-  );
+    </Container>;
 };
-
 export default DataTypeConversionDemo;

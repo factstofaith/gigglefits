@@ -9,7 +9,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query, Path, status
 from sqlalchemy.orm import Session
 
 from core.auth import get_current_user, get_current_active_user, get_user_with_permissions
-from db.base import get_db
+from db.base import get_db_session as get_db
 from db.models import User
 from modules.earnings.models import (
     EmployeeRoster, EmployeeRosterCreate, EmployeeRosterUpdate,
@@ -23,12 +23,28 @@ from modules.earnings.models import (
 )
 from modules.earnings.service import EarningsService
 
+from typing import List, Dict, Any, Optional
+from datetime import datetime, timezone
+from pydantic import BaseModel
+from utils.api.models import DataResponse, PaginatedResponse, ErrorResponse, create_response, create_paginated_response, create_error_response
+
 # Create router for earnings module
 router = APIRouter(
     prefix="/earnings",
     tags=["earnings"],
     dependencies=[Depends(get_current_active_user)]
 )
+
+
+
+def standardize_response(data, skip=0, limit=10, total=None):
+    """Helper function to create standardized responses"""
+    # For collections with pagination
+    if isinstance(data, list) and total is not None:
+        return create_paginated_response(items=data, total=total, skip=skip, limit=limit)
+    # For single items or collections without pagination
+    return create_response(data=data)
+
 
 # Employee Roster endpoints
 

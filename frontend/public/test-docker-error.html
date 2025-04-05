@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docker Error Handling Test</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: #f8f9fa;
+            color: #343a40;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 1rem;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            color: #3498db;
+            margin-top: 0;
+        }
+
+        h2 {
+            color: #2c3e50;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-right: 1rem;
+            margin-bottom: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        button.danger {
+            background-color: #e74c3c;
+        }
+
+        button.danger:hover {
+            background-color: #c0392b;
+        }
+
+        button.warning {
+            background-color: #f39c12;
+        }
+
+        button.warning:hover {
+            background-color: #d35400;
+        }
+
+        .result-container {
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            padding: 1rem;
+            margin-top: 1rem;
+            border-left: 4px solid #3498db;
+            overflow-wrap: break-word;
+        }
+
+        .error {
+            border-left-color: #e74c3c;
+        }
+
+        pre {
+            margin: 0;
+            white-space: pre-wrap;
+            font-family: monospace;
+        }
+
+        .flex {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .health-status {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-left: 0.5rem;
+        }
+
+        .healthy {
+            background-color: #2ecc71;
+            color: white;
+        }
+
+        .unhealthy {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .unknown {
+            background-color: #95a5a6;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Docker Error Handling Test</h1>
+        <p>This page tests the Docker error handling system implementation for the TAP Integration Platform.</p>
+
+        <h2>Environment Information</h2>
+        <div id="env-info" class="result-container">
+            <p><strong>Container ID:</strong> <span id="container-id">Checking...</span></p>
+            <p><strong>Docker Environment:</strong> <span id="docker-env">Checking...</span></p>
+            <p><strong>Running in Docker:</strong> <span id="is-docker">Checking...</span></p>
+            <p><strong>Health Status:</strong> <span id="health-status">Checking...</span></p>
+        </div>
+
+        <h2>Test Error Handling</h2>
+        <div class="flex">
+            <button id="test-js-error" class="danger">Generate JavaScript Error</button>
+            <button id="test-network-error" class="danger">Generate Network Error</button>
+            <button id="test-health-check" class="warning">Test Health Endpoints</button>
+            <button id="test-reset" >Reset Status</button>
+        </div>
+
+        <div id="error-result" class="result-container error" style="display: none;">
+            <h3>Error Information</h3>
+            <pre id="error-details"></pre>
+        </div>
+
+        <div id="health-result" class="result-container" style="display: none;">
+            <h3>Health Check Results</h3>
+            <pre id="health-details"></pre>
+        </div>
+    </div>
+
+    <script>
+        // DOM elements
+        const containerIdEl = document.getElementById('container-id');
+        const dockerEnvEl = document.getElementById('docker-env');
+        const isDockerEl = document.getElementById('is-docker');
+        const healthStatusEl = document.getElementById('health-status');
+        const errorResultEl = document.getElementById('error-result');
+        const errorDetailsEl = document.getElementById('error-details');
+        const healthResultEl = document.getElementById('health-result');
+        const healthDetailsEl = document.getElementById('health-details');
+
+        // Environment variables
+        const env = window.env || {};
+        
+        // Check if running in Docker
+        const isDocker = env.REACT_APP_RUNNING_IN_DOCKER === 'true';
+        
+        // Display environment information
+        containerIdEl.textContent = env.REACT_APP_CONTAINER_ID || 'unknown';
+        dockerEnvEl.textContent = env.REACT_APP_DOCKER_ENVIRONMENT || 'unknown';
+        isDockerEl.textContent = isDocker ? 'Yes' : 'No';
+        
+        // Check health status
+        function updateHealthStatus() {
+            const healthCheckEl = document.getElementById('docker-health-check');
+            let status = 'unknown';
+            
+            if (healthCheckEl) {
+                status = healthCheckEl.getAttribute('data-status') || 'unknown';
+            }
+            
+            healthStatusEl.textContent = status;
+            healthStatusEl.className = 'health-status ' + status;
+        }
+        
+        // Update health status on load
+        updateHealthStatus();
+        setInterval(updateHealthStatus, 5000);
+        
+        // Test JavaScript error
+        document.getElementById('test-js-error').addEventListener('click', function() {
+            try {
+                errorResultEl.style.display = 'block';
+                errorDetailsEl.textContent = 'Generating error...';
+                
+                // Deliberate error
+                const obj = undefined;
+                const value = obj.property;
+                
+                // This should not execute
+                errorDetailsEl.textContent = 'Error generation failed!';
+            } catch (error) {
+                errorDetailsEl.textContent = `Error Type: ${error.name}\nMessage: ${error.message}\nStack: ${error.stack}`;
+                
+                // Log to console for Docker logging
+                console.error('[DOCKER_TEST_ERROR]', {
+                    type: 'javascript',
+                    name: error.name,
+                    message: error.message,
+                    stack: error.stack,
+                    source: 'test-docker-error.html',
+                    timestamp: new Date().toISOString()
+                });
+            }
+        });
+        
+        // Test network error
+        document.getElementById('test-network-error').addEventListener('click', function() {
+            errorResultEl.style.display = 'block';
+            errorDetailsEl.textContent = 'Generating network error...';
+            
+            // Request to non-existent endpoint
+            fetch('/api/non-existent-endpoint')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error ${response.status}: ${response.statusText}`);
+                    }
+                    return response.json();
+                })
+                .catch(error => {
+                    errorDetailsEl.textContent = `Error Type: Network Error\nMessage: ${error.message}`;
+                    
+                    // Log to console for Docker logging
+                    console.error('[DOCKER_TEST_ERROR]', {
+                        type: 'network',
+                        message: error.message,
+                        source: 'test-docker-error.html',
+                        timestamp: new Date().toISOString()
+                    });
+                });
+        });
+        
+        // Test health endpoints
+        document.getElementById('test-health-check').addEventListener('click', function() {
+            healthResultEl.style.display = 'block';
+            healthDetailsEl.textContent = 'Checking health endpoints...';
+            
+            // Test Docker health endpoint
+            Promise.all([
+                fetch('/docker-health')
+                    .then(res => res.text())
+                    .catch(err => `Error: ${err.message}`),
+                fetch('/health')
+                    .then(res => res.text())
+                    .catch(err => `Error: ${err.message}`)
+            ]).then(([dockerHealth, health]) => {
+                healthDetailsEl.textContent = `Docker Health: ${dockerHealth}\n\nGeneral Health: ${health}`;
+                
+                // Log to console for Docker logging
+                console.log('[DOCKER_HEALTH_TEST]', {
+                    dockerHealth,
+                    health,
+                    timestamp: new Date().toISOString()
+                });
+            });
+        });
+        
+        // Reset status
+        document.getElementById('test-reset').addEventListener('click', function() {
+            errorResultEl.style.display = 'none';
+            healthResultEl.style.display = 'none';
+        });
+    </script>
+</body>
+</html>

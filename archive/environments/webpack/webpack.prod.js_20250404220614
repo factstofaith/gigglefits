@@ -1,0 +1,121 @@
+const path = require("path");
+const webpack = require("webpack");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+
+module.exports = {
+  mode: "production",
+  entry: "./src/index.js",
+  output: {
+    path: path.resolve(__dirname, "../build"),
+    filename: "static/js/[name].[contenthash:8].js",
+    chunkFilename: "static/js/[name].[contenthash:8].chunk.js",
+    publicPath: "/",
+    clean: true
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["@babel/preset-env", "@babel/preset-react"]
+          }
+        }
+      },
+      {
+        test: /\.css$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          "css-loader"
+        ]
+      },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: "asset/resource",
+        generator: {
+          filename: "static/media/[name].[hash:8][ext]"
+        }
+      }
+    ]
+  },
+  resolve: {
+    extensions: [".js", ".jsx"],
+    alias: {
+      "@": path.resolve(__dirname, "../src")
+    }
+  },
+  optimization: {
+    minimize: true,
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          compress: {
+            ecma: 5,
+            warnings: false,
+            comparisons: false,
+            inline: 2,
+            drop_console: true
+          },
+          mangle: {
+            safari10: true,
+          },
+          output: {
+            ecma: 5,
+            comments: false,
+            ascii_only: true,
+          },
+        },
+        parallel: true,
+        extractComments: false,
+      }),
+      new CssMinimizerPlugin()
+    ],
+    splitChunks: {
+      chunks: "all",
+      name: false
+    }
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: "./public/index.html",
+      filename: "index.html",
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeRedundantAttributes: true,
+        useShortDoctype: true,
+        removeEmptyAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        keepClosingSlash: true,
+        minifyJS: true,
+        minifyCSS: true,
+        minifyURLs: true
+      }
+    }),
+    new MiniCssExtractPlugin({
+      filename: "static/css/[name].[contenthash:8].css",
+      chunkFilename: "static/css/[name].[contenthash:8].chunk.css"
+    }),
+    new webpack.DefinePlugin({
+      "process.env": {
+        NODE_ENV: JSON.stringify("production"),
+        REACT_APP_API_URL: JSON.stringify(process.env.REACT_APP_API_URL || "http://localhost:8000"),
+        REACT_APP_RUNNING_IN_DOCKER: JSON.stringify("true"),
+        REACT_APP_CONTAINER_ID: JSON.stringify(process.env.HOSTNAME || "prod-container"),
+        REACT_APP_CONTAINER_VERSION: JSON.stringify(process.env.REACT_APP_CONTAINER_VERSION || "prod"),
+        REACT_APP_DOCKER_ENVIRONMENT: JSON.stringify(process.env.REACT_APP_DOCKER_ENVIRONMENT || "production"),
+        REACT_APP_HEALTH_CHECK_INTERVAL: JSON.stringify(process.env.REACT_APP_HEALTH_CHECK_INTERVAL || "60000"),
+        REACT_APP_ERROR_REPORTING_URL: JSON.stringify(process.env.REACT_APP_ERROR_REPORTING_URL || "/api/errors"),
+        REACT_APP_ERROR_LOGGING_ENABLED: JSON.stringify(process.env.REACT_APP_ERROR_LOGGING_ENABLED || "true"),
+        REACT_APP_ERROR_LOG_LEVEL: JSON.stringify(process.env.REACT_APP_ERROR_LOG_LEVEL || "error"),
+        REACT_APP_DOCKER_ERROR_HANDLING: JSON.stringify(process.env.REACT_APP_DOCKER_ERROR_HANDLING || "enabled"),
+        REACT_APP_MAX_ERRORS_PER_SESSION: JSON.stringify(process.env.REACT_APP_MAX_ERRORS_PER_SESSION || "100")
+      }
+    })
+  ]
+};

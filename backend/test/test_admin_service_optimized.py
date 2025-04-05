@@ -7,7 +7,7 @@ testing framework.
 
 import pytest
 from unittest.mock import MagicMock, patch
-from datetime import datetime, timedelta, UTC
+from datetime import datetime, timedelta, timezone
 import requests
 
 from modules.admin.service import AdminService
@@ -99,8 +99,8 @@ class TestAdminServiceOptimized:
             auth_type=app_create.auth_type,
             status=app_create.status,
             is_public=app_create.is_public,
-            created_at=datetime.now(UTC),
-            updated_at=datetime.now(UTC),
+            created_at=datetime.now(timezone.utc),
+            updated_at=datetime.now(timezone.utc),
             created_by="test-admin"
         )
         
@@ -145,8 +145,8 @@ class TestAdminServiceOptimized:
             auth_type=AuthType.API_KEY,
             status=ApplicationStatus.DRAFT,
             is_public=True,
-            created_at=datetime.now(UTC),
-            updated_at=datetime.now(UTC),
+            created_at=datetime.now(timezone.utc),
+            updated_at=datetime.now(timezone.utc),
             created_by="test-admin"
         )
         
@@ -188,8 +188,8 @@ class TestAdminServiceOptimized:
             auth_type=AuthType.API_KEY,
             status=ApplicationStatus.DRAFT,
             is_public=True,
-            created_at=datetime.now(UTC),
-            updated_at=datetime.now(UTC),
+            created_at=datetime.now(timezone.utc),
+            updated_at=datetime.now(timezone.utc),
             created_by="test-admin"
         )
         
@@ -202,8 +202,8 @@ class TestAdminServiceOptimized:
             auth_type=AuthType.API_KEY,
             status=ApplicationStatus.ACTIVE,
             is_public=True,
-            created_at=datetime.now(UTC),
-            updated_at=datetime.now(UTC),
+            created_at=datetime.now(timezone.utc),
+            updated_at=datetime.now(timezone.utc),
             created_by="test-admin"
         )
         
@@ -262,8 +262,8 @@ class TestAdminServiceOptimized:
             auth_type=AuthType.API_KEY,
             status=ApplicationStatus.DRAFT,
             is_public=True,
-            created_at=datetime.now(UTC),
-            updated_at=datetime.now(UTC),
+            created_at=datetime.now(timezone.utc),
+            updated_at=datetime.now(timezone.utc),
             created_by="test-admin"
         )
         
@@ -314,8 +314,8 @@ class TestAdminServiceOptimized:
             status=tenant_create.status,
             tier=tenant_create.tier,
             settings=tenant_create.settings,
-            created_at=datetime.now(UTC),
-            updated_at=datetime.now(UTC)
+            created_at=datetime.now(timezone.utc),
+            updated_at=datetime.now(timezone.utc)
         )
         
         # Mock the service method directly
@@ -445,7 +445,7 @@ class TestAdminServiceOptimized:
             "tenant_id": tenant_id,
             "application_id": app_id,
             "is_active": True,
-            "granted_at": datetime.now(UTC),
+            "granted_at": datetime.now(timezone.utc),
             "granted_by": user_id
         }
         

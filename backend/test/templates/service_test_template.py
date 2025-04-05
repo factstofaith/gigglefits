@@ -6,7 +6,7 @@ This template provides a standardized structure for service layer tests.
 
 import pytest
 from unittest.mock import MagicMock, patch
-from datetime import datetime, UTC
+from datetime import datetime, timezone
 
 # Import the service to test
 from modules.example.service import ExampleService
@@ -66,8 +66,8 @@ class TestExampleService:
             id=1,
             name=example_create.name,
             description=example_create.description,
-            created_at=datetime.now(UTC),
-            updated_at=datetime.now(UTC)
+            created_at=datetime.now(timezone.utc),
+            updated_at=datetime.now(timezone.utc)
         )
         
         # Mock DB interactions
@@ -96,8 +96,8 @@ class TestExampleService:
             id=example_id,
             name="Test Example",
             description="Test Description",
-            created_at=datetime.now(UTC),
-            updated_at=datetime.now(UTC)
+            created_at=datetime.now(timezone.utc),
+            updated_at=datetime.now(timezone.utc)
         )
         
         # Mock DB interactions
@@ -120,8 +120,8 @@ class TestExampleService:
             id=example_id,
             name="Test Example",
             description="Test Description",
-            created_at=datetime.now(UTC),
-            updated_at=datetime.now(UTC)
+            created_at=datetime.now(timezone.utc),
+            updated_at=datetime.now(timezone.utc)
         )
         
         update_data = ExampleModelUpdate(
@@ -150,8 +150,8 @@ class TestExampleService:
             id=example_id,
             name="Test Example",
             description="Test Description",
-            created_at=datetime.now(UTC),
-            updated_at=datetime.now(UTC)
+            created_at=datetime.now(timezone.utc),
+            updated_at=datetime.now(timezone.utc)
         )
         
         # Mock DB interactions

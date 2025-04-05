@@ -6,7 +6,7 @@ This module provides classes and utilities for configuring rate limiting.
 
 from typing import Dict, Any, List, Optional, Union, Callable, Type
 from enum import Enum
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator
 
 from .strategies.base import RateLimitStrategy
 from .strategies.fixed_window import FixedWindowStrategy
@@ -72,13 +72,22 @@ class RedisConfig(BaseModel):
         return params
 
 
+# Define constants for default values
+DEFAULT_RATE_LIMIT = 100  # Requests per period
+DEFAULT_PERIOD_SECONDS = 60  # One minute period
+DEFAULT_MAX_KEY_LENGTH = 128
+DEFAULT_NAMESPACE = "ratelimit"
+DEFAULT_HEADER_PREFIX = "X-RateLimit-"
+DEFAULT_TENANT_HEADER = "X-Tenant-ID"
+
+
 class RateLimitConfig(BaseModel):
     """Rate limiting configuration."""
     enabled: bool = True
     strategy: RateLimitStrategyType = RateLimitStrategyType.FIXED_WINDOW
     storage: StorageType = StorageType.MEMORY
-    rate_limit: int = 100
-    period_seconds: int = 60
+    rate_limit: int = DEFAULT_RATE_LIMIT
+    period_seconds: int = DEFAULT_PERIOD_SECONDS
     
     # Strategy-specific configuration
     bucket_capacity: Optional[int] = None  # For token bucket
@@ -90,7 +99,7 @@ class RateLimitConfig(BaseModel):
     
     # Response headers
     include_headers: bool = True
-    header_prefix: str = "X-RateLimit-"
+    header_prefix: str = DEFAULT_HEADER_PREFIX
     
     # Redis configuration (if storage is REDIS)
     redis: RedisConfig = Field(default_factory=RedisConfig)
@@ -101,24 +110,24 @@ class RateLimitConfig(BaseModel):
     
     # Tenant configuration
     enable_tenant_limits: bool = False
-    tenant_header: str = "X-Tenant-ID"
+    tenant_header: str = DEFAULT_TENANT_HEADER
     tenant_limits: Dict[str, Dict[str, Any]] = Field(default_factory=dict)
     
     # Error handling
     block_on_failure: bool = False  # If True, block requests when rate limiter fails
     
     # Advanced options
-    namespace: str = "ratelimit"
-    max_key_length: int = 128
+    namespace: str = DEFAULT_NAMESPACE
+    max_key_length: int = DEFAULT_MAX_KEY_LENGTH
     
-    @validator("period_seconds")
+    @field_validator("period_seconds")
     def validate_period(cls, v):
         """Validate period is positive."""
         if v <= 0:
             raise ValueError("period_seconds must be positive")
         return v
         
-    @validator("rate_limit")
+    @field_validator("rate_limit")
     def validate_rate_limit(cls, v):
         """Validate rate limit is positive."""
         if v <= 0:

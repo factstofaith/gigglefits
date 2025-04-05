@@ -5,7 +5,7 @@ This module contains tests for the earnings service functionality.
 """
 
 import pytest
-from datetime import datetime, UTC
+from datetime import datetime, timezone
 from unittest.mock import MagicMock, patch
 
 from modules.earnings.service import EarningsService
@@ -93,8 +93,8 @@ class TestEarningsService:
         mock_roster.destination_id = registry_roster["destination_id"]
         mock_roster.tenant_id = registry_roster["tenant_id"]
         mock_roster.owner_id = registry_roster["owner_id"]
-        mock_roster.created_at = datetime.now(UTC)
-        mock_roster.updated_at = datetime.now(UTC)
+        mock_roster.created_at = datetime.now(timezone.utc)
+        mock_roster.updated_at = datetime.now(timezone.utc)
         mock_roster.last_sync_at = None
         
         # Act
@@ -134,8 +134,8 @@ class TestEarningsService:
         mock_roster.destination_id = registry_roster["destination_id"]
         mock_roster.tenant_id = registry_roster["tenant_id"]
         mock_roster.owner_id = registry_roster["owner_id"]
-        mock_roster.created_at = datetime.now(UTC)
-        mock_roster.updated_at = datetime.now(UTC)
+        mock_roster.created_at = datetime.now(timezone.utc)
+        mock_roster.updated_at = datetime.now(timezone.utc)
         mock_roster.last_sync_at = None
         
         # Mock DB query
@@ -234,8 +234,8 @@ class TestEarningsService:
         mock_employee.first_name = registry_employee["first_name"]
         mock_employee.last_name = registry_employee["last_name"]
         mock_employee.email = registry_employee["email"]
-        mock_employee.created_at = datetime.now(UTC)
-        mock_employee.updated_at = datetime.now(UTC)
+        mock_employee.created_at = datetime.now(timezone.utc)
+        mock_employee.updated_at = datetime.now(timezone.utc)
         
         # Act
         result = self.service.create_employee(employee_create)
@@ -299,8 +299,8 @@ class TestEarningsService:
             mock_employee.first_name = emp.first_name
             mock_employee.last_name = emp.last_name
             mock_employee.email = emp.email
-            mock_employee.created_at = datetime.now(UTC)
-            mock_employee.updated_at = datetime.now(UTC)
+            mock_employee.created_at = datetime.now(timezone.utc)
+            mock_employee.updated_at = datetime.now(timezone.utc)
             mock_employees.append(mock_employee)
         
         # Act
@@ -347,8 +347,8 @@ class TestEarningsService:
         mock_code.description = registry_code["description"]
         mock_code.destination_system = registry_code["destination_system"]
         mock_code.is_overtime = registry_code["is_overtime"]
-        mock_code.created_at = datetime.now(UTC)
-        mock_code.updated_at = datetime.now(UTC)
+        mock_code.created_at = datetime.now(timezone.utc)
+        mock_code.updated_at = datetime.now(timezone.utc)
         
         # Act
         result = self.service.create_earnings_code(code_create)
@@ -401,8 +401,8 @@ class TestEarningsService:
         mock_map.source_type = registry_map["source_type"]
         mock_map.earnings_code_id = registry_map["earnings_code_id"]
         mock_map.default_map = registry_map["default_map"]
-        mock_map.created_at = datetime.now(UTC)
-        mock_map.updated_at = datetime.now(UTC)
+        mock_map.created_at = datetime.now(timezone.utc)
+        mock_map.updated_at = datetime.now(timezone.utc)
         
         # Act
         result = self.service.create_earnings_map(map_create)
@@ -470,8 +470,8 @@ class TestEarningsService:
         mock_rule.rule_definition = registry_rule["rule_definition"]
         mock_rule.earnings_code_id = registry_rule["earnings_code_id"]
         mock_rule.is_active = registry_rule["is_active"]
-        mock_rule.created_at = datetime.now(UTC)
-        mock_rule.updated_at = datetime.now(UTC)
+        mock_rule.created_at = datetime.now(timezone.utc)
+        mock_rule.updated_at = datetime.now(timezone.utc)
         
         # Act
         result = self.service.create_business_rule(rule_create)

@@ -7,7 +7,7 @@ the error handling test framework.
 
 import pytest
 from unittest.mock import MagicMock, patch
-from datetime import datetime, UTC
+from datetime import datetime, timezone
 from sqlalchemy.exc import SQLAlchemyError, IntegrityError
 
 # Import service classes
@@ -316,7 +316,7 @@ class TestServiceErrorHandlingOptimized:
             from modules.integrations.models import ScheduleConfig
             ScheduleConfig(
                 type="invalid",  # Invalid schedule type
-                timezone="UTC"
+                timezone="timezone"
             )
         
         # Earnings service - Missing required field

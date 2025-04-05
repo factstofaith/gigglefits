@@ -22,7 +22,7 @@ from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.types import ASGIApp
 from fastapi import Request, Response, FastAPI, Depends, HTTPException, status
 from fastapi.responses import JSONResponse
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator
 import traceback
 import uuid
 
@@ -37,7 +37,7 @@ class BatchOperation(BaseModel):
     body: Optional[Dict[str, Any]] = Field(None, description="Request body for the operation")
     headers: Optional[Dict[str, str]] = Field(None, description="Additional headers for the operation")
     
-    @validator('method')
+    @field_validator('method')
     def validate_method(cls, v):
         """Validate that the method is supported"""
         supported_methods = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']
@@ -45,7 +45,7 @@ class BatchOperation(BaseModel):
             raise ValueError(f"Method must be one of {supported_methods}")
         return v.upper()
     
-    @validator('path')
+    @field_validator('path')
     def validate_path(cls, v):
         """Validate that the path is properly formatted"""
         if not v.startswith('/'):
@@ -82,6 +82,13 @@ class BatchResponse(BaseModel):
     transaction_status: Optional[str] = Field(None, description="Status of the transaction if applicable")
 
 
+# Default configuration values
+DEFAULT_API_PREFIX = "/api"
+DEFAULT_BATCH_ENDPOINT = "/batch"
+DEFAULT_MAX_OPERATIONS = 50
+DEFAULT_TIMEOUT_SECONDS = 60  # 1 minute timeout
+MINIMUM_TIMEOUT = 0.1  # Minimum timeout in seconds to avoid division by zero
+
 class BatchRequestProcessor(BaseHTTPMiddleware):
     """
     Middleware for processing batch requests containing multiple operations.
@@ -97,10 +104,10 @@ class BatchRequestProcessor(BaseHTTPMiddleware):
     def __init__(
         self, 
         app: ASGIApp, 
-        api_prefix: str = "/api",
-        batch_endpoint: str = "/batch",
-        max_operations: int = 50,
-        default_timeout: int = 60,
+        api_prefix: str = DEFAULT_API_PREFIX,
+        batch_endpoint: str = DEFAULT_BATCH_ENDPOINT,
+        max_operations: int = DEFAULT_MAX_OPERATIONS,
+        default_timeout: int = DEFAULT_TIMEOUT_SECONDS,
         collect_metrics: bool = True
     ):
         """
@@ -334,7 +341,7 @@ class BatchRequestProcessor(BaseHTTPMiddleware):
         # Execute operations sequentially
         for op in operations:
             # Check if timeout has been exceeded
-            time_left = max(0.1, end_time - time.time())
+            time_left = max(MINIMUM_TIMEOUT, end_time - time.time())
             if time_left <= 0:
                 raise asyncio.TimeoutError("Sequential execution timed out")
             
@@ -412,7 +419,7 @@ class BatchRequestProcessor(BaseHTTPMiddleware):
             # Execute operations sequentially
             for op in operations:
                 # Check if timeout has been exceeded
-                time_left = max(0.1, end_time - time.time())
+                time_left = max(MINIMUM_TIMEOUT, end_time - time.time())
                 if time_left <= 0:
                     raise asyncio.TimeoutError("Transaction timed out")
                 
@@ -701,10 +708,10 @@ class BatchRequestProcessor(BaseHTTPMiddleware):
 # Function to add the batch request processor to a FastAPI app
 def add_batch_request_processor(
     app: FastAPI,
-    api_prefix: str = "/api",
-    batch_endpoint: str = "/batch",
-    max_operations: int = 50,
-    default_timeout: int = 60,
+    api_prefix: str = DEFAULT_API_PREFIX,
+    batch_endpoint: str = DEFAULT_BATCH_ENDPOINT,
+    max_operations: int = DEFAULT_MAX_OPERATIONS,
+    default_timeout: int = DEFAULT_TIMEOUT_SECONDS,
     collect_metrics: bool = True
 ) -> BatchRequestProcessor:
     """

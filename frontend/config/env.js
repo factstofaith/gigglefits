@@ -30,11 +30,24 @@ const dotenvFiles = [
 // https://github.com/motdotla/dotenv-expand
 dotenvFiles.forEach(dotenvFile => {
   if (fs.existsSync(dotenvFile)) {
-    require('dotenv-expand')(
-      require('dotenv').config({
-        path: dotenvFile,
-      })
-    );
+    // Use dotenv directly first to load the variables
+    const dotenvResult = require('dotenv').config({
+      path: dotenvFile,
+    });
+    
+    // Handle dotenv-expand with compatibility for both CJS and ESM versions
+    try {
+      // For older CommonJS compatible versions
+      const dotenvExpand = require('dotenv-expand');
+      if (typeof dotenvExpand === 'function') {
+        dotenvExpand(dotenvResult);
+      } else if (dotenvExpand && typeof dotenvExpand.expand === 'function') {
+        dotenvExpand.expand(dotenvResult);
+      }
+    } catch (err) {
+      console.warn('Warning: Error expanding environment variables. Some variables may not be properly expanded.', err.message);
+      // Fall back to using dotenv without expansion if needed
+    }
   }
 });
 

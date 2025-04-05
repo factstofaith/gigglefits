@@ -6,7 +6,7 @@ testing framework.
 """
 
 import pytest
-from datetime import datetime, UTC
+from datetime import datetime, timezone
 from unittest.mock import MagicMock, patch
 
 from modules.integrations.service import IntegrationService
@@ -72,7 +72,7 @@ class TestIntegrationServiceOptimized:
         # Arrange - Create
         schedule_config = ScheduleConfig(
             type=ScheduleType.DAILY_2AM,
-            timezone="UTC"
+            timezone="timezone"
         )
         
         integration_create = IntegrationCreate(
@@ -100,8 +100,8 @@ class TestIntegrationServiceOptimized:
             health="healthy",
             schedule=schedule_config.model_dump(),
             azure_blob_config=None,
-            created_at=datetime.now(UTC),
-            updated_at=datetime.now(UTC),
+            created_at=datetime.now(timezone.utc),
+            updated_at=datetime.now(timezone.utc),
             last_run_at=None,
             tags=integration_create.tags
         )
@@ -149,8 +149,8 @@ class TestIntegrationServiceOptimized:
             health="healthy",
             schedule=schedule_config.model_dump(),
             azure_blob_config=None,
-            created_at=datetime.now(UTC),
-            updated_at=datetime.now(UTC),
+            created_at=datetime.now(timezone.utc),
+            updated_at=datetime.now(timezone.utc),
             last_run_at=None,
             tags=integration_create.tags
         )
@@ -188,8 +188,8 @@ class TestIntegrationServiceOptimized:
             health=IntegrationHealth.WARNING.value,
             schedule=schedule_config.model_dump(),
             azure_blob_config=None,
-            created_at=datetime.now(UTC),
-            updated_at=datetime.now(UTC),
+            created_at=datetime.now(timezone.utc),
+            updated_at=datetime.now(timezone.utc),
             last_run_at=None,
             tags=integration_create.tags
         )
@@ -212,7 +212,7 @@ class TestIntegrationServiceOptimized:
         mock_run_result = {
             "integration_id": 1,
             "status": "running",
-            "start_time": datetime.now(UTC).isoformat(),
+            "start_time": datetime.now(timezone.utc).isoformat(),
             "end_time": None,
             "records_processed": None,
             "warnings": None,
@@ -238,7 +238,7 @@ class TestIntegrationServiceOptimized:
             {
                 "integrationId": 1,
                 "status": "running",
-                "startTime": datetime.now(UTC).isoformat(),
+                "startTime": datetime.now(timezone.utc).isoformat(),
                 "endTime": None,
                 "recordsProcessed": None,
                 "warnings": None,
@@ -314,8 +314,8 @@ class TestIntegrationServiceOptimized:
             transformation=mapping_create.transformation,
             required=mapping_create.required,
             description=mapping_create.description,
-            created_at=datetime.now(UTC),
-            updated_at=datetime.now(UTC)
+            created_at=datetime.now(timezone.utc),
+            updated_at=datetime.now(timezone.utc)
         )
         
         # Create field mapping entity in registry
@@ -353,8 +353,8 @@ class TestIntegrationServiceOptimized:
                 transformation=mapping_create.transformation,
                 required=mapping_create.required,
                 description=mapping_create.description,
-                created_at=datetime.now(UTC),
-                updated_at=datetime.now(UTC)
+                created_at=datetime.now(timezone.utc),
+                updated_at=datetime.now(timezone.utc)
             )
         ]
         
@@ -386,8 +386,8 @@ class TestIntegrationServiceOptimized:
             transformation=mapping_create.transformation,
             required=mapping_create.required,
             description=mapping_create.description,
-            created_at=datetime.now(UTC),
-            updated_at=datetime.now(UTC)
+            created_at=datetime.now(timezone.utc),
+            updated_at=datetime.now(timezone.utc)
         )
         
         # Mock the update_field_mapping method
@@ -469,8 +469,8 @@ class TestIntegrationServiceOptimized:
                 status=dataset_entity["status"],
                 tenant_id=dataset_entity["tenant_id"],
                 fields=[],
-                created_at=datetime.now(UTC),
-                updated_at=datetime.now(UTC)
+                created_at=datetime.now(timezone.utc),
+                updated_at=datetime.now(timezone.utc)
             )
         ]
         
@@ -552,8 +552,8 @@ class TestIntegrationServiceOptimized:
             description=earnings_code_entity["description"],
             destination_system=earnings_code_entity["destination_system"],
             is_overtime=earnings_code_entity["is_overtime"],
-            created_at=datetime.now(UTC),
-            updated_at=datetime.now(UTC)
+            created_at=datetime.now(timezone.utc),
+            updated_at=datetime.now(timezone.utc)
         )
         
         # Create mock earnings mappings
@@ -566,8 +566,8 @@ class TestIntegrationServiceOptimized:
                 default_map=mapping_create.default_map,
                 condition=None,
                 dataset_id=None,
-                created_at=datetime.now(UTC),
-                updated_at=datetime.now(UTC),
+                created_at=datetime.now(timezone.utc),
+                updated_at=datetime.now(timezone.utc),
                 earnings_code=mock_earnings_code
             )
         ]

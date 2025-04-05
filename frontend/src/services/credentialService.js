@@ -6,6 +6,16 @@
  */
 
 import { authService } from './authService';
+import { enhancedFetch, parseErrorResponse, getHttpStatusMessage } from "@/error-handling/networkErrorHandler";
+import { reportError, ErrorSeverity, handleAsyncError } from "@/error-handling/error-service";
+import { withDockerNetworkErrorHandling } from '@/error-handling/docker';
+import { ENV } from '@/utils/environmentConfig';
+
+// Enhance fetch with Docker error handling for containerized environments
+const dockerAwareEnhancedFetch = ENV.REACT_APP_RUNNING_IN_DOCKER === 'true' ?
+withDockerNetworkErrorHandling(enhancedFetch) :
+enhancedFetch;
+
 
 // API endpoints for credential management
 const API_ENDPOINTS = {
@@ -13,7 +23,7 @@ const API_ENDPOINTS = {
   retrieve: '/api/credentials/retrieve',
   list: '/api/credentials/list',
   delete: '/api/credentials/delete',
-  test: '/api/credentials/test',
+  test: '/api/credentials/test'
 };
 
 /**
@@ -23,12 +33,46 @@ const API_ENDPOINTS = {
  * @param {Object} data - Request payload
  * @returns {Promise<Object>} - API response
  */
+/**
+ * Handle credential service errors properly
+ * @param {Error} error - The error that occurred
+ * @param {string} operation - The credential operation that failed
+ * @param {Object} details - Additional details about the operation
+ * @returns {Error} The original error for further handling
+ */
+function handleCredentialError(error, operation, details = {}) {
+  // Add specific credential context to the error
+  const errorInfo = {
+    operation,
+    ...details,
+    timestamp: new Date().toISOString()
+  };
+
+  // Determine appropriate severity based on error type
+  let severity = ErrorSeverity.ERROR;
+
+  // Reduce severity for common non-critical credential issues
+  if (error.status === 401 ||
+  error.status === 403 ||
+  error.message.includes('Authentication required')) {
+    severity = ErrorSeverity.WARNING;
+  }
+
+  // Report the error with proper context
+  reportError(error, errorInfo, 'credentialService', severity);
+
+  // Return the error to allow for further handling
+  return error;
+}
+
 const callApi = async (url, method = 'GET', data = null) => {
   try {
     // Get auth token
     const token = localStorage.getItem('auth_token');
     if (!token) {
-      throw new Error('Authentication required');
+      const error = new Error('Authentication required');
+      handleCredentialError(error, 'tokenValidation');
+      throw error;
     }
 
     // Prepare request options
@@ -38,7 +82,7 @@ const callApi = async (url, method = 'GET', data = null) => {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       },
-      credentials: 'include',
+      credentials: 'include'
     };
 
     // Add body for non-GET requests
@@ -54,13 +98,13 @@ const callApi = async (url, method = 'GET', data = null) => {
     let response;
 
     // Simulate network delay
-    await new Promise(resolve => setTimeout(resolve, 800));
+    await new Promise((resolve) => setTimeout(resolve, 800));
 
     if (url.includes('/store')) {
       // Simulate storing credentials
       response = {
         success: true,
-        message: 'Credentials stored successfully',
+        message: 'Credentials stored successfully'
       };
     } else if (url.includes('/retrieve')) {
       // Simulate retrieving credentials
@@ -76,7 +120,7 @@ const callApi = async (url, method = 'GET', data = null) => {
             client_id: 'client-id-value',
             client_secret: data.includeSecrets ? 'secret-value' : '',
             has_credentials: true,
-            last_updated: new Date().toISOString(),
+            last_updated: new Date().toISOString()
           }
         };
       } else if (data.credentialType === 's3') {
@@ -88,7 +132,7 @@ const callApi = async (url, method = 'GET', data = null) => {
             region: 'us-east-1',
             profile: '',
             has_credentials: true,
-            last_updated: new Date().toISOString(),
+            last_updated: new Date().toISOString()
           }
         };
       } else if (data.credentialType === 'sharepoint') {
@@ -101,14 +145,14 @@ const callApi = async (url, method = 'GET', data = null) => {
             username: 'user@example.com',
             password: data.includeSecrets ? 'password-value' : '',
             has_credentials: true,
-            last_updated: new Date().toISOString(),
+            last_updated: new Date().toISOString()
           }
         };
       } else {
         // Unknown credential type
         response = {
           success: false,
-          message: 'Unknown credential type',
+          message: 'Unknown credential type'
         };
       }
     } else if (url.includes('/list')) {
@@ -116,16 +160,16 @@ const callApi = async (url, method = 'GET', data = null) => {
       response = {
         success: true,
         data: [
-          { name: 'azure', type: 'storage', last_updated: new Date().toISOString() },
-          { name: 's3', type: 'storage', last_updated: new Date().toISOString() },
-          { name: 'sharepoint', type: 'storage', last_updated: new Date().toISOString() },
-        ]
+        { name: 'azure', type: 'storage', last_updated: new Date().toISOString() },
+        { name: 's3', type: 'storage', last_updated: new Date().toISOString() },
+        { name: 'sharepoint', type: 'storage', last_updated: new Date().toISOString() }]
+
       };
     } else if (url.includes('/delete')) {
       // Simulate deleting credentials
       response = {
         success: true,
-        message: 'Credentials deleted successfully',
+        message: 'Credentials deleted successfully'
       };
     } else if (url.includes('/test')) {
       // Simulate testing credentials
@@ -137,7 +181,7 @@ const callApi = async (url, method = 'GET', data = null) => {
             message: 'Failed to connect to Azure Blob Storage',
             details: {
               error: 'Connection timeout',
-              code: 'ConnectionError',
+              code: 'ConnectionError'
             }
           };
         } else {
@@ -147,7 +191,7 @@ const callApi = async (url, method = 'GET', data = null) => {
             details: {
               containers: 5,
               account: 'myaccount',
-              permissions: ['read', 'write', 'delete'],
+              permissions: ['read', 'write', 'delete']
             }
           };
         }
@@ -158,7 +202,7 @@ const callApi = async (url, method = 'GET', data = null) => {
           details: {
             buckets: 3,
             region: 'us-east-1',
-            permissions: ['read', 'write', 'delete'],
+            permissions: ['read', 'write', 'delete']
           }
         };
       } else if (data.credentialType === 'sharepoint') {
@@ -168,21 +212,21 @@ const callApi = async (url, method = 'GET', data = null) => {
           details: {
             sites: 2,
             tenant: 'example.onmicrosoft.com',
-            permissions: ['read', 'write'],
+            permissions: ['read', 'write']
           }
         };
       } else {
         // Unknown credential type
         response = {
           success: false,
-          message: 'Unknown credential type',
+          message: 'Unknown credential type'
         };
       }
     } else {
       // Unknown endpoint
       response = {
         success: false,
-        message: 'Unknown endpoint',
+        message: 'Unknown endpoint'
       };
     }
 
@@ -200,7 +244,7 @@ const callApi = async (url, method = 'GET', data = null) => {
     return await response.json();
     */
   } catch (error) {
-    console.error('API call failed:', error);
+    handleCredentialError(error, 'apiCall', { url, method });
     throw error;
   }
 };
@@ -222,20 +266,20 @@ export const credentialService = {
         'POST',
         {
           credentialType,
-          credentials,
+          credentials
         }
       );
-      
+
       return response;
     } catch (error) {
-      console.error(`Failed to store ${credentialType} credentials:`, error);
+      handleCredentialError(error, 'storeCredentials', { credentialType });
       return {
         success: false,
         message: error.message || `Failed to store credentials: ${error}`
       };
     }
   },
-  
+
   /**
    * Retrieve credentials from secure storage
    * @param {string} credentialType - Type of credentials to retrieve
@@ -249,20 +293,20 @@ export const credentialService = {
         'POST',
         {
           credentialType,
-          includeSecrets,
+          includeSecrets
         }
       );
-      
+
       return response;
     } catch (error) {
-      console.error(`Failed to retrieve ${credentialType} credentials:`, error);
+      handleCredentialError(error, 'getCredentials', { credentialType, includeSecrets });
       return {
         success: false,
         message: error.message || `Failed to retrieve credentials: ${error}`
       };
     }
   },
-  
+
   /**
    * List available credential types
    * @returns {Promise<Array>} - List of available credential types
@@ -272,14 +316,14 @@ export const credentialService = {
       const response = await callApi(API_ENDPOINTS.list, 'GET');
       return response;
     } catch (error) {
-      console.error('Failed to list credentials:', error);
+      handleCredentialError(error, 'listCredentials');
       return {
         success: false,
         message: error.message || `Failed to list credentials: ${error}`
       };
     }
   },
-  
+
   /**
    * Delete stored credentials
    * @param {string} credentialType - Type of credentials to delete
@@ -291,20 +335,20 @@ export const credentialService = {
         API_ENDPOINTS.delete,
         'POST',
         {
-          credentialType,
+          credentialType
         }
       );
-      
+
       return response;
     } catch (error) {
-      console.error(`Failed to delete ${credentialType} credentials:`, error);
+      handleCredentialError(error, 'deleteCredentials', { credentialType });
       return {
         success: false,
         message: error.message || `Failed to delete credentials: ${error}`
       };
     }
   },
-  
+
   /**
    * Test credentials by attempting to connect to the service
    * @param {string} credentialType - Type of credentials to test
@@ -318,20 +362,20 @@ export const credentialService = {
         'POST',
         {
           credentialType,
-          credentials,
+          credentials
         }
       );
-      
+
       return response;
     } catch (error) {
-      console.error(`Failed to test ${credentialType} credentials:`, error);
+      handleCredentialError(error, 'testCredentials', { credentialType });
       return {
         success: false,
         message: error.message || `Failed to test credentials: ${error}`
       };
     }
   },
-  
+
   /**
    * Check if credentials exist for a specific type
    * @param {string} credentialType - Type of credentials to check
@@ -344,16 +388,16 @@ export const credentialService = {
         'POST',
         {
           credentialType,
-          includeSecrets: false,
+          includeSecrets: false
         }
       );
-      
+
       return response.success && response.data && response.data.has_credentials;
     } catch (error) {
-      console.error(`Failed to check ${credentialType} credentials:`, error);
+      handleCredentialError(error, 'hasCredentials', { credentialType });
       return false;
     }
-  },
+  }
 };
 
 export default credentialService;

@@ -1,0 +1,41 @@
+{
+  "analysis": {
+    "include": ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx", "**/*.py", "**/*.html", "**/*.css", "**/*.scss"],
+    "exclude": ["**/node_modules/**", "**/venv/**", "**/__pycache__/**", "**/dist/**", "**/build/**"],
+    "focus": [],
+    "depth": "standard",
+    "ignoreTodos": true,
+    "metrics": true,
+    "parsers": {
+      "javascript": true,
+      "typescript": true,
+      "python": true,
+      "html": true,
+      "css": true
+    },
+    "detectors": {
+      "architecture": true,
+      "style": true,
+      "dependencies": true,
+      "errorHandling": true,
+      "testing": true,
+      "security": true,
+      "technicalDebt": true,
+      "productionReadiness": true
+    }
+  },
+  "toolMapping": {
+    "discoverTools": true,
+    "toolsPath": "/p_tools/docker/bin"
+  },
+  "planning": {
+    "phases": 4,
+    "tasksPerPhase": 10,
+    "estimationMethod": "detailed"
+  },
+  "output": {
+    "artifacts": ["report", "plan", "checklist", "mapping"],
+    "directory": "./audit-results",
+    "format": "markdown"
+  }
+}

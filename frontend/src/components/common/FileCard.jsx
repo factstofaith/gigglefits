@@ -1,25 +1,12 @@
-/**
- * FileCard Component
- * 
- * A reusable card component for displaying file metadata with preview capabilities.
- * Supports various file types with appropriate icons and actions.
- */
-
+import { ErrorBoundary, useErrorHandler, withErrorBoundary } from "@/error-handling"; /**
+                                                                                      * FileCard Component
+                                                                                      * 
+                                                                                      * A reusable card component for displaying file metadata with preview capabilities.
+                                                                                      * Supports various file types with appropriate icons and actions.
+                                                                                      */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { 
-  Box, 
-  Card, 
-  CardActionArea, 
-  CardActions, 
-  CardContent, 
-  CardMedia,
-  Chip,
-  Dialog,
-  IconButton, 
-  Tooltip, 
-  Typography
-} from '@mui/material';
+import { Box, Card, CardActionArea, CardActions, CardContent, CardMedia, Chip, Dialog, IconButton, Tooltip, Typography } from '@mui/material';
 
 // Icons
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -37,12 +24,7 @@ import FolderZipOutlinedIcon from '@mui/icons-material/FolderZipOutlined';
 import TableChartOutlinedIcon from '@mui/icons-material/TableChartOutlined';
 
 // File type utilities
-import { 
-  getFileTypeIcon, 
-  getFileTypeColor,
-  getFileTypeDescription,
-  generateFileMetadata
-} from '../../utils/fileTypeUtils';
+import { getFileTypeIcon, getFileTypeColor, getFileTypeDescription, generateFileMetadata } from "@/utils/fileTypeUtils";
 
 // File preview component
 import FilePreview from './FilePreview';
@@ -51,7 +33,7 @@ import FilePreview from './FilePreview';
  * FileCard component for displaying file information
  * @component
  */
-const FileCard = ({ 
+const FileCard = ({
   file,
   url,
   name,
@@ -66,9 +48,9 @@ const FileCard = ({
   compact = false,
   variant = 'outlined'
 }) => {
+  const [formError, setFormError] = useState(null);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [fileMetadata, setFileMetadata] = useState(null);
-  
   useEffect(() => {
     // Create file metadata object
     const fileObj = file || {
@@ -77,40 +59,36 @@ const FileCard = ({
       type: type,
       lastModified: lastModified
     };
-    
     setFileMetadata(generateFileMetadata(fileObj));
   }, [file, name, size, type, lastModified]);
-  
   if (!fileMetadata) {
     return null;
   }
-  
+
   // Format file size
-  const formatFileSize = (bytes) => {
+  const formatFileSize = bytes => {
     if (bytes === 0) return '0 Bytes';
-    
     const k = 1024;
     const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
-    
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
   };
-  
+
   // Format last modified date
-  const formatDate = (dateString) => {
+  const formatDate = dateString => {
     if (!dateString) return '';
-    
     const date = new Date(dateString);
     return date.toLocaleString();
   };
-  
+
   // Get file icon component based on file type
-  const getFileIconComponent = (iconName) => {
-    const iconProps = { 
+  const getFileIconComponent = iconName => {
+    const iconProps = {
       fontSize: compact ? 'medium' : 'large',
-      sx: { color: getFileTypeColor(fileMetadata.mimeType) }
+      sx: {
+        color: getFileTypeColor(fileMetadata.mimeType)
+      }
     };
-    
     switch (iconName) {
       case 'Description':
         return <DescriptionOutlinedIcon {...iconProps} />;
@@ -134,7 +112,7 @@ const FileCard = ({
         return <InsertDriveFileOutlinedIcon {...iconProps} />;
     }
   };
-  
+
   // Handle preview click
   const handlePreviewClick = () => {
     if (onPreview) {
@@ -143,291 +121,224 @@ const FileCard = ({
       setPreviewOpen(true);
     }
   };
-  
+
   // Handle download click
-  const handleDownloadClick = (e) => {
+  const handleDownloadClick = e => {
     e.stopPropagation();
     if (onDownload) {
       onDownload(fileMetadata);
     }
   };
-  
+
   // Handle delete click
-  const handleDeleteClick = (e) => {
+  const handleDeleteClick = e => {
     e.stopPropagation();
     if (onDelete) {
       onDelete(fileMetadata);
     }
   };
-  
+
   // Close preview dialog
   const handleClosePreview = () => {
     setPreviewOpen(false);
   };
-  
+
   // Determine if we have a thumbnail URL for images
   const thumbnailUrl = fileMetadata.mimeType.startsWith('image/') && url ? url : null;
-  
+
   // For compact cards
   if (compact) {
-    return (
-      <>
-        <Card 
-          variant={variant} 
-          sx={{ 
-            display: 'flex',
-            alignItems: 'center',
-            width: '100%',
-            height: '48px',
-            '&:hover': {
-              bgcolor: 'action.hover'
-            }
-          }}
-        >
-          <CardActionArea 
-            onClick={handlePreviewClick}
-            sx={{ 
-              display: 'flex', 
-              alignItems: 'center',
-              height: '100%',
-              justifyContent: 'flex-start',
-              px: 1
-            }}
-          >
-            <Box sx={{ mr: 1 }}>
+    return <>
+        <Card variant={variant} sx={{
+        display: 'flex',
+        alignItems: 'center',
+        width: '100%',
+        height: '48px',
+        '&:hover': {
+          bgcolor: 'action.hover'
+        }
+      }}>
+
+          <CardActionArea onClick={handlePreviewClick} sx={{
+          display: 'flex',
+          alignItems: 'center',
+          height: '100%',
+          justifyContent: 'flex-start',
+          px: 1
+        }}>
+
+            <Box sx={{
+            mr: 1
+          }}>
               {getFileIconComponent(getFileTypeIcon(fileMetadata.mimeType))}
             </Box>
-            <Box sx={{ 
-              flex: 1, 
-              display: 'flex', 
-              justifyContent: 'space-between',
-              alignItems: 'center',
+            <Box sx={{
+            flex: 1,
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            overflow: 'hidden',
+            pr: showActions ? 5 : 1
+          }}>
+              <Typography variant="body2" noWrap sx={{
               overflow: 'hidden',
-              pr: showActions ? 5 : 1
+              textOverflow: 'ellipsis',
+              maxWidth: '60%'
             }}>
-              <Typography 
-                variant="body2" 
-                noWrap 
-                sx={{ 
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  maxWidth: '60%'
-                }}
-              >
+
                 {fileMetadata.filename}
               </Typography>
-              <Typography 
-                variant="caption" 
-                color="text.secondary" 
-                noWrap
-              >
+              <Typography variant="caption" color="text.secondary" noWrap>
+
                 {formatFileSize(fileMetadata.size)}
               </Typography>
             </Box>
           </CardActionArea>
           
-          {showActions && (
-            <Box sx={{ 
-              position: 'absolute', 
-              right: 8, 
-              display: 'flex',
-              alignItems: 'center'
-            }}>
-              {onPreview && fileMetadata.isPreviewable && (
-                <Tooltip title="Preview">
-                  <IconButton 
-                    size="small" 
-                    onClick={handlePreviewClick}
-                    color="primary"
-                  >
+          {showActions && <Box sx={{
+          position: 'absolute',
+          right: 8,
+          display: 'flex',
+          alignItems: 'center'
+        }}>
+              {onPreview && fileMetadata.isPreviewable && <Tooltip title="Preview">
+                  <IconButton size="small" onClick={handlePreviewClick} color="primary">
+
                     <VisibilityIcon fontSize="small" />
                   </IconButton>
-                </Tooltip>
-              )}
+                </Tooltip>}
+
               
-              {onDownload && (
-                <Tooltip title="Download">
-                  <IconButton 
-                    size="small" 
-                    onClick={handleDownloadClick}
-                  >
+              {onDownload && <Tooltip title="Download">
+                  <IconButton size="small" onClick={handleDownloadClick}>
+
                     <DownloadIcon fontSize="small" />
                   </IconButton>
-                </Tooltip>
-              )}
+                </Tooltip>}
+
               
-              {onDelete && (
-                <Tooltip title="Delete">
-                  <IconButton 
-                    size="small" 
-                    onClick={handleDeleteClick}
-                    color="error"
-                  >
+              {onDelete && <Tooltip title="Delete">
+                  <IconButton size="small" onClick={handleDeleteClick} color="error">
+
                     <DeleteIcon fontSize="small" />
                   </IconButton>
-                </Tooltip>
-              )}
-            </Box>
-          )}
+                </Tooltip>}
+
+            </Box>}
+
         </Card>
         
         {/* Preview Dialog */}
-        {showPreview && (
-          <Dialog
-            open={previewOpen}
-            onClose={handleClosePreview}
-            maxWidth="lg"
-            fullWidth
-          >
-            <FilePreview
-              file={file}
-              url={url}
-              mimeType={fileMetadata.mimeType}
-              filename={fileMetadata.filename}
-              onDownload={onDownload ? () => onDownload(fileMetadata) : undefined}
-            />
-          </Dialog>
-        )}
-      </>
-    );
+        {showPreview && <Dialog open={previewOpen} onClose={handleClosePreview} maxWidth="lg" fullWidth>
+
+            <FilePreview file={file} url={url} mimeType={fileMetadata.mimeType} filename={fileMetadata.filename} onDownload={onDownload ? () => onDownload(fileMetadata) : undefined} />
+
+          </Dialog>}
+
+      </>;
   }
-  
+
   // For full-sized cards
-  return (
-    <>
-      <Card 
-        variant={variant} 
-        sx={{ 
-          display: 'flex',
-          flexDirection: 'column',
-          width: '100%',
-          height: '100%',
-          '&:hover': {
-            boxShadow: 2
-          }
-        }}
-      >
+  return <>
+      <Card variant={variant} sx={{
+      display: 'flex',
+      flexDirection: 'column',
+      width: '100%',
+      height: '100%',
+      '&:hover': {
+        boxShadow: 2
+      }
+    }}>
+
         {/* Thumbnail area */}
         <CardActionArea onClick={handlePreviewClick}>
-          {thumbnailUrl ? (
-            <CardMedia
-              component="img"
-              height="140"
-              image={thumbnailUrl}
-              alt={fileMetadata.filename}
-              sx={{ objectFit: 'contain', bgcolor: 'background.default' }}
-            />
-          ) : (
-            <Box 
-              sx={{ 
-                height: 140, 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'center',
-                bgcolor: 'background.default'
-              }}
-            >
+          {thumbnailUrl ? <CardMedia component="img" height="140" image={thumbnailUrl} alt={fileMetadata.filename} sx={{
+          objectFit: 'contain',
+          bgcolor: 'background.default'
+        }} /> : <Box sx={{
+          height: 140,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          bgcolor: 'background.default'
+        }}>
+
               {getFileIconComponent(getFileTypeIcon(fileMetadata.mimeType))}
-            </Box>
-          )}
+            </Box>}
+
           
           <CardContent>
-            <Typography 
-              variant="subtitle2" 
-              noWrap 
-              title={fileMetadata.filename}
-              gutterBottom
-            >
+            <Typography variant="subtitle2" noWrap title={fileMetadata.filename} gutterBottom>
+
               {fileMetadata.filename}
             </Typography>
             
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
-              <Chip
-                label={fileMetadata.description}
-                size="small"
-                sx={{ 
-                  height: 20, 
-                  fontSize: '0.7rem',
-                  bgcolor: getFileTypeColor(fileMetadata.mimeType) + '22',
-                  color: getFileTypeColor(fileMetadata.mimeType)
-                }}
-              />
+            <Box sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            mb: 1
+          }}>
+              <Chip label={fileMetadata.description} size="small" sx={{
+              height: 20,
+              fontSize: '0.7rem',
+              bgcolor: getFileTypeColor(fileMetadata.mimeType) + '22',
+              color: getFileTypeColor(fileMetadata.mimeType)
+            }} />
+
               
               <Typography variant="caption" color="text.secondary">
                 {formatFileSize(fileMetadata.size)}
               </Typography>
             </Box>
             
-            {fileMetadata.lastModified && (
-              <Typography variant="caption" color="text.secondary" display="block">
+            {fileMetadata.lastModified && <Typography variant="caption" color="text.secondary" display="block">
                 Modified: {formatDate(fileMetadata.lastModified)}
-              </Typography>
-            )}
+              </Typography>}
+
           </CardContent>
         </CardActionArea>
         
         {/* Actions */}
-        {showActions && (
-          <CardActions sx={{ mt: 'auto', justifyContent: 'flex-end' }}>
-            {onPreview && fileMetadata.isPreviewable && (
-              <Tooltip title="Preview">
-                <IconButton 
-                  size="small" 
-                  onClick={handlePreviewClick}
-                  color="primary"
-                >
+        {showActions && <CardActions sx={{
+        mt: 'auto',
+        justifyContent: 'flex-end'
+      }}>
+            {onPreview && fileMetadata.isPreviewable && <Tooltip title="Preview">
+                <IconButton size="small" onClick={handlePreviewClick} color="primary">
+
                   <VisibilityIcon fontSize="small" />
                 </IconButton>
-              </Tooltip>
-            )}
+              </Tooltip>}
+
             
-            {onDownload && (
-              <Tooltip title="Download">
-                <IconButton 
-                  size="small" 
-                  onClick={handleDownloadClick}
-                >
+            {onDownload && <Tooltip title="Download">
+                <IconButton size="small" onClick={handleDownloadClick}>
+
                   <DownloadIcon fontSize="small" />
                 </IconButton>
-              </Tooltip>
-            )}
+              </Tooltip>}
+
             
-            {onDelete && (
-              <Tooltip title="Delete">
-                <IconButton 
-                  size="small" 
-                  onClick={handleDeleteClick}
-                  color="error"
-                >
+            {onDelete && <Tooltip title="Delete">
+                <IconButton size="small" onClick={handleDeleteClick} color="error">
+
                   <DeleteIcon fontSize="small" />
                 </IconButton>
-              </Tooltip>
-            )}
-          </CardActions>
-        )}
+              </Tooltip>}
+
+          </CardActions>}
+
       </Card>
       
       {/* Preview Dialog */}
-      {showPreview && (
-        <Dialog
-          open={previewOpen}
-          onClose={handleClosePreview}
-          maxWidth="lg"
-          fullWidth
-        >
-          <FilePreview
-            file={file}
-            url={url}
-            mimeType={fileMetadata.mimeType}
-            filename={fileMetadata.filename}
-            onDownload={onDownload ? () => onDownload(fileMetadata) : undefined}
-          />
-        </Dialog>
-      )}
-    </>
-  );
-};
+      {showPreview && <Dialog open={previewOpen} onClose={handleClosePreview} maxWidth="lg" fullWidth>
 
+          <FilePreview file={file} url={url} mimeType={fileMetadata.mimeType} filename={fileMetadata.filename} onDownload={onDownload ? () => onDownload(fileMetadata) : undefined} />
+
+        </Dialog>}
+
+    </>;
+};
 FileCard.propTypes = {
   file: PropTypes.object,
   url: PropTypes.string,
@@ -443,5 +354,4 @@ FileCard.propTypes = {
   compact: PropTypes.bool,
   variant: PropTypes.oneOf(['outlined', 'elevation', 'contained'])
 };
-
 export default FileCard;

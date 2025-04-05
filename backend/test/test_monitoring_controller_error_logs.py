@@ -59,21 +59,21 @@ mock_logs = [
         severity=LogSeverity.ERROR,
         component="backend",
         message="Database connection failed",
-        timestamp=datetime.utcnow() - timedelta(hours=1)
+        timestamp=datetime.now(timezone.utc) - timedelta(hours=1)
     ),
     ErrorLog(
         id="log-2",
         severity=LogSeverity.WARNING,
         component="frontend",
         message="API request timed out",
-        timestamp=datetime.utcnow() - timedelta(hours=2)
+        timestamp=datetime.now(timezone.utc) - timedelta(hours=2)
     ),
     ErrorLog(
         id="log-3",
         severity=LogSeverity.CRITICAL,
         component="database",
         message="Out of memory error",
-        timestamp=datetime.utcnow() - timedelta(hours=3)
+        timestamp=datetime.now(timezone.utc) - timedelta(hours=3)
     ),
 ]
 
@@ -89,7 +89,7 @@ mock_log_detail = ErrorLogDetail(
     severity=LogSeverity.ERROR,
     component="backend",
     message="Database connection failed",
-    timestamp=datetime.utcnow() - timedelta(hours=1),
+    timestamp=datetime.now(timezone.utc) - timedelta(hours=1),
     stack_trace="Error: Database connection failed\n  at connectToDatabase (database.js:42)",
     context={"request_id": "req-12345", "user_id": "user-67890"},
     additional_data={"attempted_fixes": ["retry", "fallback"]}

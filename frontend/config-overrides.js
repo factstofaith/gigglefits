@@ -7,21 +7,21 @@
  */
 const { override, addWebpackAlias, addBabelPlugin } = require('customize-cra');
 const webpack = require('webpack');
-const aliases = require('./config/webpack.aliases');
+const aliases = require("./config/webpack.aliases.js");
 
 module.exports = override(
   // Add webpack aliases from our configuration file
   addWebpackAlias(aliases),
-  
+
   // Add module resolver babel plugin for consistent imports
   addBabelPlugin([
-    'module-resolver',
-    {
-      root: ['./src'],
-      alias: aliases
-    }
-  ]),
-  
+  'module-resolver',
+  {
+    root: ['./src'],
+    alias: aliases
+  }]
+  ),
+
   // Add Node.js polyfills for webpack 5
   (config) => {
     // Add fallbacks for Node.js core modules
@@ -49,7 +49,7 @@ module.exports = override(
     config.plugins.push(
       new webpack.ProvidePlugin({
         process: 'process/browser',
-        Buffer: ['buffer', 'Buffer'],
+        Buffer: ['buffer', 'Buffer']
       })
     );
 

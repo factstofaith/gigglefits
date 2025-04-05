@@ -1,14 +1,17 @@
-// ProgressBar.jsx
+import { ErrorBoundary, useErrorHandler, withErrorBoundary } from "@/error-handling"; // ProgressBar.jsx
 // -----------------------------------------------------------------------------
 // Simple progress bar component
-
 import React from 'react';
-
-function ProgressBar({ value = 0, max = 100, color = '#48C2C5', height = 8, style }) {
+function ProgressBar({
+  value = 0,
+  max = 100,
+  color = '#48C2C5',
+  height = 8,
+  style
+}) {
   // Ensure value is between 0 and max
   const clampedValue = Math.min(Math.max(0, value), max);
-  const percentage = (clampedValue / max) * 100;
-
+  const percentage = clampedValue / max * 100;
   const containerStyle = {
     width: '100%',
     backgroundColor: '#EEEEEE',
@@ -17,7 +20,6 @@ function ProgressBar({ value = 0, max = 100, color = '#48C2C5', height = 8, styl
     overflow: 'hidden',
     ...style
   };
-
   const fillStyle = {
     height: '100%',
     width: `${percentage}%`,
@@ -25,12 +27,10 @@ function ProgressBar({ value = 0, max = 100, color = '#48C2C5', height = 8, styl
     borderRadius: height / 2,
     transition: 'width 0.3s ease'
   };
-
-  return (
-    <div style={containerStyle}>
+  return <div style={containerStyle}>
       <div style={fillStyle}></div>
-    </div>
-  );
+    </div>;
 }
-
-export default ProgressBar;
+export default withErrorBoundary(ProgressBar, {
+  boundary: 'ProgressBar'
+});

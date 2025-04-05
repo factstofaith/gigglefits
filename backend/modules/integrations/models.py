@@ -94,7 +94,7 @@ class ScheduleConfig(BaseModel):
     """Configuration for integration schedules"""
     type: ScheduleType = ScheduleType.ON_DEMAND
     cronExpression: Optional[str] = None
-    timezone: str = "UTC"
+    timezone: str = "timezone"
     effectiveDate: Optional[datetime] = None
     description: Optional[str] = None
     

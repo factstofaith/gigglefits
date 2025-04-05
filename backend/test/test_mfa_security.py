@@ -78,8 +78,8 @@ def mock_mfa():
         mfa_verified=True,
         mfa_secret=secret,  # In production this would be encrypted
         mfa_recovery_codes=["REC1", "REC2", "REC3", "REC4", "REC5"],
-        created_at=datetime.utcnow(),
-        updated_at=datetime.utcnow()
+        created_at=datetime.now(timezone.utc),
+        updated_at=datetime.now(timezone.utc)
     )
 
 @pytest.fixture

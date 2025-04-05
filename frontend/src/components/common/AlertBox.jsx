@@ -1,18 +1,31 @@
-// AlertBox.jsx
+import { ErrorBoundary, useErrorHandler, withErrorBoundary } from "@/error-handling"; // AlertBox.jsx
 // -----------------------------------------------------------------------------
 // Displays an alert in brand colors, with optional close.
-
 import React from 'react';
-
-function AlertBox({ type = 'info', message, onClose }) {
+function AlertBox({
+  type = 'info',
+  message,
+  onClose
+}) {
   // Basic color mapping
   const colorMap = {
-    success: { bg: '#48C2C5', text: '#FFFFFF' },
-    error: { bg: '#FC741C', text: '#FFFFFF' },
-    warning: { bg: '#FFAA3B', text: '#FFFFFF' },
-    info: { bg: '#48C2C5', text: '#FFFFFF' }
+    success: {
+      bg: '#48C2C5',
+      text: '#FFFFFF'
+    },
+    error: {
+      bg: '#FC741C',
+      text: '#FFFFFF'
+    },
+    warning: {
+      bg: '#FFAA3B',
+      text: '#FFFFFF'
+    },
+    info: {
+      bg: '#48C2C5',
+      text: '#FFFFFF'
+    }
   };
-
   const style = {
     backgroundColor: colorMap[type] ? colorMap[type].bg : '#48C2C5',
     color: colorMap[type] ? colorMap[type].text : '#FFFFFF',
@@ -21,7 +34,6 @@ function AlertBox({ type = 'info', message, onClose }) {
     margin: '1rem 0',
     position: 'relative'
   };
-
   const closeStyle = {
     position: 'absolute',
     top: '0.5rem',
@@ -33,17 +45,14 @@ function AlertBox({ type = 'info', message, onClose }) {
     fontSize: '1.2rem',
     lineHeight: '1'
   };
-
-  return (
-    <div style={style}>
+  return <div style={style}>
       {message}
-      {onClose && (
-        <button style={closeStyle} onClick={onClose}>
+      {onClose && <button style={closeStyle} onClick={onClose}>
           &times;
-        </button>
-      )}
-    </div>
-  );
+        </button>}
+      
+    </div>;
 }
-
-export default AlertBox;
+export default withErrorBoundary(AlertBox, {
+  boundary: 'AlertBox'
+});

@@ -127,7 +127,7 @@ class TestScheduler:
         task_info = scheduler.scheduled_tasks["integration_1"]
         
         # Should run when enough time has passed and cron matches
-        now = datetime.now(pytz.UTC)
+        now = datetime.now(pytz.timezone)
         # Simulate last run more than a minute ago
         task_info["last_run"] = now - timedelta(minutes=16)
         

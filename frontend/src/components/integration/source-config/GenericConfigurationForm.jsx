@@ -19,47 +19,42 @@ import { Box, Alert, Typography, TextField, Paper } from '@mui/material';
  * @param {Object} props.formik - Formik instance
  * @returns {JSX.Element} The GenericConfigurationForm component
  */
-const GenericConfigurationForm = ({ formik }) => {
+import { withErrorBoundary } from "@/error-handling/withErrorBoundary";
+const GenericConfigurationForm = ({
+  formik
+}) => {
   const sourceType = formik.values.sourceType;
-
-  return (
-    <Box>
-      <Alert severity="info" sx={{ mb: 3 }}>
+  return <Box>
+      <Alert severity="info" sx={{
+      mb: 3
+    }}>
         Please provide configuration details for the selected source type. The specific
         configuration form for this source type is not yet implemented.
       </Alert>
 
-      <Paper variant="outlined" sx={{ p: 3 }}>
+      <Paper variant="outlined" sx={{
+      p: 3
+    }}>
         <Typography variant="subtitle1" gutterBottom>
           Generic Configuration
         </Typography>
 
-        <TextField
-          fullWidth
-          multiline
-          rows={10}
-          label="Configuration JSON"
-          name="config.raw"
-          value={JSON.stringify(formik.values.config || {}, null, 2)}
-          onChange={(e) => {
-            try {
-              const config = JSON.parse(e.target.value);
-              formik.setFieldValue('config', config);
-            } catch (error) {
-              // Allow invalid JSON during editing, but don't update the value
-              console.error('Invalid JSON configuration', error);
-            }
-          }}
-          placeholder={`{\n  "key": "value"\n}`}
-          sx={{ fontFamily: 'monospace' }}
-        />
+        <TextField fullWidth multiline rows={10} label="Configuration JSON" name="config.raw" value={JSON.stringify(formik.values.config || {}, null, 2)} onChange={e => {
+        try {
+          const config = JSON.parse(e.target.value);
+          formik.setFieldValue('config', config);
+        } catch (error) {
+          // Allow invalid JSON during editing, but don't update the value
+          console.error('Invalid JSON configuration', error);
+        }
+      }} placeholder={`{\n  "key": "value"\n}`} sx={{
+        fontFamily: 'monospace'
+      }} />
+
       </Paper>
-    </Box>
-  );
+    </Box>;
 };
-
 GenericConfigurationForm.propTypes = {
-  formik: PropTypes.object.isRequired,
+  formik: PropTypes.object.isRequired
 };
-
 export default GenericConfigurationForm;

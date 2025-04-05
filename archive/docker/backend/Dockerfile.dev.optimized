@@ -3,6 +3,28 @@
 
 FROM python:3.10-slim
 
+# Create non-root user
+RUN groupadd -g 1000 appuser && \
+    useradd -u 1000 -g appuser -s /bin/bash -m appuser && \
+    mkdir -p /home/appuser/app && \
+    chown -R appuser:appuser /home/appuser
+
+
+# Add metadata labels
+LABEL \
+    org.opencontainers.image.vendor="TAP Integration Platform" \
+    org.opencontainers.image.authors="TAP Platform Team <tap-team@example.com>" \
+    org.opencontainers.image.licenses="Proprietary" \
+    org.label-schema.schema-version="1.0" \
+    org.label-schema.vendor="TAP Integration Platform" \
+    com.tap.component.version="1.0.0" \
+RUN chown -R appuser:appuser /app
+    com.tap.image.environment="development" \
+    com.tap.maintainer="TAP Platform Team" \
+    com.tap.component.type="backend" \
+    org.opencontainers.image.created="2025-04-03T02:06:45.342Z"
+
+
 WORKDIR /app
 
 # Install curl for healthcheck and system dependencies
@@ -72,6 +94,10 @@ exec uvicorn main:app --host 0.0.0.0 --port 8000 --reload\n\
 
 # Add Docker healthcheck
 HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 CMD [ "/app/healthcheck.sh" ]
+
+
+# Use non-root user
+USER appuser
 
 # Use the entrypoint script to start the server
 ENTRYPOINT ["/app/entrypoint.sh"]

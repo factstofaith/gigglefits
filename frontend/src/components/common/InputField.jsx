@@ -1,13 +1,12 @@
-// InputField.jsx
-// -----------------------------------------------------------------------------
-// Modern input field with brand color highlight on focus.
 
 import React, { useState } from 'react';
+import { ErrorBoundary, useErrorHandler, withErrorBoundary } from '@/error-handling';
 
 function InputField({ label, type = 'text', value, onChange, placeholder, style }) {
+  const [formError, setFormError] = useState(null);
+  const { handleError } = useErrorHandler('InputField');
   // We'll handle focus style changes with local state or inline approach
   const [focused, setFocused] = useState(false);
-
   const containerStyle = {
     marginBottom: '1rem',
     ...style
@@ -30,18 +29,34 @@ function InputField({ label, type = 'text', value, onChange, placeholder, style 
 
   return (
     <div style={containerStyle}>
+      {formError && (
+        <div style={{ color: 'red', marginBottom: '0.5rem', fontSize: '0.875rem' }}>
+          {formError}
+        </div>
+      )}
       {label && <label style={labelStyle}>{label}</label>}
       <input
-        type={type}
-        value={value}
-        onChange={onChange}
-        placeholder={placeholder}
-        style={inputStyle}
-        onFocus={() => setFocused(true)}
-        onBlur={() => setFocused(false)}
-      />
-    </div>
-  );
+      type={type}
+      value={value}
+      onChange={(e) => {
+          try {
+            // Clear form error when user makes changes
+            if (formError) setFormError(null);
+            onChange(e);
+          } catch (err) {
+            setFormError(err.message || 'Invalid input');
+            handleError(err, { field: label || 'unknown', value: e.target.value });
+          }
+        }}
+      placeholder={placeholder}
+      style={inputStyle}
+      onFocus={() => setFocused(true)}
+      onBlur={() => setFocused(false)} />
+      
+    </div>);
+
 }
 
-export default InputField;
+export default withErrorBoundary(InputField, {
+  boundary: 'InputField'
+});

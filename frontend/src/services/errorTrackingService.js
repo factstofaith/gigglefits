@@ -5,31 +5,35 @@
  * with third-party error monitoring services like Sentry, LogRocket, etc.
  */
 
+import { reportError, ErrorSeverity } from "@/error-handling/error-service";
+import { ENV } from '@/utils/environmentConfig';
+
 // Configuration
 const config = {
-  enabled: process.env.NODE_ENV === 'production',
-  environment: process.env.NODE_ENV || 'development',
+  enabled: ENV.NODE_ENV === 'production',
+  environment: ENV.NODE_ENV || 'development',
   sampleRate: 1.0, // Capture all errors in development, could be reduced in production
   ignoreErrors: [
-    // Add patterns to ignore certain errors
-    'ResizeObserver loop limit exceeded',
-    'Network request failed',
-    /^Script error./i,
-  ],
+  // Add patterns to ignore certain errors
+  'ResizeObserver loop limit exceeded',
+  'Network request failed',
+  /^Script error./i]
+
 };
 
 // Initialize third-party error tracking
 function initErrorTracking() {
   if (!config.enabled) return;
-  
+
   // Example for Sentry integration:
   /*
   import * as Sentry from '@sentry/react';
+  import { withDockerNetworkErrorHandling } from '@/error-handling/docker';
   
   Sentry.init({
-    dsn: process.env.REACT_APP_SENTRY_DSN,
+    dsn: ENV.REACT_APP_SENTRY_DSN,
     environment: config.environment,
-    release: process.env.REACT_APP_VERSION,
+    release: ENV.REACT_APP_VERSION,
     sampleRate: config.sampleRate,
     ignoreErrors: config.ignoreErrors,
     beforeSend(event) {
@@ -38,53 +42,61 @@ function initErrorTracking() {
     },
   });
   */
-  
+
   // Add initialization for other services here
 }
 
 // Track an error
 function trackError(error, errorInfo = {}, tags = {}) {
-  const errorDetails = {
-    message: error?.message || String(error),
-    stack: error?.stack,
-    timestamp: new Date().toISOString(),
-    ...errorInfo,
-    tags: {
-      environment: config.environment,
-      ...tags,
-    },
-  };
-  
-  // Log to console in development
-  if (process.env.NODE_ENV !== 'production') {
-    console.error('[ErrorTracking]', errorDetails);
-  }
-  
-  // Skip if error should be ignored
-  if (shouldIgnoreError(error)) {
-    return;
-  }
-  
-  // Send to tracking service if enabled
-  if (config.enabled) {
-    // Send to appropriate service
-    // Example for Sentry:
-    /*
-    Sentry.captureException(error, {
-      extra: errorInfo,
-      tags,
-    });
-    */
-  }
-  
-  return errorDetails;
-}
+  try {
+    const errorDetails = {
+      message: error?.message || String(error),
+      stack: error?.stack,
+      timestamp: new Date().toISOString(),
+      ...errorInfo,
+      tags: {
+        environment: config.environment,
+        ...tags
+      }
+    };
+
+    // Log to console in development
+    if (ENV.NODE_ENV !== 'production') {
+      console.error('[ErrorTracking]', errorDetails);
+    }
+
+    // Also report to the error-service for centralized handling
+    reportError(error, errorInfo, 'errorTrackingService', ErrorSeverity.ERROR);
+
+    // Skip if error should be ignored
+    if (shouldIgnoreError(error)) {
+      return;
+    }
+
+    // Send to tracking service if enabled
+    if (config.enabled) {
+
+
+
+
+
+
+
+
+      // Send to appropriate service
+      // Example for Sentry:
+      /*
+      Sentry.captureException(error, {
+        extra: errorInfo,
+        tags,
+      });
+      */}return errorDetails;} catch (err) {console.error('Error in error tracking:', err);return null;}}
 
 // Check if error should be ignored
 function shouldIgnoreError(error) {
   const errorMessage = error?.message || String(error);
-  
-  return config.ignoreErrors.some(pattern => {
+
+  return config.ignoreErrors.some((pattern) => {
     if (pattern instanceof RegExp) {
       return pattern.test(errorMessage);
     }
@@ -100,7 +112,7 @@ function trackHandledError(error, context = {}) {
 // Set user context for error tracking
 function setUserContext(user) {
   if (!config.enabled) return;
-  
+
   // Example for Sentry:
   /*
   Sentry.setUser({
@@ -114,7 +126,7 @@ function setUserContext(user) {
 // Clear user context (e.g., on logout)
 function clearUserContext() {
   if (!config.enabled) return;
-  
+
   // Example for Sentry:
   /*
   Sentry.configureScope(scope => scope.setUser(null));
@@ -124,7 +136,7 @@ function clearUserContext() {
 // Add breadcrumb for contextual information
 function addBreadcrumb(message, category = 'app', data = {}) {
   if (!config.enabled) return;
-  
+
   // Example for Sentry:
   /*
   Sentry.addBreadcrumb({
@@ -140,7 +152,7 @@ function addBreadcrumb(message, category = 'app', data = {}) {
 function errorBoundaryHandler(error, errorInfo) {
   trackError(error, {
     componentStack: errorInfo?.componentStack,
-    type: 'react-error-boundary',
+    type: 'react-error-boundary'
   });
 }
 
@@ -151,5 +163,5 @@ export default {
   setUserContext,
   clearUserContext,
   addBreadcrumb,
-  errorBoundaryHandler,
+  errorBoundaryHandler
 };

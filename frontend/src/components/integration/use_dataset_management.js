@@ -20,31 +20,31 @@ import { createDataset, generateMockDatasets, DATASET_STATUSES } from './dataset
  */
 export const useDatasetManagement = (options = {}) => {
   const { useMock = true, mockCount = 10 } = options;
-  
+
   // State for datasets
   const [datasets, setDatasets] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedDataset, setSelectedDataset] = useState(null);
-  
+
   // State for filtering and sorting
   const [filters, setFilters] = useState({
     searchTerm: '',
     sourceTypes: [],
     datasetTypes: [],
     tags: [],
-    statuses: [],
+    statuses: []
   });
   const [sortField, setSortField] = useState('name');
   const [sortDirection, setSortDirection] = useState('asc');
-  
+
   /**
    * Fetch datasets from API or generate mock data
    */
   const fetchDatasets = useCallback(async () => {
     setLoading(true);
     setError(null);
-    
+
     try {
       if (useMock) {
         // Generate mock data
@@ -66,7 +66,7 @@ export const useDatasetManagement = (options = {}) => {
       setLoading(false);
     }
   }, [useMock, mockCount]);
-  
+
   /**
    * Create a new dataset
    * @param {Object} datasetData - Dataset data
@@ -75,7 +75,7 @@ export const useDatasetManagement = (options = {}) => {
   const createDatasetRecord = useCallback(async (datasetData) => {
     setLoading(true);
     setError(null);
-    
+
     try {
       if (useMock) {
         // Create mock dataset
@@ -83,27 +83,27 @@ export const useDatasetManagement = (options = {}) => {
           ...datasetData,
           id: crypto.randomUUID(),
           createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
         });
-        
-        setDatasets(prevDatasets => [...prevDatasets, newDataset]);
+
+        setDatasets((prevDatasets) => [...prevDatasets, newDataset]);
         return newDataset;
       } else {
         // Call API
         const response = await fetch('/api/datasets', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
           },
-          body: JSON.stringify(datasetData),
+          body: JSON.stringify(datasetData)
         });
-        
+
         if (!response.ok) {
           throw new Error(`Failed to create dataset: ${response.status} ${response.statusText}`);
         }
-        
+
         const newDataset = await response.json();
-        setDatasets(prevDatasets => [...prevDatasets, newDataset]);
+        setDatasets((prevDatasets) => [...prevDatasets, newDataset]);
         return newDataset;
       }
     } catch (err) {
@@ -114,7 +114,7 @@ export const useDatasetManagement = (options = {}) => {
       setLoading(false);
     }
   }, [useMock]);
-  
+
   /**
    * Update an existing dataset
    * @param {string} datasetId - Dataset ID
@@ -124,45 +124,45 @@ export const useDatasetManagement = (options = {}) => {
   const updateDataset = useCallback(async (datasetId, datasetData) => {
     setLoading(true);
     setError(null);
-    
+
     try {
       if (useMock) {
         // Update mock dataset
-        const updatedDatasets = datasets.map(dataset => {
+        const updatedDatasets = datasets.map((dataset) => {
           if (dataset.id === datasetId) {
             return {
               ...dataset,
               ...datasetData,
-              updatedAt: new Date().toISOString(),
+              updatedAt: new Date().toISOString()
             };
           }
           return dataset;
         });
-        
+
         setDatasets(updatedDatasets);
-        const updatedDataset = updatedDatasets.find(dataset => dataset.id === datasetId);
+        const updatedDataset = updatedDatasets.find((dataset) => dataset.id === datasetId);
         return updatedDataset;
       } else {
         // Call API
         const response = await fetch(`/api/datasets/${datasetId}`, {
           method: 'PUT',
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
           },
-          body: JSON.stringify(datasetData),
+          body: JSON.stringify(datasetData)
         });
-        
+
         if (!response.ok) {
           throw new Error(`Failed to update dataset: ${response.status} ${response.statusText}`);
         }
-        
+
         const updatedDataset = await response.json();
-        setDatasets(prevDatasets => 
-          prevDatasets.map(dataset => 
-            dataset.id === datasetId ? updatedDataset : dataset
-          )
+        setDatasets((prevDatasets) =>
+        prevDatasets.map((dataset) =>
+        dataset.id === datasetId ? updatedDataset : dataset
+        )
         );
-        
+
         return updatedDataset;
       }
     } catch (err) {
@@ -173,7 +173,7 @@ export const useDatasetManagement = (options = {}) => {
       setLoading(false);
     }
   }, [datasets, useMock]);
-  
+
   /**
    * Delete a dataset
    * @param {string} datasetId - Dataset ID
@@ -182,23 +182,23 @@ export const useDatasetManagement = (options = {}) => {
   const deleteDataset = useCallback(async (datasetId) => {
     setLoading(true);
     setError(null);
-    
+
     try {
       if (useMock) {
         // Delete mock dataset
-        setDatasets(prevDatasets => prevDatasets.filter(dataset => dataset.id !== datasetId));
+        setDatasets((prevDatasets) => prevDatasets.filter((dataset) => dataset.id !== datasetId));
         return true;
       } else {
         // Call API
         const response = await fetch(`/api/datasets/${datasetId}`, {
-          method: 'DELETE',
+          method: 'DELETE'
         });
-        
+
         if (!response.ok) {
           throw new Error(`Failed to delete dataset: ${response.status} ${response.statusText}`);
         }
-        
-        setDatasets(prevDatasets => prevDatasets.filter(dataset => dataset.id !== datasetId));
+
+        setDatasets((prevDatasets) => prevDatasets.filter((dataset) => dataset.id !== datasetId));
         return true;
       }
     } catch (err) {
@@ -209,7 +209,7 @@ export const useDatasetManagement = (options = {}) => {
       setLoading(false);
     }
   }, [useMock]);
-  
+
   /**
    * Get a dataset by ID
    * @param {string} datasetId - Dataset ID
@@ -218,11 +218,11 @@ export const useDatasetManagement = (options = {}) => {
   const getDatasetById = useCallback(async (datasetId) => {
     setLoading(true);
     setError(null);
-    
+
     try {
       if (useMock) {
         // Get mock dataset
-        const dataset = datasets.find(dataset => dataset.id === datasetId);
+        const dataset = datasets.find((dataset) => dataset.id === datasetId);
         if (!dataset) {
           throw new Error(`Dataset not found: ${datasetId}`);
         }
@@ -230,11 +230,11 @@ export const useDatasetManagement = (options = {}) => {
       } else {
         // Call API
         const response = await fetch(`/api/datasets/${datasetId}`);
-        
+
         if (!response.ok) {
           throw new Error(`Failed to get dataset: ${response.status} ${response.statusText}`);
         }
-        
+
         return await response.json();
       }
     } catch (err) {
@@ -245,7 +245,7 @@ export const useDatasetManagement = (options = {}) => {
       setLoading(false);
     }
   }, [datasets, useMock]);
-  
+
   /**
    * Create a dataset association with an application
    * @param {string} datasetId - Dataset ID
@@ -257,7 +257,7 @@ export const useDatasetManagement = (options = {}) => {
   const createDatasetAssociation = useCallback(async (datasetId, applicationId, associationType, config = {}) => {
     setLoading(true);
     setError(null);
-    
+
     try {
       if (useMock) {
         // Create mock association
@@ -268,65 +268,65 @@ export const useDatasetManagement = (options = {}) => {
           associationType,
           config,
           createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
         };
-        
+
         // Update dataset with association
-        setDatasets(prevDatasets => 
-          prevDatasets.map(dataset => {
-            if (dataset.id === datasetId) {
-              return {
-                ...dataset,
-                associatedApplications: [
-                  ...(dataset.associatedApplications || []),
-                  { applicationId, associationType, config },
-                ],
-                updatedAt: new Date().toISOString(),
-              };
-            }
-            return dataset;
-          })
+        setDatasets((prevDatasets) =>
+        prevDatasets.map((dataset) => {
+          if (dataset.id === datasetId) {
+            return {
+              ...dataset,
+              associatedApplications: [
+              ...(dataset.associatedApplications || []),
+              { applicationId, associationType, config }],
+
+              updatedAt: new Date().toISOString()
+            };
+          }
+          return dataset;
+        })
         );
-        
+
         return association;
       } else {
         // Call API
         const response = await fetch('/api/dataset-associations', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
           },
           body: JSON.stringify({
             datasetId,
             applicationId,
             associationType,
-            config,
-          }),
+            config
+          })
         });
-        
+
         if (!response.ok) {
           throw new Error(`Failed to create dataset association: ${response.status} ${response.statusText}`);
         }
-        
+
         const association = await response.json();
-        
+
         // Update cached datasets with the new association
-        setDatasets(prevDatasets => 
-          prevDatasets.map(dataset => {
-            if (dataset.id === datasetId) {
-              return {
-                ...dataset,
-                associatedApplications: [
-                  ...(dataset.associatedApplications || []),
-                  { applicationId, associationType, config },
-                ],
-                updatedAt: new Date().toISOString(),
-              };
-            }
-            return dataset;
-          })
+        setDatasets((prevDatasets) =>
+        prevDatasets.map((dataset) => {
+          if (dataset.id === datasetId) {
+            return {
+              ...dataset,
+              associatedApplications: [
+              ...(dataset.associatedApplications || []),
+              { applicationId, associationType, config }],
+
+              updatedAt: new Date().toISOString()
+            };
+          }
+          return dataset;
+        })
         );
-        
+
         return association;
       }
     } catch (err) {
@@ -337,7 +337,7 @@ export const useDatasetManagement = (options = {}) => {
       setLoading(false);
     }
   }, [useMock]);
-  
+
   /**
    * Remove a dataset association with an application
    * @param {string} datasetId - Dataset ID
@@ -347,50 +347,50 @@ export const useDatasetManagement = (options = {}) => {
   const removeDatasetAssociation = useCallback(async (datasetId, applicationId) => {
     setLoading(true);
     setError(null);
-    
+
     try {
       if (useMock) {
         // Remove mock association
-        setDatasets(prevDatasets => 
-          prevDatasets.map(dataset => {
-            if (dataset.id === datasetId) {
-              return {
-                ...dataset,
-                associatedApplications: (dataset.associatedApplications || [])
-                  .filter(assoc => assoc.applicationId !== applicationId),
-                updatedAt: new Date().toISOString(),
-              };
-            }
-            return dataset;
-          })
+        setDatasets((prevDatasets) =>
+        prevDatasets.map((dataset) => {
+          if (dataset.id === datasetId) {
+            return {
+              ...dataset,
+              associatedApplications: (dataset.associatedApplications || []).
+              filter((assoc) => assoc.applicationId !== applicationId),
+              updatedAt: new Date().toISOString()
+            };
+          }
+          return dataset;
+        })
         );
-        
+
         return true;
       } else {
         // Call API
         const response = await fetch(`/api/dataset-associations/${datasetId}/${applicationId}`, {
-          method: 'DELETE',
+          method: 'DELETE'
         });
-        
+
         if (!response.ok) {
           throw new Error(`Failed to remove dataset association: ${response.status} ${response.statusText}`);
         }
-        
+
         // Update cached datasets
-        setDatasets(prevDatasets => 
-          prevDatasets.map(dataset => {
-            if (dataset.id === datasetId) {
-              return {
-                ...dataset,
-                associatedApplications: (dataset.associatedApplications || [])
-                  .filter(assoc => assoc.applicationId !== applicationId),
-                updatedAt: new Date().toISOString(),
-              };
-            }
-            return dataset;
-          })
+        setDatasets((prevDatasets) =>
+        prevDatasets.map((dataset) => {
+          if (dataset.id === datasetId) {
+            return {
+              ...dataset,
+              associatedApplications: (dataset.associatedApplications || []).
+              filter((assoc) => assoc.applicationId !== applicationId),
+              updatedAt: new Date().toISOString()
+            };
+          }
+          return dataset;
+        })
         );
-        
+
         return true;
       }
     } catch (err) {
@@ -401,18 +401,18 @@ export const useDatasetManagement = (options = {}) => {
       setLoading(false);
     }
   }, [useMock]);
-  
+
   /**
    * Update dataset filters
    * @param {Object} newFilters - New filter values
    */
   const updateFilters = useCallback((newFilters) => {
-    setFilters(prevFilters => ({
+    setFilters((prevFilters) => ({
       ...prevFilters,
-      ...newFilters,
+      ...newFilters
     }));
   }, []);
-  
+
   /**
    * Update sort field and direction
    * @param {string} field - Field to sort by
@@ -422,7 +422,7 @@ export const useDatasetManagement = (options = {}) => {
     setSortField(field);
     setSortDirection(direction);
   }, []);
-  
+
   /**
    * Reset all filters and sorting to default values
    */
@@ -432,12 +432,12 @@ export const useDatasetManagement = (options = {}) => {
       sourceTypes: [],
       datasetTypes: [],
       tags: [],
-      statuses: [],
+      statuses: []
     });
     setSortField('name');
     setSortDirection('asc');
   }, []);
-  
+
   /**
    * Apply filters to datasets
    * @param {Array} datasetsToFilter - Datasets to filter
@@ -445,48 +445,48 @@ export const useDatasetManagement = (options = {}) => {
    */
   const applyFilters = useCallback((datasetsToFilter) => {
     let filtered = [...datasetsToFilter];
-    
+
     // Apply search term filter
     if (filters.searchTerm) {
       const term = filters.searchTerm.toLowerCase();
-      filtered = filtered.filter(dataset => 
-        dataset.name.toLowerCase().includes(term) ||
-        dataset.description.toLowerCase().includes(term) ||
-        dataset.tags.some(tag => tag.toLowerCase().includes(term))
+      filtered = filtered.filter((dataset) =>
+      dataset.name.toLowerCase().includes(term) ||
+      dataset.description.toLowerCase().includes(term) ||
+      dataset.tags.some((tag) => tag.toLowerCase().includes(term))
       );
     }
-    
+
     // Apply source type filter
     if (filters.sourceTypes.length > 0) {
-      filtered = filtered.filter(dataset => 
-        filters.sourceTypes.includes(dataset.sourceType)
+      filtered = filtered.filter((dataset) =>
+      filters.sourceTypes.includes(dataset.sourceType)
       );
     }
-    
+
     // Apply dataset type filter
     if (filters.datasetTypes.length > 0) {
-      filtered = filtered.filter(dataset => 
-        filters.datasetTypes.includes(dataset.type)
+      filtered = filtered.filter((dataset) =>
+      filters.datasetTypes.includes(dataset.type)
       );
     }
-    
+
     // Apply tag filter
     if (filters.tags.length > 0) {
-      filtered = filtered.filter(dataset => 
-        filters.tags.some(tag => dataset.tags.includes(tag))
+      filtered = filtered.filter((dataset) =>
+      filters.tags.some((tag) => dataset.tags.includes(tag))
       );
     }
-    
+
     // Apply status filter
     if (filters.statuses.length > 0) {
-      filtered = filtered.filter(dataset => 
-        filters.statuses.includes(dataset.status)
+      filtered = filtered.filter((dataset) =>
+      filters.statuses.includes(dataset.status)
       );
     }
-    
+
     return filtered;
   }, [filters]);
-  
+
   /**
    * Apply sorting to datasets
    * @param {Array} datasetsToSort - Datasets to sort
@@ -494,27 +494,27 @@ export const useDatasetManagement = (options = {}) => {
    */
   const applySorting = useCallback((datasetsToSort) => {
     const sorted = [...datasetsToSort];
-    
+
     sorted.sort((a, b) => {
       let aValue = a[sortField];
       let bValue = b[sortField];
-      
+
       // Handle special cases
       if (typeof aValue === 'string' && typeof bValue === 'string') {
         const comparison = aValue.localeCompare(bValue);
         return sortDirection === 'asc' ? comparison : -comparison;
       }
-      
+
       // Handle number comparison
       if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1;
       if (aValue > bValue) return sortDirection === 'asc' ? 1 : -1;
-      
+
       return 0;
     });
-    
+
     return sorted;
   }, [sortField, sortDirection]);
-  
+
   /**
    * Get all datasets with filters and sorting applied
    * @returns {Array} Filtered and sorted datasets
@@ -523,36 +523,36 @@ export const useDatasetManagement = (options = {}) => {
     const filtered = applyFilters(datasets);
     return applySorting(filtered);
   }, [datasets, applyFilters, applySorting]);
-  
+
   /**
    * Get datasets associated with an application
    * @param {string} applicationId - Application ID
    * @returns {Array} Datasets associated with the application
    */
   const getDatasetsByApplicationId = useCallback((applicationId) => {
-    return datasets.filter(dataset => 
-      (dataset.associatedApplications || []).some(assoc => 
-        assoc.applicationId === applicationId
-      )
+    return datasets.filter((dataset) =>
+    (dataset.associatedApplications || []).some((assoc) =>
+    assoc.applicationId === applicationId
+    )
     );
   }, [datasets]);
-  
+
   /**
    * Get all unique tags from all datasets
    * @returns {Array} Array of unique tags
    */
   const getAllTags = useCallback(() => {
     const tagSet = new Set();
-    
-    datasets.forEach(dataset => {
-      (dataset.tags || []).forEach(tag => {
+
+    datasets.forEach((dataset) => {
+      (dataset.tags || []).forEach((tag) => {
         tagSet.add(tag);
       });
     });
-    
+
     return Array.from(tagSet);
   }, [datasets]);
-  
+
   /**
    * Archive a dataset
    * @param {string} datasetId - Dataset ID
@@ -561,7 +561,7 @@ export const useDatasetManagement = (options = {}) => {
   const archiveDataset = useCallback(async (datasetId) => {
     return updateDataset(datasetId, { status: DATASET_STATUSES.ARCHIVED });
   }, [updateDataset]);
-  
+
   /**
    * Restore an archived dataset
    * @param {string} datasetId - Dataset ID
@@ -570,12 +570,12 @@ export const useDatasetManagement = (options = {}) => {
   const restoreDataset = useCallback(async (datasetId) => {
     return updateDataset(datasetId, { status: DATASET_STATUSES.ACTIVE });
   }, [updateDataset]);
-  
+
   // Initial data fetch
   useEffect(() => {
     fetchDatasets();
   }, [fetchDatasets]);
-  
+
   // Return state and operations
   return {
     // State
@@ -586,10 +586,10 @@ export const useDatasetManagement = (options = {}) => {
     filters,
     sortField,
     sortDirection,
-    
+
     // Filtered and sorted datasets
     filteredDatasets: getFilteredAndSortedDatasets(),
-    
+
     // Dataset operations
     fetchDatasets,
     createDataset: createDatasetRecord,
@@ -599,17 +599,17 @@ export const useDatasetManagement = (options = {}) => {
     createDatasetAssociation,
     removeDatasetAssociation,
     setSelectedDataset,
-    
+
     // Filter and sort operations
     updateFilters,
     updateSort,
     resetFiltersAndSort,
-    
+
     // Helper functions
     getDatasetsByApplicationId,
     getAllTags,
     archiveDataset,
-    restoreDataset,
+    restoreDataset
   };
 };
 

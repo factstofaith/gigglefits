@@ -50,6 +50,10 @@ class APIAdapter:
         2. Making a sample request to analyze the response structure
         3. Querying metadata endpoints if available
         """
+        # Setup logger
+        import logging
+        logger = logging.getLogger(__name__)
+        
         try:
             # Try to get schema information
             try:
@@ -58,7 +62,7 @@ class APIAdapter:
                 if schema and isinstance(schema, dict) and "properties" in schema:
                     return self._extract_fields_from_schema(schema)
             except Exception as schema_error:
-                print(f"Error fetching schema: {schema_error}")
+                logger.warning(f"Error fetching schema: {schema_error}")
             
             # Second attempt: Try to get metadata from a metadata endpoint
             try:
@@ -66,7 +70,7 @@ class APIAdapter:
                 if metadata and isinstance(metadata, dict) and "fields" in metadata:
                     return metadata["fields"]
             except Exception as metadata_error:
-                print(f"Error fetching metadata: {metadata_error}")
+                logger.warning(f"Error fetching metadata: {metadata_error}")
             
             # Third attempt: Make a sample request and analyze the response
             try:
@@ -81,10 +85,10 @@ class APIAdapter:
                     if isinstance(sample, dict):
                         return self._extract_fields_from_sample(sample)
             except Exception as sample_error:
-                print(f"Error fetching sample data: {sample_error}")
+                logger.warning(f"Error fetching sample data: {sample_error}")
             
             # If all attempts fail, return basic fields
-            print("Could not determine fields from API, returning basic fields")
+            logger.info("Could not determine fields from API, returning basic fields")
             return [
                 {"name": "id", "type": "string", "description": "Unique identifier"},
                 {"name": "name", "type": "string", "description": "Name field"},
@@ -92,7 +96,7 @@ class APIAdapter:
             ]
         except Exception as e:
             # Log the error but don't fail - return basic fields
-            print(f"Error discovering fields: {e}")
+            logger.error(f"Error discovering fields: {e}")
             return [
                 {"name": "id", "type": "string", "description": "Unique identifier"},
                 {"name": "name", "type": "string", "description": "Name field"},

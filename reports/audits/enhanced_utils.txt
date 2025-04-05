@@ -1,5 +1,0 @@
-./frontend/src/cleanup-archive/utils/apiServiceFactoryEnhanced.js
-./frontend/src/cleanup-archive/services/integrationServiceEnhanced.js
-./frontend/src/tests/utils/apiServiceFactoryEnhanced.test.js
-./frontend/src/tests/integration/EnhancedFlowCanvas.test.js
-./frontend/src/tests/services/integrationServiceEnhanced.test.js

@@ -86,7 +86,7 @@ def create_admin_user(db: Session, email: str, username: str, password: str, nam
                 user_id=existing_user.id,
                 mfa_enabled=False,
                 mfa_verified=False,
-                created_at=datetime.utcnow()
+                created_at=datetime.now(timezone.utc)
             )
             db.add(mfa)
         
@@ -103,7 +103,7 @@ def create_admin_user(db: Session, email: str, username: str, password: str, nam
     hashed_password = hashlib.sha256(password.encode()).hexdigest()
     
     # Create user via direct SQL to bypass ORM issues
-    current_time = datetime.utcnow().isoformat()
+    current_time = datetime.now(timezone.utc).isoformat()
     
     # Insert user with direct SQL
     db.execute(

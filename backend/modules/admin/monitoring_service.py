@@ -103,7 +103,7 @@ async def save_azure_config(config: AzureConfigCreate, user_id: str) -> AzureCon
         config_dict["client_secret"] = config.client_secret.get_secret_value()
     
     # Set timestamps
-    now = datetime.utcnow()
+    now = datetime.now(timezone.utc)
     
     if existing_config:
         # Update existing configuration
@@ -217,7 +217,7 @@ async def update_azure_config(config: AzureConfigUpdate, user_id: str) -> Option
         config_dict["client_secret"] = config.client_secret.get_secret_value()
     
     # Set updated_at timestamp
-    now = datetime.utcnow()
+    now = datetime.now(timezone.utc)
     config_dict["updated_at"] = now
     
     # Build update query
@@ -298,7 +298,7 @@ async def test_azure_connection(config: Optional[AzureConfigCreate] = None) -> A
                 return AzureConnectionTest(
                     success=False,
                     message="No Azure configuration found",
-                    timestamp=datetime.utcnow()
+                    timestamp=datetime.now(timezone.utc)
                 )
             
             # Use stored config
@@ -322,7 +322,7 @@ async def test_azure_connection(config: Optional[AzureConfigCreate] = None) -> A
                     return AzureConnectionTest(
                         success=False,
                         message="No Azure configuration found",
-                        timestamp=datetime.utcnow()
+                        timestamp=datetime.now(timezone.utc)
                     )
                 
                 # Test service principal authentication with stored config
@@ -343,7 +343,7 @@ async def test_azure_connection(config: Optional[AzureConfigCreate] = None) -> A
             return AzureConnectionTest(
                 success=False,
                 message="Managed Identity authentication not implemented",
-                timestamp=datetime.utcnow()
+                timestamp=datetime.now(timezone.utc)
             )
         
         if "error" in token_response:
@@ -351,7 +351,7 @@ async def test_azure_connection(config: Optional[AzureConfigCreate] = None) -> A
                 success=False,
                 message=f"Authentication failed: {token_response.get('error_description', 'Unknown error')}",
                 details=token_response,
-                timestamp=datetime.utcnow()
+                timestamp=datetime.now(timezone.utc)
             )
         
         # If we got here, authentication was successful
@@ -371,7 +371,7 @@ async def test_azure_connection(config: Optional[AzureConfigCreate] = None) -> A
                         success=False,
                         message=f"Failed to access subscription: HTTP {response.status}",
                         details={"error": sub_error},
-                        timestamp=datetime.utcnow()
+                        timestamp=datetime.now(timezone.utc)
                     )
                 
                 sub_data = await response.json()
@@ -386,7 +386,7 @@ async def test_azure_connection(config: Optional[AzureConfigCreate] = None) -> A
                             success=False,
                             message=f"Failed to access resource group: HTTP {response.status}",
                             details={"error": rg_error},
-                            timestamp=datetime.utcnow()
+                            timestamp=datetime.now(timezone.utc)
                         )
                     
                     rg_data = await response.json()
@@ -406,14 +406,14 @@ async def test_azure_connection(config: Optional[AzureConfigCreate] = None) -> A
                     "location": rg_data.get("location") if config.resource_group else None
                 } if config.resource_group else None
             },
-            timestamp=datetime.utcnow()
+            timestamp=datetime.now(timezone.utc)
         )
     except Exception as e:
         logger.error(f"Error testing Azure connection: {e}")
         return AzureConnectionTest(
             success=False,
             message=f"Error testing connection: {str(e)}",
-            timestamp=datetime.utcnow()
+            timestamp=datetime.now(timezone.utc)
         )
 
 async def check_azure_connection() -> bool:
@@ -434,7 +434,7 @@ async def check_azure_connection() -> bool:
             conn_test = await test_azure_connection()
             if conn_test.success:
                 # Update connection status
-                now = datetime.utcnow()
+                now = datetime.now(timezone.utc)
                 await database.execute(
                     f"UPDATE {AZURE_CONFIG_TABLE} SET is_connected = TRUE, last_connected_at = :now WHERE id = :id",
                     {"now": now, "id": config.id}
@@ -443,7 +443,7 @@ async def check_azure_connection() -> bool:
             return False
         
         # If last connection was too long ago, test again
-        now = datetime.utcnow()
+        now = datetime.now(timezone.utc)
         if (now - config.last_connected_at).total_seconds() > 3600:  # 1 hour
             # Test connection
             conn_test = await test_azure_connection()
@@ -855,7 +855,7 @@ async def discover_azure_resources() -> AzureDiscoveryResult:
             resource_group=config.resource_group,
             resource_count=len(resources),
             discovered_types=sorted(list(resource_types)),
-            timestamp=datetime.utcnow()
+            timestamp=datetime.now(timezone.utc)
         )
     except HTTPException:
         raise
@@ -916,7 +916,7 @@ async def get_azure_resource_health(resource_id: str) -> Optional[AzureResourceH
                         resource_id=resource_id,
                         status="Unknown",
                         details="Health data not available for this resource type",
-                        last_checked=datetime.utcnow()
+                        last_checked=datetime.now(timezone.utc)
                     )
                 elif response.status != 200:
                     error_text = await response.text()
@@ -927,7 +927,7 @@ async def get_azure_resource_health(resource_id: str) -> Optional[AzureResourceH
                         status="Unknown",
                         details=f"Error fetching health data: HTTP {response.status}",
                         reason=error_text[:100] + ("..." if len(error_text) > 100 else ""),
-                        last_checked=datetime.utcnow()
+                        last_checked=datetime.now(timezone.utc)
                     )
                 
                 health_data = await response.json()
@@ -939,7 +939,7 @@ async def get_azure_resource_health(resource_id: str) -> Optional[AzureResourceH
                 status=properties.get("availabilityState", "Unknown"),
                 details=properties.get("summary", ""),
                 reason=properties.get("reasonType", ""),
-                last_checked=datetime.utcnow()
+                last_checked=datetime.now(timezone.utc)
             )
     except HTTPException:
         raise
@@ -950,7 +950,7 @@ async def get_azure_resource_health(resource_id: str) -> Optional[AzureResourceH
             resource_id=resource_id,
             status="Unknown",
             details=f"Error fetching health data: {str(e)}",
-            last_checked=datetime.utcnow()
+            last_checked=datetime.now(timezone.utc)
         )
 
 async def get_all_resource_health() -> Dict[str, AzureResourceHealth]:
@@ -1167,7 +1167,7 @@ async def get_storage_analytics(start_time: datetime, end_time: datetime) -> Dic
                 "storage_metrics": {
                     "total_size_mb": 256,
                     "document_count": 45,
-                    "last_updated": datetime.utcnow().isoformat()
+                    "last_updated": datetime.now(timezone.utc).isoformat()
                 }
             }
         
@@ -1324,7 +1324,7 @@ async def get_error_logs(
             
             # Generate timestamp (most recent first)
             hours_ago = skip + i
-            log_timestamp = datetime.utcnow() - timedelta(hours=hours_ago)
+            log_timestamp = datetime.now(timezone.utc) - timedelta(hours=hours_ago)
             
             # Skip if outside date range
             if start_date and log_timestamp < start_date:
@@ -1801,7 +1801,7 @@ async def get_alerts(
                 )
             
             # Timestamps
-            created_at = datetime.utcnow() - timedelta(days=30 - i)
+            created_at = datetime.now(timezone.utc) - timedelta(days=30 - i)
             updated_at = created_at + timedelta(days=5)
             last_triggered_at = None
             resolved_at = None
@@ -1874,7 +1874,7 @@ async def create_alert(alert: AlertCreate, user_id: str) -> Alert:
         alert_id = f"alert-{uuid.uuid4().hex[:8]}"
         
         # Current time
-        now = datetime.utcnow()
+        now = datetime.now(timezone.utc)
         
         # Create alert object
         created_alert = Alert(
@@ -1983,7 +1983,7 @@ async def get_alert(alert_id: str) -> Optional[Alert]:
         ]
         
         # Timestamps (ensure they're consistent for the same ID)
-        created_at = datetime.utcnow() - timedelta(days=30 - (seed % 30))
+        created_at = datetime.now(timezone.utc) - timedelta(days=30 - (seed % 30))
         updated_at = created_at + timedelta(days=5)
         
         # Create mock alert
@@ -2054,7 +2054,7 @@ async def update_alert(alert_id: str, alert_update: AlertUpdate, user_id: str) -
             "tags": existing_alert.tags,
             "status": existing_alert.status,
             "created_at": existing_alert.created_at,
-            "updated_at": datetime.utcnow(),  # Update the timestamp
+            "updated_at": datetime.now(timezone.utc),  # Update the timestamp
             "created_by": existing_alert.created_by,
             "last_triggered_at": existing_alert.last_triggered_at,
             "resolved_at": existing_alert.resolved_at,
@@ -2131,7 +2131,7 @@ async def update_alert_status(
         # In a real implementation, update the database
         # For this example, we'll create a new Alert object with updated status
         
-        now = datetime.utcnow()
+        now = datetime.now(timezone.utc)
         resolved_at = existing_alert.resolved_at
         resolved_by = existing_alert.resolved_by
         
@@ -2220,7 +2220,7 @@ async def get_alert_history(
                 }}
             elif i == total - 1 and existing_alert.status == AlertStatus.RESOLVED:
                 action = AlertHistoryAction.RESOLVED
-                timestamp = existing_alert.resolved_at or datetime.utcnow()
+                timestamp = existing_alert.resolved_at or datetime.now(timezone.utc)
                 user_id = existing_alert.resolved_by or "user-resolver-123"
                 details = {"resolution_note": "Issue has been fixed by restarting the service"}
             else:
@@ -2476,7 +2476,7 @@ async def get_alert_statistics(
     try:
         # Set default date range if not provided
         if not end_date:
-            end_date = datetime.utcnow()
+            end_date = datetime.now(timezone.utc)
         if not start_date:
             start_date = end_date - timedelta(days=30)
         

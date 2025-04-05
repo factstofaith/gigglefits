@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { Box, TextField, Button, Typography, Paper, Container } from '../design-system/optimized';
-import { useUser } from '../contexts/UserContext';
-import { useNotification } from '../contexts/NotificationContext';
 
+import {
+  ErrorBoundary,
+  useErrorHandler,
+  withErrorBoundary } from "@/error-handling/";
+import React, { useState } from 'react';
+import { useErrorContext } from "@/error-handling/";
+import { useDockerNetworkErrorHandler, useHealthCheckHandler, HealthCheckProvider } from "@/error-handling/docker";
+import { useNavigate, useLocation } from 'react-router-dom';import { Box, TextField, Button, Typography, Paper, Container } from "@/design-system/optimized";import { useUser } from "@/contexts/UserContext";import { useNotification } from "@/contexts/NotificationContext";
 /**
  * Login Page component - Handles user authentication
  */
@@ -65,21 +68,21 @@ const LoginPage = () => {
 
   return (
     <Container maxWidth="sm">
-      <Box 
+      <Box
         sx={{
           marginTop: 8,
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
-        <Paper 
-          elevation={3} 
-          sx={{ 
+          alignItems: 'center'
+        }}>
+
+        <Paper
+          elevation={3}
+          sx={{
             padding: 4,
-            width: '100%',
-          }}
-        >
+            width: '100%'
+          }}>
+
           <Typography component="h1" variant="h5" align="center" gutterBottom>
             Sign in to TAP Integration Platform
           </Typography>
@@ -95,8 +98,8 @@ const LoginPage = () => {
               autoComplete="username"
               autoFocus
               value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
+              onChange={(e) => setUsername(e.target.value)} />
+
             
             <TextField
               margin="normal"
@@ -108,8 +111,8 @@ const LoginPage = () => {
               id="password"
               autoComplete="current-password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+              onChange={(e) => setPassword(e.target.value)} />
+
             
             <Button
               type="submit"
@@ -117,15 +120,21 @@ const LoginPage = () => {
               variant="contained"
               color="primary"
               sx={{ mt: 3, mb: 2 }}
-              disabled={isLoading}
-            >
+              disabled={isLoading}>
+
               {isLoading ? 'Signing in...' : 'Sign In'}
             </Button>
           </Box>
         </Paper>
       </Box>
-    </Container>
-  );
+    </Container>);
+
 };
 
-export default LoginPage;
+LoginPage;const LoginPageWithErrorBoundary = (props) => <ErrorBoundary boundary="LoginPage" fallback={({ error, resetError }) => <div className="error-container">
+            <h3>Error in LoginPage</h3>
+            <p>{error.message}</p>
+            <button onClick={resetError}>Retry</button>
+          </div>}>
+        <LoginPage {...props} />
+      </ErrorBoundary>;export default LoginPageWithErrorBoundary;

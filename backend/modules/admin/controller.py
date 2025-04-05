@@ -10,8 +10,9 @@ from sqlalchemy.orm import Session
 from datetime import datetime
 
 from core.auth import get_current_active_user, oauth2_scheme
-from db.base import get_db
+from db.base import get_db_session as get_db
 from db.models import User as DbUser
+from utils.api.models import create_response, create_paginated_response, create_error_response, StandardResponse, create_standard_response
 
 from .models import (
     SuperUserRole,
@@ -61,9 +62,17 @@ async def require_super_admin(current_user: DbUser = Depends(get_current_active_
         )
     return current_user
 
+# Helper function to create standardized responses
+def standardize_response(data, skip=0, limit=10, total=None):
+    """Helper function to create standardized responses"""
+    # For collections with pagination
+    if isinstance(data, list) and total is not None:
+        return create_paginated_response(items=data, total=total, skip=skip, limit=limit)
+    # For single items or collections without pagination
+    return create_response(data=data)
+
 # Application endpoints
-@router.get(
-    "/applications", 
+@router.get("/applications", 
     response_model=List[Application],
     summary="Get all applications",
     description="Retrieve a list of all registered applications with pagination and optional status filtering",
@@ -1533,13 +1542,13 @@ async def execute_release(
     )
     
     # Return a more detailed response with tracking information
-    execution_id = f"exec-{release_id}-{int(datetime.utcnow().timestamp())}"
-    started_at = datetime.utcnow().isoformat() + "Z"
+    execution_id = f"exec-{release_id}-{int(datetime.now(timezone.utc).timestamp())}"
+    started_at = datetime.now(timezone.utc).isoformat() + "Z"
     
     # Estimate 15 minutes per tenant for completion
     tenant_count = len(release.target_tenants) if hasattr(release, 'target_tenants') and release.target_tenants else 1
     estimated_minutes = max(5, tenant_count * 15)  # Minimum 5 minutes, 15 minutes per tenant
-    estimated_completion = (datetime.utcnow() + timedelta(minutes=estimated_minutes)).isoformat() + "Z"
+    estimated_completion = (datetime.now(timezone.utc) + timedelta(minutes=estimated_minutes)).isoformat() + "Z"
     
     return {
         "status": "accepted", 
@@ -1668,13 +1677,13 @@ async def rollback_release(
     )
     
     # Return a more detailed response with tracking information
-    rollback_id = f"rollback-{release_id}-{int(datetime.utcnow().timestamp())}"
-    started_at = datetime.utcnow().isoformat() + "Z"
+    rollback_id = f"rollback-{release_id}-{int(datetime.now(timezone.utc).timestamp())}"
+    started_at = datetime.now(timezone.utc).isoformat() + "Z"
     
     # Estimate 15 minutes per tenant for completion
     tenant_count = len(release.target_tenants) if hasattr(release, 'target_tenants') and release.target_tenants else 1
     estimated_minutes = max(5, tenant_count * 15)  # Minimum 5 minutes, 15 minutes per tenant
-    estimated_completion = (datetime.utcnow() + timedelta(minutes=estimated_minutes)).isoformat() + "Z"
+    estimated_completion = (datetime.now(timezone.utc) + timedelta(minutes=estimated_minutes)).isoformat() + "Z"
     
     return {
         "status": "accepted", 
@@ -2733,6 +2742,43 @@ async def delete_webhook(
     
     This endpoint allows super administrators to remove a webhook configuration
     from the platform. Once deleted, the webhook will no longer receive event
+from pydantic import BaseModel
+
+from typing import List, Dict, Any, Optional
+from datetime import timezone
+from pydantic import BaseModel
+from backend.utils.api.models import DataResponse, PaginatedResponse, ErrorResponse, create_response, create_paginated_response, create_error_response
+
+# Standard API Response Models
+class ResponseMetadata(BaseModel):
+    timestamp: datetime
+    request_id: str
+    api_version: str = "1.0"
+
+class StandardResponse(BaseModel):
+    data: Any
+    metadata: ResponseMetadata
+
+class PaginationMetadata(BaseModel):
+    page: int
+    page_size: int
+    total_items: int
+    total_pages: int
+
+class PaginatedResponse(BaseModel):
+    data: List[Any]
+    pagination: PaginationMetadata
+    metadata: ResponseMetadata
+
+class ErrorDetail(BaseModel):
+    code: str
+    message: str
+    details: Optional[Dict[str, Any]] = None
+
+class ErrorResponse(BaseModel):
+    error: ErrorDetail
+    metadata: ResponseMetadata
+
     notifications.
     
     Deleting a webhook:
@@ -3185,7 +3231,7 @@ async def get_tenant(
     * Settings configuration with resource limits and feature flags
     * Contact information
     * Creation and update timestamps
-    
+    ", response_model=StandardResponse
     Tenant settings include resource allocation, feature access, and branding:
     * Resource limits control the maximum number of integrations, users, etc.
     * Feature flags determine which platform capabilities are available
@@ -3456,13 +3502,13 @@ async def test_existing_webhook(
         if webhook.integration_id:
             payload = {
                 "integration_id": webhook.integration_id,
-                "timestamp": datetime.utcnow().isoformat(),
+                "timestamp": datetime.now(timezone.utc).isoformat(),
                 "event": event_type.value,
                 "test": True
             }
         else:
             payload = {
-                "timestamp": datetime.utcnow().isoformat(),
+                "timestamp": datetime.now(timezone.utc).isoformat(),
                 "event": event_type.value,
                 "test": True
             }

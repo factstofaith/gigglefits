@@ -104,7 +104,7 @@ class RateLimitStrategy(ABC):
             Storage key string including window information
         """
         if timestamp is None:
-            timestamp = datetime.utcnow()
+            timestamp = datetime.now(timezone.utc)
         
         # Default implementation - can be overridden in subclasses
         # Convert timestamp to a window identifier (e.g., rounded to minute)

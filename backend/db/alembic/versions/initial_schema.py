@@ -1,37 +1,32 @@
-"""Initial schema migration
+"""
+Initial schema migration
 
 Revision ID: initial_schema
-Revises: 
-Create Date: 2025-03-26
+Revises: None
+Create Date: 2025-04-03 01:02:38
 
-This migration represents the initial schema created from legacy migrations.
+Generated with docker-alembic-standardizer
 """
+
 from alembic import op
 import sqlalchemy as sa
-from sqlalchemy.dialects import postgresql
-from datetime import datetime
+from sqlalchemy import Column, Integer, String, Text, DateTime, Boolean, ForeignKey, Enum, JSON, Table, Float
+from sqlalchemy.sql import func
+from datetime import datetime, timezone
+import uuid
 import enum
 
-# Add custom types or imports needed for models
-try:
-    from utils.encryption.crypto import EncryptedString, EncryptedJSON
-except ImportError:
-    # Create stub classes for migration
-    class EncryptedString(sa.TypeDecorator):
-        impl = sa.String
-        cache_ok = True
-    
-    class EncryptedJSON(sa.TypeDecorator):
-        impl = sa.JSON
-        cache_ok = True
+from db.base import Base
+from utils.encryption.crypto import EncryptedString, EncryptedJSON
 
-# revision identifiers
-revision = 'initial_schema'
+# revision identifiers, used by Alembic.
+revision = '$REVISION'
 down_revision = None
 branch_labels = None
 depends_on = None
 
-def upgrade():
+
+def upgrade() -> None:
     """
     Creates the initial database schema based on the existing models.
     
@@ -248,15 +243,13 @@ def upgrade():
     )
     
     # Add additional tables and relationships as needed
-
-def downgrade():
-    """
-    Removes all tables created in the upgrade method.
     
-    This drops all tables in the reverse order of their creation
-    to handle foreign key dependencies properly.
+
+def downgrade() -> None:
     """
-    # Drop tables in reverse order to handle dependencies
+    Drops all tables created in the upgrade function.
+    """
+    # Drop all created tables in reverse order (to respect foreign key constraints)
     op.drop_table('webhook_logs')
     op.drop_table('webhooks')
     op.drop_table('integration_runs')
@@ -264,10 +257,10 @@ def downgrade():
     op.drop_table('integration_datasets')
     op.drop_table('integration_tags')
     op.drop_table('integrations')
-    op.drop_table('users')
     op.drop_table('dataset_fields')
     op.drop_table('application_datasets')
     op.drop_table('datasets')
     op.drop_table('applications')
+    op.drop_table('users')
     op.drop_table('tenants')
     op.drop_table('tags')

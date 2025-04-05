@@ -1,0 +1,149 @@
+# Standardized Docker Compose for TAP Integration Platform
+# Simplified and unified for development environment
+
+version: '3.8'
+
+services:
+  # Frontend service
+  tap-frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.master
+      args:
+        - NPM_INSTALL_FLAGS=--legacy-peer-deps
+    image: tap-frontend:local-dev
+    container_name: tap-frontend-dev
+    ports:
+      - "3456:3000"
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/public:/app/public
+      - ./frontend/config:/app/config
+      # Additional files that should be mounted
+      - ./frontend/package.json:/app/package.json
+      - ./frontend/package-lock.json:/app/package-lock.json
+      - ./frontend/docker:/app/docker
+      # Named volume for node_modules to prevent overwriting
+      - frontend_node_modules:/app/node_modules
+    environment:
+      # Service identification
+      - SERVICE_NAME=frontend
+      - SERVICE_ENV=development
+      - SERVICE_VERSION=1.0.0
+      
+      # For backward compatibility - legacy environment variables
+      - NODE_ENV=development
+      - REACT_APP_API_URL=http://tap-backend:8000
+      - REACT_APP_VERSION=1.0.0
+      - REACT_APP_ENVIRONMENT=development
+      
+      # API configuration
+      - SERVICE_API_URL=http://tap-backend:8000
+      
+      # Development configuration
+      - SERVICE_DEV_MODE=true
+      - SERVICE_HOT_RELOAD=true
+      - SERVICE_HOT_RELOAD_HOST=localhost
+      - SERVICE_HOT_RELOAD_PORT=3456
+      - CHOKIDAR_USEPOLLING=true
+      - WDS_SOCKET_HOST=localhost
+      - WDS_SOCKET_PORT=3456
+      - WEBPACK_DEV_SERVER=true
+      
+      # Health monitoring
+      - SERVICE_HEALTH_CHECK_INTERVAL=60000
+      - SERVICE_HEALTH_CHECK_PATH=/health
+      
+      # Error handling
+      - SERVICE_ERROR_REPORTING=true
+      - SERVICE_ERROR_LEVEL=debug
+      - SERVICE_MAX_ERRORS=100
+      - REACT_APP_ERROR_REPORTING_URL=/api/errors
+      - REACT_APP_ERROR_LOGGING_ENABLED=true
+      - REACT_APP_ERROR_LOG_LEVEL=debug
+    depends_on:
+      tap-backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:3000/health", "||", "exit", "1"]
+      interval: 15s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    networks:
+      - tap-network
+    restart: unless-stopped
+
+  # Backend service
+  tap-backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.master
+      args:
+        - EXTRA_PACKAGES=pydantic-settings psutil httpx
+    image: tap-backend:local-dev
+    container_name: tap-backend-dev
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - backend_data:/app/data
+    environment:
+      # Service identification
+      - SERVICE_NAME=backend
+      - SERVICE_ENV=development
+      - SERVICE_VERSION=1.0.0
+      
+      # Python configuration
+      - PYTHONUNBUFFERED=1
+      - PYTHONDONTWRITEBYTECODE=1
+      
+      # Legacy environment variables for backward compatibility
+      - DEBUG=true
+      - DEBUG_MODE=true
+      - LOG_LEVEL=debug
+      - ENVIRONMENT=development
+      - APP_ENVIRONMENT=development
+      - DB_SSL_REQUIRED=false
+      - RUNNING_IN_DOCKER=true
+      
+      # Application configuration
+      - SERVICE_CORS_ORIGINS=["http://localhost:3456","http://tap-frontend:3000"]
+      - SERVICE_DATABASE_URL=sqlite:///data/local_dev.sqlite
+      - SERVICE_SECRET_KEY=local_development_secret_change_in_production
+      - SERVICE_LOG_LEVEL=debug
+      - SERVICE_DEBUG=true
+      
+      # Feature flags
+      - SERVICE_ENABLE_INVITATIONS=false
+      - SERVICE_ENABLE_MFA=false
+      
+      # Database configuration
+      - SERVICE_DB_SSL_REQUIRED=false
+      - SERVICE_DB_AUTOMIGRATE=true
+      - SERVICE_DB_AUTOSEED=true
+      
+      # Performance tuning
+      - SERVICE_WORKERS=1
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health", "||", "exit", "1"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    networks:
+      - tap-network
+    restart: unless-stopped
+
+# Network configuration
+networks:
+  tap-network:
+    name: tap-network-dev
+    driver: bridge
+
+# Volume configuration
+volumes:
+  frontend_node_modules:
+    name: tap-frontend-node-modules-dev
+  backend_data:
+    name: tap-backend-data-dev

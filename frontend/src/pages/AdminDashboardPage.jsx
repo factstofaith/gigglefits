@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { Container, Typography, Box, Tabs, Tab, Paper, Button, TextField } from '../design-system/optimized';
-import { useNotification } from '../contexts/NotificationContext';
 
-/**
- * Admin Dashboard Page - Main administration interface
- */
-const AdminDashboardPage = () => {
+import {
+  ErrorBoundary,
+  useErrorHandler,
+  withErrorBoundary } from "@/error-handling/";
+import React, { useState } from 'react';import { Container, Typography, Box, Tabs, Tab, Paper, Button, TextField } from "@/design-system/optimized";import { useNotification } from "@/contexts/NotificationContext"; /**
+* Admin Dashboard Page - Main administration interface
+*/import { useHealthCheckHandler } from "@/error-handling/docker";import { HealthCheckProvider } from "@/error-handling/docker";const AdminDashboardPage = () => {
   const [activeTab, setActiveTab] = useState(0);
   const { setState: setNotification } = useNotification();
   const [smtpConfig, setSmtpConfig] = useState({
@@ -53,8 +53,8 @@ const AdminDashboardPage = () => {
           </Tabs>
 
           <Box sx={{ p: 3 }}>
-            {activeTab === 0 && (
-              <Box>
+            {activeTab === 0 &&
+            <Box>
                 <Typography variant="h6" gutterBottom>
                   User Management
                 </Typography>
@@ -78,11 +78,11 @@ const AdminDashboardPage = () => {
                     </Typography>
                   </Box>
                 </Box>
-              </Box>
-            )}
+              </Box>}
 
-            {activeTab === 1 && (
-              <Box>
+
+            {activeTab === 1 &&
+            <Box>
                 <Typography variant="h6" gutterBottom>
                   Email Configuration
                 </Typography>
@@ -90,118 +90,124 @@ const AdminDashboardPage = () => {
                   Configure SMTP settings for sending emails
                 </Typography>
 
-                <Box 
-                  component="form" 
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: 2,
-                    maxWidth: 600,
-                    mt: 2
-                  }}
-                >
+                <Box
+                component="form"
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 2,
+                  maxWidth: 600,
+                  mt: 2
+                }}>
+
                   <TextField
-                    label="SMTP Host"
-                    value={smtpConfig.host}
-                    onChange={handleSmtpChange('host')}
-                    fullWidth
-                    helperText="e.g., smtp.office365.com"
-                  />
+                  label="SMTP Host"
+                  value={smtpConfig.host}
+                  onChange={handleSmtpChange('host')}
+                  fullWidth
+                  helperText="e.g., smtp.office365.com" />
+
                   
                   <TextField
-                    label="SMTP Port"
-                    value={smtpConfig.port}
-                    onChange={handleSmtpChange('port')}
-                    fullWidth
-                    helperText="e.g., 587 for STARTTLS, 465 for SSL"
-                  />
+                  label="SMTP Port"
+                  value={smtpConfig.port}
+                  onChange={handleSmtpChange('port')}
+                  fullWidth
+                  helperText="e.g., 587 for STARTTLS, 465 for SSL" />
+
                   
                   <TextField
-                    label="Username"
-                    value={smtpConfig.username}
-                    onChange={handleSmtpChange('username')}
-                    fullWidth
-                    helperText="Usually your full email address"
-                  />
+                  label="Username"
+                  value={smtpConfig.username}
+                  onChange={handleSmtpChange('username')}
+                  fullWidth
+                  helperText="Usually your full email address" />
+
                   
                   <TextField
-                    label="Password"
-                    type="password"
-                    value={smtpConfig.password}
-                    onChange={handleSmtpChange('password')}
-                    fullWidth
-                    helperText="Your email account password or app password"
-                  />
+                  label="Password"
+                  type="password"
+                  value={smtpConfig.password}
+                  onChange={handleSmtpChange('password')}
+                  fullWidth
+                  helperText="Your email account password or app password" />
+
                   
                   <TextField
-                    label="Encryption"
-                    value={smtpConfig.encryption}
-                    onChange={handleSmtpChange('encryption')}
-                    fullWidth
-                    helperText="STARTTLS or SSL/TLS"
-                  />
+                  label="Encryption"
+                  value={smtpConfig.encryption}
+                  onChange={handleSmtpChange('encryption')}
+                  fullWidth
+                  helperText="STARTTLS or SSL/TLS" />
+
                   
                   <TextField
-                    label="From Address"
-                    value={smtpConfig.fromAddress}
-                    onChange={handleSmtpChange('fromAddress')}
-                    fullWidth
-                    helperText="Email address to send from"
-                  />
+                  label="From Address"
+                  value={smtpConfig.fromAddress}
+                  onChange={handleSmtpChange('fromAddress')}
+                  fullWidth
+                  helperText="Email address to send from" />
+
                   
                   <Box sx={{ mt: 2 }}>
-                    <Button 
-                      variant="contained" 
-                      color="primary" 
-                      onClick={handleSmtpSave}
-                    >
+                    <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleSmtpSave}>
+
                       Save SMTP Settings
                     </Button>
                     
-                    <Button 
-                      variant="outlined" 
-                      sx={{ ml: 2 }} 
-                      onClick={() => {
-                        setNotification({
-                          type: 'info',
-                          message: 'Test email sent successfully',
-                          open: true
-                        });
-                      }}
-                    >
+                    <Button
+                    variant="outlined"
+                    sx={{ ml: 2 }}
+                    onClick={() => {
+                      setNotification({
+                        type: 'info',
+                        message: 'Test email sent successfully',
+                        open: true
+                      });
+                    }}>
+
                       Test Connection
                     </Button>
                   </Box>
                 </Box>
-              </Box>
-            )}
+              </Box>}
 
-            {activeTab === 2 && (
-              <Box>
+
+            {activeTab === 2 &&
+            <Box>
                 <Typography variant="h6" gutterBottom>
                   Tenant Management
                 </Typography>
                 <Typography paragraph>
                   Manage tenants and tenant-specific configurations
                 </Typography>
-              </Box>
-            )}
+              </Box>}
 
-            {activeTab === 3 && (
-              <Box>
+
+            {activeTab === 3 &&
+            <Box>
                 <Typography variant="h6" gutterBottom>
                   System Settings
                 </Typography>
                 <Typography paragraph>
                   Configure global system settings and defaults
                 </Typography>
-              </Box>
-            )}
+              </Box>}
+
           </Box>
         </Paper>
       </Box>
-    </Container>
-  );
+    </Container>);
+
 };
 
-export default AdminDashboardPage;
+AdminDashboardPage;const AdminDashboardPageWithErrorBoundary = (props) => <ErrorBoundary boundary="AdminDashboardPage" fallback={({ error, resetError }) => <div className="error-container">
+            <h3>Error in AdminDashboardPage</h3>
+            <p>{error.message}</p>
+            <button onClick={resetError}>Retry</button>
+          </div>}>
+        <AdminDashboardPage {...props} />
+      </ErrorBoundary>;export default AdminDashboardPageWithErrorBoundary;

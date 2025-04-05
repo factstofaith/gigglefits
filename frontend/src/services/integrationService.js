@@ -3,6 +3,10 @@
 // Service for managing integrations, connecting to the backend API
 
 import axios from 'axios';
+import { createAxiosErrorInterceptor, parseErrorResponse, getHttpStatusMessage } from "@/error-handling/networkErrorHandler";
+import { reportError, ErrorSeverity, handleAsyncError } from "@/error-handling/error-service";
+import { withDockerNetworkErrorHandling } from '@/error-handling/docker';
+import { ENV } from '@/utils/environmentConfig';
 
 // Base API URL - would come from environment config in a real app
 const API_BASE_URL = '/api';
@@ -29,8 +33,46 @@ const apiClient = axios.create({
   }
 });
 
+/**
+ * Handle integration service errors properly
+ * @param {Error} error - The error that occurred
+ * @param {string} operation - The integration operation that failed
+ * @param {Object} details - Additional details about the operation
+ * @returns {Error} The original error for further handling
+ */
+function handleIntegrationError(error, operation, details = {}) {
+  // Add specific integration context to the error
+  const errorInfo = {
+    operation,
+    ...details,
+    timestamp: new Date().toISOString()
+  };
+
+  // Determine appropriate severity based on error type
+  let severity = ErrorSeverity.ERROR;
+
+  // Reduce severity for common non-critical issues
+  if (error.response) {
+    // Client errors are usually less severe than server errors
+    if (error.response.status >= 400 && error.response.status < 500) {
+      severity = ErrorSeverity.WARNING;
+    }
+
+    // Not found is generally just a warning
+    if (error.response.status === 404) {
+      severity = ErrorSeverity.INFO;
+    }
+  }
+
+  // Report the error with proper context
+  reportError(error, errorInfo, 'integrationService', severity);
+
+  // Return the error to allow for further handling
+  return error;
+}
+
 // Add request interceptor to include auth token
-apiClient.interceptors.request.use(config => {
+apiClient.interceptors.request.use((config) => {
   const headers = getAuthHeader();
   config.headers = { ...config.headers, ...headers };
   return config;
@@ -38,24 +80,32 @@ apiClient.interceptors.request.use(config => {
 
 // Add response interceptor to handle auth errors
 apiClient.interceptors.response.use(
-  response => response,
-  error => {
+  (response) => response,
+  (error) => {
     // Handle 401 Unauthorized or 403 Forbidden errors
     if (error.response && (error.response.status === 401 || error.response.status === 403)) {
-      console.error('Authentication error:', error);
-      
+      // Report the authentication error
+      handleIntegrationError(error, 'authentication', {
+        status: error.response.status,
+        method: error.config?.method,
+        url: error.config?.url
+      });
+
       // Clear auth state and redirect to login
       localStorage.removeItem('auth_token');
       localStorage.removeItem('user_info');
-      
+
       // Show login modal or redirect to login page
       // For now, just redirect to home
       window.location.href = '/';
     }
-    
+
     return Promise.reject(error);
   }
 );
+
+// Add the error handling interceptor from our networkErrorHandler
+createAxiosErrorInterceptor(apiClient);
 
 // Integration service with API methods
 const integrationService = {
@@ -65,7 +115,7 @@ const integrationService = {
       const response = await apiClient.get(ENDPOINTS.integrations, { params });
       return response.data;
     } catch (error) {
-      console.error('Error fetching integrations:', error);
+      handleIntegrationError(error, 'getIntegrations', { params });
       throw error;
     }
   },
@@ -76,7 +126,7 @@ const integrationService = {
       const response = await apiClient.get(`${ENDPOINTS.integrations}/${id}`);
       return response.data;
     } catch (error) {
-      console.error(`Error fetching integration with ID ${id}:`, error);
+      handleIntegrationError(error, 'getIntegrationById', { id });
       throw error;
     }
   },
@@ -87,7 +137,13 @@ const integrationService = {
       const response = await apiClient.post(ENDPOINTS.integrations, integrationData);
       return response.data;
     } catch (error) {
-      console.error('Error creating integration:', error);
+      // Sanitize any sensitive data before logging
+      const safeData = { ...integrationData };
+      if (safeData.credentials) {
+        safeData.credentials = '[REDACTED]';
+      }
+
+      handleIntegrationError(error, 'createIntegration', { data: safeData });
       throw error;
     }
   },
@@ -98,7 +154,13 @@ const integrationService = {
       const response = await apiClient.put(`${ENDPOINTS.integrations}/${id}`, integrationData);
       return response.data;
     } catch (error) {
-      console.error(`Error updating integration with ID ${id}:`, error);
+      // Sanitize any sensitive data before logging
+      const safeData = { ...integrationData };
+      if (safeData.credentials) {
+        safeData.credentials = '[REDACTED]';
+      }
+
+      handleIntegrationError(error, 'updateIntegration', { id, data: safeData });
       throw error;
     }
   },
@@ -109,7 +171,7 @@ const integrationService = {
       await apiClient.delete(`${ENDPOINTS.integrations}/${id}`);
       return true;
     } catch (error) {
-      console.error(`Error deleting integration with ID ${id}:`, error);
+      handleIntegrationError(error, 'deleteIntegration', { id });
       throw error;
     }
   },
@@ -120,7 +182,7 @@ const integrationService = {
       const response = await apiClient.post(`${ENDPOINTS.integrations}/${id}/run`);
       return response.data;
     } catch (error) {
-      console.error(`Error running integration with ID ${id}:`, error);
+      handleIntegrationError(error, 'runIntegration', { id });
       throw error;
     }
   },
@@ -133,18 +195,18 @@ const integrationService = {
       });
       return response.data;
     } catch (error) {
-      console.error(`Error fetching history for integration with ID ${id}:`, error);
+      handleIntegrationError(error, 'getIntegrationHistory', { id, limit });
       throw error;
     }
   },
-  
+
   // Get field mappings for an integration
   getFieldMappings: async (integrationId) => {
     try {
       const response = await apiClient.get(`${ENDPOINTS.integrations}/${integrationId}/mappings`);
       return response.data;
     } catch (error) {
-      console.error(`Error fetching field mappings for integration with ID ${integrationId}:`, error);
+      handleIntegrationError(error, 'getFieldMappings', { integrationId });
       throw error;
     }
   },
@@ -153,7 +215,7 @@ const integrationService = {
   createFieldMapping: async (integrationId, mappingData) => {
     try {
       const response = await apiClient.post(
-        `${ENDPOINTS.integrations}/${integrationId}/mappings`, 
+        `${ENDPOINTS.integrations}/${integrationId}/mappings`,
         mappingData
       );
       return response.data;
@@ -167,7 +229,7 @@ const integrationService = {
   updateFieldMapping: async (integrationId, mappingId, mappingData) => {
     try {
       const response = await apiClient.put(
-        `${ENDPOINTS.integrations}/${integrationId}/mappings/${mappingId}`, 
+        `${ENDPOINTS.integrations}/${integrationId}/mappings/${mappingId}`,
         mappingData
       );
       return response.data;
@@ -218,7 +280,7 @@ const integrationService = {
   discoverFields: async (integrationId, sourceOrDest = 'source') => {
     try {
       const response = await apiClient.get(
-        `${ENDPOINTS.integrations}/${integrationId}/discover-fields`, 
+        `${ENDPOINTS.integrations}/${integrationId}/discover-fields`,
         { params: { source_or_dest: sourceOrDest } }
       );
       return response.data;
@@ -227,7 +289,7 @@ const integrationService = {
       throw error;
     }
   },
-  
+
   // Get Azure Blob Storage configuration
   getAzureBlobConfig: async (integrationId) => {
     try {
@@ -238,7 +300,7 @@ const integrationService = {
       throw error;
     }
   },
-  
+
   // Update Azure Blob Storage configuration
   updateAzureBlobConfig: async (integrationId, config) => {
     try {
@@ -252,7 +314,7 @@ const integrationService = {
       throw error;
     }
   },
-  
+
   // Test Azure Blob Storage connection
   testAzureBlobConnection: async (integrationId) => {
     try {
@@ -263,7 +325,7 @@ const integrationService = {
       throw error;
     }
   },
-  
+
   // Get schedule configuration
   getScheduleConfig: async (integrationId) => {
     try {
@@ -274,7 +336,7 @@ const integrationService = {
       throw error;
     }
   },
-  
+
   // Update schedule configuration
   updateScheduleConfig: async (integrationId, schedule) => {
     try {
@@ -288,7 +350,7 @@ const integrationService = {
       throw error;
     }
   },
-  
+
   // Get detailed run history
   getIntegrationRuns: async (integrationId, skip = 0, limit = 10) => {
     try {
@@ -301,7 +363,7 @@ const integrationService = {
       throw error;
     }
   },
-  
+
   // Get current user information
   getCurrentUser: async () => {
     try {

@@ -23,3 +23,7 @@ export * from './accessibilityUtils';
 // Export performance utilities
 export * as performance from './performance';
 export * from './react-compat-adapters';
+
+// Export environment utilities
+export * from './runtimeEnv';
+export * from './environmentConfig';

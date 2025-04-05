@@ -53,7 +53,7 @@ class FixedWindowStrategy(RateLimitStrategy):
             Storage key string including window information
         """
         if timestamp is None:
-            timestamp = datetime.utcnow()
+            timestamp = datetime.now(timezone.utc)
             
         # For fixed window, we divide time into discrete periods
         # e.g., for a 60-second window, each minute becomes a window

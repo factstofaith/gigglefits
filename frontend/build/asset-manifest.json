@@ -1,9 +1,15 @@
 {
   "files": {
-    "main.js": "/static/js/main.33078016.js",
-    "index.html": "/index.html"
+    "main.js": "/static/js/main.4fac3bc4.js",
+    "runtime-main.js": "/static/js/runtime-main.22ce8275.js",
+    "workbox-13d12fd3.js.map": "/workbox-13d12fd3.js.map",
+    "workbox-13d12fd3.js": "/workbox-13d12fd3.js",
+    "service-worker.js.map": "/service-worker.js.map",
+    "service-worker.js": "/service-worker.js",
+    "runtime-main.22ce8275.js.map": "/static/js/runtime-main.22ce8275.js.map"
   },
   "entrypoints": [
-    "static/js/main.33078016.js"
+    "static/js/runtime-main.22ce8275.js",
+    "static/js/main.4fac3bc4.js"
   ]
 }

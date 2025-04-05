@@ -1,3 +1,4 @@
+import { ENV } from '@/utils/environmentConfig';
 /**
  * Lazy Component Loading with Performance Monitoring
  * 
@@ -52,7 +53,7 @@ export const lazyWithMonitoring = (importFunction, {
             default: (props) => (
               <div className="lazy-load-error">
                 Failed to load component. Try refreshing the page.
-                {process.env.NODE_ENV === 'development' && (
+                {ENV.NODE_ENV === 'development' && (
                   <pre>{error.message}</pre>
                 )}
               </div>
@@ -110,7 +111,7 @@ export const LazyComponentLoader = ({
     return (
       <div className={`lazy-component-error ${className}`} style={style}>
         <h3>Something went wrong</h3>
-        {process.env.NODE_ENV === 'development' && error && (
+        {ENV.NODE_ENV === 'development' && error && (
           <pre>{error.message}</pre>
         )}
       </div>

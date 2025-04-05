@@ -1,0 +1,52 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+      args:
+        - NPM_INSTALL_FLAGS=--legacy-peer-deps
+    image: tap-frontend:local
+    container_name: tap-frontend-dev
+    ports:
+      - 3456:3000
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/public:/app/public
+      - ./frontend/config:/app/config
+      - frontend_node_modules:/app/node_modules
+    environment:
+      # Core environment variables
+      - NODE_ENV=development
+      - REACT_APP_API_URL=http://localhost:8000
+      - REACT_APP_VERSION=1.0.0
+      - REACT_APP_ENVIRONMENT=development
+      
+      # Development environment variables
+      - CHOKIDAR_USEPOLLING=true
+      - WDS_SOCKET_HOST=localhost
+      - WDS_SOCKET_PORT=3456
+      - WEBPACK_DEV_SERVER=true
+      
+      # Docker error handling variables
+      - REACT_APP_RUNNING_IN_DOCKER=true
+      - REACT_APP_CONTAINER_ID=tap-frontend-dev
+      - REACT_APP_CONTAINER_VERSION=1.0.0
+      - REACT_APP_DOCKER_ENVIRONMENT=development
+      - REACT_APP_HEALTH_CHECK_INTERVAL=60000
+      - REACT_APP_DOCKER_VERBOSE_LOGGING=true
+      - REACT_APP_ERROR_REPORTING_URL=/api/errors
+      - REACT_APP_ERROR_LOGGING_ENABLED=true
+      - REACT_APP_ERROR_LOG_LEVEL=debug
+      - REACT_APP_DOCKER_ERROR_HANDLING=enabled
+      - REACT_APP_MAX_ERRORS_PER_SESSION=100
+    healthcheck:
+      test: ["CMD", "sh", "/app/healthcheck.sh"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 90s
+    restart: unless-stopped
+
+volumes:
+  frontend_node_modules:
+    name: tap-frontend-node-modules-local

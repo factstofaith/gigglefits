@@ -134,7 +134,7 @@ class TestSchedulerOptimized:
     def test_cron_expression_matching(self):
         """Test matching cron expressions with datetimes."""
         # Create test datetime
-        dt = datetime(2023, 1, 1, 12, 30, 0, tzinfo=pytz.UTC)
+        dt = datetime(2023, 1, 1, 12, 30, 0, tzinfo=pytz.timezone)
         
         # Test various cron patterns
         assert self.scheduler_adapter.matches_cron("30 12 * * *", dt) is True

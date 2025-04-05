@@ -35,7 +35,7 @@ def reset_adapters():
     yield
 
 def test_invitation_creation_with_utc():
-    """Test invitation creation with UTC timezone."""
+    """Test invitation creation with timezone timezone."""
     invitation = create_invitation_with_timezone(
         invitation_adapter=invitation_adapter,
         email="utc@example.com",

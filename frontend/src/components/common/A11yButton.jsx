@@ -1,16 +1,15 @@
-/**
- * Accessibility-Enhanced Button Component
- * 
- * A button component with enhanced accessibility features.
- * Part of the zero technical debt accessibility implementation.
- * 
- * @module components/common/A11yButton
- */
-
+import { ErrorBoundary, useErrorHandler, withErrorBoundary } from "@/error-handling"; /**
+                                                                                      * Accessibility-Enhanced Button Component
+                                                                                      * 
+                                                                                      * A button component with enhanced accessibility features.
+                                                                                      * Part of the zero technical debt accessibility implementation.
+                                                                                      * 
+                                                                                      * @module components/common/A11yButton
+                                                                                      */
 import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@mui/material';
-import { useA11yAnnouncement } from '../../hooks/a11y';
+import { useA11yAnnouncement } from "@/hooks/a11y";
 
 /**
  * Enhanced Button with built-in accessibility features
@@ -35,7 +34,6 @@ const A11yButton = forwardRef(({
   a11yHaspopup,
   a11yDescription,
   a11yFocusIndicator = true,
-  
   // Standard button props
   children,
   disabled,
@@ -44,59 +42,50 @@ const A11yButton = forwardRef(({
   sx = {},
   ...rest
 }, ref) => {
-  const { announcePolite } = useA11yAnnouncement();
-  
+  const {
+    announcePolite
+  } = useA11yAnnouncement();
+
   // Handle click with announcement
-  const handleClick = (event) => {
+  const handleClick = event => {
     if (a11yAnnouncement && !disabled) {
       announcePolite(a11yAnnouncement);
     }
-    
     if (onClick) {
       onClick(event);
     }
   };
-  
+
   // Combine standard and a11y props
   const buttonProps = {
     // Standard props
     disabled,
     onClick: handleClick,
     className: `${a11yFocusIndicator ? 'a11y-focus-visible' : ''} ${className || ''}`.trim(),
-    
     // A11y attributes
     'aria-label': a11yLabel,
     'aria-expanded': a11yExpanded,
     'aria-controls': a11yControls,
     'aria-haspopup': a11yHaspopup,
     'aria-describedby': a11yDescription,
-    
     // Enhanced focus styles
     sx: {
       '&.a11y-focus-visible:focus-visible': {
         outline: '2px solid',
         outlineColor: 'primary.main',
-        outlineOffset: '2px',
+        outlineOffset: '2px'
       },
       ...sx
     },
-    
     // Pass through other props
     ...rest
   };
-  
-  return (
-    <Button
-      ref={ref}
-      {...buttonProps}
-    >
+  return <Button ref={ref} {...buttonProps}>
+
       {children}
-    </Button>
-  );
+    </Button>;
 });
-
 A11yButton.displayName = 'A11yButton';
-
 A11yButton.propTypes = {
   // A11y props
   a11yLabel: PropTypes.string,
@@ -106,13 +95,13 @@ A11yButton.propTypes = {
   a11yHaspopup: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   a11yDescription: PropTypes.string,
   a11yFocusIndicator: PropTypes.bool,
-  
   // Standard button props
   children: PropTypes.node,
   className: PropTypes.string,
   disabled: PropTypes.bool,
   onClick: PropTypes.func,
-  sx: PropTypes.object,
+  sx: PropTypes.object
 };
-
-export default A11yButton;
+export default withErrorBoundary(A11yButton, {
+  boundary: 'A11yButton'
+});

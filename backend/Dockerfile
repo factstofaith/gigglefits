@@ -1,81 +1,68 @@
-# Production Dockerfile for TAP Integration Platform Backend
-FROM python:3.10-slim
+# Standardized Backend Dockerfile
+# Multi-stage build for efficient container size
 
-# Set working directory
+# ===== Build Stage =====
+FROM python:3.12-slim AS builder
+
 WORKDIR /app
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    curl \
+# Install build dependencies
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
     build-essential \
-    libpq-dev \
-    procps \
+    curl \
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Set environment variables
-ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1 \
-    PIP_NO_CACHE_DIR=1 \
-    PIP_DISABLE_PIP_VERSION_CHECK=1
+# Setup virtual environment
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
 
 # Install Python dependencies
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -U pip && \
+    pip install --no-cache-dir -r requirements.txt
 
-# Install additional packages for monitoring and health checks
-RUN pip install --no-cache-dir \
-    psutil \
-    pydantic-settings \
-    httpx
+# ===== Runtime Stage =====
+FROM python:3.12-slim AS runtime
+
+WORKDIR /app
+
+# Copy virtual environment from builder
+COPY --from=builder /opt/venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+# Install runtime dependencies
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    curl \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # Copy application code
 COPY . .
 
-# Create data directory for database files
-RUN mkdir -p /app/data && chmod 777 /app/data
+# Copy health check script
+COPY healthcheck.sh /app/healthcheck.sh
+RUN chmod +x /app/healthcheck.sh
 
-# Create a health check script
-RUN echo '#!/bin/bash\n\
-curl -f http://localhost:8000/health || exit 1\n\
-' > /app/healthcheck.sh && chmod +x /app/healthcheck.sh
+# Copy entrypoint script
+COPY entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
 
-# Create an entrypoint script
-RUN echo '#!/bin/bash\n\
-echo "Starting TAP Integration Platform Backend"\n\
-echo "Environment: $APP_ENVIRONMENT"\n\
-\n\
-# Run migrations if AUTOMIGRATE is enabled\n\
-if [ "$AUTOMIGRATE" = "true" ]; then\n\
-  echo "Running database migrations..."\n\
-  python -m db.manage_db migrate\n\
-fi\n\
-\n\
-# Run startup script if it exists\n\
-if [ -f "/app/startup.sh" ]; then\n\
-  echo "Running startup script..."\n\
-  chmod +x /app/startup.sh\n\
-  bash /app/startup.sh\n\
-fi\n\
-\n\
-# Start the server\n\
-echo "Starting server on port 8000..."\n\
-exec uvicorn main:app --host 0.0.0.0 --port 8000 --workers $WORKERS\n\
-' > /app/entrypoint.sh && chmod +x /app/entrypoint.sh
+# Environment variables
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    SERVICE_NAME=tap-backend \
+    SERVICE_ENVIRONMENT=development \
+    SERVICE_PORT=8000
 
-# Expose API port
+# Health check configuration
+HEALTHCHECK --interval=15s --timeout=5s --start-period=30s --retries=3 \
+  CMD curl -f http://localhost:$SERVICE_PORT/health || exit 1
+
 EXPOSE 8000
 
-# Set default environment variables
-ENV WORKERS=4 \
-    AUTOMIGRATE=false \
-    APP_ENVIRONMENT=production \
-    API_VERSION=v1 \
-    ENVIRONMENT=production \
-    LOG_LEVEL=INFO \
-    DB_SSL_REQUIRED=true
-
-# Add Docker healthcheck
-HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 CMD [ "/app/healthcheck.sh" ]
-
-# Use the entrypoint script
+# Start the application
 ENTRYPOINT ["/app/entrypoint.sh"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]

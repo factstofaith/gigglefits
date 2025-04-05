@@ -1,0 +1,126 @@
+name: Docker Local Testing CI
+
+on:
+  push:
+    branches: [ main, enterprise-ready ]
+    paths:
+      - 'frontend/**'
+      - 'backend/**'
+      - 'project/flowiq/**'
+      - '.github/workflows/docker-testing-ci.yml'
+  pull_request:
+    branches: [ main, enterprise-ready ]
+    paths:
+      - 'frontend/**'
+      - 'backend/**'
+      - 'project/flowiq/**'
+      - '.github/workflows/docker-testing-ci.yml'
+
+jobs:
+  validation:
+    name: Docker Image Validation
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      
+      - name: Make scripts executable
+        run: |
+          chmod +x project/flowiq/ci-cd-integration.sh
+          chmod +x project/flowiq/run_all_fixes.sh
+          chmod +x project/flowiq/fix_*.py
+          chmod +x project/flowiq/auto_fix_codebase.py
+      
+      - name: Validate Docker images
+        run: ./project/flowiq/ci-cd-integration.sh validate
+  
+  tests:
+    name: Docker Container Tests
+    runs-on: ubuntu-latest
+    needs: validation
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      
+      - name: Make scripts executable
+        run: |
+          chmod +x project/flowiq/ci-cd-integration.sh
+          chmod +x project/flowiq/run_all_fixes.sh
+          chmod +x project/flowiq/fix_*.py
+          chmod +x project/flowiq/auto_fix_codebase.py
+      
+      - name: Run automated tests
+        run: ./project/flowiq/ci-cd-integration.sh test
+      
+      - name: Upload test results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: test-results
+          path: ci_test_results
+  
+  azure-compatibility:
+    name: Azure Compatibility Check
+    runs-on: ubuntu-latest
+    needs: tests
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Make scripts executable
+        run: |
+          chmod +x project/flowiq/azure-compatibility-check.sh
+      
+      - name: Run Azure compatibility check
+        run: ./project/flowiq/azure-compatibility-check.sh
+      
+      - name: Upload compatibility report
+        uses: actions/upload-artifact@v3
+        with:
+          name: azure-compatibility-report
+          path: project/flowiq/azure-check-results
+  
+  build-publish:
+    name: Build and Publish
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/enterprise-ready')
+    needs: [validation, tests, azure-compatibility]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      
+      - name: Login to Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ secrets.DOCKER_REGISTRY }}
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      
+      - name: Make scripts executable
+        run: |
+          chmod +x project/flowiq/ci-cd-integration.sh
+          chmod +x project/flowiq/run_all_fixes.sh
+          chmod +x project/flowiq/fix_*.py
+          chmod +x project/flowiq/auto_fix_codebase.py
+      
+      - name: Set version
+        run: echo "VERSION=${GITHUB_SHA::8}" >> $GITHUB_ENV
+      
+      - name: Build and push Docker images
+        env:
+          DOCKER_REGISTRY: ${{ secrets.DOCKER_REGISTRY }}
+          VERSION: ${{ env.VERSION }}
+        run: ./project/flowiq/ci-cd-integration.sh push

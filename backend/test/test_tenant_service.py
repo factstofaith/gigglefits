@@ -4,7 +4,7 @@ Unit tests for the tenant functionality in the AdminService class
 
 import unittest
 import uuid
-from datetime import datetime, UTC
+from datetime import datetime, timezone
 from unittest.mock import MagicMock, patch
 
 from sqlalchemy.orm import Session
@@ -48,8 +48,8 @@ class TestTenantService(unittest.TestCase):
             "status": "active",
             "tier": "standard",
             "settings": {"allowed_users": 5},
-            "created_at": datetime.now(UTC),
-            "updated_at": datetime.now(UTC)
+            "created_at": datetime.now(timezone.utc),
+            "updated_at": datetime.now(timezone.utc)
         }
         
         self.test_db_tenant = DbTenant(**self.test_tenant_data)
@@ -61,8 +61,8 @@ class TestTenantService(unittest.TestCase):
             name="Test App",
             type="API",
             status="active",
-            created_at=datetime.now(UTC),
-            updated_at=datetime.now(UTC)
+            created_at=datetime.now(timezone.utc),
+            updated_at=datetime.now(timezone.utc)
         )
         
         # Dataset data
@@ -71,8 +71,8 @@ class TestTenantService(unittest.TestCase):
             id=self.dataset_id,
             name="Test Dataset",
             status="active",
-            created_at=datetime.now(UTC),
-            updated_at=datetime.now(UTC)
+            created_at=datetime.now(timezone.utc),
+            updated_at=datetime.now(timezone.utc)
         )
         
         # User ID for associations
@@ -122,8 +122,8 @@ class TestTenantService(unittest.TestCase):
             description=tenant_create.description,
             status=tenant_create.status,
             tier=tenant_create.tier,
-            created_at=datetime.now(UTC),
-            updated_at=datetime.now(UTC)
+            created_at=datetime.now(timezone.utc),
+            updated_at=datetime.now(timezone.utc)
         )
         
         # Call the method
@@ -191,7 +191,7 @@ class TestTenantService(unittest.TestCase):
             tenant_id=self.tenant_id,
             application_id=self.app_id,
             is_active=True,
-            granted_at=datetime.now(UTC),
+            granted_at=datetime.now(timezone.utc),
             granted_by=self.user_id
         )
         self.db.query.return_value.filter.return_value.first.return_value = association

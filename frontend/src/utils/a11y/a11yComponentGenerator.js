@@ -8,13 +8,7 @@
  */
 
 import React from 'react';
-import { 
-  useA11yAnnouncement, 
-  useA11yFocus, 
-  useA11yKeyboard,
-  useA11yPrefersReducedMotion,
-  useA11yNavigation
-} from '../../hooks/a11y';
+import { useA11yAnnouncement, useA11yFocus, useA11yKeyboard, useA11yPrefersReducedMotion, useA11yNavigation } from "@/hooks/a11y";
 import { getFormFieldAttributes, getButtonAttributes, getDialogAttributes } from './ariaAttributeHelper';
 
 /**
@@ -44,7 +38,7 @@ export const createA11yComponent = (Component, {
       case 'button':
         return {
           ariaOptions: {
-            getAttributes: props => getButtonAttributes({
+            getAttributes: (props) => getButtonAttributes({
               purpose: 'button',
               label: props.a11yLabel || props['aria-label'],
               expanded: props.a11yExpanded || props['aria-expanded'],
@@ -53,13 +47,13 @@ export const createA11yComponent = (Component, {
             })
           },
           announcementOptions: {
-            onClick: props => props.a11yAnnouncement
+            onClick: (props) => props.a11yAnnouncement
           }
         };
       case 'dialog':
         return {
           ariaOptions: {
-            getAttributes: props => getDialogAttributes({
+            getAttributes: (props) => getDialogAttributes({
               titleId: props.a11yLabelledBy || 'a11y-dialog-title',
               descriptionId: props.a11yDescribedBy || 'a11y-dialog-description'
             })
@@ -70,10 +64,10 @@ export const createA11yComponent = (Component, {
             autoFocus: true
           },
           announcementOptions: {
-            onOpen: props => props.a11yAnnouncement || `${name || 'Dialog'} opened`
+            onOpen: (props) => props.a11yAnnouncement || `${name || 'Dialog'} opened`
           },
           keyboardOptions: {
-            Escape: props => props.onClose
+            Escape: (props) => props.onClose
           }
         };
       case 'form':
@@ -87,8 +81,8 @@ export const createA11yComponent = (Component, {
             })
           },
           announcementOptions: {
-            onSubmit: props => `${name || 'Form'} submitted successfully`,
-            onError: props => `${name || 'Form'} has errors. Please correct them.`
+            onSubmit: (props) => `${name || 'Form'} submitted successfully`,
+            onError: (props) => `${name || 'Form'} has errors. Please correct them.`
           }
         };
       default:
@@ -98,19 +92,38 @@ export const createA11yComponent = (Component, {
 
   // Merge defaults with provided options
   const typeDefaults = getTypeDefaults();
-  const mergedAriaOptions = { ...typeDefaults.ariaOptions, ...ariaOptions };
-  const mergedKeyboardOptions = { ...typeDefaults.keyboardOptions, ...keyboardOptions };
-  const mergedAnnouncementOptions = { ...typeDefaults.announcementOptions, ...announcementOptions };
-  const mergedFocusOptions = { ...typeDefaults.focusOptions, ...focusOptions };
+  const mergedAriaOptions = {
+    ...typeDefaults.ariaOptions,
+    ...ariaOptions
+  };
+  const mergedKeyboardOptions = {
+    ...typeDefaults.keyboardOptions,
+    ...keyboardOptions
+  };
+  const mergedAnnouncementOptions = {
+    ...typeDefaults.announcementOptions,
+    ...announcementOptions
+  };
+  const mergedFocusOptions = {
+    ...typeDefaults.focusOptions,
+    ...focusOptions
+  };
 
   // Create enhanced component
   const EnhancedComponent = React.forwardRef((props, ref) => {
     // Initialize accessibility hooks based on component needs
-    const { announcePolite, announceAssertive } = useA11yAnnouncement();
-    const { registerKeyHandler } = useA11yKeyboard();
-    const { containerRef } = useA11yFocus(mergedFocusOptions);
+    const {
+      announcePolite,
+      announceAssertive
+    } = useA11yAnnouncement();
+    const {
+      registerKeyHandler
+    } = useA11yKeyboard();
+    const {
+      containerRef
+    } = useA11yFocus(mergedFocusOptions);
     const prefersReducedMotion = useA11yPrefersReducedMotion();
-    
+
     // Process ARIA attributes
     const getAriaAttributes = () => {
       if (mergedAriaOptions.getAttributes) {
@@ -122,9 +135,8 @@ export const createA11yComponent = (Component, {
     // Setup keyboard event handlers
     React.useEffect(() => {
       if (Object.keys(mergedKeyboardOptions).length === 0) return;
-
       const handlers = {};
-      Object.keys(mergedKeyboardOptions).forEach(key => {
+      Object.keys(mergedKeyboardOptions).forEach((key) => {
         const handler = mergedKeyboardOptions[key];
         if (typeof handler === 'function') {
           handlers[key] = (e) => {
@@ -133,7 +145,6 @@ export const createA11yComponent = (Component, {
           };
         }
       });
-
       return registerKeyHandler(handlers);
     }, [props, registerKeyHandler]);
 
@@ -141,10 +152,7 @@ export const createA11yComponent = (Component, {
     const processAnnouncements = (type, defaultMessage) => {
       const announcementFn = mergedAnnouncementOptions[type];
       if (announcementFn) {
-        const message = typeof announcementFn === 'function'
-          ? announcementFn(props)
-          : announcementFn;
-        
+        const message = typeof announcementFn === 'function' ? announcementFn(props) : announcementFn;
         if (message) {
           announcePolite(message);
         }
@@ -165,9 +173,13 @@ export const createA11yComponent = (Component, {
       ...props,
       ...getAriaAttributes(),
       // Only add ref if it's not a dialog (already handled by containerRef)
-      ...(type !== 'dialog' ? { ref } : {}),
+      ...(type !== 'dialog' ? {
+        ref
+      } : {}),
       // For dialogs, add the containerRef
-      ...(type === 'dialog' ? { ref: containerRef } : {})
+      ...(type === 'dialog' ? {
+        ref: containerRef
+      } : {})
     };
 
     // Handle special prop transformations for different component types
@@ -180,7 +192,6 @@ export const createA11yComponent = (Component, {
         }
       };
     }
-
     if (type === 'form' && mergedAnnouncementOptions.onSubmit) {
       const originalOnSubmit = props.onSubmit;
       enhancedProps.onSubmit = (e) => {
@@ -195,13 +206,11 @@ export const createA11yComponent = (Component, {
     if (prefersReducedMotion && props.animation) {
       enhancedProps.animation = false;
     }
-
     return <Component {...enhancedProps} />;
   });
 
   // Add display name for debugging
   EnhancedComponent.displayName = `A11y${name || Component.displayName || Component.name || 'Component'}`;
-
   return EnhancedComponent;
 };
 
@@ -224,8 +233,7 @@ export const withA11y = (options = {}) => {
  */
 export const enhanceComponentExports = (components, options = {}) => {
   const enhanced = {};
-  
-  Object.keys(components).forEach(key => {
+  Object.keys(components).forEach((key) => {
     const component = components[key];
     if (typeof component === 'function') {
       // Determine component type by name
@@ -233,7 +241,6 @@ export const enhanceComponentExports = (components, options = {}) => {
       if (/button/i.test(key)) type = 'button';
       if (/dialog|modal/i.test(key)) type = 'dialog';
       if (/form/i.test(key)) type = 'form';
-      
       enhanced[`A11y${key}`] = createA11yComponent(component, {
         name: key,
         type,
@@ -243,10 +250,8 @@ export const enhanceComponentExports = (components, options = {}) => {
       enhanced[key] = component;
     }
   });
-  
   return enhanced;
 };
-
 export default {
   createA11yComponent,
   withA11y,

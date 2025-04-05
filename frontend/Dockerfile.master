@@ -1,0 +1,123 @@
+# Standardized Frontend Development Dockerfile for TAP Integration Platform
+# Includes all necessary dependencies for native module builds
+
+FROM node:18-alpine
+
+# Add metadata labels
+LABEL \
+    org.opencontainers.image.vendor="TAP Integration Platform" \
+    org.opencontainers.image.authors="TAP Platform Team <tap-team@example.com>" \
+    org.opencontainers.image.licenses="Proprietary" \
+    org.label-schema.schema-version="1.0" \
+    org.label-schema.vendor="TAP Integration Platform" \
+    com.tap.component.version="1.0.0" \
+    com.tap.image.environment="development" \
+    com.tap.maintainer="TAP Platform Team" \
+    com.tap.component.type="frontend" \
+    org.opencontainers.image.created="2025-04-04T00:00:00.000Z"
+
+WORKDIR /app
+
+# Install development dependencies (comprehensive list for all native modules)
+# Python and build tools are required for npm native modules like canvas
+RUN apk add --no-cache \
+    wget \
+    curl \
+    bash \
+    python3 \
+    py3-pip \
+    make \
+    g++ \
+    libc6-compat \
+    py3-setuptools \
+    build-base \
+    pkgconf \
+    cairo-dev \
+    pango-dev \
+    libjpeg-turbo-dev \
+    giflib-dev \
+    pixman-dev \
+    freetype-dev \
+    fontconfig-dev \
+    autoconf \
+    automake \
+    libtool \
+    nasm
+
+# Create directory structure
+RUN mkdir -p /app/docker /app/config /app/public /app/src /app/build
+
+# Store Docker configuration files in a backup location that won't be affected by volume mounts
+RUN mkdir -p /app-docker
+
+# Copy package files for dependency installation
+COPY package.master.json ./package.json
+COPY package-lock.json* ./
+
+# Install dependencies with clean npm ci for consistent builds
+ARG NPM_INSTALL_FLAGS="--legacy-peer-deps"
+RUN npm ci ${NPM_INSTALL_FLAGS}
+
+# Install webpack and related tools
+RUN npm install -g webpack webpack-cli webpack-dev-server
+
+# Copy Docker support files to backup location
+COPY ./docker/healthcheck.master.sh /app-docker/healthcheck.sh
+COPY ./docker/inject-env.master.sh /app-docker/inject-env.sh
+COPY ./docker/generate-runtime-env.master.sh /app-docker/generate-runtime-env.sh
+COPY ./docker/webpack.master.js /app-docker/webpack.config.js
+COPY ./docker/dev-server.js /app-docker/dev-server.js
+
+# Copy index.html template
+COPY ./docker/templates/index.html /app-docker/index.html
+
+# Copy Docker assets to app directory and ensure they're executable
+RUN mkdir -p /app/public && \
+    cp -f /app-docker/healthcheck.sh /app/healthcheck.sh && \
+    cp -f /app-docker/inject-env.sh /app/inject-env.sh && \
+    cp -f /app-docker/generate-runtime-env.sh /app/generate-runtime-env.sh && \
+    cp -f /app-docker/webpack.config.js /app/webpack.config.js && \
+    cp -f /app-docker/dev-server.js /app/dev-server.js && \
+    cp -f /app-docker/index.html /app/public/index.html && \
+    chmod +x /app/healthcheck.sh /app/inject-env.sh /app/generate-runtime-env.sh
+
+# Create reliable entrypoint script
+RUN echo '#!/bin/sh' > /app/docker-entrypoint.sh && \
+    echo 'set -e' >> /app/docker-entrypoint.sh && \
+    echo 'echo "TAP Frontend Container Starting..."' >> /app/docker-entrypoint.sh && \
+    echo 'if [ ! -f /app/webpack.config.js ] || [ ! -f /app/dev-server.js ]; then' >> /app/docker-entrypoint.sh && \
+    echo '  echo "Critical files missing - restoring from backup..."' >> /app/docker-entrypoint.sh && \
+    echo '  cp -f /app-docker/webpack.config.js /app/webpack.config.js 2>/dev/null || true' >> /app/docker-entrypoint.sh && \
+    echo '  cp -f /app-docker/dev-server.js /app/dev-server.js 2>/dev/null || true' >> /app/docker-entrypoint.sh && \
+    echo '  cp -f /app-docker/inject-env.sh /app/inject-env.sh 2>/dev/null || true' >> /app/docker-entrypoint.sh && \
+    echo '  mkdir -p /app/public' >> /app/docker-entrypoint.sh && \
+    echo '  cp -f /app-docker/index.html /app/public/index.html 2>/dev/null || true' >> /app/docker-entrypoint.sh && \
+    echo '  cp -f /app-docker/generate-runtime-env.sh /app/generate-runtime-env.sh 2>/dev/null || true' >> /app/docker-entrypoint.sh && \
+    echo '  chmod +x /app/healthcheck.sh /app/inject-env.sh /app/generate-runtime-env.sh /app/dev-server.js 2>/dev/null || true' >> /app/docker-entrypoint.sh && \
+    echo 'fi' >> /app/docker-entrypoint.sh && \
+    echo 'echo "Running environment variable injection script..."' >> /app/docker-entrypoint.sh && \
+    echo '[ -f /app/generate-runtime-env.sh ] && /app/generate-runtime-env.sh || echo "WARNING: generate-runtime-env.sh not found but continuing..."' >> /app/docker-entrypoint.sh && \
+    echo '[ -f /app/inject-env.sh ] && /app/inject-env.sh || echo "WARNING: inject-env.sh not found but continuing..."' >> /app/docker-entrypoint.sh && \
+    echo 'echo "Starting webpack dev server..."' >> /app/docker-entrypoint.sh && \
+    echo 'if [ -f /app/dev-server.js ]; then' >> /app/docker-entrypoint.sh && \
+    echo '  exec node /app/dev-server.js "$@"' >> /app/docker-entrypoint.sh && \
+    echo 'else' >> /app/docker-entrypoint.sh && \
+    echo '  exec npm run dev' >> /app/docker-entrypoint.sh && \
+    echo 'fi' >> /app/docker-entrypoint.sh && \
+    chmod +x /app/docker-entrypoint.sh
+
+# Expose webpack dev server port
+EXPOSE 3000
+
+# Add Docker HEALTHCHECK instruction
+HEALTHCHECK --interval=30s --timeout=5s --start-period=60s --retries=3 \
+  CMD if [ -f /app/healthcheck.sh ]; then /app/healthcheck.sh; else wget -q --spider http://localhost:3000 || exit 1; fi
+
+# Ensure proper permissions for all app files
+RUN chown -R node:node /app /app-docker
+
+# Use non-root user
+USER node
+
+# Start with our entrypoint script which will handle missing files
+CMD ["/app/docker-entrypoint.sh"]

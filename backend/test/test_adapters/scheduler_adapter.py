@@ -175,7 +175,7 @@ class SchedulerTestAdapter(BaseTestAdapter):
         
         Args:
             task_id: ID of the task
-            now: Current time (defaults to current UTC time)
+            now: Current time (defaults to current timezone time)
             
         Returns:
             True if the task should run now, False otherwise

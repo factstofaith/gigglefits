@@ -42,7 +42,7 @@ def create_admin_user(username, password, name, bypass_mfa=True):
             is_active=True,
             account_status=UserAccountStatus.ACTIVE,
             bypass_mfa=bypass_mfa,
-            created_at=datetime.utcnow()
+            created_at=datetime.now(timezone.utc)
         )
         
         db.add(user)

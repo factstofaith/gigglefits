@@ -1,0 +1,115 @@
+const path = require("path");
+const webpack = require("webpack");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+
+module.exports = {
+  mode: "development",
+  entry: "./src/index.js",
+  output: {
+    path: path.resolve(__dirname, "../build"),
+    filename: "bundle.js",
+    publicPath: "/"
+  },
+  devtool: "inline-source-map",
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["@babel/preset-env", "@babel/preset-react"]
+          }
+        }
+      },
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"]
+      },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: "asset/resource",
+      }
+    ]
+  },
+  resolve: {
+    extensions: [".js", ".jsx"],
+    alias: {
+      "@": path.resolve(__dirname, "../src")
+    },
+    // Fix for webpack 5 node polyfills
+    fallback: {
+      "path": false,
+      "os": false,
+      "crypto": false,
+      "fs": false,
+      "stream": false
+    }
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, "../public/index.html"),
+      filename: "index.html"
+    }),
+    new webpack.DefinePlugin({
+      "process.env": {
+        NODE_ENV: JSON.stringify("development"),
+        REACT_APP_API_URL: JSON.stringify(process.env.REACT_APP_API_URL || "http://backend:8000"),
+        REACT_APP_RUNNING_IN_DOCKER: JSON.stringify("true")
+      }
+    }),
+    // Provide variables that modules expect to have
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+      Buffer: ['buffer', 'Buffer'],
+    }),
+    // Hot Module Replacement Plugin
+    new webpack.HotModuleReplacementPlugin()
+  ],
+  devServer: {
+    static: {
+      directory: path.join(__dirname, "../public"),
+      publicPath: '/'
+    },
+    watchFiles: {
+      paths: ['src/**/*', 'public/**/*'],
+      options: {
+        usePolling: true,
+        interval: 1000,
+        ignored: /node_modules/
+      }
+    },
+    compress: true,
+    hot: true,
+    port: 3000,
+    host: "0.0.0.0",
+    historyApiFallback: {
+      disableDotRule: true,
+      index: '/'
+    },
+    allowedHosts: "all",
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "*",
+      "Access-Control-Allow-Headers": "*"
+    },
+    client: {
+      overlay: {
+        errors: true,
+        warnings: false
+      },
+      progress: true,
+      webSocketURL: {
+        hostname: process.env.WDS_SOCKET_HOST || 'localhost',
+        pathname: process.env.WDS_SOCKET_PATH || '/ws',
+        port: process.env.WDS_SOCKET_PORT || 3000,
+      }
+    },
+    webSocketServer: 'ws',
+    devMiddleware: {
+      publicPath: '/',
+      stats: 'minimal'
+    }
+  }
+};

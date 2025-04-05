@@ -111,7 +111,7 @@ def valid_user_token(mock_regular_user):
 @pytest.fixture
 def expired_token(mock_regular_user):
     """Create an expired JWT token"""
-    expires = datetime.utcnow() - timedelta(minutes=15)  # Token expired 15 minutes ago
+    expires = datetime.now(timezone.utc) - timedelta(minutes=15)  # Token expired 15 minutes ago
     return create_access_token(
         data={
             "sub": mock_regular_user.username,
@@ -126,7 +126,7 @@ def token_invalid_signature(mock_regular_user):
     payload = {
         "sub": mock_regular_user.username,
         "role": mock_regular_user.role.value,
-        "exp": datetime.utcnow() + timedelta(minutes=30)
+        "exp": datetime.now(timezone.utc) + timedelta(minutes=30)
     }
     return jwt.encode(payload, "invalid_secret_key", algorithm=settings.JWT_ALGORITHM)
 

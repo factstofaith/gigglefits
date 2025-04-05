@@ -1,0 +1,39 @@
+FROM python:3.10-slim
+
+# Create non-root user
+RUN groupadd -g 1000 appuser && \
+    useradd -u 1000 -g appuser -s /bin/bash -m appuser
+
+WORKDIR /app
+
+# Install minimal dependencies
+RUN apt-get update && apt-get install -y \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Python packages
+RUN pip install fastapi uvicorn
+
+# Create data directory with proper permissions
+RUN mkdir -p /app/data && chown -R appuser:appuser /app/data
+
+# Create a test app file
+COPY --chown=appuser:appuser minimal-app.py /app/main.py
+
+# Set environment variables
+ENV RUNNING_IN_DOCKER=true \
+    APP_ENVIRONMENT=development \
+    CORS_ORIGINS=["http://localhost:3000","http://localhost:3456"]
+
+# Switch to non-root user
+USER appuser
+
+# Expose API port
+EXPOSE 8000
+
+# Health check
+HEALTHCHECK --interval=10s --timeout=5s --retries=3 \
+  CMD curl -f http://localhost:8000/health || exit 1
+
+# Start the server
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]

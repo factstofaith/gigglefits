@@ -6,7 +6,13 @@ module.exports = {
     node: true,
     'cypress/globals': true,
   },
-  extends: ['eslint:recommended', 'plugin:react/recommended', 'plugin:react-hooks/recommended', 'plugin:storybook/recommended'],
+  extends: [
+    'eslint:recommended', 
+    'plugin:react/recommended', 
+    'plugin:react-hooks/recommended',
+    // Temporarily removing storybook plugin to fix loading error (FE-005)
+    // 'plugin:storybook/recommended'
+  ],
   parserOptions: {
     ecmaFeatures: {
       jsx: true,

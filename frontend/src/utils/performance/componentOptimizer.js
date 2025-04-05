@@ -1,3 +1,4 @@
+import { ENV } from '@/utils/environmentConfig';
 /**
  * Component Performance Optimizer
  * 
@@ -32,7 +33,7 @@ export const optimizeComponent = (Component, {
   // Create wrapper component for render logging
   const WrappedComponent = (props) => {
     // In development, log renders
-    if (process.env.NODE_ENV === 'development' && logRenders) {
+    if (ENV.NODE_ENV === 'development' && logRenders) {
       console.log(`Rendering ${displayName}`, props);
     }
     
@@ -142,7 +143,7 @@ export const withRenderTiming = (Component) => {
       renderTimeRef.current = endTime - startTime;
       
       // Log render time in development
-      if (process.env.NODE_ENV === 'development') {
+      if (ENV.NODE_ENV === 'development') {
         console.log(`${displayName} rendered in ${renderTimeRef.current.toFixed(2)}ms`);
       }
     });

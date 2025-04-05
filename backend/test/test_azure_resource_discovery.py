@@ -35,7 +35,7 @@ SAMPLE_RESOURCES = [
         "region": "westus",
         "properties": {"kind": "app", "reserved": False},
         "tags": {"environment": "test"},
-        "discovered_at": datetime.utcnow() - timedelta(days=1)
+        "discovered_at": datetime.now(timezone.utc) - timedelta(days=1)
     },
     {
         "id": "resource-id-2",
@@ -45,7 +45,7 @@ SAMPLE_RESOURCES = [
         "region": "westus",
         "properties": {"version": "11", "administratorLogin": "admin"},
         "tags": {"environment": "test"},
-        "discovered_at": datetime.utcnow() - timedelta(days=1)
+        "discovered_at": datetime.now(timezone.utc) - timedelta(days=1)
     },
     {
         "id": "resource-id-3",
@@ -55,7 +55,7 @@ SAMPLE_RESOURCES = [
         "region": "westus",
         "properties": {"accessTier": "Hot", "supportsHttpsTrafficOnly": True},
         "tags": {"environment": "test"},
-        "discovered_at": datetime.utcnow() - timedelta(days=1)
+        "discovered_at": datetime.now(timezone.utc) - timedelta(days=1)
     }
 ]
 
@@ -65,7 +65,7 @@ SAMPLE_HEALTH = {
     "status": "Available",
     "reason": None,
     "summary": "The resource is healthy",
-    "timestamp": datetime.utcnow() - timedelta(minutes=5)
+    "timestamp": datetime.now(timezone.utc) - timedelta(minutes=5)
 }
 
 # Sample resource types
@@ -137,8 +137,8 @@ class MockDatabase:
             return {
                 "id": "status-id",
                 "status": "completed",
-                "start_time": datetime.utcnow() - timedelta(hours=1),
-                "end_time": datetime.utcnow() - timedelta(minutes=50),
+                "start_time": datetime.now(timezone.utc) - timedelta(hours=1),
+                "end_time": datetime.now(timezone.utc) - timedelta(minutes=50),
                 "discovered_count": 3,
                 "error_count": 0,
                 "result": "Discovered 3 resources"

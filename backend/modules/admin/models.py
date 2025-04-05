@@ -9,6 +9,31 @@ from typing import Optional, List, Dict, Any, Union, Literal
 from datetime import datetime
 from pydantic import BaseModel, Field, field_validator, HttpUrl, constr, SecretStr
 
+class AdminUser(BaseModel):
+    """Admin user model for administrative operations"""
+    id: str = Field(..., description="Admin user identifier")
+    username: str = Field(..., description="Admin username")
+    email: str = Field(..., description="Admin email address")
+    role: str = Field(..., description="Administrator role")
+    is_active: bool = Field(True, description="Whether the admin user is active")
+    created_at: datetime = Field(..., description="When the admin user was created")
+    last_login: Optional[datetime] = Field(None, description="When the admin user last logged in")
+    
+    model_config = {
+        "from_attributes": True,
+        "json_schema_extra": {
+            "example": {
+                "id": "admin-12345",
+                "username": "admin",
+                "email": "admin@example.com",
+                "role": "super_admin",
+                "is_active": True,
+                "created_at": "2025-01-01T00:00:00Z",
+                "last_login": "2025-04-01T12:00:00Z"
+            }
+        }
+    }
+
 class SuperUserRole(str, Enum):
     """Extended user role enum for super admin functionality"""
     SUPER_ADMIN = "super_admin"

@@ -6,7 +6,7 @@ testing framework.
 """
 
 import pytest
-from datetime import datetime, UTC
+from datetime import datetime, timezone
 from unittest.mock import MagicMock, patch
 
 from modules.earnings.service import EarningsService
@@ -89,8 +89,8 @@ class TestEarningsServiceOptimized:
         mock_roster.destination_id = roster["destination_id"]
         mock_roster.tenant_id = roster["tenant_id"]
         mock_roster.owner_id = roster["owner_id"]
-        mock_roster.created_at = datetime.now(UTC)
-        mock_roster.updated_at = datetime.now(UTC)
+        mock_roster.created_at = datetime.now(timezone.utc)
+        mock_roster.updated_at = datetime.now(timezone.utc)
         mock_roster.last_sync_at = None
         
         query_mock = MagicMock()
@@ -142,7 +142,7 @@ class TestEarningsServiceOptimized:
         updated_mock_roster.tenant_id = mock_roster.tenant_id
         updated_mock_roster.owner_id = mock_roster.owner_id
         updated_mock_roster.created_at = mock_roster.created_at
-        updated_mock_roster.updated_at = datetime.now(UTC)
+        updated_mock_roster.updated_at = datetime.now(timezone.utc)
         updated_mock_roster.last_sync_at = mock_roster.last_sync_at
         
         # Mock update_roster
@@ -209,8 +209,8 @@ class TestEarningsServiceOptimized:
         mock_employee.first_name = employee["first_name"]
         mock_employee.last_name = employee["last_name"]
         mock_employee.email = employee["email"]
-        mock_employee.created_at = datetime.now(UTC)
-        mock_employee.updated_at = datetime.now(UTC)
+        mock_employee.created_at = datetime.now(timezone.utc)
+        mock_employee.updated_at = datetime.now(timezone.utc)
         
         # Mock create_employee
         with patch.object(EarningsService, 'create_employee', return_value=mock_employee) as mock_create:
@@ -280,7 +280,7 @@ class TestEarningsServiceOptimized:
         updated_mock_employee.last_name = employee_update.last_name
         updated_mock_employee.email = mock_employee.email
         updated_mock_employee.created_at = mock_employee.created_at
-        updated_mock_employee.updated_at = datetime.now(UTC)
+        updated_mock_employee.updated_at = datetime.now(timezone.utc)
         
         # Mock update_employee
         with patch.object(EarningsService, 'update_employee', return_value=updated_mock_employee) as mock_update:
@@ -334,8 +334,8 @@ class TestEarningsServiceOptimized:
         mock_code.description = code["description"]
         mock_code.destination_system = code["destination_system"]
         mock_code.is_overtime = code["is_overtime"]
-        mock_code.created_at = datetime.now(UTC)
-        mock_code.updated_at = datetime.now(UTC)
+        mock_code.created_at = datetime.now(timezone.utc)
+        mock_code.updated_at = datetime.now(timezone.utc)
         
         # Mock create_earnings_code
         with patch.object(EarningsService, 'create_earnings_code', return_value=mock_code) as mock_create:
@@ -392,7 +392,7 @@ class TestEarningsServiceOptimized:
         updated_mock_code.destination_system = mock_code.destination_system
         updated_mock_code.is_overtime = mock_code.is_overtime
         updated_mock_code.created_at = mock_code.created_at
-        updated_mock_code.updated_at = datetime.now(UTC)
+        updated_mock_code.updated_at = datetime.now(timezone.utc)
         
         # Mock update_earnings_code
         with patch.object(EarningsService, 'update_earnings_code', return_value=updated_mock_code) as mock_update:
@@ -460,8 +460,8 @@ class TestEarningsServiceOptimized:
         mock_map.source_type = earnings_map["source_type"]
         mock_map.earnings_code_id = earnings_map["earnings_code_id"]
         mock_map.default_map = earnings_map["default_map"]
-        mock_map.created_at = datetime.now(UTC)
-        mock_map.updated_at = datetime.now(UTC)
+        mock_map.created_at = datetime.now(timezone.utc)
+        mock_map.updated_at = datetime.now(timezone.utc)
         
         # Mock create_earnings_map
         with patch.object(EarningsService, 'create_earnings_map', return_value=mock_map) as mock_create:
@@ -517,7 +517,7 @@ class TestEarningsServiceOptimized:
         updated_mock_map.earnings_code_id = mock_map.earnings_code_id
         updated_mock_map.default_map = mock_map.default_map
         updated_mock_map.created_at = mock_map.created_at
-        updated_mock_map.updated_at = datetime.now(UTC)
+        updated_mock_map.updated_at = datetime.now(timezone.utc)
         
         # Mock update_earnings_map
         with patch.object(EarningsService, 'update_earnings_map', return_value=updated_mock_map) as mock_update:
@@ -606,8 +606,8 @@ class TestEarningsServiceOptimized:
         mock_rule.rule_definition = business_rule["rule_definition"]
         mock_rule.earnings_code_id = business_rule["earnings_code_id"]
         mock_rule.is_active = business_rule["is_active"]
-        mock_rule.created_at = datetime.now(UTC)
-        mock_rule.updated_at = datetime.now(UTC)
+        mock_rule.created_at = datetime.now(timezone.utc)
+        mock_rule.updated_at = datetime.now(timezone.utc)
         
         # Mock create_business_rule
         with patch.object(EarningsService, 'create_business_rule', return_value=mock_rule) as mock_create:
@@ -666,7 +666,7 @@ class TestEarningsServiceOptimized:
         updated_mock_rule.earnings_code_id = mock_rule.earnings_code_id
         updated_mock_rule.is_active = mock_rule.is_active
         updated_mock_rule.created_at = mock_rule.created_at
-        updated_mock_rule.updated_at = datetime.now(UTC)
+        updated_mock_rule.updated_at = datetime.now(timezone.utc)
         
         # Mock update_business_rule
         with patch.object(EarningsService, 'update_business_rule', return_value=updated_mock_rule) as mock_update:
@@ -717,7 +717,7 @@ class TestEarningsServiceOptimized:
         mock_sync_response.new_employees = 0
         mock_sync_response.updated_employees = 0
         mock_sync_response.errors = None
-        mock_sync_response.sync_time = datetime.now(UTC)
+        mock_sync_response.sync_time = datetime.now(timezone.utc)
         
         # Mock sync_roster
         with patch.object(EarningsService, 'sync_roster', return_value=mock_sync_response) as mock_sync:

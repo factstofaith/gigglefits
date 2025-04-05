@@ -21,7 +21,7 @@ class TimezoneTestUtilities:
     """Utilities for timezone-aware testing."""
     
     @staticmethod
-    def create_datetime(year, month, day, hour=0, minute=0, second=0, tz_name="UTC"):
+    def create_datetime(year, month, day, hour=0, minute=0, second=0, tz_name="timezone"):
         """
         Create timezone-aware datetime in the specified timezone.
         

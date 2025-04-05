@@ -1,11 +1,18 @@
+
+import {
+  ErrorBoundary,
+  useErrorHandler,
+  withErrorBoundary } from "@/error-handling/";
+
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Box, Typography, Container, Grid, Paper } from '../design-system/optimized';
-import { useUser } from '../contexts/UserContext';
-
+import { Box, Typography, Container, Grid, Paper } from "@/design-system/optimized";
+import { useUser } from "@/contexts/UserContext";
 /**
- * Home Page component - Main landing page after login
- */
+* Home Page component - Main landing page after login
+*/
+import { useHealthCheckHandler } from "@/error-handling/docker";
+import { HealthCheckProvider } from "@/error-handling/docker";
 const HomePage = () => {
   const { state: user } = useUser();
 
@@ -58,8 +65,14 @@ const HomePage = () => {
           </Grid>
         </Grid>
       </Box>
-    </Container>
-  );
+    </Container>);
+
 };
 
-export default HomePage;
+HomePage;const HomePageWithErrorBoundary = (props) => <ErrorBoundary boundary="HomePage" fallback={({ error, resetError }) => <div className="error-container">
+            <h3>Error in HomePage</h3>
+            <p>{error.message}</p>
+            <button onClick={resetError}>Retry</button>
+          </div>}>
+        <HomePage {...props} />
+      </ErrorBoundary>;export default HomePageWithErrorBoundary;

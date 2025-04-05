@@ -41,6 +41,9 @@ import {
   Tooltip,
   Alert,
 } from '@mui/material';
+
+// Error handling
+import { ErrorBoundary, useErrorHandler, withErrorBoundary } from '@/error-handling';
 import {
   BarChart as BarChartIcon,
   PieChart as PieChartIcon,
@@ -264,6 +267,9 @@ const AdminDashboard = ({
   ],
   onRefresh,
 }) => {
+  // Error handling
+  const { error, handleError, clearError, wrapPromise } = useErrorHandler('AdminDashboard');
+
   const theme = useTheme();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -272,16 +278,27 @@ const AdminDashboard = ({
   
   // Handle refresh button click
   const handleRefresh = () => {
-    setIsLoading(true);
-    
-    // In a real app, this would call the onRefresh prop
-    // For the mock, we'll just simulate a delay
-    setTimeout(() => {
-      if (onRefresh) {
-        onRefresh();
-      }
+    try {
+      setIsLoading(true);
+      clearError(); // Clear any previous errors
+      
+      // In a real app, this would call the onRefresh prop wrapped in wrapPromise
+      // For the mock, we'll just simulate a delay
+      setTimeout(() => {
+        try {
+          if (onRefresh) {
+            wrapPromise(onRefresh());
+          }
+          setIsLoading(false);
+        } catch (err) {
+          handleError(err, { action: 'refresh-dashboard' });
+          setIsLoading(false);
+        }
+      }, 1000);
+    } catch (err) {
+      handleError(err, { action: 'start-refresh' });
       setIsLoading(false);
-    }, 1000);
+    }
   };
   
   // Format statistic with trend
@@ -353,7 +370,26 @@ const AdminDashboard = ({
         color = 'default';
     }
     
-    return (
+    // Show error message if there is an error
+    if (error) {
+      return (
+        <Box sx={{ p: 3, width: '100%' }}>
+          <Alert 
+            severity="error"
+            action={
+              <Button color="inherit" size="small" onClick={clearError}>
+                Retry
+              </Button>
+            }
+          >
+            <AlertTitle>Error</AlertTitle>
+            {error.message || 'An error occurred while loading the dashboard data.'}
+          </Alert>
+        </Box>
+      );
+    }
+
+return (
       <Chip
         icon={icon}
         label={`${status}: ${count}`}
@@ -916,4 +952,26 @@ AdminDashboard.propTypes = {
   onRefresh: PropTypes.func,
 };
 
-export default AdminDashboard;
+export default withErrorBoundary(AdminDashboard, {
+  boundary: 'AdminDashboard',
+  fallback: ({ error, resetError }) => (
+    <Box sx={{ p: 3, width: '100%' }}>
+      <Paper sx={{ p: 2 }}>
+        <Typography variant="h5" color="error" gutterBottom>
+          Dashboard Error
+        </Typography>
+        <Typography paragraph>
+          {error?.message || 'Failed to load the admin dashboard. Please try again.'}
+        </Typography>
+        <Button 
+          variant="contained" 
+          color="primary" 
+          onClick={resetError}
+          startIcon={<RefreshIcon />}
+        >
+          Reload Dashboard
+        </Button>
+      </Paper>
+    </Box>
+  )
+});

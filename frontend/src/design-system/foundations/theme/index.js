@@ -5,26 +5,26 @@
 
 import ThemeProvider, { useTheme as useDesignTheme, ThemeContext } from './ThemeProvider';
 import { lightTheme, darkTheme } from './themes';
-import ThemeCompatibilityProvider, { 
-  useTheme, 
-  createCompatibilityTheme 
-} from './ThemeCompatibilityLayer';
+import ThemeCompatibilityProvider, {
+  useTheme,
+  createCompatibilityTheme } from
+'./ThemeCompatibilityLayer';
 
 // Export original theme components
-export { 
-  ThemeProvider, 
-  useDesignTheme, 
-  ThemeContext, 
-  lightTheme, 
-  darkTheme 
-};
+export {
+  ThemeProvider,
+  useDesignTheme,
+  ThemeContext,
+  lightTheme,
+  darkTheme };
+
 
 // Export compatibility layer
 export {
   ThemeCompatibilityProvider,
   useTheme,
-  createCompatibilityTheme
-};
+  createCompatibilityTheme };
+
 
 // Default export is now the ThemeCompatibilityProvider for ease of migration
 export default ThemeCompatibilityProvider;

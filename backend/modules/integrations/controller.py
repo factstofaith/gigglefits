@@ -7,9 +7,11 @@ This module defines the API routes for integrations in the TAP platform.
 from typing import List, Optional, Dict, Any, Union
 from fastapi import APIRouter, Depends, HTTPException, Query, Path, Security, Body
 from sqlalchemy.orm import Session
+from datetime import datetime, timezone
+from pydantic import BaseModel
 
 from core.auth import get_current_active_user, oauth2_scheme
-from db.base import get_db
+from db.base import get_db_session as get_db
 from db.models import User as DbUser
 
 from .models import (
@@ -43,6 +45,17 @@ router = APIRouter(prefix="/api/integrations")
 def get_integration_service(db: Session = Depends(get_db)):
     """Get integration service instance with DB session"""
     return IntegrationService(db)
+
+
+
+def standardize_response(data, skip=0, limit=10, total=None):
+    """Helper function to create standardized responses"""
+    # For collections with pagination
+    if isinstance(data, list) and total is not None:
+        return create_paginated_response(items=data, total=total, skip=skip, limit=limit)
+    # For single items or collections without pagination
+    return create_response(data=data)
+
 
 
 @router.get(
@@ -737,11 +750,11 @@ async def run_integration(
         from datetime import datetime, timedelta
         
         # Generate a run ID if not provided
-        run_id = f"run-{integration_id}-{int(datetime.utcnow().timestamp())}"
-        started_at = datetime.utcnow().isoformat() + "Z"
+        run_id = f"run-{integration_id}-{int(datetime.now(timezone.utc).timestamp())}"
+        started_at = datetime.now(timezone.utc).isoformat() + "Z"
         
         # Estimate 5 minutes for completion (should be based on history or complexity)
-        estimated_completion = (datetime.utcnow() + timedelta(minutes=5)).isoformat() + "Z"
+        estimated_completion = (datetime.now(timezone.utc) + timedelta(minutes=5)).isoformat() + "Z"
         
         # Enhance the response with tracking information
         result.update({
@@ -1913,7 +1926,7 @@ async def get_azure_blob_config(
                             "type": "monthly",
                             "day": "last",
                             "time": "23:00:00",
-                            "timezone": "UTC"
+                            "timezone": "timezone"
                         },
                         "run_count": 2,
                         "success_count": 2,
@@ -2179,47 +2192,51 @@ async def test_azure_blob_connection(
         from adapters.blob_storage_adapter import BlobStorageAdapter
         import logging
         
-        logger = logging.getLogger(__name__)
+        logging.info(f"Testing Azure blob connection for integration {integration_id}")
+        adapter = AdapterFactory.create_adapter("azure_blob", config=existing.azure_blob_config)
+        result = adapter.test_connection()
         
-        # Get Azure connection details from environment or config
-        try:
-            adapter = AdapterFactory.create_adapter('azure_blob', {
-                'connection_string': None,  # Will use default connection from environment variables
-                'container_name': existing.azure_blob_config.containerName
-            })
-        except Exception as adapter_error:
-            logger.error(f"Failed to create Azure Blob adapter: {str(adapter_error)}")
-            return {
-                "status": "error", 
-                "message": "Failed to initialize Azure Blob Storage connection",
-                "details": str(adapter_error)
-            }
-        
-        # Check if adapter is valid
-        if not adapter or not isinstance(adapter, BlobStorageAdapter):
-            return {"status": "error", "message": "Could not create adapter for Azure Blob Storage"}
-        
-        # Test connection by listing a few blobs (limit to 1)
-        try:
-            blobs = adapter.list_blobs(limit=1)
-            
-            return {
-                "status": "success", 
-                "message": "Connection successful", 
-                "container": existing.azure_blob_config.containerName,
-                "blobs_found": len(blobs)
-            }
-        except Exception as blob_error:
-            logger.error(f"Failed to list blobs: {str(blob_error)}")
-            return {
-                "status": "error", 
-                "message": "Connection established but failed to list blobs",
-                "details": str(blob_error)
-            }
-            
+        return {"status": "success", "details": result}
     except Exception as e:
-        logger.error(f"Azure Blob connection test failed: {str(e)}")
-        return {"status": "error", "message": f"Connection failed: {str(e)}"}
+        logging.error(f"Azure blob connection test failed: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Connection test failed: {str(e)}")
+        
+# The following appears to be misplaced imports that should be at the top of the file
+# from pydantic import BaseModel
+# from typing import List, Dict, Any, Optional
+# from datetime import timezone
+# from pydantic import BaseModel
+# from backend.utils.api.models import DataResponse, PaginatedResponse, ErrorResponse, create_response, create_paginated_response, create_error_response
+
+# Standard API Response Models
+class ResponseMetadata(BaseModel):
+    timestamp: datetime
+    request_id: str
+    api_version: str = "1.0"
+
+class StandardResponse(BaseModel):
+    data: Any
+    metadata: ResponseMetadata
+
+class PaginationMetadata(BaseModel):
+    page: int
+    page_size: int
+    total_items: int
+    total_pages: int
+
+class PaginatedResponse(BaseModel):
+    data: List[Any]
+    pagination: PaginationMetadata
+    metadata: ResponseMetadata
+
+class ErrorDetail(BaseModel):
+    code: str
+    message: str
+    details: Optional[Dict[str, Any]] = None
+
+class ErrorResponse(BaseModel):
+    error: ErrorDetail
+    metadata: ResponseMetadata
 
 
 # Schedule Configuration Endpoints

@@ -63,9 +63,9 @@ SAMPLE_ALERTS = [
                 "settings": {"include_details": True}
             }
         ],
-        "last_updated": datetime.utcnow() - timedelta(hours=1),
-        "last_triggered": datetime.utcnow() - timedelta(minutes=30),
-        "created_at": datetime.utcnow() - timedelta(days=1),
+        "last_updated": datetime.now(timezone.utc) - timedelta(hours=1),
+        "last_triggered": datetime.now(timezone.utc) - timedelta(minutes=30),
+        "created_at": datetime.now(timezone.utc) - timedelta(days=1),
         "created_by": "test-user"
     },
     {
@@ -93,9 +93,9 @@ SAMPLE_ALERTS = [
                 "settings": {"url": "https://example.com/webhook"}
             }
         ],
-        "last_updated": datetime.utcnow() - timedelta(hours=2),
-        "last_triggered": datetime.utcnow() - timedelta(hours=3),
-        "created_at": datetime.utcnow() - timedelta(days=2),
+        "last_updated": datetime.now(timezone.utc) - timedelta(hours=2),
+        "last_triggered": datetime.now(timezone.utc) - timedelta(hours=3),
+        "created_at": datetime.now(timezone.utc) - timedelta(days=2),
         "created_by": "test-user"
     }
 ]
@@ -109,7 +109,7 @@ SAMPLE_HISTORY = [
         "status": AlertStatus.ACTIVE,
         "message": "CPU usage exceeded threshold: 85%",
         "value": 85.0,
-        "timestamp": datetime.utcnow() - timedelta(minutes=30),
+        "timestamp": datetime.now(timezone.utc) - timedelta(minutes=30),
         "user_id": None
     },
     {
@@ -119,7 +119,7 @@ SAMPLE_HISTORY = [
         "status": AlertStatus.ACKNOWLEDGED,
         "message": "Alert acknowledged by admin",
         "value": None,
-        "timestamp": datetime.utcnow() - timedelta(minutes=15),
+        "timestamp": datetime.now(timezone.utc) - timedelta(minutes=15),
         "user_id": "admin-user"
     },
     {
@@ -129,7 +129,7 @@ SAMPLE_HISTORY = [
         "status": AlertStatus.ACTIVE,
         "message": "Database connections exceeded threshold: 120",
         "value": 120.0,
-        "timestamp": datetime.utcnow() - timedelta(hours=3),
+        "timestamp": datetime.now(timezone.utc) - timedelta(hours=3),
         "user_id": None
     },
     {
@@ -139,7 +139,7 @@ SAMPLE_HISTORY = [
         "status": AlertStatus.RESOLVED,
         "message": "Alert automatically resolved",
         "value": 50.0,
-        "timestamp": datetime.utcnow() - timedelta(hours=2),
+        "timestamp": datetime.now(timezone.utc) - timedelta(hours=2),
         "user_id": None
     }
 ]

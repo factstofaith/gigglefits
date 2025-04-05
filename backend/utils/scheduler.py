@@ -46,7 +46,7 @@ class IntegrationScheduler:
     async def _scheduler_loop(self):
         """Main scheduler loop - checks for tasks to run every minute"""
         while self.is_running:
-            now = datetime.now(pytz.UTC)
+            now = datetime.now(pytz.timezone)
             
             # Check each scheduled task
             for task_id, task_info in list(self.scheduled_tasks.items()):

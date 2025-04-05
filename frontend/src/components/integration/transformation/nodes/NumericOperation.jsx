@@ -1,37 +1,20 @@
 import React, { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { 
-  Box, 
-  TextField, 
-  FormControl, 
-  InputLabel, 
-  Select, 
-  MenuItem,
-  FormHelperText,
-  Grid,
-  Typography,
-  Divider,
-  Alert,
-  Switch,
-  FormControlLabel
-} from '@mui/material';
+import { Box, TextField, FormControl, InputLabel, Select, MenuItem, FormHelperText, Grid, Typography, Divider, Alert, Switch, FormControlLabel } from '@mui/material';
 import CalculateIcon from '@mui/icons-material/Calculate';
-import TransformationNodeTemplate from '../../../../accelerators/components/TransformationNodeTemplate';
-import { useDataTransformation } from '../../../../accelerators/hooks';
+import TransformationNodeTemplate from "@/components/TransformationNodeTemplate";
+import { useDataTransformation } from "@/hooks/";
 import * as Yup from 'yup';
 import { Decimal } from 'decimal.js';
 
 // Validation schema for NumericOperation
+import { withErrorBoundary } from "@/error-handling/withErrorBoundary";
 const validationSchema = Yup.object().shape({
   inputField: Yup.string().required('Input field is required'),
   outputField: Yup.string(),
-  operation: Yup.string().required('Operation is required').oneOf([
-    'add', 'subtract', 'multiply', 'divide', 'modulo', 'power', 
-    'round', 'floor', 'ceil', 'abs', 'negate', 'percentage',
-    'min', 'max', 'sqrt', 'log', 'exp'
-  ], 'Invalid operation'),
+  operation: Yup.string().required('Operation is required').oneOf(['add', 'subtract', 'multiply', 'divide', 'modulo', 'power', 'round', 'floor', 'ceil', 'abs', 'negate', 'percentage', 'min', 'max', 'sqrt', 'log', 'exp'], 'Invalid operation'),
   operand: Yup.number().when('operation', {
-    is: op => ['add', 'subtract', 'multiply', 'divide', 'modulo', 'power', 'percentage', 'min', 'max'].includes(op),
+    is: (op) => ['add', 'subtract', 'multiply', 'divide', 'modulo', 'power', 'percentage', 'min', 'max'].includes(op),
     then: Yup.number().required('Operand is required for this operation'),
     otherwise: Yup.number()
   }),
@@ -62,25 +45,92 @@ const initialConfig = {
 };
 
 // Numeric operations available in the component
-const NUMERIC_OPERATIONS = [
-  { value: 'add', label: 'Add', requiresOperand: true, description: 'Add a value to the input number' },
-  { value: 'subtract', label: 'Subtract', requiresOperand: true, description: 'Subtract a value from the input number' },
-  { value: 'multiply', label: 'Multiply', requiresOperand: true, description: 'Multiply the input number by a value' },
-  { value: 'divide', label: 'Divide', requiresOperand: true, description: 'Divide the input number by a value' },
-  { value: 'modulo', label: 'Modulo', requiresOperand: true, description: 'Get the remainder of division by a value' },
-  { value: 'power', label: 'Power', requiresOperand: true, description: 'Raise the input number to a power' },
-  { value: 'percentage', label: 'Percentage', requiresOperand: true, description: 'Calculate a percentage of the input number' },
-  { value: 'round', label: 'Round', requiresOperand: false, description: 'Round to the nearest integer or decimal place' },
-  { value: 'floor', label: 'Floor', requiresOperand: false, description: 'Round down to the nearest integer or decimal place' },
-  { value: 'ceil', label: 'Ceiling', requiresOperand: false, description: 'Round up to the nearest integer or decimal place' },
-  { value: 'abs', label: 'Absolute', requiresOperand: false, description: 'Get the absolute value' },
-  { value: 'negate', label: 'Negate', requiresOperand: false, description: 'Change the sign of the value' },
-  { value: 'min', label: 'Minimum', requiresOperand: true, description: 'Get the minimum of the input number and the operand' },
-  { value: 'max', label: 'Maximum', requiresOperand: true, description: 'Get the maximum of the input number and the operand' },
-  { value: 'sqrt', label: 'Square Root', requiresOperand: false, description: 'Calculate the square root of the input number' },
-  { value: 'log', label: 'Logarithm', requiresOperand: false, description: 'Calculate the natural logarithm of the input number' },
-  { value: 'exp', label: 'Exponential', requiresOperand: false, description: 'Calculate e raised to the power of the input number' }
-];
+const NUMERIC_OPERATIONS = [{
+  value: 'add',
+  label: 'Add',
+  requiresOperand: true,
+  description: 'Add a value to the input number'
+}, {
+  value: 'subtract',
+  label: 'Subtract',
+  requiresOperand: true,
+  description: 'Subtract a value from the input number'
+}, {
+  value: 'multiply',
+  label: 'Multiply',
+  requiresOperand: true,
+  description: 'Multiply the input number by a value'
+}, {
+  value: 'divide',
+  label: 'Divide',
+  requiresOperand: true,
+  description: 'Divide the input number by a value'
+}, {
+  value: 'modulo',
+  label: 'Modulo',
+  requiresOperand: true,
+  description: 'Get the remainder of division by a value'
+}, {
+  value: 'power',
+  label: 'Power',
+  requiresOperand: true,
+  description: 'Raise the input number to a power'
+}, {
+  value: 'percentage',
+  label: 'Percentage',
+  requiresOperand: true,
+  description: 'Calculate a percentage of the input number'
+}, {
+  value: 'round',
+  label: 'Round',
+  requiresOperand: false,
+  description: 'Round to the nearest integer or decimal place'
+}, {
+  value: 'floor',
+  label: 'Floor',
+  requiresOperand: false,
+  description: 'Round down to the nearest integer or decimal place'
+}, {
+  value: 'ceil',
+  label: 'Ceiling',
+  requiresOperand: false,
+  description: 'Round up to the nearest integer or decimal place'
+}, {
+  value: 'abs',
+  label: 'Absolute',
+  requiresOperand: false,
+  description: 'Get the absolute value'
+}, {
+  value: 'negate',
+  label: 'Negate',
+  requiresOperand: false,
+  description: 'Change the sign of the value'
+}, {
+  value: 'min',
+  label: 'Minimum',
+  requiresOperand: true,
+  description: 'Get the minimum of the input number and the operand'
+}, {
+  value: 'max',
+  label: 'Maximum',
+  requiresOperand: true,
+  description: 'Get the maximum of the input number and the operand'
+}, {
+  value: 'sqrt',
+  label: 'Square Root',
+  requiresOperand: false,
+  description: 'Calculate the square root of the input number'
+}, {
+  value: 'log',
+  label: 'Logarithm',
+  requiresOperand: false,
+  description: 'Calculate the natural logarithm of the input number'
+}, {
+  value: 'exp',
+  label: 'Exponential',
+  requiresOperand: false,
+  description: 'Calculate e raised to the power of the input number'
+}];
 
 /**
  * Performs numeric operations with high precision
@@ -89,10 +139,10 @@ const NUMERIC_OPERATIONS = [
  * @returns {number|null} - The result of the operation
  */
 const performNumericOperation = (input, config) => {
-  const { 
-    operation, 
-    operand, 
-    precision, 
+  const {
+    operation,
+    operand,
+    precision,
     roundingMode,
     useHighPrecision,
     nullValue,
@@ -104,13 +154,11 @@ const performNumericOperation = (input, config) => {
   if (input === null || input === undefined || isNaN(Number(input))) {
     return nullValue;
   }
-
   try {
     // Use Decimal.js for high precision if enabled, otherwise use native JavaScript
     let result;
     const inputValue = useHighPrecision ? new Decimal(input) : Number(input);
     const operandValue = useHighPrecision ? new Decimal(operand || 0) : Number(operand || 0);
-
     if (useHighPrecision) {
       // High precision operations with Decimal.js
       switch (operation) {
@@ -286,7 +334,6 @@ const performNumericOperation = (input, config) => {
             break;
         }
       }
-
       return result;
     }
   } catch (error) {
@@ -306,45 +353,56 @@ const performNumericOperation = (input, config) => {
 /**
  * Configuration panel for NumericOperation
  */
-const NumericOperationConfigPanel = ({ 
-  config, 
-  onChange, 
-  validationState, 
-  disabled, 
-  readOnly 
+const NumericOperationConfigPanel = ({
+  config,
+  onChange,
+  validationState,
+  disabled,
+  readOnly
 }) => {
   // Handle changes to form fields
   const handleChange = useCallback((event) => {
-    const { name, value } = event.target;
-    
+    const {
+      name,
+      value
+    } = event.target;
+
     // Convert numeric values
     if (['operand', 'precision', 'nullValue', 'fallbackValue'].includes(name)) {
-      onChange({ ...config, [name]: value === '' ? '' : Number(value) });
+      onChange({
+        ...config,
+        [name]: value === '' ? '' : Number(value)
+      });
     } else {
-      onChange({ ...config, [name]: value });
+      onChange({
+        ...config,
+        [name]: value
+      });
     }
   }, [config, onChange]);
 
   // Handle checkbox changes
   const handleCheckboxChange = useCallback((event) => {
-    const { name, checked } = event.target;
-    onChange({ ...config, [name]: checked });
+    const {
+      name,
+      checked
+    } = event.target;
+    onChange({
+      ...config,
+      [name]: checked
+    });
   }, [config, onChange]);
 
   // Get the selected operation details
-  const selectedOperation = useMemo(() => 
-    NUMERIC_OPERATIONS.find(op => op.value === config.operation) || NUMERIC_OPERATIONS[0],
-  [config.operation]);
+  const selectedOperation = useMemo(() => NUMERIC_OPERATIONS.find((op) => op.value === config.operation) || NUMERIC_OPERATIONS[0], [config.operation]);
 
   // Show preview of numeric operation
   const numericTransform = useDataTransformation(performNumericOperation);
-  
   const handlePreviewCalculation = useCallback(() => {
     if (!config.inputField) return 'Enter an input field';
-    
+
     // Sample input value
     const sampleInput = 123.456;
-    
     try {
       const result = performNumericOperation(sampleInput, config);
       return result === null ? 'null' : String(result);
@@ -352,58 +410,37 @@ const NumericOperationConfigPanel = ({
       return `Error: ${error.message}`;
     }
   }, [config, numericTransform]);
-
   const calculationPreview = useMemo(() => {
     return handlePreviewCalculation();
   }, [handlePreviewCalculation]);
-  
-  return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+  return <Box sx={{
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 2
+  }}>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
-          <TextField
-            name="inputField"
-            label="Input Field"
-            value={config.inputField || ''}
-            onChange={handleChange}
-            error={Boolean(validationState.errors.inputField)}
-            helperText={validationState.errors.inputField || 'Field to perform calculation on'}
-            disabled={disabled}
-            InputProps={{ readOnly }}
-            fullWidth
-            required
-          />
+          <TextField name="inputField" label="Input Field" value={config.inputField || ''} onChange={handleChange} error={Boolean(validationState.errors.inputField)} helperText={validationState.errors.inputField || 'Field to perform calculation on'} disabled={disabled} InputProps={{
+          readOnly
+        }} fullWidth required />
+
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField
-            name="outputField"
-            label="Output Field (leave empty to overwrite)"
-            value={config.outputField || ''}
-            onChange={handleChange}
-            error={Boolean(validationState.errors.outputField)}
-            helperText={validationState.errors.outputField || 'Output field name (optional)'}
-            disabled={disabled}
-            InputProps={{ readOnly }}
-            fullWidth
-          />
+          <TextField name="outputField" label="Output Field (leave empty to overwrite)" value={config.outputField || ''} onChange={handleChange} error={Boolean(validationState.errors.outputField)} helperText={validationState.errors.outputField || 'Output field name (optional)'} disabled={disabled} InputProps={{
+          readOnly
+        }} fullWidth />
+
         </Grid>
       </Grid>
       
       <FormControl fullWidth error={Boolean(validationState.errors.operation)} required>
         <InputLabel id="operation-label">Numeric Operation</InputLabel>
-        <Select
-          labelId="operation-label"
-          name="operation"
-          value={config.operation || 'add'}
-          onChange={handleChange}
-          disabled={disabled}
-          readOnly={readOnly}
-        >
-          {NUMERIC_OPERATIONS.map(operation => (
-            <MenuItem key={operation.value} value={operation.value}>
+        <Select labelId="operation-label" name="operation" value={config.operation || 'add'} onChange={handleChange} disabled={disabled} readOnly={readOnly}>
+
+          {NUMERIC_OPERATIONS.map((operation) => <MenuItem key={operation.value} value={operation.value}>
               {operation.label}
-            </MenuItem>
-          ))}
+            </MenuItem>)}
+
         </Select>
         <FormHelperText>
           {validationState.errors.operation || selectedOperation.description}
@@ -411,49 +448,27 @@ const NumericOperationConfigPanel = ({
       </FormControl>
       
       {/* Operation-specific settings */}
-      {selectedOperation.requiresOperand && (
-        <TextField
-          name="operand"
-          label="Operand"
-          type="number"
-          value={config.operand !== undefined ? config.operand : ''}
-          onChange={handleChange}
-          error={Boolean(validationState.errors.operand)}
-          helperText={validationState.errors.operand || 'Value to use for the calculation'}
-          disabled={disabled}
-          InputProps={{ readOnly }}
-          fullWidth
-          required
-        />
-      )}
+      {selectedOperation.requiresOperand && <TextField name="operand" label="Operand" type="number" value={config.operand !== undefined ? config.operand : ''} onChange={handleChange} error={Boolean(validationState.errors.operand)} helperText={validationState.errors.operand || 'Value to use for the calculation'} disabled={disabled} InputProps={{
+      readOnly
+    }} fullWidth required />}
+
+
       
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
-          <TextField
-            name="precision"
-            label="Decimal Precision"
-            type="number"
-            value={config.precision !== undefined ? config.precision : 2}
-            onChange={handleChange}
-            error={Boolean(validationState.errors.precision)}
-            helperText={validationState.errors.precision || 'Number of decimal places'}
-            disabled={disabled}
-            InputProps={{ readOnly }}
-            inputProps={{ min: 0, max: 20 }}
-            fullWidth
-          />
+          <TextField name="precision" label="Decimal Precision" type="number" value={config.precision !== undefined ? config.precision : 2} onChange={handleChange} error={Boolean(validationState.errors.precision)} helperText={validationState.errors.precision || 'Number of decimal places'} disabled={disabled} InputProps={{
+          readOnly
+        }} inputProps={{
+          min: 0,
+          max: 20
+        }} fullWidth />
+
         </Grid>
         <Grid item xs={12} sm={6}>
           <FormControl fullWidth error={Boolean(validationState.errors.roundingMode)}>
             <InputLabel id="roundingMode-label">Rounding Mode</InputLabel>
-            <Select
-              labelId="roundingMode-label"
-              name="roundingMode"
-              value={config.roundingMode || 'round'}
-              onChange={handleChange}
-              disabled={disabled}
-              readOnly={readOnly}
-            >
+            <Select labelId="roundingMode-label" name="roundingMode" value={config.roundingMode || 'round'} onChange={handleChange} disabled={disabled} readOnly={readOnly}>
+
               <MenuItem value="round">Round</MenuItem>
               <MenuItem value="floor">Floor (Round Down)</MenuItem>
               <MenuItem value="ceil">Ceiling (Round Up)</MenuItem>
@@ -465,19 +480,12 @@ const NumericOperationConfigPanel = ({
         </Grid>
       </Grid>
       
-      <FormControlLabel
-        control={
-          <Switch
-            name="useHighPrecision"
-            checked={Boolean(config.useHighPrecision)}
-            onChange={handleCheckboxChange}
-            disabled={disabled || readOnly}
-          />
-        }
-        label="Use High Precision Math (Decimal.js)"
-      />
+      <FormControlLabel control={<Switch name="useHighPrecision" checked={Boolean(config.useHighPrecision)} onChange={handleCheckboxChange} disabled={disabled || readOnly} />} label="Use High Precision Math (Decimal.js)" />
+
       
-      <Divider sx={{ my: 1 }} />
+      <Divider sx={{
+      my: 1
+    }} />
       
       <Typography variant="subtitle2" gutterBottom>
         Error Handling
@@ -487,14 +495,8 @@ const NumericOperationConfigPanel = ({
         <Grid item xs={12} sm={6}>
           <FormControl fullWidth error={Boolean(validationState.errors.handleErrors)}>
             <InputLabel id="handleErrors-label">Error Handling</InputLabel>
-            <Select
-              labelId="handleErrors-label"
-              name="handleErrors"
-              value={config.handleErrors || 'error'}
-              onChange={handleChange}
-              disabled={disabled}
-              readOnly={readOnly}
-            >
+            <Select labelId="handleErrors-label" name="handleErrors" value={config.handleErrors || 'error'} onChange={handleChange} disabled={disabled} readOnly={readOnly}>
+
               <MenuItem value="error">Throw Error</MenuItem>
               <MenuItem value="null">Return Null</MenuItem>
               <MenuItem value="fallback">Use Fallback Value</MenuItem>
@@ -505,67 +507,51 @@ const NumericOperationConfigPanel = ({
           </FormControl>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField
-            name="nullValue"
-            label="Null Value Replacement"
-            type="number"
-            value={config.nullValue !== undefined ? config.nullValue : 0}
-            onChange={handleChange}
-            error={Boolean(validationState.errors.nullValue)}
-            helperText={validationState.errors.nullValue || 'Value to use when input is null/undefined/NaN'}
-            disabled={disabled}
-            InputProps={{ readOnly }}
-            fullWidth
-          />
+          <TextField name="nullValue" label="Null Value Replacement" type="number" value={config.nullValue !== undefined ? config.nullValue : 0} onChange={handleChange} error={Boolean(validationState.errors.nullValue)} helperText={validationState.errors.nullValue || 'Value to use when input is null/undefined/NaN'} disabled={disabled} InputProps={{
+          readOnly
+        }} fullWidth />
+
         </Grid>
       </Grid>
       
-      {config.handleErrors === 'fallback' && (
-        <TextField
-          name="fallbackValue"
-          label="Fallback Value"
-          type="number"
-          value={config.fallbackValue !== undefined ? config.fallbackValue : 0}
-          onChange={handleChange}
-          error={Boolean(validationState.errors.fallbackValue)}
-          helperText={validationState.errors.fallbackValue || 'Value to use when calculation fails'}
-          disabled={disabled}
-          InputProps={{ readOnly }}
-          fullWidth
-          required
-        />
-      )}
+      {config.handleErrors === 'fallback' && <TextField name="fallbackValue" label="Fallback Value" type="number" value={config.fallbackValue !== undefined ? config.fallbackValue : 0} onChange={handleChange} error={Boolean(validationState.errors.fallbackValue)} helperText={validationState.errors.fallbackValue || 'Value to use when calculation fails'} disabled={disabled} InputProps={{
+      readOnly
+    }} fullWidth required />}
+
+
       
-      <Divider sx={{ my: 1 }} />
+      <Divider sx={{
+      my: 1
+    }} />
       
       <Box>
         <Typography variant="subtitle2" gutterBottom>
           Calculation Preview
         </Typography>
-        <Alert severity="info" sx={{ mb: 1 }}>
+        <Alert severity="info" sx={{
+        mb: 1
+      }}>
           Sample calculation with operation: {selectedOperation.label}
         </Alert>
-        <Box sx={{ 
-          p: 1, 
-          bgcolor: 'grey.100', 
-          borderRadius: 1,
-          fontFamily: 'monospace', 
-          whiteSpace: 'pre-wrap',
-          overflowX: 'auto'
-        }}>
+        <Box sx={{
+        p: 1,
+        bgcolor: 'grey.100',
+        borderRadius: 1,
+        fontFamily: 'monospace',
+        whiteSpace: 'pre-wrap',
+        overflowX: 'auto'
+      }}>
           <Typography variant="body2" component="div">
             <strong>Input:</strong> 123.456
-            {selectedOperation.requiresOperand && (
-              <strong> {getOperationSymbol(config.operation)} {config.operand}</strong>
-            )}
+            {selectedOperation.requiresOperand && <strong> {getOperationSymbol(config.operation)} {config.operand}</strong>}
+
           </Typography>
           <Typography variant="body2" component="div">
             <strong>Output:</strong> {calculationPreview}
           </Typography>
         </Box>
       </Box>
-    </Box>
-  );
+    </Box>;
 };
 
 /**
@@ -575,19 +561,28 @@ const NumericOperationConfigPanel = ({
  */
 const getOperationSymbol = (operation) => {
   switch (operation) {
-    case 'add': return '+';
-    case 'subtract': return '-';
-    case 'multiply': return '×';
-    case 'divide': return '÷';
-    case 'modulo': return '%';
-    case 'power': return '^';
-    case 'percentage': return '% of';
-    case 'min': return 'min with';
-    case 'max': return 'max with';
-    default: return '';
+    case 'add':
+      return '+';
+    case 'subtract':
+      return '-';
+    case 'multiply':
+      return '×';
+    case 'divide':
+      return '÷';
+    case 'modulo':
+      return '%';
+    case 'power':
+      return '^';
+    case 'percentage':
+      return '% of';
+    case 'min':
+      return 'min with';
+    case 'max':
+      return 'max with';
+    default:
+      return '';
   }
 };
-
 NumericOperationConfigPanel.propTypes = {
   /** Current configuration */
   config: PropTypes.object.isRequired,
@@ -597,12 +592,12 @@ NumericOperationConfigPanel.propTypes = {
   validationState: PropTypes.shape({
     isValid: PropTypes.bool.isRequired,
     errors: PropTypes.object.isRequired,
-    warnings: PropTypes.object.isRequired,
+    warnings: PropTypes.object.isRequired
   }).isRequired,
   /** Whether the configuration panel is disabled */
   disabled: PropTypes.bool,
   /** Whether the configuration panel is read-only */
-  readOnly: PropTypes.bool,
+  readOnly: PropTypes.bool
 };
 
 /**
@@ -612,19 +607,8 @@ NumericOperationConfigPanel.propTypes = {
  * mathematical operations with high precision and robust error handling.
  */
 const NumericOperation = (props) => {
-  return (
-    <TransformationNodeTemplate
-      title="Numeric Operation"
-      icon={CalculateIcon}
-      description="Performs mathematical operations on numeric values"
-      configPanel={NumericOperationConfigPanel}
-      validationSchema={validationSchema}
-      initialConfig={initialConfig}
-      {...props}
-    />
-  );
+  return <TransformationNodeTemplate title="Numeric Operation" icon={CalculateIcon} description="Performs mathematical operations on numeric values" configPanel={NumericOperationConfigPanel} validationSchema={validationSchema} initialConfig={initialConfig} {...props} />;
 };
-
 NumericOperation.propTypes = {
   /** Initial configuration for the component */
   initialConfig: PropTypes.object,
@@ -637,7 +621,6 @@ NumericOperation.propTypes = {
   /** Component ID */
   id: PropTypes.string,
   /** Test ID for testing */
-  testId: PropTypes.string,
+  testId: PropTypes.string
 };
-
 export default React.memo(NumericOperation);

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" content="TAP Integration Platform - Enterprise Ready" />
+  
+  <!-- Runtime environment initialization -->
+  <script>
+    window.env = {
+      REACT_APP_API_URL: "http://backend:8000",
+      REACT_APP_RUNNING_IN_DOCKER: "true",
+      REACT_APP_ENVIRONMENT: "development"
+    };
+  </script>
+  
+  <!-- Load runtime environment script before app bundle -->
+  <script src="%PUBLIC_URL%/runtime-env.js"></script>
+
+  <title>TAP Integration Platform</title>
+  
+  <!-- Error handling for container environments -->
+  <script>
+    // Global error handler for Docker environments
+    window.addEventListener('error', function(event) {
+      if (window.runtimeEnv && window.runtimeEnv.ERROR_LOGGING_ENABLED) {
+        console.error('[Docker Error Handler]', event.error || event.message);
+        
+        // Only report errors in production
+        if (window.runtimeEnv.ENVIRONMENT === 'production') {
+          try {
+            const errorData = {
+              message: event.message || 'Unknown error',
+              source: event.filename || 'Unknown source',
+              line: event.lineno,
+              column: event.colno,
+              stack: event.error && event.error.stack,
+              userAgent: navigator.userAgent,
+              timestamp: new Date().toISOString(),
+              containerId: window.runtimeEnv.CONTAINER_ID || 'unknown'
+            };
+            
+            // Report error to backend if enabled
+            if (window.runtimeEnv.ERROR_REPORTING_URL) {
+              fetch(window.runtimeEnv.ERROR_REPORTING_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(errorData)
+              }).catch(err => console.error('Failed to report error:', err));
+            }
+          } catch (reportingError) {
+            console.error('Error in error reporting:', reportingError);
+          }
+        }
+      }
+    });
+  </script>
+</head>
+<body>
+  <noscript>
+    <div style="padding: 20px; text-align: center; font-family: sans-serif;">
+      <h1>JavaScript Required</h1>
+      <p>You need to enable JavaScript to run this application.</p>
+    </div>
+  </noscript>
+  
+  <div id="root"></div>
+  
+  <!-- Docker-specific fallback if app fails to load -->
+  <div id="docker-error" style="display: none; padding: 20px; font-family: sans-serif;">
+    <h1>Application Error</h1>
+    <p>The application failed to initialize in the Docker environment.</p>
+    <p>Please check the container logs for more information.</p>
+    <div id="docker-error-details" style="margin-top: 20px; padding: 10px; background: #f8f8f8; border-radius: 4px;"></div>
+  </div>
+  
+  <script>
+    // Show Docker error page if app doesn't initialize within timeout
+    setTimeout(function() {
+      const rootEl = document.getElementById('root');
+      const errorEl = document.getElementById('docker-error');
+      const detailsEl = document.getElementById('docker-error-details');
+      
+      if (rootEl && rootEl.childElementCount === 0) {
+        if (errorEl) errorEl.style.display = 'block';
+        if (detailsEl) {
+          detailsEl.textContent = 'Environment: ' + 
+            (window.runtimeEnv ? window.runtimeEnv.ENVIRONMENT : 'unknown') + 
+            ', Container ID: ' + 
+            (window.runtimeEnv ? window.runtimeEnv.CONTAINER_ID : 'unknown');
+        }
+        
+        console.error('[Docker Container] Application failed to initialize within expected timeframe');
+      }
+    }, 60000); // 60 second timeout
+  </script>
+</body>
+</html>

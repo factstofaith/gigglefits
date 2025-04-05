@@ -3,8 +3,11 @@ set -e
 
 echo "Starting TAP Integration Platform Backend"
 
-# Create web.config with secure headers
-cat > /home/site/wwwroot/web.config << EOL
+# Create web.config with secure headers for Azure environments only
+# Skip in Docker environment
+if [[ -z "${RUNNING_IN_DOCKER}" ]] && [[ -d "/home/site/wwwroot" ]]; then
+    echo "Creating web.config for Azure environment..."
+    cat > /home/site/wwwroot/web.config << EOL
 <?xml version="1.0" encoding="utf-8"?>
 <configuration>
   <system.webServer>
@@ -33,16 +36,38 @@ cat > /home/site/wwwroot/web.config << EOL
   </system.webServer>
 </configuration>
 EOL
+else
+    echo "Skipping web.config creation - running in Docker or directory not found"
+fi
 
-# Create uploads directory if it doesn't exist
-mkdir -p /home/site/wwwroot/uploads
-chmod 755 /home/site/wwwroot/uploads
+# Create uploads directory if it doesn't exist (only for Azure environments)
+if [[ -z "${RUNNING_IN_DOCKER}" ]] && [[ -d "/home/site/wwwroot" ]]; then
+  echo "Creating uploads directory for Azure environment..."
+  mkdir -p /home/site/wwwroot/uploads
+  chmod 755 /home/site/wwwroot/uploads
+fi
 
-# Run database migrations
+# Run database migrations (adjust paths for Docker vs Azure)
 echo "Running database migrations..."
-cd /home/site/wwwroot
-python -m db.run_migrations
+if [[ -z "${RUNNING_IN_DOCKER}" ]] && [[ -d "/home/site/wwwroot" ]]; then
+  echo "Using Azure paths for database migrations..."
+  cd /home/site/wwwroot
+else
+  # In Docker, we're already in the right directory
+  CURRENT_DIR=$(pwd)
+  echo "Using Docker paths for database migrations, current directory: $CURRENT_DIR"
+  
+  # Ensure data directory exists and is writable (for SQLite)
+  mkdir -p /app/data || true
+fi
 
-# Start the application with uvicorn
-echo "Starting uvicorn server..."
-exec uvicorn main:app --host 0.0.0.0 --port 8000
+# Try to run migrations but don't fail if they fail
+python -m db.run_migrations || echo "WARNING: Database migrations failed"
+
+# Start the application with uvicorn only in Azure (in Docker, entrypoint.sh handles this)
+if [[ -z "${RUNNING_IN_DOCKER}" ]]; then
+  echo "Starting uvicorn server in Azure environment..."
+  exec uvicorn main:app --host 0.0.0.0 --port 8000
+else
+  echo "In Docker environment: uvicorn will be started by entrypoint.sh"
+fi

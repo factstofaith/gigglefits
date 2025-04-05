@@ -2,7 +2,7 @@
 Authentication module for the TAP Integration Platform
 """
 
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Optional
 from jose import JWTError, jwt
 from passlib.context import CryptContext
@@ -11,15 +11,16 @@ from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
 
-from core.config import settings
-from db.base import get_db
-from db.models import User
+from core.config import get_settings
+from db.base import get_db_session as get_db
+from db.models import User, UserRole
+from utils.timezone_utilities import TimezoneUtilities
 
 # Password hashing
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 # OAuth2 scheme
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/auth/token")
 
 class Token(BaseModel):
     """Token response model"""
@@ -53,11 +54,12 @@ def authenticate_user(db: Session, username: str, password: str):
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     """Create JWT access token"""
     to_encode = data.copy()
+    settings = get_settings()
     if expires_delta:
-        expire = datetime.utcnow() + expires_delta
+        expire = TimezoneUtilities.utc_now() + expires_delta
     else:
-        expire = datetime.utcnow() + timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
-    to_encode.update({"exp": expire})
+        expire = TimezoneUtilities.utc_now() + timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
+    to_encode.update({"exp": expire, "iat": TimezoneUtilities.utc_now()})
     encoded_jwt = jwt.encode(to_encode, settings.SECRET_KEY, algorithm="HS256")
     return encoded_jwt
 
@@ -69,13 +71,14 @@ async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = De
         headers={"WWW-Authenticate": "Bearer"},
     )
     try:
+        settings = get_settings()
         payload = jwt.decode(token, settings.SECRET_KEY, algorithms=["HS256"])
         username: str = payload.get("sub")
         if username is None:
             raise credentials_exception
         
         # Add expiration check
-        if "exp" in payload and datetime.utcnow() > datetime.fromtimestamp(payload["exp"]):
+        if "exp" in payload and datetime.now(timezone.utc) > datetime.fromtimestamp(payload["exp"]):
             raise credentials_exception
             
         token_data = TokenData(

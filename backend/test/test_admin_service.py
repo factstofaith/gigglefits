@@ -5,7 +5,7 @@ This module contains tests for the admin service functionality.
 """
 
 import pytest
-from datetime import datetime, timedelta, UTC
+from datetime import datetime, timedelta, timezone
 from unittest.mock import MagicMock, patch
 
 from modules.admin.service import AdminService
@@ -71,8 +71,8 @@ class TestAdminService:
             auth_type=app_create.auth_type,
             status=app_create.status,
             is_public=app_create.is_public,
-            created_at=datetime.now(UTC),
-            updated_at=datetime.now(UTC),
+            created_at=datetime.now(timezone.utc),
+            updated_at=datetime.now(timezone.utc),
             created_by="test-admin"
         )
         self.db_session.query().filter().first.return_value = None  # No existing app
@@ -103,8 +103,8 @@ class TestAdminService:
             auth_type=AuthType.API_KEY,
             status=ApplicationStatus.DRAFT,
             is_public=True,
-            created_at=datetime.now(UTC),
-            updated_at=datetime.now(UTC),
+            created_at=datetime.now(timezone.utc),
+            updated_at=datetime.now(timezone.utc),
             created_by="test-admin"
         )
         
@@ -147,8 +147,8 @@ class TestAdminService:
             auth_type=AuthType.API_KEY,
             status=ApplicationStatus.DRAFT,
             is_public=True,
-            created_at=datetime.now(UTC),
-            updated_at=datetime.now(UTC),
+            created_at=datetime.now(timezone.utc),
+            updated_at=datetime.now(timezone.utc),
             created_by="test-admin"
         )
         
@@ -184,8 +184,8 @@ class TestAdminService:
             auth_type=AuthType.API_KEY,
             status=ApplicationStatus.DRAFT,
             is_public=True,
-            created_at=datetime.now(UTC),
-            updated_at=datetime.now(UTC),
+            created_at=datetime.now(timezone.utc),
+            updated_at=datetime.now(timezone.utc),
             created_by="test-admin"
         )
         
@@ -259,8 +259,8 @@ class TestAdminService:
             fields=dataset_create.fields,
             status=dataset_create.status,
             is_public=dataset_create.is_public,
-            created_at=datetime.now(UTC),
-            updated_at=datetime.now(UTC),
+            created_at=datetime.now(timezone.utc),
+            updated_at=datetime.now(timezone.utc),
             created_by="test-admin"
         )
         self.db_session.query().filter().first.return_value = None  # No existing dataset
@@ -307,8 +307,8 @@ class TestAdminService:
             status=release_create.status,
             items=release_create.items,
             tenants=release_create.tenants,
-            created_at=datetime.now(UTC),
-            updated_at=datetime.now(UTC),
+            created_at=datetime.now(timezone.utc),
+            updated_at=datetime.now(timezone.utc),
             created_by="test-admin",
             completed_at=None
         )
@@ -354,8 +354,8 @@ class TestAdminService:
             status=tenant_create.status,
             tier=tenant_create.tier,
             settings=tenant_create.settings,
-            created_at=datetime.now(UTC),
-            updated_at=datetime.now(UTC)
+            created_at=datetime.now(timezone.utc),
+            updated_at=datetime.now(timezone.utc)
         )
         self.db_session.query().filter().first.return_value = None  # No existing tenant
         self.db_session.query().get.return_value = created_tenant

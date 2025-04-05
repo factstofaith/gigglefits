@@ -9,61 +9,42 @@ import json
 import requests
 import time
 from typing import List, Optional, Dict, Any, Union
-from datetime import datetime, timedelta, UTC
+from datetime import datetime, timedelta, timezone
+from sqlalchemy import Column, Integer, String, Text, DateTime, Boolean, ForeignKey, Enum, JSON, Table, Float, Sequence, UniqueConstraint, ForeignKeyConstraint, event
+from sqlalchemy.orm import relationship, backref, validates
+from sqlalchemy.ext.declarative import declared_attr
+from sqlalchemy.sql import func
+from datetime import datetime, timezone
+import enum
+import uuid
+
+from db.base import Base
+from utils.encryption.crypto import EncryptedString, EncryptedJSON
+from utils.helpers import generate_uid
 from sqlalchemy.orm import Session
-from sqlalchemy.exc import SQLAlchemyError
+from utils.error_handling.exceptions import ValidationError, ApplicationError, ResourceNotFoundError, DatabaseError
+from utils.error_handling.handlers import with_error_logging
+from utils.error_handling.container import register_signal_handlers, setup_container_health_check, add_container_middleware
 
-from .models import (
-    Application,
-    ApplicationCreate,
-    ApplicationUpdate,
-    ApplicationType,
-    ApplicationStatus,
-    AuthType,
-    Dataset,
-    DatasetCreate,
-    DatasetUpdate,
-    DatasetStatus,
-    Release,
-    ReleaseCreate,
-    ReleaseUpdate,
-    TenantApplicationAssociation,
-    TenantDatasetAssociation,
-    ReleaseStatus,
-    Webhook,
-    WebhookCreate,
-    WebhookUpdate,
-    WebhookLog,
-    WebhookStatus,
-    WebhookTestRequest,
-    WebhookTestResponse,
-    WebhookEventType,
-    WebhookAuthType,
-    WebhookBasicAuth,
-    WebhookBearerAuth,
-    WebhookCustomAuth,
-    SchemaDiscoveryMethod,
-    DatasetField,
-    DataType,
-    ConnectionParameter,
-    Tenant,
-    TenantCreate,
-    TenantUpdate,
-    TenantStatus,
-    TenantTier
-)
-
-from adapters.adapter_factory import AdapterFactory
-from db.models import (
-    Tenant as DbTenant,
-    TenantApplicationAssociation as DbTenantApplicationAssociation,
-    TenantDatasetAssociation as DbTenantDatasetAssociation,
-    Application as DbApplication,
-    Dataset as DbDataset
-)
-
+# Logger setup
 logger = logging.getLogger(__name__)
 
+# Import models
+from .models import (
+    SchemaDiscoveryMethod, DatasetField, AdminModel, DataType, 
+    ApplicationCreate, ApplicationUpdate, ApplicationBase, Application as ApplicationModel,
+    Dataset, DatasetCreate, DatasetUpdate, DatasetBase, 
+    TenantCreate, TenantUpdate, Tenant as TenantModel,
+    WebhookCreate, WebhookUpdate, Webhook, WebhookLog, WebhookLogBase, WebhookEventType,
+    WebhookAuthType, WebhookStatus, WebhookFilter,
+    Release, ReleaseCreate, ReleaseUpdate, ReleaseBase, ReleaseStatus, ReleaseItem,
+    AlertCreate, AlertUpdate, Alert, AlertHistoryEntry, AlertStatus, AlertSeverity,
+    WebhookTestRequest, WebhookTestResponse,
+    AzureConfigCreate, AzureConfigUpdate, AzureConfig, AzureResource, AzureMetric,
+    ErrorLog, ErrorLogDetail, LogSeverity
+)
+from db.models import Application, Tenant
+from modules.admin.models import AdminUser
 class SchemaDiscoveryService:
     """Service for discovering application schemas"""
     
@@ -717,7 +698,9 @@ class SchemaDiscoveryService:
                 try:
                     import json
                     samples = json.loads(samples)
-                except:
+                except Exception as e:
+                    logger.error(f"Error: {e}")
+
                     # If not JSON, treat as comma-separated or newline-separated values
                     if ',' in samples:
                         samples = [s.strip() for s in samples.split(',')]
@@ -935,7 +918,8 @@ class SchemaDiscoveryService:
             try:
                 datetime.strptime(value_str, '%Y-%m-%d')
                 return DataType.DATE
-            except ValueError:
+            except ValueError as e:
+                logger.error(f"Error: {e}")
                 pass
                 
         # Check for ISO datetime format
@@ -946,7 +930,8 @@ class SchemaDiscoveryService:
                     try:
                         datetime.strptime(value_str.split('.')[0], fmt)
                         return DataType.DATETIME
-                    except ValueError:
+                    except ValueError as e:
+                        logger.error(f"Error: {e}")
                         continue
             except Exception:
                 pass
@@ -1036,7 +1021,8 @@ class AdminService:
             logger.error(f"Database error in get_applications: {str(e)}")
             raise
     
-    def create_application(self, application: ApplicationCreate, created_by: str) -> Application:
+    @with_error_logging
+    def create_application(self, application: ApplicationCreate, created_by: str):
         """
         Create a new application
         """
@@ -1056,9 +1042,9 @@ class AdminService:
             
             return new_application
         except SQLAlchemyError as e:
+            logger.error(f"Error: {e}")
             self.db.rollback()
-            logger.error(f"Database error in create_application: {str(e)}")
-            raise
+            raise ApplicationError(message="Failed to create application", original_error=e)
     
     def get_application(self, application_id: int) -> Optional[Application]:
         """
@@ -1096,17 +1082,20 @@ class AdminService:
             
             return existing
         except SQLAlchemyError as e:
+            logger.error(f"Error: {e}")
             self.db.rollback()
             logger.error(f"Database error in update_application: {str(e)}")
             raise
     
-    def delete_application(self, application_id: int) -> bool:
+    @with_error_logging
+    def delete_application(self, application_id: int):
         """
         Delete an application
         """
         try:
             # Get the existing application
             existing = self.db.query(Application).filter(Application.id == application_id).first()
+            
             if not existing:
                 return False
             
@@ -1115,10 +1104,14 @@ class AdminService:
             self.db.commit()
             
             return True
+            
         except SQLAlchemyError as e:
             self.db.rollback()
             logger.error(f"Database error in delete_application: {str(e)}")
             raise
+        except Exception as e:
+            logger.error(f"Error in delete_application: {e}")
+            raise ApplicationError(message=f"Error in delete_application", original_error=e)
     
     def discover_application_schema(self, application_id: int, method: SchemaDiscoveryMethod, 
                                     discovery_config: Dict[str, Any] = None) -> List[DatasetField]:
@@ -1135,9 +1128,11 @@ class AdminService:
         """
         return self.schema_discovery_service.discover_schema(application_id, method, discovery_config)
     
+    @with_error_logging
+    
     def create_dataset_from_schema(self, application_id: int, name: str, 
                                   description: str, fields: List[DatasetField], 
-                                  created_by: str) -> Dataset:
+                                  created_by: str):
         """
         Create a dataset from discovered schema fields
         
@@ -1147,7 +1142,7 @@ class AdminService:
             description: Description for the new dataset
             fields: List of dataset fields
             created_by: User creating the dataset
-            
+        
         Returns:
             Created dataset
         """
@@ -1165,10 +1160,8 @@ class AdminService:
                 description=description,
                 schema=schema,
                 status=DatasetStatus.DRAFT,
-                is_public=False,
-                created_at=datetime.now(),
-                updated_at=datetime.now(),
-                created_by=created_by
+                created_at=datetime.now(timezone.utc),
+                updated_at=datetime.now(timezone.utc)
             )
             
             # Add dataset to database
@@ -1186,8 +1179,8 @@ class AdminService:
                     is_required=field_data.required,
                     is_primary_key=field_data.is_primary_key,
                     format=field_data.format,
-                    created_at=datetime.now(),
-                    updated_at=datetime.now()
+                    created_at=datetime.now(timezone.utc),
+                    updated_at=datetime.now(timezone.utc)
                 )
                 
                 # Add to schema properties
@@ -1217,11 +1210,14 @@ class AdminService:
             self.db.refresh(new_dataset)
             
             return new_dataset
-        
+            
         except SQLAlchemyError as e:
             self.db.rollback()
             logger.error(f"Database error in create_dataset_from_schema: {str(e)}")
             raise
+        except Exception as e:
+            logger.error(f"Error in create_dataset_from_schema: {e}")
+            raise ApplicationError(message=f"Error in create_dataset_from_schema", original_error=e)
     
     def _get_json_schema_type(self, data_type: DataType) -> str:
         """Convert from internal DataType to JSON Schema type"""
@@ -1268,7 +1264,8 @@ class AdminService:
             logger.error(f"Database error in get_datasets: {str(e)}")
             raise
     
-    def create_dataset(self, dataset: DatasetCreate, created_by: str) -> Dataset:
+    @with_error_logging
+    def create_dataset(self, dataset: DatasetCreate, created_by: str):
         """
         Create a new dataset
         """
@@ -1276,9 +1273,8 @@ class AdminService:
             # Create the new dataset object
             new_dataset = Dataset(
                 **dataset.model_dump(),
-                created_at=datetime.now(),
-                updated_at=datetime.now(),
-                created_by=created_by
+                created_at=datetime.now(timezone.utc),
+                updated_at=datetime.now(timezone.utc)
             )
             
             # Add to database
@@ -1287,10 +1283,14 @@ class AdminService:
             self.db.refresh(new_dataset)
             
             return new_dataset
+            
         except SQLAlchemyError as e:
             self.db.rollback()
             logger.error(f"Database error in create_dataset: {str(e)}")
             raise
+        except Exception as e:
+            logger.error(f"Error in create_dataset: {e}")
+            raise ApplicationError(message=f"Error in create_dataset", original_error=e)
     
     def get_dataset(self, dataset_id: int) -> Optional[Dataset]:
         """
@@ -1320,7 +1320,7 @@ class AdminService:
                 setattr(existing, field, value)
             
             # Update the updated_at timestamp
-            existing.updated_at = datetime.now()
+            existing.updated_at = datetime.now(timezone.utc)
             
             # Commit changes to the database
             self.db.commit()
@@ -1332,7 +1332,8 @@ class AdminService:
             logger.error(f"Database error in update_dataset: {str(e)}")
             raise
     
-    def delete_dataset(self, dataset_id: int) -> bool:
+    @with_error_logging
+    def delete_dataset(self, dataset_id: int):
         """
         Delete a dataset
         """
@@ -1347,12 +1348,14 @@ class AdminService:
             self.db.commit()
             
             return True
+            
         except SQLAlchemyError as e:
             self.db.rollback()
             logger.error(f"Database error in delete_dataset: {str(e)}")
             raise
-    
-    # Release methods
+        except Exception as e:
+            logger.error(f"Error in delete_dataset: {e}")
+            raise ApplicationError(message=f"Error in delete_dataset", original_error=e)
     def get_releases(self, skip: int = 0, limit: int = 100, status: Optional[str] = None) -> List[Release]:
         """
         Get all releases with optional filtering
@@ -1376,7 +1379,8 @@ class AdminService:
             logger.error(f"Database error in get_releases: {str(e)}")
             raise
     
-    def create_release(self, release: ReleaseCreate, created_by: str) -> Release:
+    @with_error_logging
+    def create_release(self, release: ReleaseCreate, created_by: str):
         """
         Create a new release
         """
@@ -1384,8 +1388,8 @@ class AdminService:
             # Create the new release object
             new_release = Release(
                 **release.model_dump(),
-                created_at=datetime.now(),
-                updated_at=datetime.now(),
+                created_at=datetime.now(timezone.utc),
+                updated_at=datetime.now(timezone.utc),
                 created_by=created_by,
                 completed_at=None
             )
@@ -1396,10 +1400,14 @@ class AdminService:
             self.db.refresh(new_release)
             
             return new_release
+            
         except SQLAlchemyError as e:
             self.db.rollback()
             logger.error(f"Database error in create_release: {str(e)}")
             raise
+        except Exception as e:
+            logger.error(f"Error in create_release: {e}")
+            raise ApplicationError(message=f"Error in create_release", original_error=e)
     
     def get_release(self, release_id: int) -> Optional[Release]:
         """
@@ -1429,7 +1437,7 @@ class AdminService:
                 setattr(existing, field, value)
             
             # Update the updated_at timestamp
-            existing.updated_at = datetime.now()
+            existing.updated_at = datetime.now(timezone.utc)
             
             # Commit changes to the database
             self.db.commit()
@@ -1441,7 +1449,8 @@ class AdminService:
             logger.error(f"Database error in update_release: {str(e)}")
             raise
     
-    def delete_release(self, release_id: int) -> bool:
+    @with_error_logging
+    def delete_release(self, release_id: int):
         """
         Delete a release
         """
@@ -1456,12 +1465,17 @@ class AdminService:
             self.db.commit()
             
             return True
+            
         except SQLAlchemyError as e:
             self.db.rollback()
             logger.error(f"Database error in delete_release: {str(e)}")
             raise
+        except Exception as e:
+            logger.error(f"Error in delete_release: {e}")
+            raise ApplicationError(message=f"Error in delete_release", original_error=e)
     
-    def execute_release(self, release_id: int, user_id: str) -> None:
+    @with_error_logging
+    def execute_release(self, release_id: int, user_id: str):
         """
         Execute a release by deploying applications and datasets to tenants
         
@@ -1471,7 +1485,7 @@ class AdminService:
             # Get the release
             release = self.db.query(Release).filter(Release.id == release_id).first()
             if not release:
-                raise ValueError(f"Release with ID {release_id} not found")
+                raise ValidationError(message=f"Release with ID {release_id} not found")
             
             # Update the release status to "in_progress"
             release.status = "in_progress"
@@ -1495,7 +1509,7 @@ class AdminService:
                             app_id = item.get('id')
                             if app_id:
                                 self.associate_application_with_tenant(tenant_id, app_id, user_id)
-                                
+                        
                         elif item.get('type') == 'dataset':
                             # Grant dataset access to the tenant
                             dataset_id = item.get('id')
@@ -1504,7 +1518,7 @@ class AdminService:
                 
                 # Update the release status to "completed"
                 release.status = "completed"
-                release.completed_at = datetime.now()
+                release.completed_at = datetime.now(timezone.utc)
                 self.db.commit()
                 
                 logger.info(f"Release {release_id} executed successfully")
@@ -1515,12 +1529,13 @@ class AdminService:
                 self.db.commit()
                 logger.error(f"Failed to execute release {release_id}: {str(inner_e)}")
                 raise inner_e
-                
+            
         except Exception as e:
-            logger.error(f"Failed to execute release {release_id}: {str(e)}")
-            raise
+            logger.error(f"Error in execute_release: {e}")
+            raise ApplicationError(message=f"Error in execute_release", original_error=e)
     
-    def rollback_release(self, release_id: int, user_id: str) -> None:
+    @with_error_logging
+    def rollback_release(self, release_id: int, user_id: str):
         """
         Rollback a previously executed release
         
@@ -1530,7 +1545,7 @@ class AdminService:
             # Get the release
             release = self.db.query(Release).filter(Release.id == release_id).first()
             if not release:
-                raise ValueError(f"Release with ID {release_id} not found")
+                raise ValidationError(message=f"Release with ID {release_id} not found")
             
             # Update the release status to "rolling_back"
             release.status = "rolling_back"
@@ -1554,7 +1569,7 @@ class AdminService:
                             app_id = item.get('id')
                             if app_id:
                                 self.disassociate_application_from_tenant(tenant_id, app_id)
-                                
+                        
                         elif item.get('type') == 'dataset':
                             # Revoke dataset access from the tenant
                             dataset_id = item.get('id')
@@ -1575,10 +1590,9 @@ class AdminService:
                 raise inner_e
                 
         except Exception as e:
-            logger.error(f"Failed to roll back release {release_id}: {str(e)}")
-            raise
+            logger.error(f"Error in rollback_release: {e}")
+            raise ApplicationError(message=f"Error in rollback_release", original_error=e)
     
-    # Tenant association methods
     def get_tenant_applications(self, tenant_id: str) -> List[Application]:
         """
         Get all applications associated with a tenant
@@ -1597,7 +1611,8 @@ class AdminService:
             logger.error(f"Database error in get_tenant_applications: {str(e)}")
             raise
     
-    def associate_application_with_tenant(self, tenant_id: str, application_id: int, granted_by: str) -> TenantApplicationAssociation:
+    @with_error_logging
+    def associate_application_with_tenant(self, tenant_id: str, application_id: int, granted_by: str):
         """
         Associate an application with a tenant
         """
@@ -1612,7 +1627,7 @@ class AdminService:
                 # If it exists but is inactive, reactivate it
                 if not existing.is_active:
                     existing.is_active = True
-                    existing.granted_at = datetime.now()
+                    existing.granted_at = datetime.now(timezone.utc)
                     existing.granted_by = granted_by
                     self.db.commit()
                 return existing
@@ -1622,7 +1637,7 @@ class AdminService:
                 tenant_id=tenant_id,
                 application_id=application_id,
                 is_active=True,
-                granted_at=datetime.now(),
+                granted_at=datetime.now(timezone.utc),
                 granted_by=granted_by
             )
             
@@ -1632,12 +1647,17 @@ class AdminService:
             self.db.refresh(association)
             
             return association
+            
         except SQLAlchemyError as e:
             self.db.rollback()
             logger.error(f"Database error in associate_application_with_tenant: {str(e)}")
             raise
+        except Exception as e:
+            logger.error(f"Error in associate_application_with_tenant: {e}")
+            raise ApplicationError(message=f"Error in associate_application_with_tenant", original_error=e)
     
-    def disassociate_application_from_tenant(self, tenant_id: str, application_id: int) -> bool:
+    @with_error_logging
+    def disassociate_application_from_tenant(self, tenant_id: str, application_id: int):
         """
         Remove an application from a tenant
         """
@@ -1661,10 +1681,14 @@ class AdminService:
             self.db.commit()
             
             return True
+            
         except SQLAlchemyError as e:
             self.db.rollback()
             logger.error(f"Database error in remove_application_from_tenant: {str(e)}")
             raise
+        except Exception as e:
+            logger.error(f"Error in disassociate_application_from_tenant: {e}")
+            raise ApplicationError(message=f"Error in disassociate_application_from_tenant", original_error=e)
     
     def get_tenant_datasets(self, tenant_id: str) -> List[Dataset]:
         """
@@ -1684,7 +1708,8 @@ class AdminService:
             logger.error(f"Database error in get_tenant_datasets: {str(e)}")
             raise
     
-    def associate_dataset_with_tenant(self, tenant_id: str, dataset_id: int, granted_by: str) -> TenantDatasetAssociation:
+    @with_error_logging
+    def associate_dataset_with_tenant(self, tenant_id: str, dataset_id: int, granted_by: str):
         """
         Associate a dataset with a tenant
         """
@@ -1699,9 +1724,10 @@ class AdminService:
                 # If it exists but is inactive, reactivate it
                 if not existing.is_active:
                     existing.is_active = True
-                    existing.granted_at = datetime.now()
+                    existing.granted_at = datetime.now(timezone.utc)
                     existing.granted_by = granted_by
-                    self.db.commit()
+                
+                self.db.commit()
                 return existing
             
             # Create a new association
@@ -1709,7 +1735,7 @@ class AdminService:
                 tenant_id=tenant_id,
                 dataset_id=dataset_id,
                 is_active=True,
-                granted_at=datetime.now(),
+                granted_at=datetime.now(timezone.utc),
                 granted_by=granted_by
             )
             
@@ -1719,12 +1745,17 @@ class AdminService:
             self.db.refresh(association)
             
             return association
+            
         except SQLAlchemyError as e:
             self.db.rollback()
             logger.error(f"Database error in associate_dataset_with_tenant: {str(e)}")
             raise
+        except Exception as e:
+            logger.error(f"Error in associate_dataset_with_tenant: {e}")
+            raise ApplicationError(message=f"Error in associate_dataset_with_tenant", original_error=e)
     
-    def disassociate_dataset_from_tenant(self, tenant_id: str, dataset_id: int) -> bool:
+    @with_error_logging
+    def disassociate_dataset_from_tenant(self, tenant_id: str, dataset_id: int):
         """
         Remove a dataset from a tenant
         """
@@ -1748,12 +1779,15 @@ class AdminService:
             self.db.commit()
             
             return True
+            
         except SQLAlchemyError as e:
             self.db.rollback()
             logger.error(f"Database error in disassociate_dataset_from_tenant: {str(e)}")
             raise
-        
-    # Webhook methods
+        except Exception as e:
+            logger.error(f"Error in disassociate_dataset_from_tenant: {e}")
+            raise ApplicationError(message=f"Error in disassociate_dataset_from_tenant", original_error=e)
+    
     def get_webhooks(self, skip: int = 0, limit: int = 100, 
                      integration_id: Optional[int] = None,
                      tenant_id: Optional[str] = None,
@@ -1796,7 +1830,8 @@ class AdminService:
             logger.error(f"Database error in get_webhooks: {str(e)}")
             raise
     
-    def create_webhook(self, webhook: WebhookCreate, tenant_id: str, owner_id: str) -> Webhook:
+    @with_error_logging
+    def create_webhook(self, webhook: WebhookCreate, tenant_id: str, owner_id: str):
         """
         Create a new webhook
         
@@ -1804,7 +1839,7 @@ class AdminService:
             webhook: Webhook creation data
             tenant_id: Tenant ID
             owner_id: Owner ID (user)
-            
+        
         Returns:
             Created webhook
         """
@@ -1815,8 +1850,8 @@ class AdminService:
                 tenant_id=tenant_id,
                 owner_id=owner_id,
                 status=WebhookStatus.ACTIVE,
-                created_at=datetime.now(),
-                updated_at=datetime.now(),
+                created_at=datetime.now(timezone.utc),
+                updated_at=datetime.now(timezone.utc),
                 last_triggered_at=None
             )
             
@@ -1826,10 +1861,14 @@ class AdminService:
             self.db.refresh(new_webhook)
             
             return new_webhook
+            
         except SQLAlchemyError as e:
             self.db.rollback()
             logger.error(f"Database error in create_webhook: {str(e)}")
             raise
+        except Exception as e:
+            logger.error(f"Error in create_webhook: {e}")
+            raise ApplicationError(message=f"Error in create_webhook", original_error=e)
     
     def get_webhook(self, webhook_id: int) -> Optional[Webhook]:
         """
@@ -1884,13 +1923,14 @@ class AdminService:
             logger.error(f"Database error in update_webhook: {str(e)}")
             raise
     
-    def delete_webhook(self, webhook_id: int) -> bool:
+    @with_error_logging
+    def delete_webhook(self, webhook_id: int):
         """
         Delete a webhook
         
         Args:
             webhook_id: Webhook ID
-            
+        
         Returns:
             True if successful, False otherwise
         """
@@ -1905,10 +1945,14 @@ class AdminService:
             self.db.commit()
             
             return True
+            
         except SQLAlchemyError as e:
             self.db.rollback()
             logger.error(f"Database error in delete_webhook: {str(e)}")
             raise
+        except Exception as e:
+            logger.error(f"Error in delete_webhook: {e}")
+            raise ApplicationError(message=f"Error in delete_webhook", original_error=e)
     
     def get_webhook_logs(self, webhook_id: int, skip: int = 0, limit: int = 50, 
                          success_only: Optional[bool] = None) -> List[WebhookLog]:
@@ -1971,98 +2015,105 @@ class AdminService:
             logger.error(f"Database error in get_webhook_logs: {str(e)}")
             raise
     
-    def test_webhook(self, test_request: WebhookTestRequest) -> WebhookTestResponse:
+    @with_error_logging
+    def test_webhook(self, test_request: WebhookTestRequest):
         """
         Test a webhook by sending a request
         
         Args:
             test_request: Webhook test request data
-            
+        
         Returns:
             Webhook test response
         """
-        import time
-        import requests
-        from requests.exceptions import RequestException
-        
-        logger.info(f"Testing webhook to URL: {test_request.url}")
-        
         try:
-            # Prepare request headers
-            headers = {
-                'Content-Type': 'application/json',
-                'User-Agent': 'TAP-Integration-Platform/1.0'
-            }
+            import time
+            import requests
+            from requests.exceptions import RequestException
             
-            # Add custom headers from the request
-            if test_request.headers:
-                headers.update(test_request.headers)
+            logger.info(f"Testing webhook to URL: {test_request.url}")
+            
+            try:
+                # Prepare request headers
+                headers = {
+                    'Content-Type': 'application/json',
+                    'User-Agent': 'TAP-Integration-Platform/1.0'
+                }
                 
-            # Prepare authentication based on auth_type
-            auth = None
-            if test_request.auth_type == WebhookAuthType.BASIC and test_request.auth_credentials:
-                credentials = test_request.auth_credentials
-                if hasattr(credentials, 'username') and hasattr(credentials, 'password'):
-                    auth = requests.auth.HTTPBasicAuth(credentials.username, credentials.password)
-            elif test_request.auth_type == WebhookAuthType.BEARER and test_request.auth_credentials:
-                credentials = test_request.auth_credentials
-                if hasattr(credentials, 'token'):
-                    headers['Authorization'] = f"Bearer {credentials.token}"
-            elif test_request.auth_type == WebhookAuthType.CUSTOM and test_request.auth_credentials:
-                credentials = test_request.auth_credentials
-                if hasattr(credentials, 'scheme') and hasattr(credentials, 'token'):
-                    headers['Authorization'] = f"{credentials.scheme} {credentials.token}"
-            
-            # Prepare the payload
-            payload = {
-                'event': test_request.event_type,
-                'timestamp': datetime.now(UTC).isoformat(),
-                'data': test_request.payload
-            }
-            
-            # Measure request duration
-            start_time = time.time()
-            
-            # Send request
-            response = requests.post(
-                str(test_request.url), 
-                json=payload,
-                headers=headers,
-                auth=auth,
-                timeout=10  # 10 second timeout
-            )
-            
-            # Calculate request duration
-            end_time = time.time()
-            request_duration_ms = int((end_time - start_time) * 1000)
-            
-            # Build response
-            return WebhookTestResponse(
-                success=response.ok,
-                status_code=response.status_code,
-                response_body=response.text[:1000],  # Limit response length
-                error_message=None if response.ok else f"HTTP {response.status_code}: {response.reason}",
-                request_duration_ms=request_duration_ms
-            )
-            
-        except RequestException as e:
-            # Handle request exceptions (timeouts, connection errors, etc.)
-            end_time = time.time()
-            request_duration_ms = int((end_time - start_time) * 1000)
-            
-            logger.error(f"Error testing webhook: {str(e)}")
-            
-            return WebhookTestResponse(
-                success=False,
-                status_code=None,
-                response_body=None,
-                error_message=str(e),
-                request_duration_ms=request_duration_ms
-            )
+                # Add custom headers from the request
+                if test_request.headers:
+                    headers.update(test_request.headers)
+                
+                # Prepare authentication based on auth_type
+                auth = None
+                if test_request.auth_type == WebhookAuthType.BASIC and test_request.auth_credentials:
+                    credentials = test_request.auth_credentials
+                    if hasattr(credentials, 'username') and hasattr(credentials, 'password'):
+                        auth = requests.auth.HTTPBasicAuth(credentials.username, credentials.password)
+                elif test_request.auth_type == WebhookAuthType.BEARER and test_request.auth_credentials:
+                    credentials = test_request.auth_credentials
+                    if hasattr(credentials, 'token'):
+                        headers['Authorization'] = f"Bearer {credentials.token}"
+                elif test_request.auth_type == WebhookAuthType.CUSTOM and test_request.auth_credentials:
+                    credentials = test_request.auth_credentials
+                    if hasattr(credentials, 'scheme') and hasattr(credentials, 'token'):
+                        headers['Authorization'] = f"{credentials.scheme} {credentials.token}"
+                
+                # Prepare the payload
+                payload = {
+                    'event': test_request.event_type,
+                    'timestamp': datetime.now(timezone.utc).isoformat(),
+                    'data': test_request.payload
+                }
+                
+                # Measure request duration
+                start_time = time.time()
+                
+                # Send request
+                response = requests.post(
+                    str(test_request.url),
+                    json=payload,
+                    headers=headers,
+                    auth=auth,
+                    timeout=10  # 10 second timeout
+                )
+                
+                # Calculate request duration
+                end_time = time.time()
+                request_duration_ms = int((end_time - start_time) * 1000)
+                
+                # Build response
+                return WebhookTestResponse(
+                    success=response.ok,
+                    status_code=response.status_code,
+                    response_body=response.text[:1000],  # Limit response length
+                    error_message=None if response.ok else f"HTTP {response.status_code}: {response.reason}",
+                    request_duration_ms=request_duration_ms
+                )
+                
+            except RequestException as e:
+                # Handle request exceptions (timeouts, connection errors, etc.)
+                end_time = time.time()
+                request_duration_ms = int((end_time - start_time) * 1000)
+                
+                logger.error(f"Error testing webhook: {str(e)}")
+                
+                return WebhookTestResponse(
+                    success=False,
+                    status_code=None,
+                    response_body=None,
+                    error_message=str(e),
+                    request_duration_ms=request_duration_ms
+                )
+                
+        except Exception as e:
+            logger.error(f"Error in test_webhook: {e}")
+            raise ApplicationError(message=f"Error in test_webhook", original_error=e)
     
+    @with_error_logging
     def trigger_webhooks(self, event_type: WebhookEventType, payload: Dict[str, Any],
                           integration_id: Optional[int] = None,
-                          tenant_id: Optional[str] = None) -> int:
+                          tenant_id: Optional[str] = None):
         """
         Trigger all webhooks that match the event type and filters
         
@@ -2071,164 +2122,169 @@ class AdminService:
             payload: Event payload
             integration_id: Integration ID (if applicable)
             tenant_id: Tenant ID (if applicable)
-            
+        
         Returns:
             Number of webhooks triggered
         """
-        from db.models import Webhook as WebhookModel
-        from db.models import WebhookLog as WebhookLogModel
-        import json
-        import requests
-        from requests.exceptions import RequestException
-        
-        logger.info(f"Triggering webhooks for event {event_type.value}")
-        
         try:
-            # Find all active webhooks subscribed to this event type
-            query = self.db.query(WebhookModel).filter(
-                WebhookModel.status == 'active',
-                WebhookModel.events.contains([event_type.value])
-            )
+            from db.models import Webhook as WebhookModel
+            from db.models import WebhookLog as WebhookLogModel
+            import json
+            import requests
+            from requests.exceptions import RequestException
             
-            # Filter by integration_id if provided
-            if integration_id is not None:
-                # For integration-specific webhooks or global webhooks
-                query = query.filter(
-                    (WebhookModel.integration_id == integration_id) | 
-                    (WebhookModel.integration_id.is_(None))
+            logger.info(f"Triggering webhooks for event {event_type.value}")
+            
+            try:
+                # Find all active webhooks subscribed to this event type
+                query = self.db.query(WebhookModel).filter(
+                    WebhookModel.status == 'active',
+                    WebhookModel.events.contains([event_type.value])
                 )
-            
-            # Filter by tenant_id if provided
-            if tenant_id is not None:
-                # For tenant-specific webhooks or global webhooks
-                query = query.filter(
-                    (WebhookModel.tenant_id == tenant_id) | 
-                    (WebhookModel.tenant_id.is_(None))
-                )
-            
-            # Get matching webhooks
-            webhooks = query.all()
-            logger.info(f"Found {len(webhooks)} matching webhooks for event {event_type.value}")
-            
-            # Counter for successful triggers
-            triggered_count = 0
-            
-            # Trigger each webhook
-            for webhook in webhooks:
-                # Check if webhook should be triggered based on custom filters
-                if webhook.filters and not self._webhook_passes_filters(webhook.filters, payload):
-                    logger.info(f"Webhook {webhook.id} ({webhook.name}) skipped due to filter conditions")
-                    continue
                 
-                # Create a log entry for this webhook trigger
-                webhook_log = WebhookLogModel(
-                    webhook_id=webhook.id,
-                    event_type=event_type.value,
-                    payload=payload,
-                    created_at=datetime.now(UTC)
-                )
-                self.db.add(webhook_log)
-                self.db.flush()  # Get ID without committing
-                
-                try:
-                    # Prepare headers
-                    headers = {
-                        'Content-Type': 'application/json',
-                        'User-Agent': 'TAP-Integration-Platform/1.0',
-                        'X-TAP-Event': event_type.value,
-                        'X-TAP-Webhook-ID': str(webhook.id),
-                        'X-TAP-Delivery-ID': str(webhook_log.id)
-                    }
-                    
-                    # Add custom headers if any
-                    if webhook.headers:
-                        headers.update(webhook.headers)
-                    
-                    # Add signature if secret key is present
-                    if webhook.secret_key:
-                        import hmac
-                        import hashlib
-                        payload_bytes = json.dumps(payload).encode('utf-8')
-                        signature = hmac.new(
-                            webhook.secret_key.encode('utf-8'),
-                            payload_bytes,
-                            hashlib.sha256
-                        ).hexdigest()
-                        headers['X-TAP-Signature'] = signature
-                    
-                    # Prepare authentication
-                    auth = None
-                    if webhook.auth_type == 'basic' and webhook.auth_credentials:
-                        credentials = webhook.auth_credentials
-                        if 'username' in credentials and 'password' in credentials:
-                            auth = requests.auth.HTTPBasicAuth(credentials['username'], credentials['password'])
-                    elif webhook.auth_type == 'bearer' and webhook.auth_credentials:
-                        credentials = webhook.auth_credentials
-                        if 'token' in credentials:
-                            headers['Authorization'] = f"Bearer {credentials['token']}"
-                    elif webhook.auth_type == 'custom' and webhook.auth_credentials:
-                        credentials = webhook.auth_credentials
-                        if 'scheme' in credentials and 'token' in credentials:
-                            headers['Authorization'] = f"{credentials['scheme']} {credentials['token']}"
-                    
-                    # Prepare webhook request payload
-                    webhook_payload = {
-                        'event': event_type.value,
-                        'timestamp': datetime.now(UTC).isoformat(),
-                        'data': payload,
-                        'webhook_id': webhook.id
-                    }
-                    
-                    # Send the request
-                    response = requests.post(
-                        webhook.url,
-                        json=webhook_payload,
-                        headers=headers,
-                        auth=auth,
-                        timeout=webhook.timeout_seconds
+                # Filter by integration_id if provided
+                if integration_id is not None:
+                    # For integration-specific webhooks or global webhooks
+                    query = query.filter(
+                        (WebhookModel.integration_id == integration_id) |
+                        (WebhookModel.integration_id.is_(None))
                     )
-                    
-                    # Update the log with the response
-                    webhook_log.response_status_code = response.status_code
-                    webhook_log.response_body = response.text[:1000]  # Limit response length
-                    webhook_log.is_success = response.ok
-                    webhook_log.completed_at = datetime.now(UTC)
-                    
-                    if response.ok:
-                        triggered_count += 1
-                        logger.info(f"Successfully triggered webhook {webhook.id} ({webhook.name})")
-                    else:
-                        error_msg = f"Webhook returned error status {response.status_code}: {response.reason}"
-                        webhook_log.error_message = error_msg
-                        logger.warning(error_msg)
-                    
-                except RequestException as e:
-                    # Handle request exceptions (timeouts, connection errors, etc.)
-                    error_msg = f"Error triggering webhook {webhook.id} ({webhook.name}): {str(e)}"
-                    webhook_log.error_message = str(e)
-                    webhook_log.is_success = False
-                    webhook_log.completed_at = datetime.now(UTC)
-                    logger.error(error_msg)
                 
-                # Update webhook's last_triggered_at timestamp
-                webhook.last_triggered_at = datetime.now(UTC)
+                # Filter by tenant_id if provided
+                if tenant_id is not None:
+                    # For tenant-specific webhooks or global webhooks
+                    query = query.filter(
+                        (WebhookModel.tenant_id == tenant_id) |
+                        (WebhookModel.tenant_id.is_(None))
+                    )
                 
-                # If this webhook has failed too many times, mark it as failed
-                if (not webhook_log.is_success and 
-                    self._count_recent_failures(webhook.id) >= webhook.retry_count):
-                    webhook.status = 'failed'
-                    logger.warning(f"Marking webhook {webhook.id} as failed due to multiple delivery failures")
-            
-            # Commit all changes
-            self.db.commit()
-            
-            logger.info(f"Successfully triggered {triggered_count} webhooks for event {event_type.value}")
-            return triggered_count
-            
-        except SQLAlchemyError as e:
-            self.db.rollback()
-            logger.error(f"Database error in trigger_webhooks: {str(e)}")
-            raise
+                # Get matching webhooks
+                webhooks = query.all()
+                logger.info(f"Found {len(webhooks)} matching webhooks for event {event_type.value}")
+                
+                # Counter for successful triggers
+                triggered_count = 0
+                
+                # Trigger each webhook
+                for webhook in webhooks:
+                    # Check if webhook should be triggered based on custom filters
+                    if webhook.filters and not self._webhook_passes_filters(webhook.filters, payload):
+                        logger.info(f"Webhook {webhook.id} ({webhook.name}) skipped due to filter conditions")
+                        continue
+                    
+                    # Create a log entry for this webhook trigger
+                    webhook_log = WebhookLogModel(
+                        webhook_id=webhook.id,
+                        event_type=event_type.value,
+                        payload=payload,
+                        created_at=datetime.now(timezone.utc)
+                    )
+                    self.db.add(webhook_log)
+                    self.db.flush()  # Get ID without committing
+                    
+                    try:
+                        # Prepare headers
+                        headers = {
+                            'Content-Type': 'application/json',
+                            'User-Agent': 'TAP-Integration-Platform/1.0',
+                            'X-TAP-Event': event_type.value,
+                            'X-TAP-Webhook-ID': str(webhook.id),
+                            'X-TAP-Delivery-ID': str(webhook_log.id)
+                        }
+                        
+                        # Add custom headers if any
+                        if webhook.headers:
+                            headers.update(webhook.headers)
+                        
+                        # Add signature if secret key is present
+                        if webhook.secret_key:
+                            import hmac
+                            import hashlib
+                            payload_bytes = json.dumps(payload).encode('utf-8')
+                            signature = hmac.new(
+                                webhook.secret_key.encode('utf-8'),
+                                payload_bytes,
+                                hashlib.sha256
+                            ).hexdigest()
+                            headers['X-TAP-Signature'] = signature
+                        
+                        # Prepare authentication
+                        auth = None
+                        if webhook.auth_type == 'basic' and webhook.auth_credentials:
+                            credentials = webhook.auth_credentials
+                            if 'username' in credentials and 'password' in credentials:
+                                auth = requests.auth.HTTPBasicAuth(credentials['username'], credentials['password'])
+                        elif webhook.auth_type == 'bearer' and webhook.auth_credentials:
+                            credentials = webhook.auth_credentials
+                            if 'token' in credentials:
+                                headers['Authorization'] = f"Bearer {credentials['token']}"
+                        elif webhook.auth_type == 'custom' and webhook.auth_credentials:
+                            credentials = webhook.auth_credentials
+                            if 'scheme' in credentials and 'token' in credentials:
+                                headers['Authorization'] = f"{credentials['scheme']} {credentials['token']}"
+                        
+                        # Prepare webhook request payload
+                        webhook_payload = {
+                            'event': event_type.value,
+                            'timestamp': datetime.now(timezone.utc).isoformat(),
+                            'data': payload,
+                            'webhook_id': webhook.id
+                        }
+                        
+                        # Send the request
+                        response = requests.post(
+                            webhook.url,
+                            json=webhook_payload,
+                            headers=headers,
+                            auth=auth,
+                            timeout=webhook.timeout_seconds
+                        )
+                        
+                        # Update the log with the response
+                        webhook_log.response_status_code = response.status_code
+                        webhook_log.response_body = response.text[:1000]  # Limit response length
+                        webhook_log.is_success = response.ok
+                        webhook_log.completed_at = datetime.now(timezone.utc)
+                        
+                        if response.ok:
+                            triggered_count += 1
+                            logger.info(f"Successfully triggered webhook {webhook.id} ({webhook.name})")
+                        else:
+                            error_msg = f"Webhook returned error status {response.status_code}: {response.reason}"
+                            webhook_log.error_message = error_msg
+                            logger.warning(error_msg)
+                            
+                    except RequestException as e:
+                        # Handle request exceptions (timeouts, connection errors, etc.)
+                        error_msg = f"Error triggering webhook {webhook.id} ({webhook.name}): {str(e)}"
+                        webhook_log.error_message = str(e)
+                        webhook_log.is_success = False
+                        webhook_log.completed_at = datetime.now(timezone.utc)
+                        logger.error(error_msg)
+                    
+                    # Update webhook's last_triggered_at timestamp
+                    webhook.last_triggered_at = datetime.now(timezone.utc)
+                    
+                    # If this webhook has failed too many times, mark it as failed
+                    if (not webhook_log.is_success and
+                        self._count_recent_failures(webhook.id) >= webhook.retry_count):
+                        webhook.status = 'failed'
+                        logger.warning(f"Marking webhook {webhook.id} as failed due to multiple delivery failures")
+                    
+                    # Commit all changes
+                    self.db.commit()
+                
+                logger.info(f"Successfully triggered {triggered_count} webhooks for event {event_type.value}")
+                return triggered_count
+                
+            except SQLAlchemyError as e:
+                self.db.rollback()
+                logger.error(f"Database error in trigger_webhooks: {str(e)}")
+                raise
+                
+        except Exception as e:
+            logger.error(f"Error in trigger_webhooks: {e}")
+            raise ApplicationError(message=f"Error in trigger_webhooks", original_error=e)
     
     def _webhook_passes_filters(self, filters: List[Dict], payload: Dict) -> bool:
         """
@@ -2302,7 +2358,7 @@ class AdminService:
         
         try:
             # Get count of failed deliveries in the last 24 hours
-            one_day_ago = datetime.now(UTC) - timedelta(days=1)
+            one_day_ago = datetime.now(timezone.utc) - timedelta(days=1)
             
             count = self.db.query(func.count(WebhookLogModel.id))\
                 .filter(WebhookLogModel.webhook_id == webhook_id,
@@ -2315,7 +2371,7 @@ class AdminService:
             logger.error(f"Error counting recent webhook failures: {str(e)}")
             return 0
             
-    # Tenant management methods
+        # Tenant management methods
     
     def get_tenants(self, skip: int = 0, limit: int = 100, status: Optional[str] = None) -> List[Tenant]:
         """
@@ -2357,14 +2413,14 @@ class AdminService:
             logger.error(f"Database error in get_tenant: {str(e)}")
             raise
     
-    def create_tenant(self, tenant: TenantCreate) -> Tenant:
+    @with_error_logging
+    def create_tenant(self, tenant: TenantCreate):
         """
         Create a new tenant
         """
         try:
             # Generate ID if not provided
             tenant_id = tenant.id or str(uuid.uuid4())
-            
             # Create a new tenant object
             new_tenant = DbTenant(
                 id=tenant_id,
@@ -2373,22 +2429,23 @@ class AdminService:
                 status=tenant.status,
                 tier=tenant.tier,
                 settings=tenant.settings,
-                created_at=datetime.now(UTC),
-                updated_at=datetime.now(UTC)
+                created_at=datetime.now(timezone.utc),
+                updated_at=datetime.now(timezone.utc)
             )
-            
             # Add to database
             self.db.add(new_tenant)
             self.db.commit()
             self.db.refresh(new_tenant)
-            
             # Convert to Pydantic model
             return Tenant.model_validate(new_tenant)
         except SQLAlchemyError as e:
+            logger.error(f"Error: {e}")
             self.db.rollback()
-            logger.error(f"Database error in create_tenant: {str(e)}")
             raise
-    
+        except Exception as e:
+            logger.error(f"Error in create_tenant: {e}")
+            raise ApplicationError(message=f"Error in create_tenant", original_error=e)
+            
     def update_tenant(self, tenant_id: str, tenant: TenantUpdate) -> Optional[Tenant]:
         """
         Update an existing tenant
@@ -2398,27 +2455,25 @@ class AdminService:
             existing = self.db.query(DbTenant).filter(DbTenant.id == tenant_id).first()
             if not existing:
                 return None
-            
             # Update fields that are present in the request
             update_data = tenant.model_dump(exclude_unset=True)
             for field, value in update_data.items():
                 setattr(existing, field, value)
-            
             # Update the updated_at timestamp
-            existing.updated_at = datetime.now(UTC)
-            
+            existing.updated_at = datetime.now(timezone.utc)
             # Commit changes to the database
             self.db.commit()
             self.db.refresh(existing)
-            
             # Convert to Pydantic model
             return Tenant.model_validate(existing)
         except SQLAlchemyError as e:
+            logger.error(f"Error: {e}")
             self.db.rollback()
             logger.error(f"Database error in update_tenant: {str(e)}")
             raise
-    
-    def delete_tenant(self, tenant_id: str) -> bool:
+            
+    @with_error_logging
+    def delete_tenant(self, tenant_id: str):
         """
         Delete a tenant
         """
@@ -2427,16 +2482,21 @@ class AdminService:
             existing = self.db.query(DbTenant).filter(DbTenant.id == tenant_id).first()
             if not existing:
                 return False
-            
+                
             # Delete the tenant
             self.db.delete(existing)
             self.db.commit()
-            
             return True
+            
         except SQLAlchemyError as e:
+            logger.error(f"Error: {e}")
             self.db.rollback()
             logger.error(f"Database error in delete_tenant: {str(e)}")
             raise
+            
+        except Exception as e:
+            logger.error(f"Error in delete_tenant: {e}")
+            raise ApplicationError(message=f"Error in delete_tenant", original_error=e)
     
     def get_tenant_applications(self, tenant_id: str, skip: int = 0, limit: int = 100) -> List[Application]:
         """
@@ -2469,8 +2529,8 @@ class AdminService:
                     connection_parameters=[],
                     status=ApplicationStatus.ACTIVE,
                     is_public=False,
-                    created_at=datetime.now(UTC),
-                    updated_at=datetime.now(UTC),
+                    created_at=datetime.now(timezone.utc),
+                    updated_at=datetime.now(timezone.utc),
                     created_by="test-user"
                 ),
                 Application(
@@ -2482,8 +2542,8 @@ class AdminService:
                     connection_parameters=[],
                     status=ApplicationStatus.ACTIVE,
                     is_public=False,
-                    created_at=datetime.now(UTC),
-                    updated_at=datetime.now(UTC),
+                    created_at=datetime.now(timezone.utc),
+                    updated_at=datetime.now(timezone.utc),
                     created_by="test-user"
                 )
             ]
@@ -2520,8 +2580,8 @@ class AdminService:
                     fields=[],
                     connection_parameters=[],
                     is_public=False,
-                    created_at=datetime.now(UTC),
-                    updated_at=datetime.now(UTC),
+                    created_at=datetime.now(timezone.utc),
+                    updated_at=datetime.now(timezone.utc),
                     created_by="test-user"
                 ),
                 Dataset(
@@ -2532,8 +2592,8 @@ class AdminService:
                     fields=[],
                     connection_parameters=[],
                     is_public=False,
-                    created_at=datetime.now(UTC),
-                    updated_at=datetime.now(UTC),
+                    created_at=datetime.now(timezone.utc),
+                    updated_at=datetime.now(timezone.utc),
                     created_by="test-user"
                 )
             ]
@@ -2541,7 +2601,8 @@ class AdminService:
             logger.error(f"Database error in get_tenant_datasets: {str(e)}")
             raise
     
-    def associate_application_with_tenant(self, tenant_id: str, application_id: int, granted_by: str) -> bool:
+    @with_error_logging
+    def associate_application_with_tenant(self, tenant_id: str, application_id: int, granted_by: str):
         """
         Associate an application with a tenant
         """
@@ -2567,7 +2628,7 @@ class AdminService:
             if existing:
                 # Update if already exists
                 existing.is_active = True
-                existing.granted_at = datetime.now(UTC)
+                existing.granted_at = datetime.now(timezone.utc)
                 existing.granted_by = granted_by
             else:
                 # Create new association
@@ -2575,19 +2636,23 @@ class AdminService:
                     tenant_id=tenant_id,
                     application_id=application_id,
                     is_active=True,
-                    granted_at=datetime.now(UTC),
+                    granted_at=datetime.now(timezone.utc),
                     granted_by=granted_by
                 )
                 self.db.add(association)
             
             self.db.commit()
             return True
+        
         except SQLAlchemyError as e:
             self.db.rollback()
             logger.error(f"Database error in associate_application_with_tenant: {str(e)}")
             raise
-    
-    def disassociate_application_from_tenant(self, tenant_id: str, application_id: int) -> bool:
+        except Exception as e:
+            logger.error(f"Error in associate_application_with_tenant: {e}")
+            raise ApplicationError(message=f"Error in associate_application_with_tenant", original_error=e)
+    @with_error_logging
+    def disassociate_application_from_tenant(self, tenant_id: str, application_id: int):
         """
         Remove association between an application and a tenant
         """
@@ -2606,12 +2671,17 @@ class AdminService:
             association.is_active = False
             self.db.commit()
             return True
+            
         except SQLAlchemyError as e:
             self.db.rollback()
             logger.error(f"Database error in disassociate_application_from_tenant: {str(e)}")
             raise
+        except Exception as e:
+            logger.error(f"Error in disassociate_application_from_tenant: {e}")
+            raise ApplicationError(message=f"Error in disassociate_application_from_tenant", original_error=e)
     
-    def associate_dataset_with_tenant(self, tenant_id: str, dataset_id: int, granted_by: str) -> bool:
+    @with_error_logging
+    def associate_dataset_with_tenant(self, tenant_id: str, dataset_id: int, granted_by: str):
         """
         Associate a dataset with a tenant
         """
@@ -2637,7 +2707,7 @@ class AdminService:
             if existing:
                 # Update if already exists
                 existing.is_active = True
-                existing.granted_at = datetime.now(UTC)
+                existing.granted_at = datetime.now(timezone.utc)
                 existing.granted_by = granted_by
             else:
                 # Create new association
@@ -2645,19 +2715,24 @@ class AdminService:
                     tenant_id=tenant_id,
                     dataset_id=dataset_id,
                     is_active=True,
-                    granted_at=datetime.now(UTC),
+                    granted_at=datetime.now(timezone.utc),
                     granted_by=granted_by
                 )
                 self.db.add(association)
             
             self.db.commit()
             return True
+            
         except SQLAlchemyError as e:
             self.db.rollback()
             logger.error(f"Database error in associate_dataset_with_tenant: {str(e)}")
             raise
+        except Exception as e:
+            logger.error(f"Error in associate_dataset_with_tenant: {e}")
+            raise ApplicationError(message=f"Error in associate_dataset_with_tenant", original_error=e)
     
-    def disassociate_dataset_from_tenant(self, tenant_id: str, dataset_id: int) -> bool:
+    @with_error_logging
+    def disassociate_dataset_from_tenant(self, tenant_id: str, dataset_id: int):
         """
         Remove association between a dataset and a tenant
         """

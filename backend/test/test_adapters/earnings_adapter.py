@@ -5,7 +5,7 @@ This module provides a test adapter for earnings functionality, implementing the
 """
 
 import uuid
-from datetime import datetime, UTC
+from datetime import datetime, timezone
 from typing import Dict, List, Optional, Any, Union
 
 from .entity_registry import BaseTestAdapter, EntityAction
@@ -43,7 +43,7 @@ class EarningsTestAdapter(BaseTestAdapter):
         roster_id = len(self.rosters) + 1
         
         # Create timestamps
-        now = datetime.now(UTC)
+        now = datetime.now(timezone.utc)
         
         # Create the roster
         roster = {
@@ -74,7 +74,7 @@ class EarningsTestAdapter(BaseTestAdapter):
         # Update the roster
         roster = self.rosters[roster_id]
         roster.update({
-            "updated_at": datetime.now(UTC),
+            "updated_at": datetime.now(timezone.utc),
             **roster_data
         })
         
@@ -135,7 +135,7 @@ class EarningsTestAdapter(BaseTestAdapter):
         employee_id = len(self.employees) + 1
         
         # Create timestamps
-        now = datetime.now(UTC)
+        now = datetime.now(timezone.utc)
         
         # Create the employee
         employee = {
@@ -169,7 +169,7 @@ class EarningsTestAdapter(BaseTestAdapter):
                 # Update existing employee
                 employee_id = existing_employee["id"]
                 existing_employee.update({
-                    "updated_at": datetime.now(UTC),
+                    "updated_at": datetime.now(timezone.utc),
                     **{k: v for k, v in employee_data.items() if k != "roster_id" and k != "external_id"}
                 })
                 
@@ -207,7 +207,7 @@ class EarningsTestAdapter(BaseTestAdapter):
         # Update the employee
         employee = self.employees[employee_id]
         employee.update({
-            "updated_at": datetime.now(UTC),
+            "updated_at": datetime.now(timezone.utc),
             **employee_data
         })
         
@@ -249,7 +249,7 @@ class EarningsTestAdapter(BaseTestAdapter):
         earnings_id = len(self.employee_earnings) + 1
         
         # Create timestamp
-        now = datetime.now(UTC)
+        now = datetime.now(timezone.utc)
         
         # Create the earnings record
         earnings = {
@@ -285,7 +285,7 @@ class EarningsTestAdapter(BaseTestAdapter):
         code_id = len(self.earnings_codes) + 1
         
         # Create timestamps
-        now = datetime.now(UTC)
+        now = datetime.now(timezone.utc)
         
         # Create the earnings code
         code = {
@@ -314,7 +314,7 @@ class EarningsTestAdapter(BaseTestAdapter):
         # Update the earnings code
         code = self.earnings_codes[code_id]
         code.update({
-            "updated_at": datetime.now(UTC),
+            "updated_at": datetime.now(timezone.utc),
             **code_data
         })
         
@@ -362,7 +362,7 @@ class EarningsTestAdapter(BaseTestAdapter):
         map_id = len(self.earnings_maps) + 1
         
         # Create timestamps
-        now = datetime.now(UTC)
+        now = datetime.now(timezone.utc)
         
         # If this is a default map, unset any existing defaults for the same source type
         if map_data.get("default_map", False):
@@ -412,7 +412,7 @@ class EarningsTestAdapter(BaseTestAdapter):
         
         # Update the earnings map
         earnings_map.update({
-            "updated_at": datetime.now(UTC),
+            "updated_at": datetime.now(timezone.utc),
             **map_data
         })
         
@@ -444,7 +444,7 @@ class EarningsTestAdapter(BaseTestAdapter):
         rule_id = len(self.business_rules) + 1
         
         # Create timestamps
-        now = datetime.now(UTC)
+        now = datetime.now(timezone.utc)
         
         # Create the business rule
         rule = {
@@ -473,7 +473,7 @@ class EarningsTestAdapter(BaseTestAdapter):
         # Update the business rule
         rule = self.business_rules[rule_id]
         rule.update({
-            "updated_at": datetime.now(UTC),
+            "updated_at": datetime.now(timezone.utc),
             **rule_data
         })
         
@@ -510,11 +510,11 @@ class EarningsTestAdapter(BaseTestAdapter):
                 "new_employees": 0,
                 "updated_employees": 0,
                 "errors": ["Roster not found"],
-                "sync_time": datetime.now(UTC)
+                "sync_time": datetime.now(timezone.utc)
             }
         
         # Update the roster's last_sync_at
-        self.rosters[roster_id]["last_sync_at"] = datetime.now(UTC)
+        self.rosters[roster_id]["last_sync_at"] = datetime.now(timezone.utc)
         self._update_entity("EmployeeRoster", str(roster_id), self.rosters[roster_id])
         
         # Simulate a successful sync
@@ -525,7 +525,7 @@ class EarningsTestAdapter(BaseTestAdapter):
             "new_employees": 0,
             "updated_employees": 0,
             "errors": None,
-            "sync_time": datetime.now(UTC)
+            "sync_time": datetime.now(timezone.utc)
         }
     
     def test_earnings_map(self, roster_id: int, source_type: str, sample_data: Dict[str, Any]) -> Dict[str, Any]:
